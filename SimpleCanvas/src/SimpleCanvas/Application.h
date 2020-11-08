@@ -3,16 +3,16 @@
 #include "Core.h"
 
 namespace sc {
-	class SC_API Application
-	{
-	public:
-		Application();
-		virtual ~Application();
+class SC_API Application
+{
+public:
+	Application();
+	virtual ~Application();
 
-		void run();
-	};
+	void run();
+};
 
-	// to be defined in client
-	Application *CreateApplication();
+// to be defined in client
+Application *CreateApplication();
 }
 
