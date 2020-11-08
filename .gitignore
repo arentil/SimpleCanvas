@@ -1,0 +1,10 @@
+# --------- Dirs ---------
+.vs/
+x64/
+SimpleCanvas/x64/
+Sandbox/x64/
+
+# ---------- Files ---------
+.VC.db
+.VC.VC.opendb
+.user
