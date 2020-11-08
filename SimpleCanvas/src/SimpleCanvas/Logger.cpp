@@ -1,7 +1,5 @@
 #include "Logger.h"
 
-#include <iostream>
-
 namespace sc {
 	namespace {
 		void print(std::mutex &m, std::string const & text)

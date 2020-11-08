@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <string>
-
 namespace simpleCanvas {
 
 	class SC_API KeyEvent : public Event

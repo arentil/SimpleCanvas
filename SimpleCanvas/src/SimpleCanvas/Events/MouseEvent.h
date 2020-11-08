@@ -2,7 +2,6 @@
 
 #include "Event.h"
 
-#include <string>
 
 namespace simpleCanvas {
 

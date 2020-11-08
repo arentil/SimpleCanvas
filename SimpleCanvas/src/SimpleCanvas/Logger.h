@@ -1,9 +1,7 @@
 #pragma once
 
+#include "../stdafx.h"
 #include "Core.h"
-
-#include <mutex>
-#include <string>
 
 namespace sc
 {
@@ -22,8 +20,6 @@ namespace sc
 		Logger(Logger const&) = delete;
 		void operator=(Logger const&) = delete;
 		void Log(std::string const& text);
-		void LogInfo(std::string const& text);
-		void LogError(std::string const& text);
 	};
 
 #define LOG_TEXT(text) simpleCanvas::Logger::instance().Log(text)

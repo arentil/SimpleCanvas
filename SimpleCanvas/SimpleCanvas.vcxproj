@@ -48,6 +48,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SC_BUILD_DLL;SC_API;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -58,6 +60,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SC_BUILD_DLL;SC_API;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -65,6 +69,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\SimpleCanvas\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\SimpleCanvas\Events\Event.h" />
+    <ClInclude Include="src\SimpleCanvas\Events\KeyEvent.h" />
+    <ClInclude Include="src\SimpleCanvas\Events\MouseEvent.h" />
     <ClInclude Include="src\SimpleCanvas\Logger.h" />
     <ClInclude Include="src\SimpleCanvas.h" />
     <ClInclude Include="src\SimpleCanvas\Application.h" />
@@ -72,6 +81,12 @@
     <ClInclude Include="src\SimpleCanvas\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="src\SimpleCanvas\Logger.cpp" />
     <ClCompile Include="src\SimpleCanvas\Application.cpp" />
   </ItemGroup>

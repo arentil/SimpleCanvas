@@ -1,7 +1,9 @@
+# ------ FOLDERS -------
 .vs
 x64
 SimpleCanvas/x64
 Sandbox/x64
-# FILES
+ipch
+# ------ FILES -------
 SimpleCanvas.VC.db
 SimpleCanvas.VC.VC.opendb

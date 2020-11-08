@@ -1,9 +1,7 @@
 #pragma once
 
+#include "../../stdafx.h"
 #include "../Core.h"
-
-#include <string>
-#include <functional>
 
 namespace simpleCanvas {
 
