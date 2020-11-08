@@ -65,12 +65,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\SimpleCanvas\Logger.h" />
     <ClInclude Include="src\SimpleCanvas.h" />
     <ClInclude Include="src\SimpleCanvas\Application.h" />
     <ClInclude Include="src\SimpleCanvas\Core.h" />
     <ClInclude Include="src\SimpleCanvas\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\SimpleCanvas\Logger.cpp" />
     <ClCompile Include="src\SimpleCanvas\Application.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

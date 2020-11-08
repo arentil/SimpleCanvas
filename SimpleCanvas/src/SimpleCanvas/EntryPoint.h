@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Logger.h"
+
 extern sc::Application* sc::CreateApplication();
 
 int main(int argc, char **argv)
