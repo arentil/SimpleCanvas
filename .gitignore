@@ -3,6 +3,5 @@ x64
 SimpleCanvas/x64
 Sandbox/x64
 # FILES
-.VC.db
-.VC.VC.opendb
-.user
+SimpleCanvas.VC.db
+SimpleCanvas.VC.VC.opendb
