@@ -1,13 +1,16 @@
 #include "Application.h"
 
-#include "Events\ApplicationEvent.h"
+#include "Events/ApplicationEvent.h"
 #include "Logger.h"
+
+#include <GLFW/glfw3.h>
 
 namespace sc {
 Application::Application()
 {
+	window = std::unique_ptr<Window>(Window::create());
+	isRunning = true;
 }
-
 
 Application::~Application()
 {
@@ -15,8 +18,11 @@ Application::~Application()
 
 void Application::run()
 {
-	WindowResizeEvent e(1280, 720);
-	LOG_INFO(e.ToString());
-	while (true);
+	while (isRunning)
+	{
+		glClearColor(0, 1, 1, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+		window->onUpdate();
+	}
 }
-}
+} // namespace sc

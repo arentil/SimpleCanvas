@@ -1,1 +1,1 @@
-Yet another simple OpenGl game engine
+Yet another simple 3D OpenGl game engine

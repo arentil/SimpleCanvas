@@ -15,4 +15,6 @@
 #include <sstream>
 #include <vector>
 
+#include "SimpleCanvas/Logger.h"
+
 #include <Windows.h>

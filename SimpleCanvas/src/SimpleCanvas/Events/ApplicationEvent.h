@@ -60,4 +60,4 @@ public:
 	EVENT_CLASS_TYPE(AppUpdate)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
-}
+} // namespace sc

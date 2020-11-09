@@ -4,7 +4,6 @@
 #include "../Core.h"
 
 namespace sc {
-
 enum class EventType
 {
 	None = 0,
@@ -89,4 +88,4 @@ inline std::ostream& operator<<(std::ostream& os, const Event& e)
 {
 	return os << e.ToString();
 }
-}
+} // namespace sc

@@ -1,5 +1,10 @@
 #include "Logger.h"
 
+#include <ctime>
+#include <chrono>
+#include <thread>
+#include <iostream>
+
 namespace sc {
 namespace {
 enum class CONSOLE_TEXT_COLOR : int
@@ -8,7 +13,6 @@ enum class CONSOLE_TEXT_COLOR : int
 	COLOR_WARNING = 14,
 	COLOR_INFO = 15
 };
-
 
 std::chrono::system_clock::duration duration_since_midnight() {
 	auto now = std::chrono::system_clock::now();
@@ -30,10 +34,13 @@ std::string getCurrentTime()
 	auto minutes = std::chrono::duration_cast<std::chrono::minutes>(since_midnight - hours);
 	auto seconds = std::chrono::duration_cast<std::chrono::seconds>(since_midnight - hours - minutes);
 	auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(since_midnight - hours - minutes - seconds);
-	return (std::to_string(hours.count()) + ":" +
-			std::to_string(minutes.count()) + ":" +
-			std::to_string(seconds.count()) + ":" + 
-			std::to_string(milliseconds.count()));
+
+	std::string hoursStr = (hours.count() < 10 ? "0" : "") + std::to_string(hours.count());
+	std::string minutesStr = (hours.count() < 10 ? "0" : "") + std::to_string(minutes.count());
+	std::string secondsStr = (hours.count() < 10 ? "0" : "") + std::to_string(seconds.count());
+	std::string millisecondsStr = std::to_string(milliseconds.count()) + (milliseconds.count() < 10 ? "0" : "") + (milliseconds.count() < 100 ? "0" : "");
+
+	return (hoursStr + ":" + minutesStr + ":" + secondsStr + ":" + millisecondsStr);
 }
 
 void print(std::mutex &m, HANDLE &handle, CONSOLE_TEXT_COLOR color, std::string const & text)
@@ -41,7 +48,6 @@ void print(std::mutex &m, HANDLE &handle, CONSOLE_TEXT_COLOR color, std::string 
 	std::lock_guard<std::mutex> guard(m);
 	SetConsoleTextAttribute(handle, (int)color);
 	std::cout << "[" << getCurrentTime() << "] " << text << std::endl;
-
 }
 } // namespace
 

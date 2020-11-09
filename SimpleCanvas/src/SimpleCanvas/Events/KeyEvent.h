@@ -3,7 +3,6 @@
 #include "Event.h"
 
 namespace sc {
-
 class SC_API KeyEvent : public Event
 {
 public:
@@ -15,7 +14,6 @@ protected:
 
 	int keyCode;
 };
-
 
 class SC_API KeyPressedEvent : public KeyEvent
 {
@@ -50,4 +48,4 @@ public:
 
 	EVENT_CLASS_TYPE(KeyReleased)
 };
-}
+} // namespace sc
