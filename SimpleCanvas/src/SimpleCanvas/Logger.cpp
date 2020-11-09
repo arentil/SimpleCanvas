@@ -9,11 +9,38 @@ enum class CONSOLE_TEXT_COLOR : int
 	COLOR_INFO = 15
 };
 
+
+std::chrono::system_clock::duration duration_since_midnight() {
+	auto now = std::chrono::system_clock::now();
+
+	time_t tnow = std::chrono::system_clock::to_time_t(now);
+	tm *date = std::localtime(&tnow);
+	date->tm_hour = 0;
+	date->tm_min = 0;
+	date->tm_sec = 0;
+	auto midnight = std::chrono::system_clock::from_time_t(std::mktime(date));
+
+	return now - midnight;
+}
+
+std::string getCurrentTime()
+{
+	auto since_midnight = duration_since_midnight();
+	auto hours = std::chrono::duration_cast<std::chrono::hours>(since_midnight);
+	auto minutes = std::chrono::duration_cast<std::chrono::minutes>(since_midnight - hours);
+	auto seconds = std::chrono::duration_cast<std::chrono::seconds>(since_midnight - hours - minutes);
+	auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(since_midnight - hours - minutes - seconds);
+	return (std::to_string(hours.count()) + ":" +
+			std::to_string(minutes.count()) + ":" +
+			std::to_string(seconds.count()) + ":" + 
+			std::to_string(milliseconds.count()));
+}
+
 void print(std::mutex &m, HANDLE &handle, CONSOLE_TEXT_COLOR color, std::string const & text)
 {
 	std::lock_guard<std::mutex> guard(m);
 	SetConsoleTextAttribute(handle, (int)color);
-	std::cout << text << std::endl;
+	std::cout << "[" << getCurrentTime() << "] " << text << std::endl;
 
 }
 } // namespace
