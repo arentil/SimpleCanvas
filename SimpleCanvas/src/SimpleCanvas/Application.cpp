@@ -16,7 +16,7 @@ Application::~Application()
 void Application::run()
 {
 	WindowResizeEvent e(1280, 720);
-	LOG_TEXT(e.ToString());
+	LOG_INFO(e.ToString());
 	while (true);
 }
 }

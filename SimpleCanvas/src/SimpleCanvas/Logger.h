@@ -17,13 +17,18 @@ public:
 		return l;
 	}
 
-	void Log(std::string const& text);
+	void LogInfo(std::string const& text);
+	void LogWarning(std::string const & text);
+	void LogError(std::string const & text);
 
 private:
-	Logger() = default;
+	Logger();
 
 	mutable std::mutex mutex;
+	HANDLE hConsole;
 };
 
-#define LOG_TEXT(text) sc::Logger::instance().Log(text);
+#define LOG_INFO(text) sc::Logger::instance().LogInfo(text);
+#define LOG_WARNING(text) sc::Logger::instance().LogWarning(text);
+#define LOG_ERROR(text) sc::Logger::instance().LogError(text);
 }
