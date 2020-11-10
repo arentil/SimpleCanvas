@@ -27,6 +27,7 @@ enum class EventType
 	MouseScrolled
 };
 
+// every category equals to toggled bit
 enum EventCategory
 {
 	None = 0x0,
@@ -47,18 +48,18 @@ class SC_API Event
 {
 	friend class EventDispatcher;
 public:
-	virtual EventType GetEventType() const = 0;
-	virtual const char* GetName() const = 0;
-	virtual int GetCategoryFlags() const = 0;
-	virtual std::string ToString() const { return GetName(); }
+	Event(int pCategory) : category(pCategory) {}
+	virtual EventType type() const = 0;
+	int getCategoryFlags() const { return category; };
 
-	inline bool IsInCategory(EventCategory category)
+	inline bool isInCategory(EventCategory pCategory)
 	{
-		return GetCategoryFlags() & category;
+		return category & pCategory;
 	}
 
-protected:
+private:
 	bool handled = false;
+	int category;
 };
 
 class EventDispatcher
@@ -72,7 +73,7 @@ public:
 	template<typename T>
 	bool Dispatch(EventFn<T> func)
 	{
-		if (event.GetEventType() == T::GetStaticType())
+		if (event.type() == T::type())
 		{
 			event.handled = func(*(T*)&event);
 			return true;
@@ -84,8 +85,4 @@ private:
 	Event &event;
 };
 
-inline std::ostream& operator<<(std::ostream& os, const Event& e)
-{
-	return os << e.ToString();
-}
 } // namespace sc

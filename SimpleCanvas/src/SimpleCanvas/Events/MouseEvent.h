@@ -7,19 +7,14 @@ namespace sc {
 class SC_API MouseMovedEvent : public Event
 {
 public:
-	MouseMovedEvent(float x, float y) : mouseX(x), mouseY(y) {}
+	MouseMovedEvent(float x, float y) 
+	: Event(EventCategoryMouse | EventCategoryInput)
+	, mouseX(x), mouseY(y) {}
 
-	inline float GetX() const { return mouseX; }
-	inline float GetY() const { return mouseY; }
+	inline float getX() const { return mouseX; }
+	inline float getY() const { return mouseY; }
 
-	std::string ToString() const override
-	{
-		std::string result = "MouseMovedEvent: " + std::to_string(mouseX) + ", " + std::to_string(mouseY);
-		return result;
-	}
-
-	EVENT_CLASS_TYPE(MouseMoved)
-		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+	EventType type() const override { return EventType::MouseMoved; }
 
 private:
 	float mouseX, mouseY;
@@ -28,19 +23,15 @@ private:
 class  SC_API MouseScrolledEvent : public Event
 {
 public:
-	MouseScrolledEvent(float xOffset, float yOffset) : x_offset(xOffset), y_offset(yOffset) {}
+	MouseScrolledEvent(float xOffset, float yOffset)
+	: Event(EventCategoryMouse | EventCategoryInput)
+	, x_offset(xOffset), y_offset(yOffset) {}
 
 	inline float GetXOffset() const { return x_offset; }
 	inline float GetYOffset() const { return y_offset; }
 
-	std::string ToString() const override
-	{
-		std::string result = "MouseScrolledEvent: " + std::to_string(x_offset) + ", " + std::to_string(y_offset);
-		return result;
-	}
+	EventType type() const override { return EventType::MouseScrolled; }
 
-	EVENT_CLASS_TYPE(MouseScrolled)
-		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 private:
 	float x_offset, y_offset;
 };
@@ -49,14 +40,14 @@ private:
 class SC_API MouseButtonEvent : public Event
 {
 public:
-	inline int GetMouseButton() const { return _button; }
+	MouseButtonEvent(int pButton)
+	: Event(EventCategoryMouse | EventCategoryInput)
+	, button(pButton) {}
 
-	EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+	inline int getMouseButton() const { return button; }
 
 protected:
-	MouseButtonEvent(int button) : _button(button) {}
-
-	int _button;
+	int button;
 };
 
 class SC_API MouseButtonPressedEvent : public MouseButtonEvent
@@ -64,13 +55,7 @@ class SC_API MouseButtonPressedEvent : public MouseButtonEvent
 public:
 	MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
 
-	std::string ToString() const override
-	{
-		std::string result = "MouseButtonPressedEvent: " + std::to_string(_button);
-		return result;
-	}
-
-	EVENT_CLASS_TYPE(MouseButtonPressed)
+	EventType type() const override { return EventType::MouseButtonPressed; }
 };
 
 class SC_API MouseButtonReleasedEvent : public MouseButtonEvent
@@ -78,12 +63,6 @@ class SC_API MouseButtonReleasedEvent : public MouseButtonEvent
 public:
 	MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
 
-	std::string ToString() const override
-	{
-		std::string result = "MouseButtonPressedEvent: " + std::to_string(_button);
-		return result;
-	}
-
-	EVENT_CLASS_TYPE(MouseButtonReleased)
+	EventType type() const override { return EventType::MouseButtonReleased; }
 };
 } // namespace sc

@@ -6,9 +6,12 @@ namespace sc {
 class SC_API KeyEvent : public Event
 {
 public:
-	inline int GetKeyCode() const { return keyCode; }
+	KeyEvent(int pKeyCode)
+	: Event(EventCategoryKeyboard | EventCategoryInput) 
+	, keyCode(pKeyCode) {}
 
-	EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
+	inline int getKeyCode() const { return keyCode; }
+
 protected:
 	KeyEvent(int pKeyCode) : keyCode(pKeyCode) {}
 
@@ -19,17 +22,10 @@ class SC_API KeyPressedEvent : public KeyEvent
 {
 public:
 	KeyPressedEvent(int pKeyCode, int pRepeatCount)
-		: KeyEvent(pKeyCode), repeatCount(pRepeatCount) {}
+	: KeyEvent(pKeyCode), repeatCount(pRepeatCount) {}
 
-	inline int GetRepearCount() const { return repeatCount; }
-
-	std::string ToString() const override
-	{
-		std::string result = "KeyPressedEvent: " + std::to_string(keyCode) + " (" + std::to_string(repeatCount) + " repeats)";
-		return result;
-	}
-
-	EVENT_CLASS_TYPE(KeyPressed)
+	inline int getRepearCount() const { return repeatCount; }
+	EventType type() const override { return EventType::KeyPressed; }
 
 private:
 	int repeatCount;
@@ -40,12 +36,6 @@ class SC_API KeyReleasedEvent : public KeyEvent
 public:
 	KeyReleasedEvent(int pKeyCode) : KeyEvent(pKeyCode) {}
 
-	std::string ToString() const override
-	{
-		std::string result = "KeyReleasedEvent: " + std::to_string(keyCode);
-		return result;
-	}
-
-	EVENT_CLASS_TYPE(KeyReleased)
+	EventType type() const override { return EventType::KeyReleased; }
 };
 } // namespace sc

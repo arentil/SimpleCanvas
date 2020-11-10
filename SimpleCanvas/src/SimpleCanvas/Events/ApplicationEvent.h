@@ -6,58 +6,52 @@ namespace sc {
 class SC_API WindowResizeEvent : public Event
 {
 public:
-	WindowResizeEvent(unsigned int width, unsigned int height) : _width(width), _height(height) {}
+	WindowResizeEvent(uint32_t pWidth, uint32_t pHeight) 
+	: Event(EventCategory::EventCategoryApplication)
+	, width(pWidth), height(pHeight) {}
 
-	inline unsigned int GetWidth() const { return _width; }
-	inline unsigned int GetHeight() const { return _height; }
+	inline uint32_t getWidth() const { return width; }
+	inline uint32_t getHeight() const { return height; }
 
-	std::string ToString() const override
-	{
-		std::string result = "WindowResizeEvent: " + std::to_string(_width) + ", " + std::to_string(_height);
-		return result;
-	}
-
-	EVENT_CLASS_TYPE(WindowResize)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+	EventType type() const override { return EventType::WindowResize; }
 
 private:
-	unsigned int _width, _height;
+	uint32_t width, height;
 };
-
 
 class SC_API WindowCloseEvent : public Event
 {
 public:
-	WindowCloseEvent() {}
+	WindowCloseEvent()
+	: Event(EventCategory::EventCategoryApplication) {}
 
-	EVENT_CLASS_TYPE(WindowClose)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+	EventType type() const override { return EventType::WindowClose; }
 };
 
 class SC_API AppTickEvent : public Event
 {
 public:
-	AppTickEvent() {}
+	AppTickEvent()
+	: Event(EventCategory::EventCategoryApplication) {}
 
-	EVENT_CLASS_TYPE(AppTick)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+	EventType type() const override { return EventType::AppTick; }
 };
 
 class SC_API AppUpdateEvent : public Event
 {
 public:
-	AppUpdateEvent() {}
+	AppUpdateEvent()
+	: Event(EventCategory::EventCategoryApplication) {}
 
-	EVENT_CLASS_TYPE(AppUpdate)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+	EventType type() const override { return EventType::AppUpdate; }
 };
 
 class SC_API AppRenderEvent : public Event
 {
 public:
-	AppRenderEvent() {}
+	AppRenderEvent()
+	: Event(EventCategory::EventCategoryApplication) {}
 
-	EVENT_CLASS_TYPE(AppUpdate)
-		EVENT_CLASS_CATEGORY(EventCategoryApplication)
+	EventType type() const override { return EventType::AppRender; }
 };
 } // namespace sc

@@ -40,7 +40,7 @@ std::string getCurrentTime()
 	std::string secondsStr = (hours.count() < 10 ? "0" : "") + std::to_string(seconds.count());
 	std::string millisecondsStr = std::to_string(milliseconds.count()) + (milliseconds.count() < 10 ? "0" : "") + (milliseconds.count() < 100 ? "0" : "");
 
-	return (hoursStr + ":" + minutesStr + ":" + secondsStr + ":" + millisecondsStr);
+	return (hoursStr + ":" + minutesStr + ":" + secondsStr + "." + millisecondsStr);
 }
 
 void print(std::mutex &m, HANDLE &handle, CONSOLE_TEXT_COLOR color, std::string const & text)
