@@ -12,9 +12,7 @@ public:
 
 	inline int getKeyCode() const { return keyCode; }
 
-protected:
-	KeyEvent(int pKeyCode) : keyCode(pKeyCode) {}
-
+private:
 	int keyCode;
 };
 

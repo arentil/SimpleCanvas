@@ -1,6 +1,5 @@
 #include "Application.h"
 
-#include "Events/ApplicationEvent.h"
 #include "Logger.h"
 
 #include <GLFW/glfw3.h>
@@ -10,6 +9,7 @@ Application::Application()
 {
 	window = std::unique_ptr<Window>(Window::create());
 	isRunning = true;
+	window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 }
 
 Application::~Application()
@@ -25,4 +25,19 @@ void Application::run()
 		window->onUpdate();
 	}
 }
+
+void Application::onEvent(Event & e)
+{
+	EventDispatcher dispatcher(e);
+	dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onWindowClose, this, std::placeholders::_1));
+
+	LOG_INFO(e.name());
+}
+
+bool Application::onWindowClose(WindowCloseEvent &e)
+{
+	isRunning = false;
+	return true;
+}
+
 } // namespace sc

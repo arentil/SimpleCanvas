@@ -38,11 +38,25 @@ enum EventCategory
 	EventCategoryMouseButton = 0x10,
 };
 
-#define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::##type; }\
-								virtual EventType GetEventType() const override { return GetStaticType(); }\
-								virtual const char* GetName() const override { return #type; }
-
-#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
+namespace {
+std::string eventTypeNames[]{
+	"None",
+	"WindowClose",
+	"WindowResize",
+	"WindowFocus",
+	"WindowLostFocus",
+	"WindowMoved",
+	"AppTick",
+	"AppUpdate",
+	"AppRender",
+	"KeyPressed",
+	"KeyReleased",
+	"MouseButtonPressed",
+	"MouseButtonReleased",
+	"MouseMoved",
+	"MouseScrolled"
+};
+}
 
 class SC_API Event
 {
@@ -51,6 +65,7 @@ public:
 	Event(int pCategory) : category(pCategory) {}
 	virtual EventType type() const = 0;
 	int getCategoryFlags() const { return category; };
+	std::string name() const { return eventTypeNames[int(type())]; }
 
 	inline bool isInCategory(EventCategory pCategory)
 	{
@@ -71,9 +86,9 @@ public:
 		: event(pEvent) {}
 
 	template<typename T>
-	bool Dispatch(EventFn<T> func)
+	bool dispatch(EventFn<T> func)
 	{
-		if (event.type() == T::type())
+		if (event.type() == T().type())
 		{
 			event.handled = func(*(T*)&event);
 			return true;

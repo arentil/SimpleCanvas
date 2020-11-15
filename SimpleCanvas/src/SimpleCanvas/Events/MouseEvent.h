@@ -20,10 +20,10 @@ private:
 	float mouseX, mouseY;
 };
 
-class  SC_API MouseScrolledEvent : public Event
+class  SC_API MouseScrollEvent : public Event
 {
 public:
-	MouseScrolledEvent(float xOffset, float yOffset)
+	MouseScrollEvent(float xOffset, float yOffset)
 	: Event(EventCategoryMouse | EventCategoryInput)
 	, x_offset(xOffset), y_offset(yOffset) {}
 
