@@ -14,6 +14,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <map>
 
 #include "SimpleCanvas/Logger.h"
 

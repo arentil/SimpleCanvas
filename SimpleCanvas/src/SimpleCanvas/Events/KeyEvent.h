@@ -24,6 +24,7 @@ public:
 
 	inline int getRepearCount() const { return repeatCount; }
 	EventType type() const override { return EventType::KeyPressed; }
+	static EventType staticType() { return EventType::KeyPressed; }
 
 private:
 	int repeatCount;
@@ -35,5 +36,6 @@ public:
 	KeyReleasedEvent(int pKeyCode) : KeyEvent(pKeyCode) {}
 
 	EventType type() const override { return EventType::KeyReleased; }
+	static EventType staticType() { return EventType::KeyReleased; }
 };
 } // namespace sc

@@ -15,6 +15,7 @@ public:
 	inline float getY() const { return mouseY; }
 
 	EventType type() const override { return EventType::MouseMoved; }
+	static EventType staticType() { return EventType::MouseMoved; }
 
 private:
 	float mouseX, mouseY;
@@ -31,6 +32,7 @@ public:
 	inline float GetYOffset() const { return y_offset; }
 
 	EventType type() const override { return EventType::MouseScrolled; }
+	static EventType staticType() { return EventType::MouseScrolled; }
 
 private:
 	float x_offset, y_offset;
@@ -56,6 +58,7 @@ public:
 	MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
 
 	EventType type() const override { return EventType::MouseButtonPressed; }
+	static EventType staticType() { return EventType::MouseButtonPressed; }
 };
 
 class SC_API MouseButtonReleasedEvent : public MouseButtonEvent
@@ -64,5 +67,6 @@ public:
 	MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
 
 	EventType type() const override { return EventType::MouseButtonReleased; }
+	static EventType staticType() { return EventType::MouseButtonReleased; }
 };
 } // namespace sc

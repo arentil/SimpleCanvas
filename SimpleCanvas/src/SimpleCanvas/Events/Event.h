@@ -73,31 +73,64 @@ public:
 	}
 
 private:
-	bool handled = false;
 	int category;
+};
+
+class FunctionHandler
+{
+public:
+	void call(Event &event)
+	{
+		exec(event);
+	}
+
+private:
+	virtual void exec(Event &event) = 0;
+};
+
+template<typename T, typename EventType>
+class MemberFunctionHandler : public FunctionHandler
+{
+public:
+	using MemberFunction = void (T::*)(EventType&);
+
+	MemberFunctionHandler(T* pInstance, MemberFunction pFunction)
+		: instance(pInstance), function(pFunction) {}
+
+	void exec(Event &event) override
+	{
+		(instance->*function)(static_cast<EventType&>(event));
+	}
+
+private:
+	T* instance;
+	MemberFunction function;
 };
 
 class EventDispatcher
 {
-	template<typename T>
-	using EventFn = std::function<bool(T&)>;
 public:
-	EventDispatcher(Event & pEvent)
-		: event(pEvent) {}
+	using Callbacks = std::vector<std::unique_ptr<FunctionHandler>>;
 
-	template<typename T>
-	bool dispatch(EventFn<T> func)
+	template<typename T, typename EventType>
+	void subscribe(T* pInstance, void (T::*pFunction)(EventType&))
 	{
-		if (event.type() == T().type())
-		{
-			event.handled = func(*(T*)&event);
-			return true;
-		}
-		return false;
+		callbacks[EventType::staticType()].emplace_back(new MemberFunctionHandler<T, EventType>(pInstance, pFunction));
+	}
+
+	void dispatch(Event &event)
+	{
+		if (callbacks[event.type()].empty())
+			return;
+
+		for (auto &callback : callbacks[event.type()])
+			callback->call(event);
+
+		callbacks.erase(event.type());	// pointers to FunctionHandler objects will be self deleted
 	}
 
 private:
-	Event &event;
+	std::map<EventType, Callbacks> callbacks;
 };
 
 } // namespace sc

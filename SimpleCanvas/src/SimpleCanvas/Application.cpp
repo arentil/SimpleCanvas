@@ -26,18 +26,20 @@ void Application::run()
 	}
 }
 
-void Application::onEvent(Event & e)
+void Application::onEvent(Event &event)
 {
-	EventDispatcher dispatcher(e);
-	dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onWindowClose, this, std::placeholders::_1));
+	EventDispatcher dispatcher;
+	dispatcher.subscribe(this, &Application::onWindowClose);
 
-	LOG_INFO(e.name());
+
+
+	dispatcher.dispatch(event);
+	LOG_INFO(event.name());
 }
 
-bool Application::onWindowClose(WindowCloseEvent &e)
+void Application::onWindowClose(WindowCloseEvent &e)
 {
 	isRunning = false;
-	return true;
 }
 
 } // namespace sc
