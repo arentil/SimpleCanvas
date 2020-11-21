@@ -34,18 +34,18 @@ void Window::init(WindowProperties const& properties)
 	if (!GLFW_INITIALIZED)
 	{
 		int success = glfwInit();
-		SC_ASSERT(success, "Failed to initialize GLFW!");
+		SC_ASSERT(success, "Assertion failed! Failed to initialize GLFW!");
 		glfwSetErrorCallback(GLFWErrorCallback);
 		GLFW_INITIALIZED = true;
 	}
 
-	window = glfwCreateWindow(glfwData.width, glfwData.height, glfwData.title.c_str(), nullptr, nullptr);
-	glfwMakeContextCurrent(window);
-	glfwSetWindowUserPointer(window, &glfwData);	// assosiate wrapper pointer to the window
+	glfwWindow = glfwCreateWindow(glfwData.width, glfwData.height, glfwData.title.c_str(), nullptr, nullptr);
+	glfwMakeContextCurrent(glfwWindow);
+	glfwSetWindowUserPointer(glfwWindow, &glfwData);	// assosiate wrapper pointer to the window
 	setVSync(true);
 
 	// Set GLFW callbacks
-	glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int w, int h)
+	glfwSetWindowSizeCallback(glfwWindow, [](GLFWwindow *window, int w, int h)
 	{
 		GLFWWindowData& data = *(GLFWWindowData*)glfwGetWindowUserPointer(window);	// register callback
 		data.width = w;
@@ -55,13 +55,13 @@ void Window::init(WindowProperties const& properties)
 		data.eventCallback(event);
 	});
 
-	glfwSetWindowCloseCallback(window, [](GLFWwindow *window) {
+	glfwSetWindowCloseCallback(glfwWindow, [](GLFWwindow *window) {
 		GLFWWindowData& data = *(GLFWWindowData*)glfwGetWindowUserPointer(window);
 		WindowCloseEvent event;
 		data.eventCallback(event);
 	});
 
-	glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
+	glfwSetKeyCallback(glfwWindow, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
 		GLFWWindowData& data = *(GLFWWindowData*)glfwGetWindowUserPointer(window);
 
 		switch (action)
@@ -87,7 +87,7 @@ void Window::init(WindowProperties const& properties)
 		}
 	});
 
-	glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+	glfwSetMouseButtonCallback(glfwWindow, [](GLFWwindow* window, int button, int action, int mods) {
 		GLFWWindowData& data = *(GLFWWindowData*)glfwGetWindowUserPointer(window);
 
 		switch (action)
@@ -107,13 +107,13 @@ void Window::init(WindowProperties const& properties)
 		}
 	});
 
-	glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset) {
+	glfwSetScrollCallback(glfwWindow, [](GLFWwindow* window, double xOffset, double yOffset) {
 		GLFWWindowData& data = *(GLFWWindowData*)glfwGetWindowUserPointer(window);
 		MouseScrollEvent event((float)xOffset, (float)yOffset);
 		data.eventCallback(event);
 	});
 
-	glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
+	glfwSetCursorPosCallback(glfwWindow, [](GLFWwindow* window, double xPos, double yPos) {
 		GLFWWindowData& data = *(GLFWWindowData*)glfwGetWindowUserPointer(window);
 		MouseMovedEvent event((float)xPos, (float)yPos);
 		data.eventCallback(event);
@@ -122,13 +122,13 @@ void Window::init(WindowProperties const& properties)
 
 void Window::shutdown()
 {
-	glfwDestroyWindow(window);
+	glfwDestroyWindow(glfwWindow);
 }
 
-void Window::onUpdate()
+void Window::update()
 {
 	glfwPollEvents();		// obvious
-	glfwSwapBuffers(window); // obvious
+	glfwSwapBuffers(glfwWindow); // obvious
 }
 
 uint32_t Window::getWidth() const

@@ -6,8 +6,8 @@
 	#define SC_API __declspec(dllimport)
 #endif
 
-#ifdef ASSERT_ENABLED
-	#define SC_ASSERT(x, text) { if(!(x)) { LOG_ERROR("Assertion failed! " + text); __debugbreak(); } }
+#ifdef SC_ASSERT_ENABLED
+	#define SC_ASSERT(x, text) { if(!(x)) { LOG_ERROR(text); __debugbreak(); } }
 #else
 	#define SC_ASSERT(x, ...)
 #endif

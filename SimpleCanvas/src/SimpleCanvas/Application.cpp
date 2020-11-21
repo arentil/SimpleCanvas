@@ -22,7 +22,11 @@ void Application::run()
 	{
 		glClearColor(0, 1, 1, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
-		window->onUpdate();
+
+		for (Layer* layer : layerContainer)
+			layer->update();
+
+		window->update();
 	}
 }
 
@@ -31,7 +35,12 @@ void Application::onEvent(Event &event)
 	EventDispatcher dispatcher;
 	dispatcher.subscribe(this, &Application::onWindowClose);
 
-
+	for (auto it = layerContainer.end(); it != layerContainer.begin(); )
+	{
+		(*--it)->onEvent(event);
+		if (event.isHandled())
+			break;
+	}
 
 	dispatcher.dispatch(event);
 	LOG_INFO(event.name());
@@ -40,6 +49,16 @@ void Application::onEvent(Event &event)
 void Application::onWindowClose(WindowCloseEvent &e)
 {
 	isRunning = false;
+}
+
+void Application::pushLayer(Layer * layer)
+{
+	layerContainer.pushLayer(layer);
+}
+
+void Application::pushOverlay(Layer * overlay)
+{
+	layerContainer.pushOverlay(overlay);
 }
 
 } // namespace sc

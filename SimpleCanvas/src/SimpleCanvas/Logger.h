@@ -30,7 +30,7 @@ private:
 	HANDLE hConsole;
 };
 
-#ifdef DEBUG_MODE
+#ifdef _DEBUG
 	#define LOG_INFO(text) sc::Logger::instance().LogInfo(text);
 	#define LOG_WARNING(text) sc::Logger::instance().LogWarning(text);	
 	#define LOG_ERROR(text) sc::Logger::instance().LogError(text);

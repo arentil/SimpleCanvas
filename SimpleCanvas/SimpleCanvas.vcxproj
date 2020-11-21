@@ -47,7 +47,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DEBUG_MODE;SC_BUILD_DLL;SC_API;_WINDLL;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SC_ASSERT_ENABLED;SC_BUILD_DLL;SC_API;_WINDLL;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)includes\GLFW\include</AdditionalIncludeDirectories>
@@ -66,7 +66,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SC_BUILD_DLL;SC_API;_WINDLL;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SC_ASSERT_ENABLED;SC_BUILD_DLL;SC_API;_WINDLL;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)includes\GLFW\include</AdditionalIncludeDirectories>
@@ -81,6 +81,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\SimpleCanvas\Layer.h" />
+    <ClInclude Include="src\SimpleCanvas\LayerContainer.h" />
     <ClInclude Include="src\SimpleCanvas\Window.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\SimpleCanvas\Events\ApplicationEvent.h" />
@@ -94,6 +96,8 @@
     <ClInclude Include="src\SimpleCanvas\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\SimpleCanvas\Layer.cpp" />
+    <ClCompile Include="src\SimpleCanvas\LayerContainer.cpp" />
     <ClCompile Include="src\SimpleCanvas\Window.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

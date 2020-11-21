@@ -72,8 +72,11 @@ public:
 		return category & pCategory;
 	}
 
+	inline bool isHandled() const { return handled; }
+
 private:
 	int category;
+	bool handled;
 };
 
 class FunctionHandler

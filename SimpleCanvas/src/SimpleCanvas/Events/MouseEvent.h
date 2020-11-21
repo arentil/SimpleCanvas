@@ -2,7 +2,6 @@
 
 #include "Event.h"
 
-
 namespace sc {
 class SC_API MouseMovedEvent : public Event
 {

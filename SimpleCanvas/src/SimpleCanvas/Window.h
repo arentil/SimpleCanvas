@@ -29,7 +29,7 @@ public:
 	Window(WindowProperties const& properties);
 	~Window();
 
-	void onUpdate();
+	void update();
 	uint32_t getWidth() const;
 	uint32_t getHeight() const;
 
@@ -43,7 +43,7 @@ private:
 	void init(WindowProperties const& properties);
 	void shutdown();
 
-	GLFWwindow *window;
+	GLFWwindow *glfwWindow;
 
 	struct GLFWWindowData
 	{
