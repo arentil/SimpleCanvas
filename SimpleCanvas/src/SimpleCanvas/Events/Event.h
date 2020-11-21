@@ -7,20 +7,20 @@ namespace sc {
 enum class EventType
 {
 	None = 0,
-	// Window Events
+	// ******* WINDOW *******
 	WindowClose,
 	WindowResize,
 	WindowFocus,
 	WindowLostFocus,
 	WindowMoved,
-	// App Events
+	// ******* TICK/UPDATE/RENDER *******
 	AppTick,
 	AppUpdate,
 	AppRender,
-	// Key Events
+	// ******* KEYS *******
 	KeyPressed,
 	KeyReleased,
-	// Mouse Events
+	// ******* MOUSE *******
 	MouseButtonPressed,
 	MouseButtonReleased,
 	MouseMoved,

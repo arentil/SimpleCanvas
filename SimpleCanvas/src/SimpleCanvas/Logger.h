@@ -30,7 +30,13 @@ private:
 	HANDLE hConsole;
 };
 
-#define LOG_INFO(text) sc::Logger::instance().LogInfo(text);
-#define LOG_WARNING(text) sc::Logger::instance().LogWarning(text);
-#define LOG_ERROR(text) sc::Logger::instance().LogError(text);
+#ifdef DEBUG_MODE
+	#define LOG_INFO(text) sc::Logger::instance().LogInfo(text);
+	#define LOG_WARNING(text) sc::Logger::instance().LogWarning(text);	
+	#define LOG_ERROR(text) sc::Logger::instance().LogError(text);
+#else
+	#define LOG_INFO(text)
+	#define LOG_WARNING(text)
+	#define LOG_ERROR(text)
+#endif
 } // namespace sc
