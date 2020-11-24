@@ -1,0 +1,6 @@
+[submodule "includes/glfw"]
+	path = includes/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "SimpleCanvas/glfw"]
+	path = SimpleCanvas/glfw
+	url = https://github.com/glfw/glfw.git

@@ -18,4 +18,3 @@
 
 #include "SimpleCanvas/Logger.h"
 
-#include <Windows.h>
