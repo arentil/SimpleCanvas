@@ -1,9 +1,13 @@
 #pragma once
 
-#ifdef SC_BUILD_DLL
-	#define SC_API __declspec(dllexport)
+#ifdef _WIN32
+	#ifdef SC_BUILD_DLL
+		#define SC_API __declspec(dllexport)
+	#else
+		#define SC_API __declspec(dllimport)
+	#endif
 #else
-	#define SC_API __declspec(dllimport)
+	#define SC_API
 #endif
 
 #ifdef SC_ASSERT_ENABLED

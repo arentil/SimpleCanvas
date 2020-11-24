@@ -49,6 +49,7 @@ add_library(SimpleCanvas SHARED ${SOURCE_FILES})
 target_link_libraries(SimpleCanvas ${OPENGL_LIBRARIES} Glad glfw)
 
 target_include_directories(SimpleCanvas PUBLIC
+	${SOURCE_DIR}
 	${SOURCE_DIR}/SimpleCanvas
 	${SOURCE_DIR}/SimpleCanvas/Events
 )
