@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-//#include <Windows.h>
 #include <mutex>
 #include "Core.h"
 
@@ -25,10 +24,6 @@ public:
 
 private:
 	Logger();
-
-	#ifdef _WIN32
-		HANDLE winCmdHandler;
-	#endif
 
 	mutable std::mutex mutex;
 };

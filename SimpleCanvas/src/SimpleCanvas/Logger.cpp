@@ -44,6 +44,9 @@ std::string getCurrentTime()
 }
 
 #ifdef _WIN32
+	#include <Windows.h>
+	HANDLE winCmdHandler;
+
 	void print(std::mutex &m, int color, std::string text)
 	{
 		std::lock_guard<std::mutex> guard(m);
