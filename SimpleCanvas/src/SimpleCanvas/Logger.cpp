@@ -43,33 +43,55 @@ std::string getCurrentTime()
 	return (hoursStr + ":" + minutesStr + ":" + secondsStr + "." + millisecondsStr);
 }
 
-void print(std::mutex &m, HANDLE &handle, CONSOLE_TEXT_COLOR color, std::string const & text)
-{
-	std::lock_guard<std::mutex> guard(m);
-	SetConsoleTextAttribute(handle, (int)color);
-	std::cout << "[" << getCurrentTime() << "] " << text << std::endl;
-}
+#ifdef _WIN32
+	void print(std::mutex &m, int color, std::string text)
+	{
+		std::lock_guard<std::mutex> guard(m);
+		SetConsoleTextAttribute(winCmdHandler, color);
+		std::cout << "[" << getCurrentTime() << "] " << text << std::endl;
+	}
+#else
+	void print(std::mutex &m, int color, std::string text)
+	{
+		std::lock_guard<std::mutex> guard(m);
+		std::string colorTagPrefix, colorTagSuffix;
+		CONSOLE_TEXT_COLOR eColor = (CONSOLE_TEXT_COLOR)color;
+		switch (eColor)
+		{
+			case CONSOLE_TEXT_COLOR::COLOR_INFO:
+				break;
+			case CONSOLE_TEXT_COLOR::COLOR_WARNING:
+				colorTagPrefix = "\033[1;33m";
+				colorTagSuffix = "\033[0m";
+				break;
+			case CONSOLE_TEXT_COLOR::COLOR_ERROR:
+				colorTagPrefix = "\033[1;31m";
+				colorTagSuffix = "\033[0m";
+				break;
+		}
+		std::cout << "[" << getCurrentTime() << "] " << text << std::endl;
+	}
+#endif
 } // namespace
 
-Logger::Logger() : hConsole(GetStdHandle(STD_OUTPUT_HANDLE))
+Logger::Logger()
 {}
 
 void Logger::LogInfo(std::string const & text)
 {
-	std::thread t(print, std::ref(mutex), std::ref(hConsole), CONSOLE_TEXT_COLOR::COLOR_INFO, std::ref(text));
+	std::thread t(print, std::ref(mutex), (int)CONSOLE_TEXT_COLOR::COLOR_INFO, std::ref(text));
 	t.join();
 }
 
 void Logger::LogWarning(std::string const & text)
 {
-	std::thread t(print, std::ref(mutex), std::ref(hConsole), CONSOLE_TEXT_COLOR::COLOR_WARNING, std::ref(text));
+	std::thread t(print, std::ref(mutex), (int)CONSOLE_TEXT_COLOR::COLOR_WARNING, std::ref(text));
 	t.join();
 }
 
 void Logger::LogError(std::string const & text)
 {
-	std::thread t(print, std::ref(mutex), std::ref(hConsole), CONSOLE_TEXT_COLOR::COLOR_ERROR, std::ref(text));
+	std::thread t(print, std::ref(mutex), (int)CONSOLE_TEXT_COLOR::COLOR_ERROR, std::ref(text));
 	t.join();
 }
-
 } // namespace sc

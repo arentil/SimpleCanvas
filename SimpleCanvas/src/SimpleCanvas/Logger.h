@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <Windows.h>
+//#include <Windows.h>
 #include <mutex>
 #include "Core.h"
 
@@ -26,17 +26,14 @@ public:
 private:
 	Logger();
 
+	#ifdef _WIN32
+		HANDLE winCmdHandler;
+	#endif
+
 	mutable std::mutex mutex;
-	HANDLE hConsole;
 };
 
-#ifdef _DEBUG
-	#define LOG_INFO(text) sc::Logger::instance().LogInfo(text);
-	#define LOG_WARNING(text) sc::Logger::instance().LogWarning(text);	
-	#define LOG_ERROR(text) sc::Logger::instance().LogError(text);
-#else
-	#define LOG_INFO(text)
-	#define LOG_WARNING(text)
-	#define LOG_ERROR(text)
-#endif
+#define LOG_INFO(text) sc::Logger::instance().LogInfo(text);
+#define LOG_WARNING(text) sc::Logger::instance().LogWarning(text);	
+#define LOG_ERROR(text) sc::Logger::instance().LogError(text);
 } // namespace sc

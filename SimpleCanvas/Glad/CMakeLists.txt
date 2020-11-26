@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.16)
 
 project(Glad LANGUAGES C DESCRIPTION "OpenGL 4.6")
 
