@@ -65,7 +65,7 @@ void formatColorConsole(CONSOLE_TEXT_COLOR color)
 	#define FORMAT_CONSOLE_BEGIN(color) SetConsoleTextAttribute(winCmdHandler, (int)color); \
 		printf("[ %s ] ", getCurrentTime().c_str());
 
-	#define FOMRAT_CONSOLE_END printf("\n");
+	#define FORMAT_CONSOLE_END printf("\n");
 #else
 	#define FORMAT_CONSOLE_BEGIN(color)					\
 		printf("[ %s ] ", getCurrentTime().c_str());	\
@@ -88,20 +88,20 @@ void Logger::LogInfo(const char* format, ...)
 {
 	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_INFO);
 	PRINT_ARGS
-	FOMRAT_CONSOLE_END
+	FORMAT_CONSOLE_END
 }
 
 void Logger::LogWarning(const char* format, ...)
 {
 	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_WARNING);
 	PRINT_ARGS
-	FOMRAT_CONSOLE_END
+	FORMAT_CONSOLE_END
 }
 
 void Logger::LogError(const char* format, ...)
 {
 	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_ERROR);
 	PRINT_ARGS
-	FOMRAT_CONSOLE_END
+	FORMAT_CONSOLE_END
 }
 } // namespace sc

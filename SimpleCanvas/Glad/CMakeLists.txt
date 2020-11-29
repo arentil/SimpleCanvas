@@ -9,6 +9,7 @@ set(SOURCE_FILES
 )
 
 add_library(Glad STATIC ${SOURCE_FILES})
+set_property(TARGET Glad PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 target_include_directories(Glad PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}/include
