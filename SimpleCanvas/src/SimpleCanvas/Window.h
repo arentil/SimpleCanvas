@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../stdafx.h"
-
 #include "Core.h"
 #include "Events/Event.h"
 

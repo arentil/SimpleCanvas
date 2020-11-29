@@ -2,7 +2,7 @@
 
 #include "Logger.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace sc {
 Application::Application()

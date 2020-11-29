@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../../stdafx.h"
-#include "../Core.h"
+#include "SimpleCanvas/Core.h"
 
 namespace sc {
 enum class EventType

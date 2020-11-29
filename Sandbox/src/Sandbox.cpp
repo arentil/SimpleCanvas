@@ -7,7 +7,6 @@ public:
 	~Sandbox() {}
 };
 
-
 sc::Application* sc::CreateApplication()
 {
 	return new Sandbox();

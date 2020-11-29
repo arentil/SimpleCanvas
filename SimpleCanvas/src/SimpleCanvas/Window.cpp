@@ -4,6 +4,8 @@
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
 
+#include <glad/glad.h>
+
 namespace sc {
 namespace {
 static void GLFWErrorCallback(int error, const char* description)
@@ -41,6 +43,10 @@ void Window::init(WindowProperties const& properties)
 
 	glfwWindow = glfwCreateWindow(glfwData.width, glfwData.height, glfwData.title.c_str(), nullptr, nullptr);
 	glfwMakeContextCurrent(glfwWindow);
+
+	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);	// exactly like in the glfw context guide
+	SC_ASSERT(status, "Assertion failed! Failed to initialize glad!");
+
 	glfwSetWindowUserPointer(glfwWindow, &glfwData);	// assosiate wrapper pointer to the window
 	setVSync(true);
 
@@ -129,6 +135,10 @@ void Window::update()
 {
 	glfwPollEvents();		// obvious
 	glfwSwapBuffers(glfwWindow); // obvious
+
+	double x, y;
+	glfwGetCursorPos(glfwWindow, &x, &y);
+	LOG_INFO("x: " + std::to_string(x) + " y: " + std::to_string(y));
 }
 
 uint32_t Window::getWidth() const

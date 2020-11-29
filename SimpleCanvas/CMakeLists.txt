@@ -43,7 +43,7 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Window.h
 )
 
-add_compile_definitions(SC_BUILD_DLL)
+add_compile_definitions(SC_BUILD_DLL GLFW_INCLUDE_NONE)
 
 add_library(SimpleCanvas SHARED ${SOURCE_FILES})
 target_link_libraries(SimpleCanvas ${OPENGL_LIBRARIES} Glad glfw)
