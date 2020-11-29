@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-#include <mutex>
 #include "Core.h"
 
 namespace sc
@@ -18,17 +16,16 @@ public:
 		return l;
 	}
 
-	void LogInfo(std::string const& text);
-	void LogWarning(std::string const & text);
-	void LogError(std::string const & text);
+	void LogInfo(const char * format, ...);
+	void LogWarning(const char * format, ...);
+	void LogError(const char * format, ...);
 
 private:
 	Logger();
-
-	mutable std::mutex mutex;
 };
 
-#define LOG_INFO(text) sc::Logger::instance().LogInfo(text);
-#define LOG_WARNING(text) sc::Logger::instance().LogWarning(text);	
-#define LOG_ERROR(text) sc::Logger::instance().LogError(text);
+// for define vargs "##" means, if there will be no vards, comma will be removed
+#define LOG_INFO(format, ...) sc::Logger::instance().LogInfo(format, ##__VA_ARGS__);
+#define LOG_WARNING(format,  ...) sc::Logger::instance().LogWarning(format, ##__VA_ARGS__);	
+#define LOG_ERROR(format, ...) sc::Logger::instance().LogError(format, ##__VA_ARGS__);
 } // namespace sc

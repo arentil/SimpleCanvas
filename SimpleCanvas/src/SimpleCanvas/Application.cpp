@@ -43,7 +43,7 @@ void Application::onEvent(Event &event)
 	}
 
 	dispatcher.dispatch(event);
-	LOG_INFO(event.name());
+	LOG_ERROR("%s", event.name().c_str());
 }
 
 void Application::onWindowClose(WindowCloseEvent &e)

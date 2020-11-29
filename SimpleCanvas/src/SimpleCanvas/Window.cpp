@@ -10,7 +10,7 @@ namespace sc {
 namespace {
 static void GLFWErrorCallback(int error, const char* description)
 {
-	LOG_ERROR("GLFW ERROR CODE: " + std::to_string(error) + std::string(description));
+	LOG_ERROR("GLFW ERROR CODE: %d, %s", error, description);
 }
 }
 
@@ -138,7 +138,7 @@ void Window::update()
 
 	double x, y;
 	glfwGetCursorPos(glfwWindow, &x, &y);
-	LOG_INFO("x: " + std::to_string(x) + " y: " + std::to_string(y));
+	LOG_INFO("x: %f, y: %f", x, y);
 }
 
 uint32_t Window::getWidth() const

@@ -3,7 +3,7 @@
 #include <ctime>
 #include <chrono>
 #include <thread>
-#include <iostream>
+#include <cstdarg>
 
 namespace sc {
 namespace {
@@ -43,58 +43,65 @@ std::string getCurrentTime()
 	return (hoursStr + ":" + minutesStr + ":" + secondsStr + "." + millisecondsStr);
 }
 
+void formatColorConsole(CONSOLE_TEXT_COLOR color)
+{
+	switch (color)
+	{
+		case CONSOLE_TEXT_COLOR::COLOR_WARNING:
+			printf("\033[1;33m");
+			break;
+		case CONSOLE_TEXT_COLOR::COLOR_ERROR:
+			printf("\033[1;31m");
+			break;
+		case CONSOLE_TEXT_COLOR::COLOR_INFO:
+		default:
+			break;
+	}
+}
+
 #ifdef _WIN32
 	#include <Windows.h>
-	HANDLE winCmdHandler;
+	HANDLE winCmdHandler = GetStdHandle(STD_OUTPUT_HANDLE);
+	#define FORMAT_CONSOLE_BEGIN(color) SetConsoleTextAttribute(winCmdHandler, (int)color); \
+		printf("[ %s ] ", getCurrentTime().c_str());
 
-	void print(std::mutex &m, int color, std::string text)
-	{
-		std::lock_guard<std::mutex> guard(m);
-		SetConsoleTextAttribute(winCmdHandler, color);
-		std::cout << "[" << getCurrentTime() << "] " << text << std::endl;
-	}
+	#define FOMRAT_CONSOLE_END printf("\n");
 #else
-	void print(std::mutex &m, int color, std::string text)
-	{
-		std::lock_guard<std::mutex> guard(m);
-		std::string colorTagPrefix, colorTagSuffix;
-		CONSOLE_TEXT_COLOR eColor = (CONSOLE_TEXT_COLOR)color;
-		switch (eColor)
-		{
-			case CONSOLE_TEXT_COLOR::COLOR_INFO:
-				break;
-			case CONSOLE_TEXT_COLOR::COLOR_WARNING:
-				colorTagPrefix = "\033[1;33m";
-				colorTagSuffix = "\033[0m";
-				break;
-			case CONSOLE_TEXT_COLOR::COLOR_ERROR:
-				colorTagPrefix = "\033[1;31m";
-				colorTagSuffix = "\033[0m";
-				break;
-		}
-		std::cout << "[" << getCurrentTime() << "] " << text << std::endl;
-	}
+	#define FORMAT_CONSOLE_BEGIN(color)					\
+		printf("[ %s ] ", getCurrentTime().c_str());	\
+		formatColorConsole(color);
+
+	#define FORMAT_CONSOLE_END printf("\033[0m\n");
 #endif
+
+#define PRINT_ARGS			\
+	va_list args;			\
+	va_start(args, format);	\
+	vprintf(format, args);	\
+	va_end (args);
 } // namespace
 
 Logger::Logger()
 {}
 
-void Logger::LogInfo(std::string const & text)
+void Logger::LogInfo(const char* format, ...)
 {
-	std::thread t(print, std::ref(mutex), (int)CONSOLE_TEXT_COLOR::COLOR_INFO, std::ref(text));
-	t.join();
+	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_INFO);
+	PRINT_ARGS
+	FOMRAT_CONSOLE_END
 }
 
-void Logger::LogWarning(std::string const & text)
+void Logger::LogWarning(const char* format, ...)
 {
-	std::thread t(print, std::ref(mutex), (int)CONSOLE_TEXT_COLOR::COLOR_WARNING, std::ref(text));
-	t.join();
+	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_WARNING);
+	PRINT_ARGS
+	FOMRAT_CONSOLE_END
 }
 
-void Logger::LogError(std::string const & text)
+void Logger::LogError(const char* format, ...)
 {
-	std::thread t(print, std::ref(mutex), (int)CONSOLE_TEXT_COLOR::COLOR_ERROR, std::ref(text));
-	t.join();
+	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_ERROR);
+	PRINT_ARGS
+	FOMRAT_CONSOLE_END
 }
 } // namespace sc
