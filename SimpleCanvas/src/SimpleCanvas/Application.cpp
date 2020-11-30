@@ -1,8 +1,8 @@
 #include "Application.h"
 
-#include "Logger.h"
-
 #include <glad/glad.h>
+
+#include "Events/KeyEvent.h"
 
 namespace sc {
 Application::Application()
@@ -40,6 +40,11 @@ void Application::onEvent(Event &event)
 		(*--it)->onEvent(event);
 		if (event.isHandled())
 			break;
+	}
+	if (event.type() == EventType::KeyPressed)
+	{
+		auto asd = Input::getKeyName(((KeyPressedEvent&)event).getKeyCode());
+		LOG_WARNING("%s", asd.c_str())
 	}
 
 	dispatcher.dispatch(event);

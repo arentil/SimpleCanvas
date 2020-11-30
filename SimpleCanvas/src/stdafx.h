@@ -17,4 +17,5 @@
 #include <map>
 
 #include "SimpleCanvas/Logger.h"
+#include "SimpleCanvas/Input/Input.h"
 

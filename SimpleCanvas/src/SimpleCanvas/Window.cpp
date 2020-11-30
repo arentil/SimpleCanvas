@@ -3,6 +3,7 @@
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
+#include "Input/Input.h"
 
 #include <glad/glad.h>
 
@@ -41,14 +42,18 @@ void Window::init(WindowProperties const& properties)
 		GLFW_INITIALIZED = true;
 	}
 
+	// create GLFW window
 	glfwWindow = glfwCreateWindow(glfwData.width, glfwData.height, glfwData.title.c_str(), nullptr, nullptr);
 	glfwMakeContextCurrent(glfwWindow);
 
+	// add and init glad
 	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);	// exactly like in the glfw context guide
 	SC_ASSERT(status, "Assertion failed! Failed to initialize glad!");
 
 	glfwSetWindowUserPointer(glfwWindow, &glfwData);	// assosiate wrapper pointer to the window
 	setVSync(true);
+
+
 
 	// Set GLFW callbacks
 	glfwSetWindowSizeCallback(glfwWindow, [](GLFWwindow *window, int w, int h)
@@ -72,19 +77,19 @@ void Window::init(WindowProperties const& properties)
 
 		switch (action)
 		{
-			case GLFW_PRESS:
+			case State::PRESSED:
 			{
 				KeyPressedEvent event(key, 0);
 				data.eventCallback(event);
 				break;
 			}
-			case GLFW_REPEAT:
+			case State::HOLD:
 			{
 				KeyPressedEvent event(key, 1);
 				data.eventCallback(event);
 				break;
 			}
-			case GLFW_RELEASE:
+			case State::RELEASE:
 			{
 				KeyReleasedEvent event(key);
 				data.eventCallback(event);
@@ -135,10 +140,6 @@ void Window::update()
 {
 	glfwPollEvents();		// obvious
 	glfwSwapBuffers(glfwWindow); // obvious
-
-	double x, y;
-	glfwGetCursorPos(glfwWindow, &x, &y);
-	LOG_INFO("x: %f, y: %f", x, y);
 }
 
 uint32_t Window::getWidth() const
@@ -176,5 +177,4 @@ Window* Window::create(WindowProperties const& properties)
 {
 	return new Window(properties);
 }
-
 } // namespace sc

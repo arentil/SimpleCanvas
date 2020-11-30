@@ -33,6 +33,9 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Events/Event.h
 	${SOURCE_DIR}/SimpleCanvas/Events/KeyEvent.h
 	${SOURCE_DIR}/SimpleCanvas/Events/MouseEvent.h
+	${SOURCE_DIR}/SimpleCanvas/Input/Input.cpp
+	${SOURCE_DIR}/SimpleCanvas/Input/Input.h
+	${SOURCE_DIR}/SimpleCanvas/Input/InputBindings.h
 	${SOURCE_DIR}/SimpleCanvas/Layer.cpp
 	${SOURCE_DIR}/SimpleCanvas/Layer.h
 	${SOURCE_DIR}/SimpleCanvas/LayerContainer.cpp
