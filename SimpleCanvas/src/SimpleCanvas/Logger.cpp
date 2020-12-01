@@ -71,7 +71,7 @@ void formatColorConsole(CONSOLE_TEXT_COLOR color)
 		printf("[ %s ] ", getCurrentTime().c_str());	\
 		formatColorConsole(color);
 
-	#define FORMAT_CONSOLE_END 
+	#define FORMAT_CONSOLE_END printf("\n");
 #endif
 
 #define PRINT_ARGS			\
