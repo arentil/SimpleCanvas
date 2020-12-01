@@ -4,6 +4,6 @@
 [submodule "SimpleCanvas/glfw"]
 	path = SimpleCanvas/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule "SimpleCanvas/Math/googletest"]
-	path = SimpleCanvas/Math/googletest
+[submodule "SimpleCanvas/Math/MathTest/googletest"]
+	path = SimpleCanvas/Math/MathTest/googletest
 	url = https://github.com/google/googletest.git
