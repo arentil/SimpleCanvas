@@ -22,6 +22,7 @@ public:
 
 private:
 	Logger();
+	~Logger();
 };
 
 // for define vargs "##" means, if there will be no vards, comma will be removed

@@ -71,7 +71,7 @@ void formatColorConsole(CONSOLE_TEXT_COLOR color)
 		printf("[ %s ] ", getCurrentTime().c_str());	\
 		formatColorConsole(color);
 
-	#define FORMAT_CONSOLE_END printf("\033[0m\n");
+	#define FORMAT_CONSOLE_END 
 #endif
 
 #define PRINT_ARGS			\
@@ -83,6 +83,15 @@ void formatColorConsole(CONSOLE_TEXT_COLOR color)
 
 Logger::Logger()
 {}
+
+Logger::~Logger()
+{
+	#ifdef _WIN32
+		SetConsoleTextAttribute(winCmdHandler, (int)CONSOLE_TEXT_COLOR::COLOR_INFO);
+	#else
+		printf("\033[0m\n");
+	#endif
+}
 
 void Logger::LogInfo(const char* format, ...)
 {

@@ -20,6 +20,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Glad)
 add_subdirectory(Glad)
 
 # -------------------
+#        Math        
+# -------------------
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Math)
+
+add_subdirectory(Math)
+
+# -------------------
 #    SimpleCanvas        
 # -------------------
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -49,7 +56,7 @@ set(SOURCE_FILES
 add_compile_definitions(SC_BUILD_DLL GLFW_INCLUDE_NONE)
 
 add_library(SimpleCanvas SHARED ${SOURCE_FILES})
-target_link_libraries(SimpleCanvas ${OPENGL_LIBRARIES} Glad glfw)
+target_link_libraries(SimpleCanvas ${OPENGL_LIBRARIES} Glad glfw Math)
 
 target_include_directories(SimpleCanvas PUBLIC
 	${SOURCE_DIR}
