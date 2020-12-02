@@ -20,7 +20,7 @@ TODO
 
 #### Linux
 
-You will need to have a C++ compiler (supporting C++17), python (for [googletest](https://github.com/    google/googletest)s), [Cmake](https://cmake.org/) (supporting v3.16) and ``make`` installed.
+You will need to have a C++ compiler (supporting C++17), python (for [googletest](https://github.com/google/googletest)s), [Cmake](https://cmake.org/) (supporting v3.16) and ``make`` installed.
 You may also need to install following packages in order to compile
 
 * libxrandr-dev
