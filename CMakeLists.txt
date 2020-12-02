@@ -9,6 +9,7 @@ include_directories(${CMAKE_SOURCE_DIR}/SimpleCanvas/src)
 
 add_subdirectory(SimpleCanvas)
 
+add_definitions("-Wall -Wextra -Wpedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov")
 add_executable(Sandbox ${CMAKE_SOURCE_DIR}/Sandbox/src/Sandbox.cpp)
 
 target_link_libraries(Sandbox PUBLIC SimpleCanvas)
