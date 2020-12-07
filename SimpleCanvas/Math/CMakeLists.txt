@@ -1,19 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Math LANGUAGES CXX)
+project(Math)
 
 # -------------------
-#       MathTest        
+#      MathTest
 # -------------------
 add_subdirectory(MathTest)
 
-# -------------------
-# Math Lib Unit Tests        
-# -------------------
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES 
-	${SOURCE_DIR}/Math.h
-	${SOURCE_DIR}/Math.cpp
+	${SOURCE_DIR}/Vec3.h
+	${SOURCE_DIR}/Vec3.cpp
+	${SOURCE_DIR}/Utility.h
 )
 
 add_library(Math STATIC ${SOURCE_FILES})

@@ -9,7 +9,11 @@ include_directories(${CMAKE_SOURCE_DIR}/SimpleCanvas/src)
 
 add_subdirectory(SimpleCanvas)
 
-add_definitions("-Wall -Wextra -Wpedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov")
+if (CMAKE_COMPILER_IS_GNUCXX)
+    add_definitions("-Wall -Wextra -Wpedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98 -pedantic -Wall -Wextra")
+endif (CMAKE_COMPILER_IS_GNUCXX)
+    
 add_executable(Sandbox ${CMAKE_SOURCE_DIR}/Sandbox/src/Sandbox.cpp)
 
 target_link_libraries(Sandbox PUBLIC SimpleCanvas)

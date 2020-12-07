@@ -2,23 +2,27 @@ cmake_minimum_required(VERSION 3.16)
 project(MathTest)
 
 # -------------------
-#        GTest        
+#        GTest
 # -------------------
 add_subdirectory(googletest)
-
+enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 # -------------------
-# Math Lib Unit Tests        
+#        Math
 # -------------------
-set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(SOURCE_FILES 
-	${SOURCE_DIR}/MathTest.cpp
+set(MATH_DIR ${CMAKE_SOURCE_DIR}/SimpleCanvas/Math)
+include_directories(${MATH_DIR}/src)
+
+
+set(SOURCE_FILES
+    ${MATH_DIR}/src/Vec3.h
+    ${MATH_DIR}/src/Vec3.cpp
+    ${MATH_DIR}/src/Utility.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Vec3Test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
 )
 
-
-add_executable(MathTests ${SOURCE_FILES})
-target_link_libraries(MathTests PUBLIC gtest gtest_main)
-
-enable_testing()
-add_test(NAME MathTests COMMAND run)
+add_executable(MathTest ${SOURCE_FILES})
+target_link_libraries(MathTest PUBLIC gtest gtest_main)
+add_test(NAME mathTests COMMAND run)
