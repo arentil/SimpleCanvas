@@ -72,3 +72,22 @@ TEST_F(Vec3Test, VEC3_PROJECTION_TEST)
 
     EXPECT_EQ(expected, Vec3::projection(v1, v2));
 }
+
+TEST_F(Vec3Test, VEC3_REFLECT_TEST)
+{
+    Vec3 in(4, -4, 0);
+    Vec3 normal(0, 1, 0);
+    Vec3 expected(4, 4, 0);
+
+    EXPECT_EQ(expected, Vec3::reflect(in, normal));
+}
+
+TEST_F(Vec3Test, VEC3_REFRACT_TEST)
+{
+    Vec3 in(4, -4, 0);
+    Vec3 normal(0, 1, 0);
+
+    // 1.0f factor means refract through air,
+    // direction of result vector should be the same as input vector
+    EXPECT_EQ(in.normalized(), Vec3::refract(in, normal, 1.0f));
+}

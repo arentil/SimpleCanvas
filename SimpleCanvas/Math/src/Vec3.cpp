@@ -16,6 +16,11 @@ Vec3::Vec3(Vec3 const& other)
  : x(other.x), y(other.y), z(other.z)
 {}
 
+Vec3::Vec3(Vec3 && other) : Vec3(other)
+{
+    other.x = other.y = other.z = 0.0f;
+}
+
 float Vec3::dot(Vec3 const& other) const
 {
     return (x * other.x) + (y * other.y) + (z * other.z);
@@ -28,60 +33,6 @@ Vec3 Vec3::cross(Vec3 const& other) const
         (z * other.x) - (x * other.z),
         (x * other.y) - (y * other.x));
     return std::move(result);
-}
-
-Vec3& Vec3::operator=(Vec3 const& other)
-{
-    x = other.x;
-    y = other.y;
-    z = other.z;
-    return *this;
-}
-
-Vec3 Vec3::operator+(Vec3 const& other) const
-{
-    Vec3 result(x + other.x, y + other.y, z + other.z);
-    return std::move(result);
-}
-
-Vec3 Vec3::operator-(Vec3 const& other) const
-{
-    Vec3 result(x - other.x, y - other.y, z - other.z);
-    return std::move(result);
-}
-
-bool Vec3::operator==(Vec3 const& other) const
-{
-    return equal(x, other.x) && equal(y, other.y) && equal(z, other.z);
-}
-
-Vec3 Vec3::operator*(float multiplier) const
-{
-    Vec3 result(x * multiplier, y * multiplier, z * multiplier);
-    return std::move(result);
-}
-
-Vec3 Vec3::operator*(int multiplier) const
-{
-    return std::move((this->operator*((float)multiplier)));
-}
-
-Vec3 Vec3::operator*(Vec3 const& other) const
-{
-    Vec3 result(x * other.x, y * other.y, z * other.z);
-    return result;
-}
-
-Vec3 Vec3::operator/(float divider) const
-{
-    assert(divider != 0.0f);
-    Vec3 result(x / divider, y / divider, z / divider);
-    return std::move(result);
-}
-
-Vec3 Vec3::operator/(int divider) const
-{
-    return std::move(this->operator/((float)divider));
 }
 
 float Vec3::length() const
@@ -100,8 +51,69 @@ bool Vec3::isZero() const
     return (x == 0.0f && y == 0.0f && z == 0.0f);
 }
 
-// ----- static methods -----
+Vec3 Vec3::reflect(Vec3 const& normal) const
+{
+    Vec3 result = *this - (this->dot(2.0f * normal) * normal);
+    return result;
+}
 
+Vec3 Vec3::refract(Vec3 const& normal, float factor) const
+{
+    Vec3 const& thisNorm = normalized();
+    float const NdotThis = normal.dot(thisNorm);
+    float k = 1.0f - square(factor) * (1.0f - square(NdotThis));
+    if (k < 0)
+        return Vec3();
+    
+    Vec3 result = factor * thisNorm - ((factor * NdotThis + std::sqrt(k)) * normal);
+    return result;
+}
+
+Vec3& Vec3::operator=(Vec3&& other)
+{
+    x = other.x;
+    y = other.y;
+    z = other.z;
+    other.x = other.y = other.z = 0.0f;
+    return *this;
+}
+
+Vec3& Vec3::operator=(Vec3 const& other)
+{
+    x = other.x;
+    y = other.y;
+    z = other.z;
+    return *this;
+}
+
+Vec3 Vec3::operator+(Vec3 const& other) const
+{
+    return Vec3(x + other.x, y + other.y, z + other.z);
+}
+
+Vec3 Vec3::operator-(Vec3 const& other) const
+{
+    
+    return Vec3(x - other.x, y - other.y, z - other.z);
+}
+
+bool Vec3::operator==(Vec3 const& other) const
+{
+    return equal(x, other.x) && equal(y, other.y) && equal(z, other.z);
+}
+
+Vec3 Vec3::operator*(float multiplier) const
+{
+    return Vec3(x * multiplier, y * multiplier, z * multiplier);
+}
+
+Vec3 Vec3::operator/(float divider) const
+{
+    assert(divider != 0.0f);
+    return Vec3(x / divider, y / divider, z / divider);
+}
+
+// ----- static methods -----
 float Vec3::dot(Vec3 const& v1, Vec3 const& v2)
 {
     return v1.dot(v2);
@@ -109,14 +121,13 @@ float Vec3::dot(Vec3 const& v1, Vec3 const& v2)
 
 Vec3 Vec3::cross(Vec3 const& v1, Vec3 const& v2)
 {
-    return std::move(v1.cross(v2));
+    return v1.cross(v2);
 }
 
 Vec3 Vec3::projection(Vec3 const& v, Vec3 const& onNormal)
 {
     assert(!onNormal.isZero());
-    Vec3 result = (v.dot(onNormal) / square(onNormal.length())) * onNormal;
-    return std::move(result);
+    return Vec3((v.dot(onNormal) / square(onNormal.length())) * onNormal);
 }
 
 Vec3 Vec3::perpendicular(Vec3 const& v, Vec3 const& onVector)
@@ -124,9 +135,16 @@ Vec3 Vec3::perpendicular(Vec3 const& v, Vec3 const& onVector)
     return (v - Vec3::projection(v, onVector));
 }
 
-// ******************
-//      FRIENDS
-// ******************
+Vec3 Vec3::reflect(Vec3 const& in, Vec3 const& normal)
+{
+    return in.reflect(normal);
+}
+
+Vec3 Vec3::refract(Vec3 const& in, Vec3 const& normal, float factor)
+{
+    return in.refract(normal, factor);
+}
+
 std::ostream & operator<<(std::ostream &os, scmath::Vec3 const& v)
 {
     os << "Vec3(" << v.x << ", " << v.y << ", " << v.z << ")";
