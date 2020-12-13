@@ -10,6 +10,12 @@ class Vec3Test : public ::testing::Test
 {
 };
 
+TEST_F(Vec3Test, VEC3_UTILS_TEST)
+{
+    ASSERT_DEATH(Vec3() / 0.0f, ".*divider != 0.0f.*");
+    ASSERT_DEATH(Vec3().normalized(), ".*!isZero\\(\\).*");
+}
+
 TEST_F(Vec3Test, VEC3_DOT_PRODUCT_TEST)
 {   
     Vec3 v1(1, 1, 1);
@@ -71,6 +77,7 @@ TEST_F(Vec3Test, VEC3_PROJECTION_TEST)
     Vec3 expected(4.f/3, 2.f/3, 4.f/3);
 
     EXPECT_EQ(expected, Vec3::projection(v1, v2));
+    ASSERT_DEATH(Vec3::projection(Vec3(), Vec3()), ".*!onNormal.isZero\\(\\).*");
 }
 
 TEST_F(Vec3Test, VEC3_REFLECT_TEST)

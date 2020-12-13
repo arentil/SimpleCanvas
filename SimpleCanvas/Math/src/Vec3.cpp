@@ -93,7 +93,6 @@ Vec3 Vec3::operator+(Vec3 const& other) const
 
 Vec3 Vec3::operator-(Vec3 const& other) const
 {
-    
     return Vec3(x - other.x, y - other.y, z - other.z);
 }
 
