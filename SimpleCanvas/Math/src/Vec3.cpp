@@ -3,6 +3,7 @@
 #include <utility>
 #include <cmath>
 #include <cassert>
+#include <string>
 
 #include "Utility.h"
 
@@ -51,6 +52,11 @@ bool Vec3::isZero() const
     return (x == 0.0f && y == 0.0f && z == 0.0f);
 }
 
+float Vec3::distance(Vec3 const& other) const
+{
+    return Vec3(other - *this).length();
+}
+
 Vec3 Vec3::reflect(Vec3 const& normal) const
 {
     Vec3 result = *this - (this->dot(2.0f * normal) * normal);
@@ -69,6 +75,16 @@ Vec3 Vec3::refract(Vec3 const& normal, float factor) const
     return result;
 }
 
+std::string Vec3::to_string() const
+{
+    std::string result = "Vec3(";
+    result += std::to_string(x) + ", ";
+    result += std::to_string(y) + ", ";
+    result += std::to_string(z) + ")";
+    return result;
+}
+
+// ----- operators -----
 Vec3& Vec3::operator=(Vec3&& other)
 {
     x = other.x;
@@ -144,9 +160,15 @@ Vec3 Vec3::refract(Vec3 const& in, Vec3 const& normal, float factor)
     return in.refract(normal, factor);
 }
 
+Vec3 Vec3::distance(Vec3 const& first, Vec3 const& second)
+{
+    return first.distance(second);
+}
+
+// ----- friends -----
 std::ostream & operator<<(std::ostream &os, scmath::Vec3 const& v)
 {
-    os << "Vec3(" << v.x << ", " << v.y << ", " << v.z << ")";
+    os << v.to_string();
     return os;
 }
 
