@@ -64,6 +64,9 @@ public:
     bool operator==(Vec4 const& other) const;
     Vec4 operator*(float multiplier) const;
     Vec4 operator/(float divider) const;
+    float operator[](int i) const;
+    float& operator[](int i);
+    operator float *();
 
     static float dot(Vec4 const& v1, Vec4 const& v2);
 
@@ -80,6 +83,10 @@ public:
     friend std::ostream & operator<<(Vec4 const& v, std::ostream &os);
     friend Vec4 operator*(float multiplier, Vec4 const& v);
 
-    float x, y, z, w;
+    union
+    {
+        struct { float x, y, z, w; };
+        float arr[4];
+    };
 };
 } // namespace scmath

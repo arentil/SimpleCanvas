@@ -104,6 +104,23 @@ Vec4 Vec4::operator/(float divider) const
     return Vec4(x / divider, y / divider, z / divider, w / divider);
 }
 
+float Vec4::operator[](int i) const
+{
+    assert(i < 4 && i >= 4);
+    return arr[i];
+}
+
+float& Vec4::operator[](int i)
+{
+    assert(i < 4 && i >= 4);
+    return arr[i];
+}
+
+Vec4::operator float *()
+{
+    return arr;
+}
+
 // ----- static methods -----
 float Vec4::dot(Vec4 const& v1, Vec4 const& v2)
 {

@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-#include "Vec4.h"
 #include "Vec3.h"
-#include "Vec2.h"
 
 using namespace scmath;
 
@@ -17,7 +15,7 @@ TEST_F(Vec3Test, VEC3_ASSERT_TEST)
     ASSERT_DEATH(Vec3() / 0.0f, "divider != 0.0f");
     ASSERT_DEATH(Vec3().normalized(), "!isZero");
     ASSERT_DEATH(Vec3()[-1], "i < 3 && i >= 0");
-    ASSERT_DEATH(Vec3()[4], "i < 3 && i >= 0");.;
+    ASSERT_DEATH(Vec3()[4], "i < 3 && i >= 0");
 }
 
 TEST_F(Vec3Test, VEC3_DOT_PRODUCT_TEST)
