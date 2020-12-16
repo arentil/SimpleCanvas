@@ -128,6 +128,23 @@ Vec3 Vec3::operator/(float divider) const
     return Vec3(x / divider, y / divider, z / divider);
 }
 
+float Vec3::operator[](int i) const
+{
+    assert(i < 3 && i >= 0);
+    return arr[i];
+}
+
+float& Vec3::operator[](int i)
+{
+    assert(i < 3 && i >= 0);
+    return arr[i];
+}
+
+Vec3::operator float *()
+{
+    return arr;
+}
+
 // ----- static methods -----
 float Vec3::dot(Vec3 const& v1, Vec3 const& v2)
 {

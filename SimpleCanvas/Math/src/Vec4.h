@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 
 namespace scmath
@@ -48,22 +50,6 @@ public:
     float distance(Vec4 const& other) const;
 
     /**
-     * Reflects the x, y, z on a plane perpendicular to normal
-     * 
-     * @param normal Vec4, must be normalized and pointing up
-     * @return Vec4 reflected vector to original
-    */
-    Vec4 reflect(Vec4 const& normal) const;
-
-    /**
-     * Calculates vector refraction based on factor on plane perpendicular to normal
-     * 
-     * @param normal normalized vector pointing up
-     * @return Vec4 refracted vector
-    */
-    Vec4 refract(Vec4 const& normal, float factor) const;
-
-    /**
      * Build a string based on x, y, z and w like:
      * Vec4(x, y, z, w)
      * 
@@ -80,26 +66,6 @@ public:
     Vec4 operator/(float divider) const;
 
     static float dot(Vec4 const& v1, Vec4 const& v2);
-    static Vec4 cross(Vec4 const& v1, Vec4 const& v2);
-    static Vec4 projection(Vec4 const& v, Vec4 const& onVector);
-    static Vec4 perpendicular(Vec4 const& v, Vec4 const& onVector);
-
-    /**
-     * Reflects the in vector on a plane perpendicular to normal
-     * 
-     * @param in Vec4, input vector
-     * @param normal Vec4, must be normalized and pointing up
-     * @return Vec4 reflected vector to original
-    */
-    static Vec4 reflect(Vec4 const& in, Vec4 const& normal);
-
-    /**
-     * Calculates vector refraction based on factor on plane perpendicular to normal
-     * 
-     * @param normal normalized vector pointing up
-     * @return Vec4 refracted vector
-    */
-    static Vec4 refract(Vec4 const& in, Vec4 const& normal, float factor);
 
     /**
      * Calculates the distance between first vector and second vector

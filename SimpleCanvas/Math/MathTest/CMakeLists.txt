@@ -16,9 +16,14 @@ include_directories(${MATH_DIR}/src)
 
 
 set(SOURCE_FILES
+    ${MATH_DIR}/src/Utility.h
+    ${MATH_DIR}/src/Utility.cpp
+    ${MATH_DIR}/src/Vec2.h
+    ${MATH_DIR}/src/Vec2.cpp
     ${MATH_DIR}/src/Vec3.h
     ${MATH_DIR}/src/Vec3.cpp
-    ${MATH_DIR}/src/Utility.h
+    ${MATH_DIR}/src/Vec4.h
+    ${MATH_DIR}/src/Vec4.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Vec3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
 )

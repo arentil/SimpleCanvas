@@ -17,7 +17,8 @@ Vec2::Vec2(Vec2 const& other)
 : x(other.x), y(other.y)
 {}
 
-Vec2::Vec2(Vec2&& other) : Vec2(other)
+Vec2::Vec2(Vec2&& other)
+: x(other.x), y(other.y)
 {
     other.x = other.y = 0.0f;
 }
@@ -113,6 +114,23 @@ Vec2 Vec2::operator/(float divider) const
 {
     assert(divider != 0.0f);
     return Vec2(x / divider, y / divider);
+}
+
+float Vec2::operator[](int i) const
+{
+    assert(i < 2 && i >= 0);
+    return arr[i];
+}
+
+float& Vec2::operator[](int i)
+{
+    assert(i < 2 && i >= 0);
+    return arr[i];
+}
+
+Vec2::operator float *()
+{
+    return arr;
 }
 
 // ----- static methods -----

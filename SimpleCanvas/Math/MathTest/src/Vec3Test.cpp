@@ -2,7 +2,9 @@
 
 #include <iostream>
 
+#include "Vec4.h"
 #include "Vec3.h"
+#include "Vec2.h"
 
 using namespace scmath;
 
@@ -10,10 +12,12 @@ class Vec3Test : public ::testing::Test
 {
 };
 
-TEST_F(Vec3Test, VEC3_UTILS_TEST)
+TEST_F(Vec3Test, VEC3_ASSERT_TEST)
 {
-    ASSERT_DEATH(Vec3() / 0.0f, ".*divider != 0.0f.*");
-    ASSERT_DEATH(Vec3().normalized(), ".*!isZero\\(\\).*");
+    ASSERT_DEATH(Vec3() / 0.0f, "divider != 0.0f");
+    ASSERT_DEATH(Vec3().normalized(), "!isZero");
+    ASSERT_DEATH(Vec3()[-1], "i < 3 && i >= 0");
+    ASSERT_DEATH(Vec3()[4], "i < 3 && i >= 0");.;
 }
 
 TEST_F(Vec3Test, VEC3_DOT_PRODUCT_TEST)
@@ -97,4 +101,16 @@ TEST_F(Vec3Test, VEC3_REFRACT_TEST)
     // 1.0f factor means refract through air,
     // direction of result vector should be the same as input vector
     EXPECT_EQ(in.normalized(), Vec3::refract(in, normal, 1.0f));
+}
+
+TEST_F(Vec3Test, VEC3_IMPLICIT_FLOAT_ARRAY_CONVERSION_TEST)
+{
+    Vec3 arr(99, 55, 11);
+    auto getArrItem = [](float *array, int i) -> float
+    {
+        return array[i];
+    };
+    EXPECT_EQ(99, getArrItem(arr, 0));
+    EXPECT_EQ(55, getArrItem(arr, 1));
+    EXPECT_EQ(11, getArrItem(arr, 2));
 }

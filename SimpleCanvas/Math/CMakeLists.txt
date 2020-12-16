@@ -9,6 +9,8 @@ add_subdirectory(MathTest)
 
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES
+	${SOURCE_DIR}/Utility.h
+	${SOURCE_DIR}/Utility.cpp
 	${SOURCE_DIR}/Vec2.h
 	${SOURCE_DIR}/Vec2.cpp
 	${SOURCE_DIR}/Vec3.h
@@ -17,7 +19,6 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/Vec4.cpp
 	${SOURCE_DIR}/Mat4.h
 	${SOURCE_DIR}/Mat4.cpp
-	${SOURCE_DIR}/Utility.h
 )
 
 add_library(Math STATIC ${SOURCE_FILES})

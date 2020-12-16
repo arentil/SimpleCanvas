@@ -110,12 +110,12 @@ float Vec4::dot(Vec4 const& v1, Vec4 const& v2)
     return v1.dot(v2);
 }
 
+// ----- friends -----
 Vec4 Vec4::distance(Vec4 const& first, Vec4 const& second)
 {
     return first.distance(second);
 }
 
-// ----- friends -----
 std::ostream & operator<<(std::ostream &os, scmath::Vec4 const& v)
 {
     os << v.to_string();

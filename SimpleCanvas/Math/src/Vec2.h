@@ -1,3 +1,5 @@
+#pragma once
+
 #include <ostream>
 
 namespace scmath 
@@ -5,7 +7,7 @@ namespace scmath
 class Vec2
 {
 public:
-    Vec2(float pX = 0, float pY = 0);
+    Vec2(float pX = 0.0f, float pY = 0.0f);
     Vec2(Vec2 const& other);
     Vec2(Vec2&& other);
 
@@ -78,6 +80,9 @@ public:
     bool operator==(Vec2 const& other) const;
     Vec2 operator*(float multiplier) const;
     Vec2 operator/(float divider) const;
+    float operator[](int i) const;
+    float& operator[](int i);
+    operator float *();
 
     static float dot(Vec2 const& v1, Vec2 const& v2);
     static Vec2 projection(Vec2 const& v, Vec2 const& onVector);
@@ -113,7 +118,10 @@ public:
     friend std::ostream & operator<<(Vec2 const& v, std::ostream &os);
     friend Vec2 operator*(float multiplier, Vec2 const& v);
 
-    float x, y;
-
+    union 
+    {
+        struct { float x, y; };
+        float arr[2];
+    };
 };
 } // namespace scmath
