@@ -1,5 +1,7 @@
 #include "Mat4.h"
 
+#include "Utility.h"
+
 #include <cassert>
 
 namespace scmath
@@ -47,6 +49,14 @@ Mat4& Mat4::operator=(Mat4 const& other)
     return *this;
 }
 
+bool Mat4::operator==(Mat4 const& other) const
+{
+    for (int i = 0; i < 4; i++)
+        if (matrix[i] != other[i])
+            return false;
+    return true;
+}
+
 Mat4 Mat4::operator+(Mat4 const& other) const
 {
     return Mat4(
@@ -79,6 +89,10 @@ Vec4 Mat4::operator[](int i) const
     return matrix[i];
 }
 
+Mat4::operator float *()
+{
+    return (float *)matrix;
+}
 
 // ----- static methods -----
 Mat4 Mat4::identity()

@@ -62,6 +62,7 @@ public:
     Vec4 operator+(Vec4 const& other) const;
     Vec4 operator-(Vec4 const& other) const;
     bool operator==(Vec4 const& other) const;
+    bool operator!=(Vec4 const& other) const;
     Vec4 operator*(float multiplier) const;
     Vec4 operator/(float divider) const;
     float operator[](int i) const;

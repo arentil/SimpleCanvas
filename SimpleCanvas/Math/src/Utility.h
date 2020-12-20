@@ -5,7 +5,7 @@
 
 namespace scmath
 {
-bool equal(float first, float second);
+bool f_equal(float first, float second);
 
 template<typename T>
 T square(T value)

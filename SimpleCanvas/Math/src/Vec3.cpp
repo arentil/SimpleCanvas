@@ -114,7 +114,12 @@ Vec3 Vec3::operator-(Vec3 const& other) const
 
 bool Vec3::operator==(Vec3 const& other) const
 {
-    return equal(x, other.x) && equal(y, other.y) && equal(z, other.z);
+    return f_equal(x, other.x) && f_equal(y, other.y) && f_equal(z, other.z);
+}
+
+bool Vec3::operator!=(Vec3 const& other) const
+{
+    return !(this->operator==(other));
 }
 
 Vec3 Vec3::operator*(float multiplier) const

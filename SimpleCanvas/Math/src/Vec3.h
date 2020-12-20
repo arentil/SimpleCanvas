@@ -86,6 +86,7 @@ public:
     Vec3 operator+(Vec3 const& other) const;
     Vec3 operator-(Vec3 const& other) const;
     bool operator==(Vec3 const& other) const;
+    bool operator!=(Vec3 const& other) const;
     Vec3 operator*(float multiplier) const;
     Vec3 operator/(float divider) const;
     float operator[](int i) const;

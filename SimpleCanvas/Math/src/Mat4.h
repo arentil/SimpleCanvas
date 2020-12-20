@@ -17,10 +17,12 @@ public:
 
     Mat4& operator=(Mat4 && other);
     Mat4& operator=(Mat4 const& other);
+    bool operator==(Mat4 const& other) const;
     Mat4 operator+(Mat4 const& other) const;
     Mat4 operator-(Mat4 const& other) const;
     Vec4& operator[](int i);
     Vec4 operator[](int i) const;
+    operator float *();
 
     static Mat4 identity();
 

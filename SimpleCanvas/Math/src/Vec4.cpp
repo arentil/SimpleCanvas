@@ -90,7 +90,12 @@ Vec4 Vec4::operator-(Vec4 const& other) const
 
 bool Vec4::operator==(Vec4 const& other) const
 {
-    return equal(x, other.x) && equal(y, other.y) && equal(z, other.z) && equal(w, other.w);
+    return f_equal(x, other.x) && f_equal(y, other.y) && f_equal(z, other.z) && f_equal(w, other.w);
+}
+
+bool Vec4::operator!=(Vec4 const& other) const
+{
+    return !(this->operator==(other));
 }
 
 Vec4 Vec4::operator*(float multiplier) const

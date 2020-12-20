@@ -102,7 +102,12 @@ Vec2 Vec2::operator-(Vec2 const& other) const
 
 bool Vec2::operator==(Vec2 const& other) const
 {
-    return equal(x, other.x) && equal(y, other.y);
+    return f_equal(x, other.x) && f_equal(y, other.y);
+}
+
+bool Vec2::operator!=(Vec2 const& other) const
+{
+    return !(this->operator==(other));
 }
 
 Vec2 Vec2::operator*(float multiplier) const
