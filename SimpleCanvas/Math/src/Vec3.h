@@ -79,7 +79,7 @@ public:
      * 
      * @return Vec3 in string
     */
-    std::string Vec3::to_string() const;
+    std::string to_string() const;
 
     Vec3& operator=(Vec3&& other);
     Vec3& operator=(Vec3 const& other);
