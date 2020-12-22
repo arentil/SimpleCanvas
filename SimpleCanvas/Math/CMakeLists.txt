@@ -19,6 +19,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/Vec4.cpp
 	${SOURCE_DIR}/Mat4.h
 	${SOURCE_DIR}/Mat4.cpp
+	${SOURCE_DIR}/Quat.h
+	${SOURCE_DIR}/Quat.cpp
 )
 
 add_library(Math STATIC ${SOURCE_FILES})

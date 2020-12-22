@@ -54,7 +54,7 @@ bool Vec3::isZero() const
 
 float Vec3::distance(Vec3 const& other) const
 {
-    return Vec3(other - *this).length();
+    return (other - *this).length();
 }
 
 Vec3 Vec3::reflect(Vec3 const& normal) const
@@ -107,9 +107,19 @@ Vec3 Vec3::operator+(Vec3 const& other) const
     return Vec3(x + other.x, y + other.y, z + other.z);
 }
 
+Vec3 Vec3::operator+(float num) const
+{
+    return Vec3(x + num, y + num, z + num);
+}
+
 Vec3 Vec3::operator-(Vec3 const& other) const
 {
     return Vec3(x - other.x, y - other.y, z - other.z);
+}
+
+Vec3 Vec3::operator-() const
+{
+    return *this * (-1);
 }
 
 bool Vec3::operator==(Vec3 const& other) const

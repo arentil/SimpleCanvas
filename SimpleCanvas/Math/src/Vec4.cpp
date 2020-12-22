@@ -6,11 +6,16 @@
 #include <string>
 
 #include "Utility.h"
+#include "Vec3.h"
 
 namespace scmath 
 {
 Vec4::Vec4(float pX, float pY, float pZ, float pW)
  : x(pX), y(pY), z(pZ), w(pW)
+{}
+
+Vec4::Vec4(Vec3 const& other, float pW)
+ : x(other.x), y(other.y), z(other.z), w(pW)
 {}
 
 Vec4::Vec4(Vec4 const& other)
@@ -45,7 +50,7 @@ bool Vec4::isZero() const
 
 float Vec4::distance(Vec4 const& other) const
 {
-    return Vec4(other - *this).length();
+    return (other - *this).length();
 }
 
 std::string Vec4::to_string() const
@@ -88,6 +93,11 @@ Vec4 Vec4::operator-(Vec4 const& other) const
     return Vec4(x - other.x, y - other.y, z - other.z, w - other.w);
 }
 
+Vec4 Vec4::operator-() const
+{
+    return *this * (-1);
+}
+
 bool Vec4::operator==(Vec4 const& other) const
 {
     return f_equal(x, other.x) && f_equal(y, other.y) && f_equal(z, other.z) && f_equal(w, other.w);
@@ -111,13 +121,13 @@ Vec4 Vec4::operator/(float divider) const
 
 float Vec4::operator[](int i) const
 {
-    assert(i < 4 && i >= 4);
+    assert(i < 4 && i >= 0);
     return arr[i];
 }
 
 float& Vec4::operator[](int i)
 {
-    assert(i < 4 && i >= 4);
+    assert(i < 4 && i >= 0);
     return arr[i];
 }
 

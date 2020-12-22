@@ -26,6 +26,8 @@ set(SOURCE_FILES
     ${MATH_DIR}/src/Vec4.cpp
     ${MATH_DIR}/src/Mat4.h
     ${MATH_DIR}/src/Mat4.cpp
+    ${MATH_DIR}/src/Quat.h
+    ${MATH_DIR}/src/Quat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Vec3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Mat4Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp

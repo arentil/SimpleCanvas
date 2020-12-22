@@ -77,6 +77,7 @@ public:
     Vec2& operator=(Vec2 const& other);
     Vec2 operator+(Vec2 const& other) const;
     Vec2 operator-(Vec2 const& other) const;
+    Vec2 operator-() const;
     bool operator==(Vec2 const& other) const;
     bool operator!=(Vec2 const& other) const;
     Vec2 operator*(float multiplier) const;

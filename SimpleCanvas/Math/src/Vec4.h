@@ -4,10 +4,13 @@
 
 namespace scmath
 {
+class Vec3;
+
 class Vec4
 {
 public:
     Vec4(float pX = 0.0f, float pY = 0.0f, float pZ = 0.0f, float pW = 0.0f);
+    Vec4(Vec3 const& vec3, float pW);
     Vec4(Vec4 const& other);
     Vec4(Vec4&& other);
 
@@ -61,6 +64,7 @@ public:
     Vec4& operator=(Vec4 const& other);
     Vec4 operator+(Vec4 const& other) const;
     Vec4 operator-(Vec4 const& other) const;
+    Vec4 operator-() const;
     bool operator==(Vec4 const& other) const;
     bool operator!=(Vec4 const& other) const;
     Vec4 operator*(float multiplier) const;

@@ -46,7 +46,7 @@ bool Vec2::isZero() const
 
 float Vec2::distance(Vec2 const& other) const
 {
-    return Vec2(other - *this).length();
+    return (other - *this).length();
 }
 
 Vec2 Vec2::reflect(Vec2 const& normal) const
@@ -98,6 +98,11 @@ Vec2 Vec2::operator+(Vec2 const& other) const
 Vec2 Vec2::operator-(Vec2 const& other) const
 {
     return Vec2(x - other.x, y - other.y);
+}
+
+Vec2 Vec2::operator-() const
+{
+    return *this * (-1);
 }
 
 bool Vec2::operator==(Vec2 const& other) const
