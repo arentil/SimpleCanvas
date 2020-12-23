@@ -1,8 +1,5 @@
 #include "gtest/gtest.h"
 
-#include <iostream>
-#include <algorithm>
-#include <iterator>
 #include <vector>
 
 #include "Mat4.h"

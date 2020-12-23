@@ -17,7 +17,6 @@ include_directories(${MATH_DIR}/src)
 
 set(SOURCE_FILES
     ${MATH_DIR}/src/Utility.h
-    ${MATH_DIR}/src/Utility.cpp
     ${MATH_DIR}/src/Vec2.h
     ${MATH_DIR}/src/Vec2.cpp
     ${MATH_DIR}/src/Vec3.h

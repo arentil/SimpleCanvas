@@ -1,7 +1,5 @@
 #include "gtest/gtest.h"
 
-#include <iostream>
-
 #include "Vec3.h"
 
 using namespace scmath;

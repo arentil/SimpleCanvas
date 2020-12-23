@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Vec3.h"
-#include "Mat4.h"
 
 namespace scmath
 {
-    // q = w + xi + yj + zk
+class Vec4;
+class Mat4;
+
+// q = w + xi + yj + zk
 class Quat
 {
 public:

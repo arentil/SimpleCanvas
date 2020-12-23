@@ -2,9 +2,9 @@
 
 #include <cassert>
 #include <string>
-#include <cmath>
 
 #include "Utility.h"
+#include "Vec3.h"
 
 namespace scmath
 {

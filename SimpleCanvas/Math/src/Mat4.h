@@ -1,12 +1,12 @@
 #pragma once
 
-#include <iostream>
+#include <ostream>
 
-#include "Vec3.h"
 #include "Vec4.h"
 
 namespace scmath
 {
+class Vec3;
 // column-major for sake of OpenGL effectivness
 class Mat4
 {

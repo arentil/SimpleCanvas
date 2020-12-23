@@ -1,7 +1,5 @@
 #include "Vec4.h"
 
-#include <utility>
-#include <cmath>
 #include <cassert>
 #include <string>
 

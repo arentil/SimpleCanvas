@@ -1,6 +1,7 @@
 #include "Quat.h"
 
-#include <cmath>
+#include "Vec4.h"
+#include "Mat4.h"
 
 namespace scmath
 {

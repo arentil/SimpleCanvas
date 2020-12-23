@@ -10,7 +10,6 @@ add_subdirectory(MathTest)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES
 	${SOURCE_DIR}/Utility.h
-	${SOURCE_DIR}/Utility.cpp
 	${SOURCE_DIR}/Vec2.h
 	${SOURCE_DIR}/Vec2.cpp
 	${SOURCE_DIR}/Vec3.h
