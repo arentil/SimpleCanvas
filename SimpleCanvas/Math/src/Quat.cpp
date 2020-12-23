@@ -1,5 +1,7 @@
 #include "Quat.h"
 
+#include <cmath>
+
 namespace scmath
 {
 Quat::Quat(float wP, Vec3 const& vP)
