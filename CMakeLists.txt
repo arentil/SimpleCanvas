@@ -11,7 +11,7 @@ add_subdirectory(SimpleCanvas)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
     add_definitions("-Wall -Wextra -Wpedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98 -pedantic -Wall -Wextra")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -pedantic -Wall -Wextra")
 endif (CMAKE_COMPILER_IS_GNUCXX)
     
 add_executable(Sandbox ${CMAKE_SOURCE_DIR}/Sandbox/src/Sandbox.cpp)

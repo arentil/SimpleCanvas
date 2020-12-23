@@ -45,10 +45,9 @@ Quat Quat::operator/(float multiplier) const
     return Quat(w / multiplier, v / multiplier);
 }
 
-float Quat::operator[](int i) const
+Quat::operator Vec4() const
 {
-
-    return arr[i];
+    return Vec4(v, w);
 }
 
 Mat4 Quat::asMatrix() const

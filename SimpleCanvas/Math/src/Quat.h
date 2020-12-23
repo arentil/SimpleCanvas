@@ -20,7 +20,7 @@ public:
     Quat operator*(Quat const& other) const;
     Quat operator*(float multiplier) const;
     Quat operator/(float multiplier) const;
-    float operator[](int i) const;
+    operator Vec4() const;
 
     // quaternion must be normalized
     Mat4 asMatrix() const;
@@ -31,14 +31,7 @@ public:
     Quat normalized() const;
 
 
-    union
-    {
-        struct 
-        {
-            Vec3 v;
-            float w;
-        };
-        float arr[4];
-    };
+    float w;
+    Vec3 v;
 };
 } // namespace scmath

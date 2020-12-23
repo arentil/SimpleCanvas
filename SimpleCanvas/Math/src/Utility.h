@@ -4,9 +4,9 @@ namespace scmath
 {
 bool f_equal(float first, float second);
 
-inline float radToDeg(float rad);
+float radToDeg(float rad);
 
-inline float degToRad(float deg);
+float degToRad(float deg);
 
 template<typename T>
 inline T square(T value)
