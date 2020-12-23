@@ -39,15 +39,21 @@ public:
     static Mat4 rotateY(float angle);
     static Mat4 rotateZ(float angle);
     static Mat4 rotate(float angleX, float angleY, float angleZ);
-    static Mat4 rotate(float angle);
 
     //rotate by angle in radians around any axis given by x, y, z. Vector created from x, y, z must be normalized
     static Mat4 rotate(float angle, float axisX, float axisY, float axisZ);
     //rotate by angle in radians around any axis given by normalized Vec3
     static Mat4 rotate(float angle, Vec3 const& axis);
 
-    static Mat4 scale(Vec3 const& v);
     static Mat4 scale(float sX, float sY, float sZ);
+    static Mat4 scale(Vec3 const& v);
+
+    // up is a normalized vector pointing up
+    static Mat4 lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up);
+
+    static Mat4 frustum(float left, float right, float bottom, float top, float near, float far);
+    static Mat4 ortho(float left, float right, float bottom, float top, float near, float far);
+    static Mat4 perspective(float fov, float aspect, float near, float far);
 
     friend std::ostream & operator<<(std::ostream &os, Mat4 const& m);
     friend std::ostream & operator<<(Mat4 const& m, std::ostream &os);

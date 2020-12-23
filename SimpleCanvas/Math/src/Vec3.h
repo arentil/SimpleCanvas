@@ -126,6 +126,8 @@ public:
     */
     static Vec3 distance(Vec3 const& first, Vec3 const& second);
 
+    static Vec3 normalized(Vec3 const& v);
+
     friend std::ostream & operator<<(std::ostream &os, Vec3 const& v);
     friend std::ostream & operator<<(Vec3 const& v, std::ostream &os);
     friend Vec3 operator+(float multiplier, Vec3 const& v);

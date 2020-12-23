@@ -197,6 +197,11 @@ Vec3 Vec3::distance(Vec3 const& first, Vec3 const& second)
     return first.distance(second);
 }
 
+Vec3 Vec3::normalized(Vec3 const& v)
+{
+    return v.normalized();
+}
+
 // ----- friends -----
 std::ostream & operator<<(std::ostream &os, scmath::Vec3 const& v)
 {

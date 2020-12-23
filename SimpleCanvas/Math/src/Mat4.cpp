@@ -282,6 +282,53 @@ Mat4 Mat4::scale(Vec3 const& v)
     return Mat4::scale(v.x, v.y, v.z);
 }
 
+Mat4 Mat4::lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up)
+{
+    Vec3 f = Vec3::normalized(center - eye);   // looking forward vector
+    Vec3 s = Vec3::cross(f, up);            // side looking vector
+    Vec3 u = Vec3::cross(s, f);             // camera upper
+    return Mat4(
+        {f, 0},
+        {u, 0},
+        {f, 0},
+        {-eye, 1}
+    );
+}
+
+Mat4 Mat4::frustum(float left, float right, float bottom, float top, float near, float far)
+{
+    return Mat4(
+        {2 * near / (right - left), 0, 0, 0},
+        {0, 2 * near / (top - bottom), 0, 0},
+        {(right + left) / (right - left), (top + bottom) / (top - bottom), (near + far) / (near - far), -1},
+        {0, 0, 2 * near * far / (near - far), 0}
+    );
+}
+
+Mat4 Mat4::ortho(float left, float right, float bottom, float top, float near, float far)
+{
+    return Mat4(
+        {2 / (right - left), 0, 0, 0},
+        {0, 2 / (top - bottom), 0, 0},
+        {0, 0, 2 / (near - far), 0},
+        {(left + right) / (left - right), (top + bottom) / (top - bottom), (near + far) / (near - far), 1}
+    );
+}
+
+Mat4 Mat4::perspective(float fov, float aspect, float near, float far)
+{
+    float q = 1 / std::tan(degToRad(fov / 2));
+    float A = q / aspect;
+    float B = (near + far) / (near - far);
+    float C = 2 * near * far / (near - far);
+    return Mat4(
+        {A, 0, 0, 0},
+        {0, q, 0, 0},
+        {0, 0, B, -1},
+        {0, 0, C, 0}
+    );
+}
+
 // ----- friends -----
 std::ostream & operator<<(std::ostream &os, scmath::Mat4 const& m)
 {
