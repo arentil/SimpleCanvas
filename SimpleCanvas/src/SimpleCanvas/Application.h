@@ -6,7 +6,7 @@
 #include "LayerContainer.h"
 
 namespace sc {
-class SC_API Application
+class Application
 {
 public:
 	Application();

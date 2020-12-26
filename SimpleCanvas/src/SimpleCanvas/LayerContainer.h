@@ -5,7 +5,7 @@
 
 namespace sc 
 {
-class SC_API LayerContainer
+class LayerContainer
 {
 public:
 	LayerContainer();

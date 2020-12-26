@@ -3,7 +3,7 @@
 #include "Event.h"
 
 namespace sc {
-class SC_API KeyEvent : public Event
+class KeyEvent : public Event
 {
 public:
 	KeyEvent(int pKeyCode)
@@ -16,7 +16,7 @@ private:
 	int keyCode;
 };
 
-class SC_API KeyPressedEvent : public KeyEvent
+class KeyPressedEvent : public KeyEvent
 {
 public:
 	KeyPressedEvent(int pKeyCode, int pRepeatCount)
@@ -30,7 +30,7 @@ private:
 	int repeatCount;
 };
 
-class SC_API KeyReleasedEvent : public KeyEvent
+class KeyReleasedEvent : public KeyEvent
 {
 public:
 	KeyReleasedEvent(int pKeyCode) : KeyEvent(pKeyCode) {}

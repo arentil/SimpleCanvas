@@ -3,7 +3,7 @@
 #include "Event.h"
 
 namespace sc {
-class SC_API WindowResizeEvent : public Event
+class WindowResizeEvent : public Event
 {
 public:
 	WindowResizeEvent(uint32_t pWidth, uint32_t pHeight) 
@@ -20,7 +20,7 @@ private:
 	uint32_t width, height;
 };
 
-class SC_API WindowCloseEvent : public Event
+class WindowCloseEvent : public Event
 {
 public:
 	WindowCloseEvent()
@@ -30,7 +30,7 @@ public:
 	static EventType staticType() { return EventType::WindowClose; }
 };
 
-class SC_API AppTickEvent : public Event
+class AppTickEvent : public Event
 {
 public:
 	AppTickEvent()
@@ -40,7 +40,7 @@ public:
 	static EventType staticType() { return EventType::AppTick; }
 };
 
-class SC_API AppUpdateEvent : public Event
+class AppUpdateEvent : public Event
 {
 public:
 	AppUpdateEvent()
@@ -50,7 +50,7 @@ public:
 	static EventType staticType() { return EventType::AppUpdate; }
 };
 
-class SC_API AppRenderEvent : public Event
+class AppRenderEvent : public Event
 {
 public:
 	AppRenderEvent()

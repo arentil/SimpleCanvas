@@ -23,9 +23,3 @@ if (MSVC)
 	#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ENTRY:mainCRTStartup")
 	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
 endif()
-
-# custom command for copying SimpleCanvas.dll file into output directory
-add_custom_command(TARGET Sandbox POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-        $<TARGET_FILE:SimpleCanvas>
-        $<TARGET_FILE_DIR:Sandbox>)

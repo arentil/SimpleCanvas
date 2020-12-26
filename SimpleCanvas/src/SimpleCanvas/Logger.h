@@ -4,7 +4,7 @@
 
 namespace sc
 {
-class SC_API Logger
+class Logger
 {
 public:
 	Logger(Logger const&) = delete;

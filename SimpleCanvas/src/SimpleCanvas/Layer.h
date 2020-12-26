@@ -15,7 +15,7 @@ static std::string defaultLayerName()
 }
 } // namespace
 
-class SC_API Layer
+class Layer
 {
 public:
 	Layer(std::string const& pName = defaultLayerName());

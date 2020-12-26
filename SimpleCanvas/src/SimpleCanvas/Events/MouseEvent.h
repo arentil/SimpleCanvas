@@ -3,7 +3,7 @@
 #include "Event.h"
 
 namespace sc {
-class SC_API MouseMovedEvent : public Event
+class MouseMovedEvent : public Event
 {
 public:
 	MouseMovedEvent(float x, float y) 
@@ -20,7 +20,7 @@ private:
 	float mouseX, mouseY;
 };
 
-class  SC_API MouseScrollEvent : public Event
+class  MouseScrollEvent : public Event
 {
 public:
 	MouseScrollEvent(float xOffset, float yOffset)
@@ -38,7 +38,7 @@ private:
 };
 
 
-class SC_API MouseButtonEvent : public Event
+class MouseButtonEvent : public Event
 {
 public:
 	MouseButtonEvent(int pButton)
@@ -51,7 +51,7 @@ protected:
 	int button;
 };
 
-class SC_API MouseButtonPressedEvent : public MouseButtonEvent
+class MouseButtonPressedEvent : public MouseButtonEvent
 {
 public:
 	MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
@@ -60,7 +60,7 @@ public:
 	static EventType staticType() { return EventType::MouseButtonPressed; }
 };
 
-class SC_API MouseButtonReleasedEvent : public MouseButtonEvent
+class MouseButtonReleasedEvent : public MouseButtonEvent
 {
 public:
 	MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}

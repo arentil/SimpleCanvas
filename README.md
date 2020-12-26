@@ -40,6 +40,6 @@ Init and update submodules. [GLFW](https://www.glfw.org/) and [googletest](https
 
 #### Windows
 
-You will need to download and install a binary release of CMake. You can get
+You will need to download and install a binary release of CMake and python. You can get
 latest release from: https://cmake.org/download.
 Compile with MSVC from VS 2017 or later with Visual C++ 2017 Redistributable.

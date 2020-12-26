@@ -5,7 +5,7 @@
 
 namespace sc 
 {
-class SC_API Input
+class Input
 {
 public:
     static bool isKeyPressed(int code);
