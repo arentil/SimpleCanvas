@@ -9,17 +9,22 @@ include_directories(${CMAKE_SOURCE_DIR}/SimpleCanvas/src)
 
 add_subdirectory(SimpleCanvas)
 
-if (CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions("-Wall -Wextra -Wpedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -pedantic -Wall -Wextra")
-endif (CMAKE_COMPILER_IS_GNUCXX)
+# if build type is not specified, cmake will assume it is a Release build type
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+if (MSVC)
+  add_compile_options(/W4 /std:c++latest) #/WX
+  set(CMAKE_CXX_FLAGS_DEBUG "/Od")
+  set(CMAKE_CXX_FLAGS_RELEASE "/O2")
+  #set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
+else()
+  add_compile_options(-std=c++17 -Wall -Wextra -pedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov)
+  set(CMAKE_CXX_FLAGS_DEBUG "-g")
+  set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+endif ()
     
 add_executable(Sandbox ${CMAKE_SOURCE_DIR}/Sandbox/src/Sandbox.cpp)
 
 target_link_libraries(Sandbox PUBLIC SimpleCanvas)
-
-# windows additional flags
-if (MSVC)
-	#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ENTRY:mainCRTStartup")
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
-endif()
