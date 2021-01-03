@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
 #include "LayerContainer.h"
+#include "Renderer/Shader.h"
 
 namespace sc {
 class Application
@@ -23,7 +24,9 @@ private:
 	std::unique_ptr<Window> window;
 	bool isRunning = false;
 	LayerContainer layerContainer;
+
 	unsigned int vertexArray, vertexBuffer, indexBuffer;
+	std::unique_ptr<Shader> shader;
 };
 
 // to be defined in client
