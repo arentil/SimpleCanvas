@@ -5,6 +5,7 @@
 #include "Events/ApplicationEvent.h"
 #include "LayerContainer.h"
 #include "Renderer/Shader.h"
+#include "Renderer/Buffer.h"
 
 namespace sc {
 class Application
@@ -25,8 +26,10 @@ private:
 	bool isRunning = false;
 	LayerContainer layerContainer;
 
-	unsigned int vertexArray, vertexBuffer, indexBuffer;
+	unsigned int vertexArray;
 	std::unique_ptr<Shader> shader;
+	std::unique_ptr<VertexBuffer> vertexBuffer;
+	std::unique_ptr<IndexBuffer> indexBuffer;
 };
 
 // to be defined in client

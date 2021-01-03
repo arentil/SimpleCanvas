@@ -10,6 +10,7 @@
 
 #include <chrono>
 #include <ctime>
+#include <cstdint>
 
 #include <string>
 #include <sstream>
