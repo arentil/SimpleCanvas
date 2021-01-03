@@ -49,6 +49,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
 	${SOURCE_DIR}/SimpleCanvas/Window.cpp
 	${SOURCE_DIR}/SimpleCanvas/Window.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.cpp
 )
 
 add_compile_definitions(SC_BUILD_DLL GLFW_INCLUDE_NONE)

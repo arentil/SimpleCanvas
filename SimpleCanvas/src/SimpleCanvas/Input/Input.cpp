@@ -23,6 +23,9 @@ std::pair<float, float> Input::getMousePos()
 
 std::string Input::getKeyName(int code)
 {
-    return glfwGetKeyName(code, 0);
+    const char * keyName = glfwGetKeyName(code, 0);
+    if (keyName == nullptr)
+        return "GLFW_KEY_UNKNOWN";
+    return keyName;
 }
 } // namespace sc

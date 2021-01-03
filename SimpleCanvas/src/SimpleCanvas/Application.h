@@ -23,6 +23,7 @@ private:
 	std::unique_ptr<Window> window;
 	bool isRunning = false;
 	LayerContainer layerContainer;
+	unsigned int vertexArray, vertexBuffer, indexBuffer;
 };
 
 // to be defined in client

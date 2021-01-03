@@ -4,8 +4,7 @@
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
 #include "Input/Input.h"
-
-#include <glad/glad.h>
+#include "Renderer/GLContext.h"
 
 namespace sc {
 namespace {
@@ -44,16 +43,12 @@ void Window::init(WindowProperties const& properties)
 
 	// create GLFW window
 	glfwWindow = glfwCreateWindow(glfwData.width, glfwData.height, glfwData.title.c_str(), nullptr, nullptr);
-	glfwMakeContextCurrent(glfwWindow);
 
-	// add and init glad
-	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);	// exactly like in the glfw context guide
-	SC_ASSERT(status, "Assertion failed! Failed to initialize glad!");
+	glContext = new GLContext(glfwWindow);
+	glContext->init();
 
 	glfwSetWindowUserPointer(glfwWindow, &glfwData);	// assosiate wrapper pointer to the window
 	setVSync(true);
-
-
 
 	// Set GLFW callbacks
 	glfwSetWindowSizeCallback(glfwWindow, [](GLFWwindow *window, int w, int h)
@@ -139,7 +134,7 @@ void Window::shutdown()
 void Window::update()
 {
 	glfwPollEvents();		// obvious
-	glfwSwapBuffers(glfwWindow); // obvious
+	glContext->swapBuffers();
 }
 
 uint32_t Window::getWidth() const

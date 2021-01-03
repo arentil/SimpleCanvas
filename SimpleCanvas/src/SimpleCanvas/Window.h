@@ -6,7 +6,7 @@
 #include <GLFW/glfw3.h>
 
 namespace sc {
-
+class GLContext;
 static bool GLFW_INITIALIZED = false;
 
 class Window
@@ -42,6 +42,7 @@ private:
 	void shutdown();
 
 	GLFWwindow *glfwWindow;
+	GLContext *glContext;
 
 	struct GLFWWindowData
 	{
