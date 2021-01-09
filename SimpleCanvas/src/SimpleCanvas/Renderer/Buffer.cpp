@@ -26,6 +26,16 @@ void VertexBuffer::unbind() const
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+void VertexBuffer::setLayout(BufferLayout const& pLayout)
+{
+    layout = pLayout;
+}
+
+BufferLayout VertexBuffer::getLayout() const
+{
+    return layout;
+}
+
 std::unique_ptr<VertexBuffer> VertexBuffer::create(float * vertices, uint32_t size)
 {
     return std::make_unique<VertexBuffer>(vertices, size);
@@ -33,6 +43,7 @@ std::unique_ptr<VertexBuffer> VertexBuffer::create(float * vertices, uint32_t si
 
 // INDEX BUFFER -------------------
 IndexBuffer::IndexBuffer(uint32_t * indices, uint32_t count)
+: _count(count)
 {
     glCreateBuffers(1, &rendererId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererId);
@@ -57,5 +68,10 @@ void IndexBuffer::unbind() const
 std::unique_ptr<IndexBuffer> IndexBuffer::create(uint32_t * indices, uint32_t count)
 {
     return std::make_unique<IndexBuffer>(indices, count);
+}
+
+uint32_t IndexBuffer::count() const
+{
+    return _count;
 }
 } // namespace sc

@@ -55,6 +55,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Shader.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.cpp
 )
 
 add_compile_definitions(SC_BUILD_DLL GLFW_INCLUDE_NONE)

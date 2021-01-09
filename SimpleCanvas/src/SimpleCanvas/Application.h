@@ -6,6 +6,7 @@
 #include "LayerContainer.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
 
 namespace sc {
 class Application
@@ -26,10 +27,12 @@ private:
 	bool isRunning = false;
 	LayerContainer layerContainer;
 
-	unsigned int vertexArray;
-	std::unique_ptr<Shader> shader;
-	std::unique_ptr<VertexBuffer> vertexBuffer;
-	std::unique_ptr<IndexBuffer> indexBuffer;
+	std::shared_ptr<Shader> shader;
+	std::shared_ptr<VertexArray> _vertexArray;
+
+	std::shared_ptr<Shader> shader2;
+	std::shared_ptr<VertexArray> _vertexArray2;
+	
 };
 
 // to be defined in client

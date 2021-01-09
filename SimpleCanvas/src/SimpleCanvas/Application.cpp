@@ -11,33 +11,43 @@ Application::Application()
 	isRunning = true;
 	window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 
-	glGenVertexArrays(1, &vertexArray);
-	glBindVertexArray(vertexArray);
+	_vertexArray.reset(VertexArray::create());
 
-	float vertices[9] = {
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f, 0.5f, 0.0f,
+	float vertices[3 * 7] = {
+		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+		0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+		0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
 	};
 
-	vertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
+	std::shared_ptr<VertexBuffer>vertexBuffer = VertexBuffer::create(vertices, sizeof(vertices));
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
+	BufferLayout layout = {
+		{ ShaderDataType::Float3, "a_Position"},
+		{ ShaderDataType::Float4, "a_Color"}
+	};
 
+	vertexBuffer->setLayout(layout);
+	_vertexArray->addVertexBuffer(vertexBuffer);
+	
+	
 	unsigned int indices[3] = { 0, 1, 2	};
-	indexBuffer = IndexBuffer::create(indices, 3);
+	std::shared_ptr<IndexBuffer>indexBuffer = IndexBuffer::create(indices, 3);
+	_vertexArray->setIndexBuffer(indexBuffer);
 
 	std::string vertexSrc = R"(
 		#version 330 core
 
 		layout(location = 0) in vec3 a_Position;
+		layout(location = 1) in vec4 a_Color;
+
 		out vec3 v_Position;
+		out vec4 v_Color;
 
 		void main()
 		{
-			v_Position = a_Position + 0.5;
-			gl_Position = vec4(a_Position + 0.5, 1.0);
+			v_Position = a_Position;
+			v_Color = a_Color;
+			gl_Position = vec4(a_Position, 1.0);
 		}
 	)";
 
@@ -46,14 +56,62 @@ Application::Application()
 
 		layout(location = 0) out vec4 a_color;
 		in vec3 v_Position;
+		in vec4 v_Color;
 
 		void main()
 		{
-			a_color = vec4(v_Position * 0.5 + 0.5, 1.0);
+			a_color = v_Color;
+		}
+	)";
+
+	_vertexArray2.reset(VertexArray::create());
+
+	float vertices2[3 * 4] = {
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.5f, 0.5f, 0.0f,
+		-0.5f, 0.5f, 0.0f
+	};
+
+	std::shared_ptr<VertexBuffer> vertexBuffer2 = VertexBuffer::create(vertices2, sizeof(vertices2));
+
+	BufferLayout layout2 = {
+		{ ShaderDataType::Float3, "a_Position"},
+	};
+
+	vertexBuffer2->setLayout(layout2);
+	_vertexArray2->addVertexBuffer(vertexBuffer2);
+	
+	
+	unsigned int indices2[6] = { 0, 1, 2, 2, 3, 0 };
+	std::shared_ptr<IndexBuffer> indexBuffer2 = IndexBuffer::create(indices2, sizeof(indices2) / sizeof(uint32_t));
+	_vertexArray2->setIndexBuffer(indexBuffer2);
+
+	std::string vertexSrc2 = R"(
+		#version 330 core
+
+		layout(location = 0) in vec3 a_Position;
+
+
+		void main()
+		{
+			gl_Position = vec4(a_Position, 1.0);
+		}
+	)";
+
+	std::string fragmentSrc2 = R"(
+		#version 330 core
+
+		layout(location = 0) out vec4 a_color;
+
+		void main()
+		{
+			a_color = vec4(0.2, 0.3, 0.8, 1.0);
 		}
 	)";
 
 	shader = std::make_unique<Shader>(vertexSrc, fragmentSrc);
+	shader2 = std::make_unique<Shader>(vertexSrc2, fragmentSrc2);
 }
 
 Application::~Application()
@@ -66,10 +124,13 @@ void Application::run()
 		glClearColor(0.1f, 0.1f, 0.1f, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		shader->bind();
+		shader2->bind();
+		_vertexArray2->bind();
+		glDrawElements(GL_TRIANGLES, _vertexArray2->getIndexBuffer()->count(), GL_UNSIGNED_INT, nullptr);
 
-		glBindVertexArray(vertexArray);
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+		shader->bind();
+		_vertexArray->bind();
+		glDrawElements(GL_TRIANGLES, _vertexArray->getIndexBuffer()->count(), GL_UNSIGNED_INT, nullptr);
 
 		for (Layer* layer : layerContainer)
 			layer->update();
