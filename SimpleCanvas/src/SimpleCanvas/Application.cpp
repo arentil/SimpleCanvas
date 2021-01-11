@@ -1,8 +1,8 @@
 #include "Application.h"
 
-#include <glad/glad.h>
-
 #include "Events/KeyEvent.h"
+#include "Renderer/RenderCommand.h"
+#include "Renderer/Renderer.h"
 
 namespace sc {
 Application::Application()
@@ -121,16 +121,18 @@ void Application::run()
 {
 	while (isRunning)
 	{
-		glClearColor(0.1f, 0.1f, 0.1f, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
+		RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
+		RenderCommand::clear();
 
-		shader2->bind();
-		_vertexArray2->bind();
-		glDrawElements(GL_TRIANGLES, _vertexArray2->getIndexBuffer()->count(), GL_UNSIGNED_INT, nullptr);
+		Renderer::beginScene();
 
-		shader->bind();
-		_vertexArray->bind();
-		glDrawElements(GL_TRIANGLES, _vertexArray->getIndexBuffer()->count(), GL_UNSIGNED_INT, nullptr);
+			shader2->bind();
+			Renderer::submit(_vertexArray2);
+
+			shader->bind();
+			Renderer::submit(_vertexArray);
+
+		Renderer::endScene();
 
 		for (Layer* layer : layerContainer)
 			layer->update();

@@ -32,7 +32,6 @@ private:
 
 	std::shared_ptr<Shader> shader2;
 	std::shared_ptr<VertexArray> _vertexArray2;
-	
 };
 
 // to be defined in client

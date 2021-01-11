@@ -20,6 +20,7 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/Mat4.cpp
 	${SOURCE_DIR}/Quat.h
 	${SOURCE_DIR}/Quat.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SCMath.h
 )
 
 add_library(SCMath STATIC ${SOURCE_FILES})

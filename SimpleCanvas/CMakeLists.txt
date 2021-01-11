@@ -20,13 +20,14 @@ add_subdirectory(Glad)
 # -------------------
 #        SCMath        
 # -------------------
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/SCMath)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/SCMath)
 
 add_subdirectory(SCMath)
 
 # -------------------
 #    SimpleCanvas        
 # -------------------
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas.h
@@ -57,6 +58,9 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/RenderCommand.h
 )
 
 add_compile_definitions(SC_BUILD_DLL GLFW_INCLUDE_NONE)
