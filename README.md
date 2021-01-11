@@ -30,6 +30,7 @@ You may also need to install following packages in order to compile
 
 
 Init and update submodules. [GLFW](https://www.glfw.org/) and [googletest](https://github.com/google/googletest)s will be downloaded.
+Then run cmake and build with make:
 
 ```
   $ git submodule init && git submodule update
@@ -40,6 +41,6 @@ Init and update submodules. [GLFW](https://www.glfw.org/) and [googletest](https
 
 #### Windows
 
-You will need to download and install a binary release of CMake and python. You can get
-latest release from: https://cmake.org/download.
-Compile with MSVC from VS 2017 or later with Visual C++ 2017 Redistributable.
+You will need to download and install a binary release of [CMake](https://cmake.org/download) and [python](https://www.python.org/downloads/windows/).
+Generate build system for Visual Studio 15 2017 or later.
+Make sure that Sandbox is "Set as StartUp Projekt"
