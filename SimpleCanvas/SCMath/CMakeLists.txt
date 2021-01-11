@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Math)
+project(SCMath)
 
 # -------------------
-#      MathTest
+#      SCMathTest
 # -------------------
-add_subdirectory(MathTest)
+add_subdirectory(SCMathTest)
 
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES
@@ -22,4 +22,4 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/Quat.cpp
 )
 
-add_library(Math STATIC ${SOURCE_FILES})
+add_library(SCMath STATIC ${SOURCE_FILES})

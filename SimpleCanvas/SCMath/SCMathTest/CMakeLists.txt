@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(MathTest)
+project(SCMathTest)
 
 # -------------------
 #        GTest
@@ -9,9 +9,9 @@ enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 # -------------------
-#        Math
+#        SCMath
 # -------------------
-set(MATH_DIR ${CMAKE_SOURCE_DIR}/SimpleCanvas/Math)
+set(MATH_DIR ${CMAKE_SOURCE_DIR}/SimpleCanvas/SCMath)
 include_directories(${MATH_DIR}/src)
 
 
@@ -32,6 +32,6 @@ set(SOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
 )
 
-add_executable(MathTest ${SOURCE_FILES})
-target_link_libraries(MathTest PUBLIC gtest gtest_main)
+add_executable(SCMathTest ${SOURCE_FILES})
+target_link_libraries(SCMathTest PUBLIC gtest gtest_main)
 add_test(NAME mathTests COMMAND run)
