@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Mat4.h"
+#include "Vec4.h"
 #include "Utility.h"
 
 using namespace scmath;
@@ -136,4 +137,52 @@ TEST_F(Mat4Test, MAT4_MULTIPLY_IDENTITY_MATRIX_TEST)
     Vec4 v(1, 2, 3, 4);
 
     EXPECT_EQ(v, Mat4::identity() * v);
+}
+
+TEST_F(Mat4Test, MAT4_DET_MATRIX_TEST)
+{
+    Vec4 col1(1, 1, 1, -1);
+    Vec4 col2(1, 1, -1, 1);
+    Vec4 col3(1, -1, 1, 1);
+    Vec4 col4(-1, 1, 1, 1);
+
+    Mat4 mat(col1, col2, col3, col4);
+
+    EXPECT_EQ(-16.0f, Mat4::det(mat));
+}
+
+TEST_F(Mat4Test, MAT4_ADJUGATE_MATRIX_TEST)
+{
+    Vec4 col1(1, 1, 1, -1);
+    Vec4 col2(1, 1, -1, 1);
+    Vec4 col3(1, -1, 1, 1);
+    Vec4 col4(-1, 1, 1, 1);
+
+    Mat4 mat(col1, col2, col3, col4);
+
+    Mat4 expected(
+        {-4, -4, -4,  4},
+        {-4, -4,  4, -4},
+        {-4,  4, -4, -4},
+        { 4, -4, -4, -4});
+
+    EXPECT_EQ(expected, Mat4::adjugate(mat));
+}
+
+TEST_F(Mat4Test, MAT4_INVERSE_MATRIX_TEST)
+{
+    Vec4 col1( 4,  4,  4, -4);
+    Vec4 col2( 4,  4, -4,  4);
+    Vec4 col3( 4, -4,  4,  4);
+    Vec4 col4(-4,  4,  4,  4);
+
+    Mat4 mat(col1, col2, col3, col4);
+
+    Mat4 expected(
+        { 0.0625,  0.0625,  0.0625, -0.0625},
+        { 0.0625,  0.0625, -0.0625,  0.0625},
+        { 0.0625, -0.0625,  0.0625,  0.0625},
+        {-0.0625,  0.0625,  0.0625,  0.0625});
+
+    EXPECT_EQ(expected, Mat4::inverse(mat));
 }

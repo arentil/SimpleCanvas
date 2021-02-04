@@ -1,6 +1,7 @@
 #include "Mat4.h"
 
 #include <cassert>
+#include <iostream>
 #include <string>
 
 #include "Utility.h"
@@ -31,7 +32,7 @@ Mat4::Mat4(Mat4 && mat)
 
 std::string Mat4::to_string() const
 {
-    std::string result = "";
+    std::string result = "\n";
     for (int i = 0; i < 4; i++)
     {
         result += "|";
@@ -289,12 +290,55 @@ Mat4 Mat4::scale(Vec3 const& v)
 
 float Mat4::det(Mat4 const& m)
 {
-    return 0;
+    float a11 = m[0][0], a12 = m[1][0], a13 = m[2][0], a14 = m[3][0];
+    float a21 = m[0][1], a22 = m[1][1], a23 = m[2][1], a24 = m[3][1];
+    float a31 = m[0][2], a32 = m[1][2], a33 = m[2][2], a34 = m[3][2];
+    float a41 = m[0][3], a42 = m[1][3], a43 = m[2][3], a44 = m[3][3];
+
+    return (a11 * a22 * a33 * a44) + (a11 * a23 * a34 * a42) + (a11 * a24 * a32 * a43) -
+           (a11 * a24 * a33 * a42) - (a11 * a23 * a32 * a44) - (a11 * a22 * a34 * a43) -
+           (a12 * a21 * a33 * a44) - (a13 * a21 * a34 * a42) - (a14 * a21 * a32 * a43) +
+           (a14 * a21 * a33 * a42) + (a13 * a21 * a32 * a44) + (a12 * a21 * a34 * a43) +
+           (a12 * a23 * a31 * a44) + (a13 * a24 * a31 * a42) + (a14 * a22 * a31 * a43) -
+           (a14 * a23 * a31 * a42) - (a13 * a22 * a31 * a44) - (a12 * a24 * a31 * a43) -
+           (a12 * a23 * a34 * a41) - (a13 * a24 * a32 * a41) - (a14 * a22 * a33 * a41) +
+           (a14 * a23 * a32 * a41) + (a13 * a22 * a34 * a41) + (a12 * a24 * a33 * a41);
 }
 
-Mat4 Mat4::inverse(Mat4 const& inverse)
+Mat4 Mat4::adjugate(Mat4 const& m)
 {
-    return inverse;
+    float a11 = m[0][0], a12 = m[1][0], a13 = m[2][0], a14 = m[3][0];
+    float a21 = m[0][1], a22 = m[1][1], a23 = m[2][1], a24 = m[3][1];
+    float a31 = m[0][2], a32 = m[1][2], a33 = m[2][2], a34 = m[3][2];
+    float a41 = m[0][3], a42 = m[1][3], a43 = m[2][3], a44 = m[3][3];
+
+    Vec4 col1((a22 * a33 * a44) + (a23 * a34 * a42) + (a24 * a32 * a43) - (a24 * a33 * a42) - (a23 * a32 * a44) - (a22 * a34 * a43),
+              -(a21 * a33 * a44) - (a23 * a34 * a41) - (a24 * a31 * a43) + (a24 * a33 * a41) + (a23 * a31 * a44) + (a21 * a34 * a43),
+               (a21 * a32 * a44) + (a22 * a34 * a41) + (a24 * a31 * a42) - (a24 * a32 * a41) - (a22 * a31 * a44) - (a21 * a34 * a42),
+              -(a21 * a32 * a43) - (a22 * a33 * a41) - (a23 * a31 * a42) + (a23 * a32 * a41) + (a22 * a31 * a43) + (a21 * a33 * a42));
+
+    Vec4 col2(-(a12 * a33 * a44) - (a13 * a34 * a42) - (a14 * a32 * a43) + (a14 * a33 * a42) + (a13 * a32 * a44) + (a13 * a43 * a43),
+               (a11 * a33 * a44) + (a13 * a34 * a41) + (a14 * a31 * a43) - (a14 * a33 * a41) - (a13 * a31 * a44) - (a11 * a34 * a43),
+               -(a11 * a23 * a44) - (a13 * a24 * a41) - (a14 * a21 * a42) + (a14 * a23 * a41) + (a13 * a21 * a44) + (a11 * a24 * a43),
+               (a11 * a32 * a43) + (a12 * a33 * a41) + (a13 * a31 * a42) - (a13 * a32 * a41) - (a12 * a31 * a43) - (a11 * a33 * a42));
+
+    Vec4 col3( (a12 * a23 * a44) + (a13 * a24 * a42) + (a14 * a22 * a43) - (a14 * a23 * a42) - (a13 * a22 * a44) - (a12 * a24 * a43),
+              -(a11 * a23 * a44) - (a13 * a24 * a41) - (a14 * a21 * a43) + (a14 * a23 * a41) + (a13 * a21 * a44) + (a11 * a24 * a43),
+               (a11 * a22 * a44) + (a12 * a24 * a41) + (a41 * a21 * a42) - (a14 * a22 * a41) - (a12 * a21 * a44) - (a11 * a24 * a42),
+              -(a11 * a22 * a43) - (a12 * a23 * a41) - (a13 * a21 * a42) + (a12 * a22 * a41) + (a12 * a21 * a43) + (a11 * a23 * a42));
+
+    Vec4 col4(-(a21 * a23 * a34) - (a12 * a24 * a32) - (a14 * a22 * a33) + (a14 * a23 * a32) + (a13 * a22 * a34) + (a12 * a24 * a33),
+               (a11 * a23 * a34) + (a13 * a24 * a31) + (a14 * a21 * a33) - (a14 * a23 * a31) - (a13 * a21 * a34) - (a11 * a24 * a33),
+              -(a11 * a22 * a34) - (a12 * a24 * a31) - (a14 * a21 * a32) + (a14 * a22 * a31) + (a12 * a21 * a34) + (a11 * a24 * a32),
+               (a11 * a22 * a33) + (a12 * a23 * a31) + (a13 * a21 * a32) - (a13 * a22 * a31) - (a12 * a21 * a33) - (a11 * a23 * a32));
+
+    Mat4 result(col1, col2, col3, col4);
+    return result;
+}
+
+Mat4 Mat4::inverse(Mat4 const& m)
+{
+    return Mat4::adjugate(m) / Mat4::det(m);
 }
 
 Mat4 Mat4::lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up)

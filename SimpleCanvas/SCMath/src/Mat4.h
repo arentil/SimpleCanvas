@@ -51,6 +51,7 @@ public:
 
     static float det(Mat4 const& mat);
     static Mat4 inverse(Mat4 const& inverse);
+    static Mat4 adjugate(Mat4 const& inverse);
 
     // up is a normalized vector pointing up
     static Mat4 lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up);
