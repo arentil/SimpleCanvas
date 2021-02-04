@@ -141,6 +141,11 @@ Vec2::operator float *()
     return arr;
 }
 
+Vec2::operator const float *()
+{
+    return arr;
+}
+
 // ----- static methods -----
 float Vec2::dot(Vec2 const& v1, Vec2 const& v2)
 {

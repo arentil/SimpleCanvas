@@ -1,7 +1,6 @@
 #pragma once
 
-#include "SCMath/SCMath.h"
-
+#include <SCMath.h>
 #include <glad/glad.h>
 
 namespace sc 

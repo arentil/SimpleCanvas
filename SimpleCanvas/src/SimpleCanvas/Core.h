@@ -5,3 +5,5 @@
 #else
 	#define SC_ASSERT(x, ...)
 #endif
+
+#define GLFW_INCLUDE_NONE

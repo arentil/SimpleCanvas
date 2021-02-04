@@ -31,6 +31,7 @@ public:
     Vec4& operator[](int i);
     Vec4 operator[](int i) const;
     operator float *();
+    operator const float*() const;
 
     static Mat4 identity();
     static Mat4 translate(Vec3 const& v);
@@ -47,6 +48,9 @@ public:
 
     static Mat4 scale(float sX, float sY, float sZ);
     static Mat4 scale(Vec3 const& v);
+
+    static float det(Mat4 const& mat);
+    static Mat4 inverse(Mat4 const& inverse);
 
     // up is a normalized vector pointing up
     static Mat4 lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up);

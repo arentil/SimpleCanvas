@@ -94,6 +94,7 @@ public:
     float operator[](int i) const;
     float& operator[](int i);
     operator float *();
+    operator const float *();
 
     static float dot(Vec3 const& v1, Vec3 const& v2);
     static Vec3 cross(Vec3 const& v1, Vec3 const& v2);

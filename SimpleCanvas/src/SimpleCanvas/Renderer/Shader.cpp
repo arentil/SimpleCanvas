@@ -134,4 +134,9 @@ void Shader::unbind() const
     glUseProgram(0);
 }
 
+void Shader::uploadUniformMat4(std::string const& name, scmath::Mat4 const& mat)
+{
+    GLint location = glGetUniformLocation(program, name.c_str());
+    glUniformMatrix4fv(location, 1, GL_FALSE, mat);
+}
 } // namespace sc

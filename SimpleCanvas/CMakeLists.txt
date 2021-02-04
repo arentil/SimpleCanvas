@@ -20,14 +20,12 @@ add_subdirectory(Glad)
 # -------------------
 #        SCMath        
 # -------------------
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/SCMath)
-
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/SCMath)
 add_subdirectory(SCMath)
 
 # -------------------
 #    SimpleCanvas        
 # -------------------
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas.h
@@ -61,9 +59,9 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/RenderCommand.h
+	#${SOURCE_DIR}/SimpleCanvas/Renderer/OrthoCamera.h
+	#${SOURCE_DIR}/SimpleCanvas/Renderer/OrthoCamera.cpp
 )
-
-add_compile_definitions(SC_BUILD_DLL GLFW_INCLUDE_NONE)
 
 add_library(SimpleCanvas STATIC ${SOURCE_FILES})
 target_link_libraries(SimpleCanvas ${OPENGL_LIBRARIES} Glad glfw SCMath)

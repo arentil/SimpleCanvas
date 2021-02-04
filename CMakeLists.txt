@@ -24,7 +24,7 @@ else()
   set(CMAKE_CXX_FLAGS_DEBUG "-g")
   set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 endif ()
-    
+
 add_executable(Sandbox ${CMAKE_SOURCE_DIR}/Sandbox/src/Sandbox.cpp)
 
 target_link_libraries(Sandbox PUBLIC SimpleCanvas)

@@ -85,6 +85,7 @@ public:
     float operator[](int i) const;
     float& operator[](int i);
     operator float *();
+    operator const float *();
 
     static float dot(Vec2 const& v1, Vec2 const& v2);
     static Vec2 projection(Vec2 const& v, Vec2 const& onVector);

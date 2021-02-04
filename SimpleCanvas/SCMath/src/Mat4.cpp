@@ -168,6 +168,11 @@ Mat4::operator float *()
     return (float *)matrix;
 }
 
+Mat4::operator const float*() const
+{
+    return (float *)matrix;
+}
+
 // ----- static methods -----
 Mat4 Mat4::identity()
 {
@@ -280,6 +285,16 @@ Mat4 Mat4::scale(float sX, float sY, float sZ)
 Mat4 Mat4::scale(Vec3 const& v)
 {
     return Mat4::scale(v.x, v.y, v.z);
+}
+
+float Mat4::det(Mat4 const& m)
+{
+    return 0;
+}
+
+Mat4 Mat4::inverse(Mat4 const& inverse)
+{
+    return inverse;
 }
 
 Mat4 Mat4::lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up)

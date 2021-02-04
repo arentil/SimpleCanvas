@@ -24,3 +24,7 @@ set(SOURCE_FILES
 )
 
 add_library(SCMath STATIC ${SOURCE_FILES})
+
+target_include_directories(SCMath PUBLIC
+	${CMAKE_CURRENT_SOURCE_DIR}/
+)
