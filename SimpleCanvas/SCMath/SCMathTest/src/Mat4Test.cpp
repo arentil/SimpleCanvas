@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Mat4.h"
+#include "Vec3.h"
 #include "Vec4.h"
 #include "Utility.h"
 
@@ -132,6 +133,18 @@ TEST_F(Mat4Test, MAT4_MULTIPLY_TEST)
     EXPECT_EQ(expected, mat1 * mat2);
 }
 
+TEST_F(Mat4Test, MAT4_ROTATION_MATRIX_TEST)
+{
+    // rotate by 90 degree means clockwise
+    Mat4 rotationAroundYMatrix = Mat4::rotate(degToRad(90.0f), Vec3(0, 1, 0));
+
+    Vec4 toRotate(1, 0, 0, 1);
+    Vec4 expected(0, 0, 1, 1);
+
+    EXPECT_EQ(expected, rotationAroundYMatrix * toRotate);
+}
+
+
 TEST_F(Mat4Test, MAT4_MULTIPLY_IDENTITY_MATRIX_TEST)
 {
     Vec4 v(1, 2, 3, 4);
@@ -149,6 +162,14 @@ TEST_F(Mat4Test, MAT4_DET_MATRIX_TEST)
     Mat4 mat(col1, col2, col3, col4);
 
     EXPECT_EQ(-16.0f, Mat4::det(mat));
+
+    col1 = {1, 1, 4, 5};
+    col2 = {3, 3, 3, 2};
+    col3 = {5, 1, 9, 0};
+    col4 = {9, 7, 7, 9};
+
+    mat = {col1, col2, col3, col4};
+    EXPECT_EQ(-376.0f, Mat4::det(mat));
 }
 
 TEST_F(Mat4Test, MAT4_ADJUGATE_MATRIX_TEST)

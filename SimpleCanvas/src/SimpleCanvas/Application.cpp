@@ -6,6 +6,7 @@
 
 namespace sc {
 Application::Application()
+: _camera(-1.6f, 1.6f, -0.9f, 0.9f)
 {
 	window = std::unique_ptr<Window>(Window::create());
 	isRunning = true;
@@ -40,6 +41,8 @@ Application::Application()
 		layout(location = 0) in vec3 a_Position;
 		layout(location = 1) in vec4 a_Color;
 
+		uniform mat4 u_ViewProjection;
+
 		out vec3 v_Position;
 		out vec4 v_Color;
 
@@ -47,7 +50,7 @@ Application::Application()
 		{
 			v_Position = a_Position;
 			v_Color = a_Color;
-			gl_Position = vec4(a_Position, 1.0);
+			gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 		}
 	)";
 
@@ -91,11 +94,14 @@ Application::Application()
 		#version 330 core
 
 		layout(location = 0) in vec3 a_Position;
+		uniform mat4 u_ViewProjection;
 
+		out vec3 v_Position;
 
 		void main()
 		{
-			gl_Position = vec4(a_Position, 1.0);
+			v_Position = a_Position;
+			gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 		}
 	)";
 
@@ -124,13 +130,14 @@ void Application::run()
 		RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		RenderCommand::clear();
 
-		Renderer::beginScene();
+		_camera.setPosition({0.5f, 0.5f, 0.0f}); // move camera right and up
+		_camera.setRotation(45.0f);
+		
 
-			shader2->bind();
-			Renderer::submit(_vertexArray2);
+		Renderer::beginScene(_camera);
 
-			shader->bind();
-			Renderer::submit(_vertexArray);
+			Renderer::submit(_vertexArray2, shader2);
+			Renderer::submit(_vertexArray, shader);
 
 		Renderer::endScene();
 

@@ -263,7 +263,7 @@ Mat4 Mat4::rotate(float angle, float axisX, float axisY, float axisZ)
     return Mat4(
         {cosTheta - cosTheta * (axisX * axisX), -cosTheta * axisX * axisY + sinTheta * axisZ, -cosTheta * axisX * axisZ - sinTheta * axisY, 0},
         {-cosTheta * axisX * axisY - sinTheta * axisZ, cosTheta - cosTheta * (axisY * axisY), -cosTheta * axisY * axisZ + sinTheta * axisX, 0},
-        {-cosTheta * axisX * axisZ + sinTheta * axisY, -cosTheta * axisY * axisZ - sinTheta * axisX, cosTheta - cosTheta * (axisZ * axisZ), 0},
+        {-cosTheta * axisX * axisZ + sinTheta * axisY, -cosTheta * axisY * axisZ - sinTheta * axisX, cosTheta + (1 - cosTheta * (axisZ * axisZ)), 0},
         {0, 0, 0, 1}
     );
 }
@@ -338,7 +338,9 @@ Mat4 Mat4::adjugate(Mat4 const& m)
 
 Mat4 Mat4::inverse(Mat4 const& m)
 {
-    return Mat4::adjugate(m) / Mat4::det(m);
+    if (float det = Mat4::det(m); !f_equal(det, 0.0f))
+        return Mat4::adjugate(m) / det;
+    return Mat4::identity();
 }
 
 Mat4 Mat4::lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up)

@@ -7,6 +7,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
+#include "Renderer/OrthoCamera.h"
 
 namespace sc {
 class Application
@@ -32,6 +33,8 @@ private:
 
 	std::shared_ptr<Shader> shader2;
 	std::shared_ptr<VertexArray> _vertexArray2;
+
+	OrthoCamera _camera;
 };
 
 // to be defined in client

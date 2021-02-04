@@ -59,8 +59,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/RenderCommand.h
-	#${SOURCE_DIR}/SimpleCanvas/Renderer/OrthoCamera.h
-	#${SOURCE_DIR}/SimpleCanvas/Renderer/OrthoCamera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/OrthoCamera.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/OrthoCamera.cpp
 )
 
 add_library(SimpleCanvas STATIC ${SOURCE_FILES})
