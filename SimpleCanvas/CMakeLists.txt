@@ -13,6 +13,7 @@ add_subdirectory(glfw)
 # -------------------
 #        GLAD        
 # -------------------
+find_package(OpenGL REQUIRED)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Glad)
 
 add_subdirectory(Glad)
