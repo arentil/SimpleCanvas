@@ -66,20 +66,22 @@ public:
 				a_color = v_Color;
 			}
 		)";
+		shader = std::make_unique<sc::Shader>(vertexSrc, fragmentSrc);
 
 		_vertexArray2.reset(sc::VertexArray::create());
 
-		float vertices2[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.5f, 0.5f, 0.0f,
-			-0.5f, 0.5f, 0.0f
+		float vertices2[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f, 0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		auto vertexBuffer2 =sc::VertexBuffer::create(vertices2, sizeof(vertices2));
 
 		sc::BufferLayout layout2 = {
-			{ sc::ShaderDataType::Float3, "a_Position"}
+			{ sc::ShaderDataType::Float3, "a_Position"},
+			{ sc::ShaderDataType::Float2, "a_TexCoord"}
 		};
 
 		vertexBuffer2->setLayout(layout2);
@@ -119,8 +121,42 @@ public:
 			}
 		)";
 
-		shader = std::make_unique<sc::Shader>(vertexSrc, fragmentSrc);
 		_flatColorShader = std::make_unique<sc::Shader>(flatColorVertexShaderSrc, flatColorFragmentShaderSrc);
+
+
+		std::string texShaderVertexSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Model;
+
+			out vec2 v_TexCoord;
+
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string texShaderFragmentSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 a_color;
+
+			in vec2 v_TexCoord;
+
+			uniform vec4 u_Color;
+
+			void main()
+			{
+				a_color = vec4(v_TexCoord, 0.0, 1.0);
+			}
+		)";
+
+		_texShader = std::make_unique<sc::Shader>(texShaderVertexSrc, texShaderFragmentSrc);
 	}
 
 	void update(float deltaTime) override
@@ -157,28 +193,30 @@ public:
 		_camera.setPosition(_cameraPos); // move camera right and up
 		_camera.setRotation(_cameraRot); // move camera right and up
 		
+		sc::Renderer::beginScene(_camera);//----------------- BEGIN SCENE -------------------------
+		
+		scmath::Mat4 scale = scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f));
 
-		sc::Renderer::beginScene(_camera);
+		_flatColorShader->bind();
+		_flatColorShader->uploadUniformFloat4("u_Color", _squareColor);
+
+		for (int y = 0; y < 20; y++)
+
 		{
-			scmath::Mat4 scale = scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f));
-
-			_flatColorShader->bind();
-			_flatColorShader->uploadUniformFloat4("u_Color", _squareColor);
-
-			for (int y = 0; y < 20; y++)
-
+			for (int x = 0; x < 20; x++)
 			{
-				for (int x = 0; x < 20; x++)
-				{
-					scmath::Vec3 pos(x * 0.11f, y * 0.11f, 0);
-					scmath::Mat4 transform = scmath::Mat4::translate(pos) * scale;
-					sc::Renderer::submit(_vertexArray2, _flatColorShader, transform);
-				}
+				scmath::Vec3 pos(x * 0.11f, y * 0.11f, 0);
+				scmath::Mat4 transform = scmath::Mat4::translate(pos) * scale;
+				sc::Renderer::submit(_vertexArray2, _flatColorShader, transform);
 			}
-
-			sc::Renderer::submit(_vertexArray, shader);
 		}
-		sc::Renderer::endScene();
+
+		sc::Renderer::submit(_vertexArray2, _texShader, scmath::Mat4::scale(scmath::Vec3(1.5f, 1.5f, 1.5f)));
+
+		// triangle
+		//sc::Renderer::submit(_vertexArray, shader);
+		
+		sc::Renderer::endScene();//---------------------------- END SCENE ---------------------------
 	}
 
 	void onEvent(sc::Event &event) override
@@ -199,6 +237,7 @@ private:
 	sc::VertexArrayPtr _vertexArray;
 
 	sc::ShaderPtr _flatColorShader;
+	sc::ShaderPtr _texShader;
 	sc::VertexArrayPtr _vertexArray2;
 
 	sc::OrthoCamera _camera;
