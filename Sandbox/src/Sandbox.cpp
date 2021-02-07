@@ -9,6 +9,7 @@ public:
 	: Layer("Example")
 	, _camera(-1.6f, 1.6f, -0.9f, 0.9f)
 	, _cameraPos(0, 0, 0)
+	, _squarePos(0, 0, 0)
 	{
 		_vertexArray.reset(sc::VertexArray::create());
 
@@ -40,6 +41,7 @@ public:
 			layout(location = 1) in vec4 a_Color;
 
 			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Model;
 
 			out vec3 v_Position;
 			out vec4 v_Color;
@@ -48,7 +50,7 @@ public:
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * u_Model * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -93,13 +95,14 @@ public:
 
 			layout(location = 0) in vec3 a_Position;
 			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Model;
 
 			out vec3 v_Position;
 
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * u_Model * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -128,7 +131,6 @@ public:
 		{
 			_cameraPos.x += _cameraMoveSpeed * deltaTime;
 		}
-
 		if (sc::Input::isKeyPressed(sc::KEY_UP))
 		{
 			_cameraPos.y += _cameraMoveSpeed * deltaTime;
@@ -156,7 +158,18 @@ public:
 
 		sc::Renderer::beginScene(_camera);
 
-			sc::Renderer::submit(_vertexArray2, shader2);
+			scmath::Mat4 scale = scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f));
+
+			for (int y = 0; y < 20; y++)
+			{
+				for (int x = 0; x < 20; x++)
+				{
+					scmath::Vec3 pos(x * 0.11f, y * 0.11f, 0);
+					scmath::Mat4 transform = scmath::Mat4::translate(pos) * scale;
+					sc::Renderer::submit(_vertexArray2, shader2, transform);
+				}
+			}
+
 			sc::Renderer::submit(_vertexArray, shader);
 
 		sc::Renderer::endScene();
@@ -185,9 +198,11 @@ private:
 
 	sc::OrthoCamera _camera;
 	scmath::Vec3 _cameraPos;
-	float _cameraMoveSpeed = 0.1f;
+	float _cameraMoveSpeed = 5.f;
 	float _cameraRot = 0.0f;
 	float _cameraRotSpeed = 90.0f;
+	scmath::Vec3 _squarePos;
+	float _squareMoveSpeed = 1.0f;
 };
 
 class Sandbox : public sc::Application
