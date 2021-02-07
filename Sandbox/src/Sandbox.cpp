@@ -90,7 +90,7 @@ public:
 		std::shared_ptr<sc::IndexBuffer> indexBuffer2 = sc::IndexBuffer::create(indices2, sizeof(indices2) / sizeof(uint32_t));
 		_vertexArray2->setIndexBuffer(indexBuffer2);
 
-		std::string vertexSrc2 = R"(
+		std::string flatColorVertexShaderSrc = R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
@@ -106,19 +106,21 @@ public:
 			}
 		)";
 
-		std::string fragmentSrc2 = R"(
+		std::string flatColorFragmentShaderSrc = R"(
 			#version 330 core
 
 			layout(location = 0) out vec4 a_color;
 
+			uniform vec4 u_Color;
+
 			void main()
 			{
-				a_color = vec4(0.2, 0.3, 0.8, 1.0);
+				a_color = u_Color;
 			}
 		)";
 
 		shader = std::make_unique<sc::Shader>(vertexSrc, fragmentSrc);
-		shader2 = std::make_unique<sc::Shader>(vertexSrc2, fragmentSrc2);
+		_flatColorShader = std::make_unique<sc::Shader>(flatColorVertexShaderSrc, flatColorFragmentShaderSrc);
 	}
 
 	void update(float deltaTime) override
@@ -157,22 +159,25 @@ public:
 		
 
 		sc::Renderer::beginScene(_camera);
-
+		{
 			scmath::Mat4 scale = scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f));
 
+			_flatColorShader->bind();
+			_flatColorShader->uploadUniformFloat4("u_Color", _squareColor);
+
 			for (int y = 0; y < 20; y++)
+
 			{
 				for (int x = 0; x < 20; x++)
 				{
 					scmath::Vec3 pos(x * 0.11f, y * 0.11f, 0);
 					scmath::Mat4 transform = scmath::Mat4::translate(pos) * scale;
-					sc::Renderer::submit(_vertexArray2, shader2, transform);
+					sc::Renderer::submit(_vertexArray2, _flatColorShader, transform);
 				}
 			}
 
 			sc::Renderer::submit(_vertexArray, shader);
-
-		sc::Renderer::endScene();
+		}sc::Renderer::endScene();
 	}
 
 	void onEvent(sc::Event &event) override
@@ -185,7 +190,6 @@ public:
 		{
 			auto asd = sc::Input::getKeyName(((sc::KeyPressedEvent&)event).getKeyCode());
 			LOG_WARNING("%s", asd.c_str())
-
 		}
 	}
 
@@ -193,7 +197,7 @@ private:
 	std::shared_ptr<sc::Shader> shader;
 	std::shared_ptr<sc::VertexArray> _vertexArray;
 
-	std::shared_ptr<sc::Shader> shader2;
+	std::shared_ptr<sc::Shader> _flatColorShader;
 	std::shared_ptr<sc::VertexArray> _vertexArray2;
 
 	sc::OrthoCamera _camera;
@@ -203,6 +207,8 @@ private:
 	float _cameraRotSpeed = 90.0f;
 	scmath::Vec3 _squarePos;
 	float _squareMoveSpeed = 1.0f;
+
+	scmath::Vec4 _squareColor = {0.2f, 0.3f, 0.8f, 1.0f};
 };
 
 class Sandbox : public sc::Application

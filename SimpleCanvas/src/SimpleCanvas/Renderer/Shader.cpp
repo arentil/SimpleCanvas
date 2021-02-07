@@ -134,9 +134,39 @@ void Shader::unbind() const
     glUseProgram(0);
 }
 
-void Shader::uploadUniformMat4(std::string const& name, scmath::Mat4 const& mat)
+void Shader::uploadUniformInt(std::string const& name, int value)
 {
     GLint location = glGetUniformLocation(program, name.c_str());
-    glUniformMatrix4fv(location, 1, GL_FALSE, mat);
+    glUniform1i(location, value);
+}
+
+void Shader::uploadUniformFloat(std::string const& name, float value)
+{
+    GLint location = glGetUniformLocation(program, name.c_str());
+    glUniform1f(location, value);
+}
+
+void Shader::uploadUniformFloat2(std::string const& name, scmath::Vec2 const& v)
+{
+    GLint location = glGetUniformLocation(program, name.c_str());
+    glUniform2f(location, v.x, v.y);
+}
+
+void Shader::uploadUniformFloat3(std::string const& name, scmath::Vec3 const& v)
+{
+    GLint location = glGetUniformLocation(program, name.c_str());
+    glUniform3f(location, v.x, v.y, v.z);
+}
+
+void Shader::uploadUniformFloat4(std::string const& name, scmath::Vec4 const& v)
+{
+    GLint location = glGetUniformLocation(program, name.c_str());
+    glUniform4f(location, v.x, v.y, v.z, v.w);
+}
+
+void Shader::uploadUniformMat4(std::string const& name, scmath::Mat4 const& m)
+{
+    GLint location = glGetUniformLocation(program, name.c_str());
+    glUniformMatrix4fv(location, 1, GL_FALSE, m);
 }
 } // namespace sc
