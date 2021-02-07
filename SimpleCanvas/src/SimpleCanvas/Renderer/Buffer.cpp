@@ -36,9 +36,9 @@ BufferLayout VertexBuffer::getLayout() const
     return layout;
 }
 
-std::unique_ptr<VertexBuffer> VertexBuffer::create(float * vertices, uint32_t size)
+std::shared_ptr<VertexBuffer> VertexBuffer::create(float * vertices, uint32_t size)
 {
-    return std::make_unique<VertexBuffer>(vertices, size);
+    return std::make_shared<VertexBuffer>(vertices, size);
 }
 
 // INDEX BUFFER -------------------
@@ -65,9 +65,9 @@ void IndexBuffer::unbind() const
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-std::unique_ptr<IndexBuffer> IndexBuffer::create(uint32_t * indices, uint32_t count)
+std::shared_ptr<IndexBuffer> IndexBuffer::create(uint32_t * indices, uint32_t count)
 {
-    return std::make_unique<IndexBuffer>(indices, count);
+    return std::make_shared<IndexBuffer>(indices, count);
 }
 
 uint32_t IndexBuffer::count() const

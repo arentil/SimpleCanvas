@@ -3,6 +3,8 @@
 #include <SCMath.h>
 #include <glad/glad.h>
 
+#include "Renderer/VertexArray.h"
+
 namespace sc 
 {
 class RenderCommand

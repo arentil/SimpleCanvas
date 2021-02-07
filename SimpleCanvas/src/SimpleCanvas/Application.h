@@ -4,10 +4,6 @@
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
 #include "LayerContainer.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/OrthoCamera.h"
 
 namespace sc {
 class Application
@@ -27,14 +23,6 @@ private:
 	std::unique_ptr<Window> window;
 	bool isRunning = false;
 	LayerContainer layerContainer;
-
-	std::shared_ptr<Shader> shader;
-	std::shared_ptr<VertexArray> _vertexArray;
-
-	std::shared_ptr<Shader> shader2;
-	std::shared_ptr<VertexArray> _vertexArray2;
-
-	OrthoCamera _camera;
 };
 
 // to be defined in client

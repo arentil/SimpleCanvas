@@ -114,7 +114,7 @@ public:
     void setLayout(BufferLayout const& layout);
     BufferLayout getLayout() const;
 
-    static std::unique_ptr<VertexBuffer> create(float * vertices, uint32_t size);
+    static std::shared_ptr<VertexBuffer> create(float * vertices, uint32_t size);
 
 private:
     uint32_t rendererId;
@@ -130,7 +130,7 @@ public:
     void bind() const;
     void unbind() const;
 
-    static std::unique_ptr<IndexBuffer> create(uint32_t * indices, uint32_t count);
+    static std::shared_ptr<IndexBuffer> create(uint32_t * indices, uint32_t count);
     uint32_t count() const;
 
 private:

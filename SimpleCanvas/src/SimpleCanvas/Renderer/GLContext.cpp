@@ -31,7 +31,7 @@ void GLContext::init()
 	SC_ASSERT(status, "Assertion failed! Failed to initialize glad!");
 	LOG_INFO("%s, %s, %s", glGetString(GL_VENDOR) ,glGetString(GL_RENDERER), glGetString(GL_VERSION));
 
-	if 	(auto [versionMajor, versionMinor] = getGlVersion(); versionMajor < 4 || versionMinor < 5)
+	if 	(auto [versionMajor, versionMinor] = getGlVersion(); versionMajor < 4 || versionMinor < 5)	// check if installed OpenGL version >4.5
 	{
 		LOG_ERROR("OPENGL %d.%d NOT SUPPORTED! PLEASE INSTALL OPENGL 4.5 OR LATER", versionMajor, versionMinor);
 		exit(1);
