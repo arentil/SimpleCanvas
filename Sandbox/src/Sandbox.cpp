@@ -118,33 +118,33 @@ public:
 		shader2 = std::make_unique<sc::Shader>(vertexSrc2, fragmentSrc2);
 	}
 
-	void update() override
+	void update(float deltaTime) override
 	{
 		if (sc::Input::isKeyPressed(sc::KEY_LEFT))
 		{
-			_cameraPos.x -= _cameraMoveSpeed;
+			_cameraPos.x -= _cameraMoveSpeed * deltaTime;
 		}
 		else if (sc::Input::isKeyPressed(sc::KEY_RIGHT))
 		{
-			_cameraPos.x += _cameraMoveSpeed;
+			_cameraPos.x += _cameraMoveSpeed * deltaTime;
 		}
 
 		if (sc::Input::isKeyPressed(sc::KEY_UP))
 		{
-			_cameraPos.y += _cameraMoveSpeed;
+			_cameraPos.y += _cameraMoveSpeed * deltaTime;
 		}
 		else if (sc::Input::isKeyPressed(sc::KEY_DOWN))
 		{
-			_cameraPos.y -= _cameraMoveSpeed;
+			_cameraPos.y -= _cameraMoveSpeed * deltaTime;
 		}
 
 		if (sc::Input::isKeyPressed(sc::KEY_A))
 		{
-			_cameraRot += _cameraRotSpeed;
+			_cameraRot += _cameraRotSpeed * deltaTime;
 		}
 		else if (sc::Input::isKeyPressed(sc::KEY_D))
 		{
-			_cameraRot -= _cameraRotSpeed;
+			_cameraRot -= _cameraRotSpeed * deltaTime;
 		}
 
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
@@ -187,7 +187,7 @@ private:
 	scmath::Vec3 _cameraPos;
 	float _cameraMoveSpeed = 0.1f;
 	float _cameraRot = 0.0f;
-	float _cameraRotSpeed = 10.0f;
+	float _cameraRotSpeed = 90.0f;
 };
 
 class Sandbox : public sc::Application

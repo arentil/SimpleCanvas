@@ -1,6 +1,7 @@
 #include "Application.h"
 
 #include "Events/KeyEvent.h"
+#include <GLFW/glfw3.h>
 
 namespace sc {
 Application::Application()
@@ -15,10 +16,16 @@ Application::~Application()
 
 void Application::run()
 {
+	float lastFrameDeltaTime = 0.0;
+
 	while (isRunning)
 	{
+		float time = (float)glfwGetTime();
+		float deltaTime = time - lastFrameDeltaTime;
+		lastFrameDeltaTime = time;
+
 		for (Layer* layer : layerContainer)
-			layer->update();
+			layer->update(deltaTime);
 
 		window->update();
 	}

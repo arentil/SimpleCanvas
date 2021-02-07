@@ -22,7 +22,9 @@ public:
 
 	virtual void attach() {};
 	virtual void detach() {};
-	virtual void update() {};
+
+	// deltaTime in seconds
+	virtual void update(float deltaTime) {};
 	virtual void onEvent(Event &event) {};
 
 	inline const std::string& getName() const { return name; }
