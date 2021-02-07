@@ -6,7 +6,7 @@
 namespace sc {
 Application::Application()
 {
-	window = std::unique_ptr<Window>(Window::create());
+	window = WindowPtr(Window::create());
 	isRunning = true;
 	window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 }
@@ -44,7 +44,7 @@ void Application::onEvent(Event &event)
 	}
 
 	dispatcher.dispatch(event);
-	LOG_ERROR("%s", event.name().c_str());
+	//LOG_ERROR("%s", event.name().c_str());
 }
 
 void Application::onWindowClose(WindowCloseEvent &e)

@@ -14,11 +14,11 @@ bool Input::isMousePressed(int code)
     return (state == State::PRESSED || state == State::HOLD);
 }
 
-std::pair<float, float> Input::getMousePos()
+scmath::Vec2 Input::getMousePos()
 {
     double x, y;
     glfwGetCursorPos(glfwGetCurrentContext(), &x, &y);
-    return std::make_pair((float)x, (float)y);
+    return scmath::Vec2(x, y);
 }
 
 std::string Input::getKeyName(int code)

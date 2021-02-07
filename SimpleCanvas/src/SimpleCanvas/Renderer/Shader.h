@@ -6,6 +6,9 @@
 
 namespace sc
 {
+class Shader;
+using ShaderPtr = std::shared_ptr<Shader>;
+
 class Shader
 {
 public:

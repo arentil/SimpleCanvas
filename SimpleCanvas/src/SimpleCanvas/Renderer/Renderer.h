@@ -12,7 +12,7 @@ class Renderer
 {
 public:
     static void beginScene(OrthoCamera &camera);
-    static void submit(std::shared_ptr<VertexArray> const& vertexArray, std::shared_ptr<Shader> const& shader, scmath::Mat4 const& transform = scmath::Mat4::identity());
+    static void submit(VertexArrayPtr const& vertexArray, ShaderPtr const& shader, scmath::Mat4 const& transform = scmath::Mat4::identity());
     static void endScene();
 
 private:

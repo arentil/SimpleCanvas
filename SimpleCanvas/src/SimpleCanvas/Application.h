@@ -20,7 +20,7 @@ public:
 	void pushOverlay(Layer * overlay);
 
 private:
-	std::unique_ptr<Window> window;
+	WindowPtr window;
 	bool isRunning = false;
 	LayerContainer layerContainer;
 };

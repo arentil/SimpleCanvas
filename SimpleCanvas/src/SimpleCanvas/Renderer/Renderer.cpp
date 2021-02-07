@@ -12,7 +12,7 @@ void Renderer::beginScene(OrthoCamera &camera)
     _sceneData->viewProjMatrix = camera.getViewProjMatrix();
 }
 
-void Renderer::submit(std::shared_ptr<VertexArray> const& vertexArray, std::shared_ptr<Shader> const& shader, scmath::Mat4 const& transform)
+void Renderer::submit(VertexArrayPtr const& vertexArray, ShaderPtr const& shader, scmath::Mat4 const& transform)
 {
     shader->bind();
     shader->uploadUniformMat4("u_ViewProjection", _sceneData->viewProjMatrix);

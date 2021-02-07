@@ -1,7 +1,7 @@
 #pragma once
 
-#include "SimpleCanvas/Core.h"
 #include "InputBindings.h"
+#include <SCMath.h>
 
 namespace sc 
 {
@@ -13,6 +13,6 @@ public:
     static std::string getKeyName(int code);
 
     // TODO: TO BE CHANGED INTO VECTOR2
-    static std::pair<float, float> getMousePos();
+    static scmath::Vec2 getMousePos();
 };
 } // namespace sc

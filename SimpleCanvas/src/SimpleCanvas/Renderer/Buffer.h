@@ -103,6 +103,10 @@ private:
     }
 };
 
+class VertexBuffer;
+using VertexBufferPtr = std::shared_ptr<VertexBuffer>;
+using VertexBufferPtrVec = std::vector<VertexBufferPtr>;
+
 class VertexBuffer
 {
 public:
@@ -114,12 +118,15 @@ public:
     void setLayout(BufferLayout const& layout);
     BufferLayout getLayout() const;
 
-    static std::shared_ptr<VertexBuffer> create(float * vertices, uint32_t size);
+    static VertexBufferPtr create(float * vertices, uint32_t size);
 
 private:
     uint32_t rendererId;
     BufferLayout layout;
 };
+
+class IndexBuffer;
+using IndexBufferPtr = std::shared_ptr<IndexBuffer>;
 
 class IndexBuffer
 {
@@ -130,7 +137,7 @@ public:
     void bind() const;
     void unbind() const;
 
-    static std::shared_ptr<IndexBuffer> create(uint32_t * indices, uint32_t count);
+    static IndexBufferPtr create(uint32_t * indices, uint32_t count);
     uint32_t count() const;
 
 private:

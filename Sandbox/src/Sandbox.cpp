@@ -87,7 +87,7 @@ public:
 		
 		
 		unsigned int indices2[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<sc::IndexBuffer> indexBuffer2 = sc::IndexBuffer::create(indices2, sizeof(indices2) / sizeof(uint32_t));
+		auto indexBuffer2 = sc::IndexBuffer::create(indices2, sizeof(indices2) / sizeof(uint32_t));
 		_vertexArray2->setIndexBuffer(indexBuffer2);
 
 		std::string flatColorVertexShaderSrc = R"(
@@ -177,7 +177,8 @@ public:
 			}
 
 			sc::Renderer::submit(_vertexArray, shader);
-		}sc::Renderer::endScene();
+		}
+		sc::Renderer::endScene();
 	}
 
 	void onEvent(sc::Event &event) override
@@ -194,11 +195,11 @@ public:
 	}
 
 private:
-	std::shared_ptr<sc::Shader> shader;
-	std::shared_ptr<sc::VertexArray> _vertexArray;
+	sc::ShaderPtr shader;
+	sc::VertexArrayPtr _vertexArray;
 
-	std::shared_ptr<sc::Shader> _flatColorShader;
-	std::shared_ptr<sc::VertexArray> _vertexArray2;
+	sc::ShaderPtr _flatColorShader;
+	sc::VertexArrayPtr _vertexArray2;
 
 	sc::OrthoCamera _camera;
 	scmath::Vec3 _cameraPos;

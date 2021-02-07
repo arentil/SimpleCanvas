@@ -4,6 +4,9 @@
 
 namespace sc
 {
+class VertexArray;
+using VertexArrayPtr = std::shared_ptr<VertexArray>;
+
 class VertexArray
 {
 public:
@@ -13,16 +16,16 @@ public:
     void bind() const;
     void unbind() const;
 
-    void addVertexBuffer(std::shared_ptr<VertexBuffer> const& vertexBuffer);
-    void setIndexBuffer(std::shared_ptr<IndexBuffer> const& indexBuffer);
-    const std::vector<std::shared_ptr<VertexBuffer>>& getVertexBuffers() const { return _vertexBuffers; }
-    const std::shared_ptr<IndexBuffer>& getIndexBuffer() const { return _indexBuffer; }
+    void addVertexBuffer(VertexBufferPtr const& vertexBuffer);
+    void setIndexBuffer(IndexBufferPtr const& indexBuffer);
+    const VertexBufferPtrVec& getVertexBuffers() const { return _vertexBuffers; }
+    const IndexBufferPtr& getIndexBuffer() const { return _indexBuffer; }
 
     static VertexArray* create();
 
 private:
     uint32_t _rendererId;
-    std::vector<std::shared_ptr<VertexBuffer>> _vertexBuffers;
-    std::shared_ptr<IndexBuffer> _indexBuffer;
+    VertexBufferPtrVec _vertexBuffers;
+    IndexBufferPtr _indexBuffer;
 };
 } // namespace sc

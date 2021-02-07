@@ -9,6 +9,10 @@ namespace sc {
 class GLContext;
 static bool GLFW_INITIALIZED = false;
 
+class Window;
+using WindowPtr = std::unique_ptr<Window>;
+
+
 class Window
 {
 public:
