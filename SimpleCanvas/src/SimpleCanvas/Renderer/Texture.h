@@ -7,7 +7,7 @@ class Texture
 public:
     virtual uint32_t getWidth() const = 0;
     virtual uint32_t getHeight() const = 0;
-    virtual void bind() const = 0;
+    virtual void bind(uint32_t slot = 0) const = 0;
 };
 
 class Texture2d;
@@ -24,7 +24,7 @@ public:
 
     virtual uint32_t getWidth() const override { return _width; }
     virtual uint32_t getHeight() const override {return _height; }
-    virtual void bind() const override;
+    virtual void bind(uint32_t slot = 0) const override;
 
 private:
     std::string _filePath;

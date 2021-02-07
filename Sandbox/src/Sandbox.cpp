@@ -148,15 +148,19 @@ public:
 
 			in vec2 v_TexCoord;
 
-			uniform vec4 u_Color;
+			uniform sampler2D u_Texture;
 
 			void main()
 			{
-				a_color = vec4(v_TexCoord, 0.0, 1.0);
+				a_color = texture(u_Texture, v_TexCoord);
 			}
 		)";
 
 		_texShader = std::make_unique<sc::Shader>(texShaderVertexSrc, texShaderFragmentSrc);
+
+		_texture = sc::Texture2d::create("C:\\Users\\Marcin\\Desktop\\mgr\\SimpleCanvas\\Sandbox\\assets\\textures\\Checkerboard.png");
+		_texShader->bind();
+		_texShader->uploadUniformInt("v_TexCoord", 0);
 	}
 
 	void update(float deltaTime) override
@@ -211,6 +215,7 @@ public:
 			}
 		}
 
+		_texture->bind();
 		sc::Renderer::submit(_vertexArray2, _texShader, scmath::Mat4::scale(scmath::Vec3(1.5f, 1.5f, 1.5f)));
 
 		// triangle
@@ -239,6 +244,8 @@ private:
 	sc::ShaderPtr _flatColorShader;
 	sc::ShaderPtr _texShader;
 	sc::VertexArrayPtr _vertexArray2;
+
+	sc::Texture2dPtr _texture;
 
 	sc::OrthoCamera _camera;
 	scmath::Vec3 _cameraPos;

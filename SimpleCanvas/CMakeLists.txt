@@ -31,6 +31,8 @@ set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas.h
 	${SOURCE_DIR}/SimpleCanvas/Utils/StringUtils.h
+	${SOURCE_DIR}/SimpleCanvas/Utils/stb_image.h
+	${SOURCE_DIR}/SimpleCanvas/Utils/stb_image.cpp
 	${SOURCE_DIR}/SimpleCanvas/Application.cpp
 	${SOURCE_DIR}/SimpleCanvas/Application.h
 	${SOURCE_DIR}/SimpleCanvas/Core.h
