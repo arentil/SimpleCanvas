@@ -35,7 +35,9 @@ public:
 
     static Mat4 identity();
     static Mat4 translate(Vec3 const& v);
+    static Mat4 translate(Vec4 const& v);
     static Mat4 translate(float x, float y, float z);
+    static Mat4 translate(float x, float y, float z, float w);
     static Mat4 rotateX(float angle);
     static Mat4 rotateY(float angle);
     static Mat4 rotateZ(float angle);

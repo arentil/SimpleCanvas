@@ -11,6 +11,7 @@ namespace sc
 class Renderer
 {
 public:
+    static void init();
     static void beginScene(OrthoCamera &camera);
     static void submit(VertexArrayPtr const& vertexArray, ShaderPtr const& shader, scmath::Mat4 const& transform = scmath::Mat4::identity());
     static void endScene();

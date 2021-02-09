@@ -7,6 +7,11 @@ namespace sc
 {
 Renderer::SceneData* Renderer::_sceneData = new Renderer::SceneData;
 
+void Renderer::init()
+{
+    RenderCommand::init();
+}
+
 void Renderer::beginScene(OrthoCamera &camera)
 {
     _sceneData->viewProjMatrix = camera.getViewProjMatrix();

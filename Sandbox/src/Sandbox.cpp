@@ -159,6 +159,7 @@ public:
 		_texShader = std::make_unique<sc::Shader>(texShaderVertexSrc, texShaderFragmentSrc);
 
 		_texture = sc::Texture2d::create("C:\\Users\\Marcin\\Desktop\\mgr\\SimpleCanvas\\Sandbox\\assets\\textures\\Checkerboard.png");
+		_transparentTexture = sc::Texture2d::create("C:\\Users\\Marcin\\Desktop\\mgr\\SimpleCanvas\\Sandbox\\assets\\textures\\d4500b058db6706e4b28e2ab24c4e365.png");
 		_texShader->bind();
 		_texShader->uploadUniformInt("v_TexCoord", 0);
 	}
@@ -217,11 +218,13 @@ public:
 
 		_texture->bind();
 		sc::Renderer::submit(_vertexArray2, _texShader, scmath::Mat4::scale(scmath::Vec3(1.5f, 1.5f, 1.5f)));
+		_transparentTexture->bind();
+		sc::Renderer::submit(_vertexArray2, _texShader, scmath::Mat4::scale(scmath::Vec3(1.5f, 1.5f, 1.5f)));
 
 		// triangle
 		//sc::Renderer::submit(_vertexArray, shader);
-		
-		sc::Renderer::endScene();//---------------------------- END SCENE ---------------------------
+
+		sc::Renderer::endScene();		//---------------------------- END SCENE ---------------------------
 	}
 
 	void onEvent(sc::Event &event) override
@@ -246,6 +249,7 @@ private:
 	sc::VertexArrayPtr _vertexArray2;
 
 	sc::Texture2dPtr _texture;
+	sc::Texture2dPtr _transparentTexture;
 
 	sc::OrthoCamera _camera;
 	scmath::Vec3 _cameraPos;

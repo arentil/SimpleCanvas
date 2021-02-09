@@ -1,6 +1,8 @@
 #include "Application.h"
 
 #include "Events/KeyEvent.h"
+#include "Renderer/Renderer.h"
+
 #include <GLFW/glfw3.h>
 
 namespace sc {
@@ -9,6 +11,7 @@ Application::Application()
 	window = WindowPtr(Window::create());
 	isRunning = true;
 	window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
+	Renderer::init();
 }
 
 Application::~Application()

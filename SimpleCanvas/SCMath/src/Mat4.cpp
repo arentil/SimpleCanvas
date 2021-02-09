@@ -194,6 +194,16 @@ Mat4 Mat4::translate(Vec3 const& v)
     );
 }
 
+Mat4 Mat4::translate(Vec4 const& v)
+{
+        return Mat4(
+        Vec4(1, 0, 0, 0),
+        Vec4(0, 1, 0, 0),
+        Vec4(0, 0, 1, 0),
+        v
+    );
+}
+
 Mat4 Mat4::translate(float x, float y, float z)
 {
     return Mat4(
@@ -201,6 +211,16 @@ Mat4 Mat4::translate(float x, float y, float z)
         Vec4(0, 1, 0, 0),
         Vec4(0, 0, 1, 0),
         Vec4(x ,y, z, 1)
+    );
+}
+
+Mat4 Mat4::translate(float x, float y, float z, float w)
+{
+    return Mat4(
+        Vec4(1, 0, 0, 0),
+        Vec4(0, 1, 0, 0),
+        Vec4(0, 0, 1, 0),
+        Vec4(x ,y, z, w)
     );
 }
 
