@@ -68,6 +68,7 @@ public:
 		)";
 		shader = std::make_unique<sc::Shader>(vertexSrc, fragmentSrc);
 
+
 		_vertexArray2.reset(sc::VertexArray::create());
 
 		float vertices2[5 * 4] = {
@@ -123,40 +124,7 @@ public:
 
 		_flatColorShader = std::make_unique<sc::Shader>(flatColorVertexShaderSrc, flatColorFragmentShaderSrc);
 
-
-		std::string texShaderVertexSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Model;
-
-			out vec2 v_TexCoord;
-
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				gl_Position = u_ViewProjection * u_Model * vec4(a_Position, 1.0);
-			}
-		)";
-
-		std::string texShaderFragmentSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 a_color;
-
-			in vec2 v_TexCoord;
-
-			uniform sampler2D u_Texture;
-
-			void main()
-			{
-				a_color = texture(u_Texture, v_TexCoord);
-			}
-		)";
-
-		_texShader = std::make_unique<sc::Shader>(texShaderVertexSrc, texShaderFragmentSrc);
+		_texShader = std::make_unique<sc::Shader>("C:\\Users\\Marcin\\Desktop\\mgr\\SimpleCanvas\\Sandbox\\assets\\textures\\shaders\\Texture.glsl");
 
 		_texture = sc::Texture2d::create("C:\\Users\\Marcin\\Desktop\\mgr\\SimpleCanvas\\Sandbox\\assets\\textures\\Checkerboard.png");
 		_transparentTexture = sc::Texture2d::create("C:\\Users\\Marcin\\Desktop\\mgr\\SimpleCanvas\\Sandbox\\assets\\textures\\d4500b058db6706e4b28e2ab24c4e365.png");
