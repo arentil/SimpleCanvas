@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <cassert>
+#include <cstring>
 #include <glad/glad.h>
 
 namespace sc
