@@ -213,9 +213,11 @@ public:
 			}
 		}
 
-		// square with chessboard
+		// square with chessboard texture
 		_chessboardTexture->bind();
 		sc::Renderer::submit(_squareVAO, _chessboardShader, scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
+
+		// square with blend texture
 		_transparentTexture->bind();
 		sc::Renderer::submit(_squareVAO, _chessboardShader, scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
 

@@ -37,7 +37,7 @@ Shader::~Shader()
 std::string Shader::readFile(std::string const& filePath)
 {
     std::string result;
-    std::ifstream in(filePath, std::ios::in, std::ios::binary);
+    std::ifstream in(filePath, std::ios::in & std::ios::binary);
     if (in)
     {
         in.seekg(0, std::ios::end);
@@ -58,7 +58,7 @@ std::unordered_map<uint32_t, std::string> Shader::preprocess(std::string const& 
     std::unordered_map<uint32_t, std::string> shaderSources;
     
     const char * typeToken = "#type";
-    size_t typeTokenLength = strlen(typeToken);
+    size_t typeTokenLength = std::strlen(typeToken);
     size_t pos = source.find(typeToken, 0);
     while (pos != std::string::npos)
     {
