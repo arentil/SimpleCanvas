@@ -25,6 +25,11 @@ else()
   set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 endif ()
 
-add_executable(Sandbox ${CMAKE_SOURCE_DIR}/Sandbox/src/Sandbox.cpp)
 
+add_executable(Sandbox ${CMAKE_SOURCE_DIR}/Sandbox/src/Sandbox.cpp)
 target_link_libraries(Sandbox PUBLIC SimpleCanvas)
+
+# move assets folder into binary folder
+add_custom_command(TARGET Sandbox PRE_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                       ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:Sandbox>/assets)

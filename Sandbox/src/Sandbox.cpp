@@ -1,6 +1,7 @@
 #include "SimpleCanvas.h"
 
 #include <memory>
+#include <filesystem>
 
 class ExampleLayer : public sc::Layer
 {
@@ -155,9 +156,9 @@ public:
 		auto cubeIndexBuffer = sc::IndexBuffer::create(cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t));
 		_cubeVAO->setIndexBuffer(cubeIndexBuffer);
 
-		_chessboardShader = std::make_unique<sc::Shader>("C:\\Users\\Marcin\\Desktop\\mgr\\SimpleCanvas\\Sandbox\\assets\\textures\\shaders\\Texture.glsl");
-		_chessboardTexture = sc::Texture2d::create("C:\\Users\\Marcin\\Desktop\\mgr\\SimpleCanvas\\Sandbox\\assets\\textures\\Checkerboard.png");
-		_transparentTexture = sc::Texture2d::create("C:\\Users\\Marcin\\Desktop\\mgr\\SimpleCanvas\\Sandbox\\assets\\textures\\d4500b058db6706e4b28e2ab24c4e365.png");
+		_chessboardShader = std::make_unique<sc::Shader>("assets/textures/shaders/Texture.glsl");
+		_chessboardTexture = sc::Texture2d::create("assets/textures/Checkerboard.png");
+		_transparentTexture = sc::Texture2d::create("assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
 		_chessboardShader->bind();
 		_chessboardShader->uploadUniformInt("v_TexCoord", 0);
 	}
