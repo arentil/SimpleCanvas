@@ -67,7 +67,7 @@ public:
 				a_color = v_Color;
 			}
 		)";
-		_triangleShader = std::make_unique<sc::Shader>(vertexSrc, fragmentSrc);
+		_triangleShader = std::make_unique<sc::Shader>("TriangleShader", vertexSrc, fragmentSrc);
 
 
 		_squareVAO.reset(sc::VertexArray::create());
@@ -123,7 +123,7 @@ public:
 			}
 		)";
 
-		_flatColorShader = std::make_unique<sc::Shader>(flatColorVertexShaderSrc, flatColorFragmentShaderSrc);
+		_flatColorShader = std::make_unique<sc::Shader>("FlatColorShader", flatColorVertexShaderSrc, flatColorFragmentShaderSrc);
 
 
 		_cubeVAO.reset(sc::VertexArray::create());
@@ -156,11 +156,11 @@ public:
 		auto cubeIndexBuffer = sc::IndexBuffer::create(cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t));
 		_cubeVAO->setIndexBuffer(cubeIndexBuffer);
 
-		_chessboardShader = std::make_unique<sc::Shader>("assets/textures/shaders/Texture.glsl");
+		auto textureShader = _shaderLib.load("assets/textures/shaders/Texture.glsl");
 		_chessboardTexture = sc::Texture2d::create("assets/textures/Checkerboard.png");
 		_transparentTexture = sc::Texture2d::create("assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
-		_chessboardShader->bind();
-		_chessboardShader->uploadUniformInt("v_TexCoord", 0);
+		textureShader->bind();
+		textureShader->uploadUniformInt("v_TexCoord", 0);
 	}
 
 	void update(float deltaTime) override
@@ -216,11 +216,11 @@ public:
 
 		// square with chessboard texture
 		_chessboardTexture->bind();
-		sc::Renderer::submit(_squareVAO, _chessboardShader, scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
+		sc::Renderer::submit(_squareVAO, _shaderLib.get("Texture"), scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
 
 		// square with blend texture
 		_transparentTexture->bind();
-		sc::Renderer::submit(_squareVAO, _chessboardShader, scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
+		sc::Renderer::submit(_squareVAO, _shaderLib.get("Texture"), scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
 
 		// triangle
 		rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
@@ -249,6 +249,8 @@ public:
 	}
 
 private:
+	sc::ShaderLibrary _shaderLib;
+
 	sc::ShaderPtr _triangleShader;
 	sc::VertexArrayPtr _triangleVAO;
 
@@ -256,7 +258,6 @@ private:
 	float rotationTriangleSpeed = 30.0f;
 
 	sc::ShaderPtr _flatColorShader;
-	sc::ShaderPtr _chessboardShader;
 	sc::VertexArrayPtr _squareVAO;
 
 	//cube

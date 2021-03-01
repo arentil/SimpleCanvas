@@ -13,8 +13,11 @@ class Shader
 {
 public:
     Shader(std::string const& filePath);
-    Shader(std::string const& vertexSrc, std::string const& fragmentSrc);
+    Shader(std::string const& name, std::string const& filePath);
+    Shader(std::string const& name, std::string const& vertexSrc, std::string const& fragmentSrc);
     ~Shader();
+
+    std::string getName() const;
 
     void bind() const;
     void unbind() const;
@@ -30,6 +33,21 @@ private:
     std::unordered_map<uint32_t, std::string> preprocess(std::string const& source);
     void compile(std::unordered_map<uint32_t, std::string> const& shaderSources);
 
-    uint32_t _program; 
+    uint32_t _program;
+    std::string _name;
+};
+
+class ShaderLibrary
+{
+public:
+    void add(ShaderPtr const& shader);
+    void add(std::string const& name, ShaderPtr const& shader);
+    ShaderPtr load(std::string const& filePath);
+    ShaderPtr load(std::string const& name, std::string const& filePath);
+    ShaderPtr get(std::string const& name);
+
+    bool contains(std::string const& name) const;
+private:
+    std::unordered_map<std::string, ShaderPtr> _shaders;
 };
 } // namespace sc;

@@ -1,8 +1,5 @@
 #include "Shader.h"
 
-#include <fstream>
-#include <cassert>
-#include <cstring>
 #include <glad/glad.h>
 
 namespace sc
@@ -20,9 +17,21 @@ Shader::Shader(std::string const& filePath)
     std::string source = readFile(filePath);
     auto shaderSources = preprocess(source);
     compile(shaderSources);
+
+    std::filesystem::path path = filePath;
+    _name = path.stem().string();
 }
 
-Shader::Shader(std::string const& vertexSrc, std::string const& fragmentSrc)
+Shader::Shader(std::string const& name, std::string const& filePath)
+: _name(name)
+{
+    std::string source = readFile(filePath);
+    auto shaderSources = preprocess(source);
+    compile(shaderSources);
+}
+
+Shader::Shader(std::string const& name, std::string const& vertexSrc, std::string const& fragmentSrc)
+: _name(name)
 {
     std::unordered_map<uint32_t, std::string> sources;
     sources[GL_VERTEX_SHADER] = vertexSrc;
@@ -33,6 +42,11 @@ Shader::Shader(std::string const& vertexSrc, std::string const& fragmentSrc)
 Shader::~Shader()
 {
     glDeleteProgram(_program);
+}
+
+std::string Shader::getName() const
+{
+    return _name;
 }
 
 std::string Shader::readFile(std::string const& filePath)
@@ -184,5 +198,43 @@ void Shader::uploadUniformMat4(std::string const& name, scmath::Mat4 const& m)
 {
     GLint location = glGetUniformLocation(_program, name.c_str());
     glUniformMatrix4fv(location, 1, GL_FALSE, m);
+}
+
+
+void ShaderLibrary::add(ShaderPtr const& shader)
+{   
+    assert(!contains(shader->getName()) && "Shader already exist in lib");
+    add(shader->getName(), shader);
+}
+
+void ShaderLibrary::add(std::string const& name, ShaderPtr const& shader)
+{
+    assert(!contains(name) && "Shader already exist in lib");
+    _shaders[name] = shader;
+}
+
+ShaderPtr ShaderLibrary::load(std::string const& filePath)
+{
+    ShaderPtr newShader = std::make_shared<Shader>(filePath);
+    add(newShader);
+    return newShader;
+}
+
+ShaderPtr ShaderLibrary::load(std::string const& name, std::string const& filePath)
+{
+    ShaderPtr newShader = std::make_shared<Shader>(name, filePath);
+    add(name, newShader);
+    return newShader;
+}
+
+ShaderPtr ShaderLibrary::get(std::string const& name)
+{
+    assert(contains(name) && "Shader not exist in shaders lib");
+    return _shaders[name];
+}
+
+bool ShaderLibrary::contains(std::string const& name) const
+{
+    return _shaders.find(name) != _shaders.end();
 }
 } // namespace sc
