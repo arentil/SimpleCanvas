@@ -59,7 +59,7 @@ public:
     static Mat4 lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up);
 
     static Mat4 frustum(float left, float right, float bottom, float top, float near, float far);
-    static Mat4 ortho(float left, float right, float bottom, float top, float near, float far);
+    static Mat4 orthographic(float left, float right, float bottom, float top, float near, float far);
     // fov in degree (later will be translated to radians)
     static Mat4 perspective(float fov, float aspect, float near, float far);
 

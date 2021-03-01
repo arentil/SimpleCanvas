@@ -13,15 +13,17 @@ public:
 	virtual ~Application();
 
 	void run();
-	void onEvent(Event &e);
-	void onWindowClose(WindowCloseEvent &e);
+	void onEvent(Event &event);
+	void onWindowClose(WindowCloseEvent &event);
+	void onWindowResize(WindowResizeEvent &event);
 
 	void pushLayer(Layer * layer);
 	void pushOverlay(Layer * overlay);
 
 private:
 	WindowPtr window;
-	bool isRunning = false;
+	bool _isRunning = false;
+	bool _windowMinimized = false;
 	LayerContainer layerContainer;
 };
 

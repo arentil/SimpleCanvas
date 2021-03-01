@@ -9,7 +9,7 @@ namespace sc {
 Application::Application()
 {
 	window = WindowPtr(Window::create());
-	isRunning = true;
+	_isRunning = true;
 	window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 	Renderer::init();
 }
@@ -21,14 +21,15 @@ void Application::run()
 {
 	float lastFrameDeltaTime = 0.0;
 
-	while (isRunning)
+	while (_isRunning)
 	{
 		float time = (float)glfwGetTime();
 		float deltaTime = time - lastFrameDeltaTime;
 		lastFrameDeltaTime = time;
 
-		for (Layer* layer : layerContainer)
-			layer->update(deltaTime);
+		if (!_windowMinimized)
+			for (Layer* layer : layerContainer)
+				layer->update(deltaTime);
 
 		window->update();
 	}
@@ -38,6 +39,7 @@ void Application::onEvent(Event &event)
 {
 	EventDispatcher dispatcher;
 	dispatcher.subscribe(this, &Application::onWindowClose);
+	dispatcher.subscribe(this, &Application::onWindowResize);
 
 	for (auto it = layerContainer.end(); it != layerContainer.begin(); )
 	{
@@ -47,12 +49,20 @@ void Application::onEvent(Event &event)
 	}
 
 	dispatcher.dispatch(event);
-	//LOG_ERROR("%s", event.name().c_str());
 }
 
-void Application::onWindowClose(WindowCloseEvent &e)
+void Application::onWindowClose(WindowCloseEvent &event)
 {
-	isRunning = false;
+	_isRunning = false;
+}
+
+void Application::onWindowResize(WindowResizeEvent &event)
+{
+	if (event.getWidth() == 0 || event.getHeight() == 0)
+		_windowMinimized = true;
+
+	_windowMinimized = false;
+	Renderer::setViewport(0, 0, event.getWidth(), event.getHeight());
 }
 
 void Application::pushLayer(Layer * layer)

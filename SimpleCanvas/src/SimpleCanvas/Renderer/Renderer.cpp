@@ -1,7 +1,6 @@
 #include "Renderer.h"
 
 #include "RenderCommand.h"
-#include <SCMath.h>
 
 namespace sc
 {
@@ -12,7 +11,7 @@ void Renderer::init()
     RenderCommand::init();
 }
 
-void Renderer::beginScene(OrthoCamera &camera)
+void Renderer::beginScene(Camera const& camera)
 {
     _sceneData->viewProjMatrix = camera.getViewProjMatrix();
 }
@@ -24,6 +23,11 @@ void Renderer::submit(VertexArrayPtr const& vertexArray, ShaderPtr const& shader
     shader->uploadUniformMat4("u_Model", transform);
     vertexArray->bind();
     RenderCommand::drawIndexed(vertexArray);
+}
+
+void Renderer::setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+{
+    RenderCommand::setViewport(x, y, width, height);
 }
 
 void Renderer::endScene()

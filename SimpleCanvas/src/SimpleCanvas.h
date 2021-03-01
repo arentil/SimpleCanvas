@@ -6,6 +6,7 @@
 #include "SimpleCanvas/EntryPoint.h"
 #include "SimpleCanvas/Layer.h"
 #include "SimpleCanvas/LayerContainer.h"
+#include "SimpleCanvas/CameraController.h"
 
 /**
  *  Event classes
@@ -26,7 +27,8 @@
  */
 #include "SimpleCanvas/Renderer/Buffer.h"
 #include "SimpleCanvas/Renderer/GLContext.h"
-#include "SimpleCanvas/Renderer/OrthoCamera.h"
+#include "SimpleCanvas/Renderer/OrthographicCamera.h"
+#include "SimpleCanvas/Renderer/PerspectiveCamera.h"
 #include "SimpleCanvas/Renderer/RenderCommand.h"
 #include "SimpleCanvas/Renderer/Renderer.h"
 #include "SimpleCanvas/Renderer/Shader.h"

@@ -386,7 +386,7 @@ Mat4 Mat4::frustum(float left, float right, float bottom, float top, float near,
     );
 }
 
-Mat4 Mat4::ortho(float left, float right, float bottom, float top, float near, float far)
+Mat4 Mat4::orthographic(float left, float right, float bottom, float top, float near, float far)
 {
     return Mat4(
         {2 / (right - left), 0, 0, 0},

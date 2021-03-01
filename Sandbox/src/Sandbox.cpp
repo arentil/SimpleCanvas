@@ -8,8 +8,7 @@ class ExampleLayer : public sc::Layer
 public:
 	ExampleLayer()
 	: Layer("Example")
-	, _camera(-1.6f, 1.6f, -0.9f, 0.9f)
-	, _cameraPos(0, 0, 1.0f)
+	, _cameraController(16.0f, 9.0f)//1280.0f / 720.0f)
 	, _squarePos(0, 0, 0)
 	{
 		_triangleVAO.reset(sc::VertexArray::create());
@@ -165,38 +164,10 @@ public:
 
 	void update(float deltaTime) override
 	{
-		if (sc::Input::isKeyPressed(sc::KEY_UP))
-		{
-			_cameraPos.z -= _cameraMoveSpeed * deltaTime;
-		}
-		if (sc::Input::isKeyPressed(sc::KEY_DOWN))
-		{
-			_cameraPos.z += _cameraMoveSpeed * deltaTime;
-		}
-
-		if (sc::Input::isKeyPressed(sc::KEY_W))
-		{
-			_cameraPos.y += _cameraMoveSpeed * deltaTime;
-		}
-		if (sc::Input::isKeyPressed(sc::KEY_A))
-		{
-			_cameraPos.x -= _cameraMoveSpeed * deltaTime;
-		}
-		if (sc::Input::isKeyPressed(sc::KEY_S))
-		{
-			_cameraPos.y -= _cameraMoveSpeed * deltaTime;
-		}
-		if (sc::Input::isKeyPressed(sc::KEY_D))
-		{
-			_cameraPos.x += _cameraMoveSpeed * deltaTime;
-		}
-
+		_cameraController.onUpdate(deltaTime);
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
-		sc::RenderCommand::clear();
-
-		_camera.setPosition(_cameraPos);
-		
-		sc::Renderer::beginScene(_camera);//----------------- BEGIN SCENE -------------------------
+		sc::RenderCommand::clear();		
+		sc::Renderer::beginScene(*(_cameraController.getCamera()));		//----------------- BEGIN SCENE -------------------------
 		
 		scmath::Mat4 scale = scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f));
 
@@ -240,11 +211,16 @@ public:
 		//sc::EventDispatcher dispatcher;
 		//dispatcher.subscribe(this, &ExampleLayer::onKeyPressedEvent);
 		//dispatcher.dispatch(event);
-
+		_cameraController.onEvent(event);
 		if (event.type() == sc::EventType::KeyPressed)
 		{
 			auto asd = sc::Input::getKeyName(((sc::KeyPressedEvent&)event).getKeyCode());
-			LOG_WARNING("%s", asd.c_str())
+			LOG_WARNING("%s", asd.c_str());
+		}
+		else if (event.type() == sc::EventType::MouseScrolled)
+		{
+			auto asd = ((sc::MouseScrollEvent&)event).name();
+			LOG_WARNING("%s", asd.c_str());
 		}
 	}
 
@@ -266,11 +242,8 @@ private:
 	sc::Texture2dPtr _chessboardTexture;
 	sc::Texture2dPtr _transparentTexture;
 
-	sc::OrthoCamera _camera;
-	scmath::Vec3 _cameraPos;
-	float _cameraMoveSpeed = 1.f;
-	float _cameraRot = 0.0f;
-	float _cameraRotSpeed = 90.0f;
+	sc::CameraController _cameraController;
+
 	scmath::Vec3 _squarePos;
 	float _squareMoveSpeed = 1.0f;
 
@@ -282,7 +255,6 @@ class Sandbox : public sc::Application
 public:
 	Sandbox() 
 	{
-
 		pushLayer(new ExampleLayer());
 	}
 
