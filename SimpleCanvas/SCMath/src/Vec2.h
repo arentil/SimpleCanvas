@@ -67,7 +67,7 @@ public:
 
     /**
      * Build a string based on x, y and w like:
-     * Vec2(x, y)
+     * (x, y)
      * 
      * @return Vec2 in string
     */

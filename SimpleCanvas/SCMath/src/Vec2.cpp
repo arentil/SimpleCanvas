@@ -67,7 +67,7 @@ Vec2 Vec2::refract(Vec2 const& normal, float factor) const
 
 std::string Vec2::to_string() const
 {
-    std::string result = "Vec2(";
+    std::string result = "(";
     result += std::to_string(x) + ", ";
     result += std::to_string(y) + ")";
     return result;

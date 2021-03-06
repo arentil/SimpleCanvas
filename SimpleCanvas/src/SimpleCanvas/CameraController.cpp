@@ -2,6 +2,7 @@
 
 #include "Renderer/PerspectiveCamera.h"
 #include "Renderer/OrthographicCamera.h"
+#include "Renderer/Renderer.h"
 #include "Input/Input.h"
 
 namespace sc
@@ -9,9 +10,10 @@ namespace sc
 CameraController::CameraController(float aspectX, float aspectY)
 : _aspectX(aspectX)
 , _aspectY(aspectY)
-// , _camera(new PerspectiveCamera(70.0f, _aspectX / _aspectY, 0.0001f, 10.0f))
-, _camera(new OrthographicCamera(-_aspectX, _aspectX, -_aspectY,_aspectY, -1.0f, 1.0f)) // _camera(-1.6f, 1.6f, -0.9f, 0.9f)
+ , _camera(new PerspectiveCamera(70.0f, _aspectX / _aspectY, 0.0001f, 10.0f))
+//, _camera(new OrthographicCamera(-_aspectX, _aspectX, -_aspectY,_aspectY, -1.0f, 1.0f)) // _camera(-1.6f, 1.6f, -0.9f, 0.9f)
 {
+    Renderer::setCursorMode(CursorMode::CURSOR_DISABLED);
 }
 
 CameraPtr CameraController::getCamera() const
@@ -50,6 +52,11 @@ void CameraController::onUpdate(float deltaTime)
     if (Input::isKeyPressed(KEY_D))
     {
         _position.x += _translationSpeed * deltaTime;
+    }
+
+    if (Input::isKeyPressed(KEY_ESC))
+    {
+        Renderer::setCursorMode(CursorMode::CURSOR_NORMAL);
     }
 
     _camera->setPosition(_position);

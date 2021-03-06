@@ -1,0 +1,6 @@
+1. Rotations with quaternions
+2. Loading obj files or else to be able to render object with textures stored in files
+3. Refactor file and shader loader
+4. How to load and render many objects with different shaders easily
+5. Objects position and it's position related to parent
+6. Create save game system

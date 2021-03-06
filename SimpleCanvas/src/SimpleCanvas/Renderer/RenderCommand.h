@@ -2,6 +2,7 @@
 
 #include <SCMath.h>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #include "Renderer/VertexArray.h"
 
@@ -15,6 +16,8 @@ public:
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_DEPTH_TEST);
+        //glfwWindowHint(GLFW_SAMPLES, 4);
+        //glEnable(GL_MULTISAMPLE);
     }
 
     static void setClearColor(scmath::Vec4 const& color)
@@ -35,6 +38,12 @@ public:
     static void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
     {
         glViewport(x, y, width, height);
+    }
+
+    static void setCursorMode(int mode)
+    {
+        GLFWwindow *window = glfwGetCurrentContext();
+        glfwSetInputMode(window, GLFW_CURSOR, mode);
     }
 };
 } // namespace sc

@@ -16,6 +16,9 @@ void Renderer::beginScene(Camera const& camera)
     _sceneData->viewProjMatrix = camera.getViewProjMatrix();
 }
 
+void Renderer::endScene()
+{}
+
 void Renderer::submit(VertexArrayPtr const& vertexArray, ShaderPtr const& shader, scmath::Mat4 const& transform)
 {
     shader->bind();
@@ -30,7 +33,8 @@ void Renderer::setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t heig
     RenderCommand::setViewport(x, y, width, height);
 }
 
-void Renderer::endScene()
+void Renderer::setCursorMode(CursorMode mode)
 {
+    RenderCommand::setCursorMode(mode);
 }
 } // namespace sc
