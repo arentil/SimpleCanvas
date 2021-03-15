@@ -4,34 +4,7 @@
 
 namespace sc
 {
-static GLenum shaderTypeFromString(std::string const& type)
-{
-    if (type == "vertex") return GL_VERTEX_SHADER;
-    if (type == "fragment") return GL_FRAGMENT_SHADER;
-
-    assert(false && "Unknown shader type!");
-}
-
-Shader::Shader(std::string const& filePath)
-{
-    std::string source = readFile(filePath);
-    auto shaderSources = preprocess(source);
-    compile(shaderSources);
-
-    std::filesystem::path path = filePath;
-    _name = path.stem().string();
-}
-
-Shader::Shader(std::string const& name, std::string const& filePath)
-: _name(name)
-{
-    std::string source = readFile(filePath);
-    auto shaderSources = preprocess(source);
-    compile(shaderSources);
-}
-
-Shader::Shader(std::string const& name, std::string const& vertexSrc, std::string const& fragmentSrc)
-: _name(name)
+Shader::Shader(std::string const& vertexSrc, std::string const& fragmentSrc)
 {
     std::unordered_map<uint32_t, std::string> sources;
     sources[GL_VERTEX_SHADER] = vertexSrc;
@@ -42,53 +15,6 @@ Shader::Shader(std::string const& name, std::string const& vertexSrc, std::strin
 Shader::~Shader()
 {
     glDeleteProgram(_program);
-}
-
-std::string Shader::getName() const
-{
-    return _name;
-}
-
-std::string Shader::readFile(std::string const& filePath)
-{
-    std::string result;
-    std::ifstream in(filePath, std::ios::in & std::ios::binary);
-    if (in)
-    {
-        in.seekg(0, std::ios::end);
-        result.resize(in.tellg());
-        in.seekg(0, std::ios::beg);
-        in.read(&result[0], result.size());
-        in.close();
-    }
-    else
-    {
-        LOG_ERROR("Could not open file \'%s\'", filePath.c_str());
-    }
-    return result;
-}
-
-std::unordered_map<uint32_t, std::string> Shader::preprocess(std::string const& source)
-{
-    std::unordered_map<uint32_t, std::string> shaderSources;
-    
-    const char * typeToken = "#type";
-    size_t typeTokenLength = std::strlen(typeToken);
-    size_t pos = source.find(typeToken, 0);
-    while (pos != std::string::npos)
-    {
-        size_t eol = source.find_first_of("\r\n", pos);
-        assert(eol != std::string::npos && "Syntax error!");
-        size_t begin = pos + typeTokenLength + 1;
-        std::string type = source.substr(begin, eol - begin);
-        assert((type == "vertex" | type == "fragment") && "Invalid shader type specified");
-
-        size_t nextLinePos = source.find_first_not_of("\r\n", eol);
-        pos = source.find(typeToken, nextLinePos);
-        shaderSources[shaderTypeFromString(type)] = source.substr(nextLinePos, pos - (nextLinePos == std::string::npos ? source.size() - 1 : nextLinePos));
-    }
-
-    return shaderSources;
 }
 
 void Shader::compile(std::unordered_map<uint32_t, std::string> const& shaderSources)
@@ -200,41 +126,35 @@ void Shader::uploadUniformMat4(std::string const& name, scmath::Mat4 const& m)
     glUniformMatrix4fv(location, 1, GL_FALSE, m);
 }
 
+void ShadersContainer::addShader(std::string const& shaderName, ShaderPtr const& shader)
+{
+    if (_shaders.find(shaderName) != _shaders.end())
+    {
+        LOG_ERROR("ShaderContainer::addShader shader \"%s\" already exist!", shaderName.c_str())
+        return;
+    }
 
-void ShaderLibrary::add(ShaderPtr const& shader)
-{   
-    assert(!contains(shader->getName()) && "Shader already exist in lib");
-    add(shader->getName(), shader);
+    _shaders.emplace(shaderName, shader);
 }
 
-void ShaderLibrary::add(std::string const& name, ShaderPtr const& shader)
+void ShadersContainer::addShaderFromFile(std::string const& shaderName, std::string const& vertexShaderFilePath, std::string const& fragmentShaderFilePath)
 {
-    assert(!contains(name) && "Shader already exist in lib");
-    _shaders[name] = shader;
+    std::string const vertexSource = _fReader.readFile(vertexShaderFilePath);
+    std::string const fragmentSource = _fReader.readFile(fragmentShaderFilePath);
+    if (vertexSource.empty() || fragmentSource.empty())
+    {
+        LOG_ERROR("ShaderContainer::addShaderFromFile shader source empty!");
+        return;
+    }
+    _shaders.emplace(shaderName, std::make_unique<Shader>(vertexSource, fragmentSource));
 }
 
-ShaderPtr ShaderLibrary::load(std::string const& filePath)
+ShaderPtr ShadersContainer::getShader(std::string const& shaderName) const
 {
-    ShaderPtr newShader = std::make_shared<Shader>(filePath);
-    add(newShader);
-    return newShader;
-}
-
-ShaderPtr ShaderLibrary::load(std::string const& name, std::string const& filePath)
-{
-    ShaderPtr newShader = std::make_shared<Shader>(name, filePath);
-    add(name, newShader);
-    return newShader;
-}
-
-ShaderPtr ShaderLibrary::get(std::string const& name)
-{
-    assert(contains(name) && "Shader not exist in shaders lib");
-    return _shaders[name];
-}
-
-bool ShaderLibrary::contains(std::string const& name) const
-{
-    return _shaders.find(name) != _shaders.end();
+    if (_shaders.find(shaderName) == _shaders.end())
+    {
+        LOG_ERROR("ShaderContainer::getShader no such shader \"%s\" in ShaderContainer!", shaderName.c_str());
+    }
+    return _shaders.at(shaderName);
 }
 } // namespace sc

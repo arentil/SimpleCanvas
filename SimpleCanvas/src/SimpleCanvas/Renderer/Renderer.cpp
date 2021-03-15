@@ -19,11 +19,11 @@ void Renderer::beginScene(Camera const& camera)
 void Renderer::endScene()
 {}
 
-void Renderer::submit(VertexArrayPtr const& vertexArray, ShaderPtr const& shader, scmath::Mat4 const& transform)
+void Renderer::submit(VertexArrayPtr const& vertexArray, ShaderPtr const& shader, scmath::Mat4 const& modelMatrix)
 {
     shader->bind();
     shader->uploadUniformMat4("u_ViewProjection", _sceneData->viewProjMatrix);
-    shader->uploadUniformMat4("u_Model", transform);
+    shader->uploadUniformMat4("u_Model", modelMatrix);
     vertexArray->bind();
     RenderCommand::drawIndexed(vertexArray);
 }

@@ -15,7 +15,7 @@ public:
     static void init();
     static void beginScene(Camera const& camera);
     static void endScene();
-    static void submit(VertexArrayPtr const& vertexArray, ShaderPtr const& shader, scmath::Mat4 const& transform = scmath::Mat4::identity());
+    static void submit(VertexArrayPtr const& vertexArray, ShaderPtr const& shader, scmath::Mat4 const& modelMatrix = scmath::Mat4::identity());
     static void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
     static void setCursorMode(CursorMode mode);
 

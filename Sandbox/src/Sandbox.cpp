@@ -34,39 +34,8 @@ public:
 		auto indexBuffer = sc::IndexBuffer::create(indices, 3);
 		_triangleVAO->setIndexBuffer(indexBuffer);
 
-		std::string vertexSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Model;
-
-			out vec3 v_Position;
-			out vec4 v_Color;
-
-			void main()
-			{
-				v_Position = a_Position;
-				v_Color = a_Color;
-				gl_Position = u_ViewProjection * u_Model * vec4(a_Position, 1.0);
-			}
-		)";
-
-		std::string fragmentSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 a_color;
-			in vec3 v_Position;
-			in vec4 v_Color;
-
-			void main()
-			{
-				a_color = v_Color;
-			}
-		)";
-		_triangleShader = std::make_unique<sc::Shader>("TriangleShader", vertexSrc, fragmentSrc);
+		_shadersContainer.addShaderFromFile("TriangleShader", "assets/textures/shaders/ViewProj_vertex.glsl", "assets/textures/shaders/ViewProj_fragment.glsl");
+		_triangleShader = _shadersContainer.getShader("TriangleShader");
 
 
 		_squareVAO.reset(sc::VertexArray::create());
@@ -93,37 +62,8 @@ public:
 		auto indexBuffer2 = sc::IndexBuffer::create(indices2, sizeof(indices2) / sizeof(uint32_t));
 		_squareVAO->setIndexBuffer(indexBuffer2);
 
-		std::string flatColorVertexShaderSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Model;
-
-			out vec3 v_Position;
-
-			void main()
-			{
-				v_Position = a_Position;
-				gl_Position = u_ViewProjection * u_Model * vec4(a_Position, 1.0);
-			}
-		)";
-
-		std::string flatColorFragmentShaderSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 a_color;
-
-			uniform vec4 u_Color;
-
-			void main()
-			{
-				a_color = u_Color;
-			}
-		)";
-
-		_flatColorShader = std::make_unique<sc::Shader>("FlatColorShader", flatColorVertexShaderSrc, flatColorFragmentShaderSrc);
-
+		_shadersContainer.addShaderFromFile("FlatColorShader", "assets/textures/shaders/FlatColor_vertex.glsl", "assets/textures/shaders/FlatColor_fragment.glsl");
+		_flatColorShader = _shadersContainer.getShader("FlatColorShader");
 
 		_cubeVAO.reset(sc::VertexArray::create());
 
@@ -155,9 +95,11 @@ public:
 		auto cubeIndexBuffer = sc::IndexBuffer::create(cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t));
 		_cubeVAO->setIndexBuffer(cubeIndexBuffer);
 
-		auto textureShader = _shaderLib.load("assets/textures/shaders/Texture.glsl");
 		_chessboardTexture = sc::Texture2d::create("assets/textures/Checkerboard.png");
 		_transparentTexture = sc::Texture2d::create("assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
+
+		_shadersContainer.addShaderFromFile("Texture", "assets/textures/shaders/Texture_vertex.glsl", "assets/textures/shaders/Texture_fragment.glsl");
+		auto textureShader = _shadersContainer.getShader("Texture");
 		textureShader->bind();
 		textureShader->uploadUniformInt("v_TexCoord", 0);
 	}
@@ -187,11 +129,11 @@ public:
 
 		// square with chessboard texture
 		_chessboardTexture->bind();
-		sc::Renderer::submit(_squareVAO, _shaderLib.get("Texture"), scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
+		sc::Renderer::submit(_squareVAO, _shadersContainer.getShader("Texture"), scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
 
 		// square with blend texture
 		_transparentTexture->bind();
-		sc::Renderer::submit(_squareVAO, _shaderLib.get("Texture"), scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
+		sc::Renderer::submit(_squareVAO, _shadersContainer.getShader("Texture"), scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
 
 		// triangle
 		rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
@@ -225,7 +167,7 @@ public:
 	}
 
 private:
-	sc::ShaderLibrary _shaderLib;
+	sc::ShadersContainer _shadersContainer;
 
 	sc::ShaderPtr _triangleShader;
 	sc::VertexArrayPtr _triangleVAO;

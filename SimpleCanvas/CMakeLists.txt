@@ -30,11 +30,10 @@ add_subdirectory(SCMath)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas.h
-	${SOURCE_DIR}/SimpleCanvas/Utils/StringUtils.h
-	${SOURCE_DIR}/SimpleCanvas/Utils/stb_image.h
-	${SOURCE_DIR}/SimpleCanvas/Utils/stb_image.cpp
 	${SOURCE_DIR}/SimpleCanvas/Application.cpp
 	${SOURCE_DIR}/SimpleCanvas/Application.h
+	${SOURCE_DIR}/SimpleCanvas/CameraController.cpp
+	${SOURCE_DIR}/SimpleCanvas/CameraController.h
 	${SOURCE_DIR}/SimpleCanvas/Core.h
 	${SOURCE_DIR}/SimpleCanvas/EntryPoint.h
 	${SOURCE_DIR}/SimpleCanvas/Events/ApplicationEvent.h
@@ -50,29 +49,31 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/LayerContainer.h
 	${SOURCE_DIR}/SimpleCanvas/Logger.cpp
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/OrthographicCamera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/OrthographicCamera.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/PerspectiveCamera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/PerspectiveCamera.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/RenderCommand.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Shader.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Shader.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.h
+	${SOURCE_DIR}/SimpleCanvas/Utils/StringUtils.h
+	${SOURCE_DIR}/SimpleCanvas/Utils/stb_image.cpp
+	${SOURCE_DIR}/SimpleCanvas/Utils/stb_image.h
+	${SOURCE_DIR}/SimpleCanvas/Utils/FileReader.h
 	${SOURCE_DIR}/SimpleCanvas/Window.cpp
 	${SOURCE_DIR}/SimpleCanvas/Window.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Shader.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Shader.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/RenderCommand.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/OrthographicCamera.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/OrthographicCamera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/PerspectiveCamera.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/PerspectiveCamera.cpp
-	${SOURCE_DIR}/SimpleCanvas/CameraController.h
-	${SOURCE_DIR}/SimpleCanvas/CameraController.cpp
 )
 
 add_library(SimpleCanvas STATIC ${SOURCE_FILES})
