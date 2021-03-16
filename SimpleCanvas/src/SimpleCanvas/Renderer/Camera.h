@@ -26,9 +26,10 @@ public:
     void setPosition(scmath::Vec3 const& position);
     scmath::Vec3 getPosition() const;
 
-    void setRotation(float rotation);
-    float getRotation() const;
+    void setFrontVector(scmath::Vec3 const& front);
+    const scmath::Vec3& getFrontVector() const;
 
+    
     const scmath::Mat4& getProjMatrix() const;
     const scmath::Mat4& getViewMatrix() const;
     const scmath::Mat4& getViewProjMatrix() const;
@@ -43,6 +44,7 @@ protected:
     scmath::Mat4 _viewProjMatrix;
 
     scmath::Vec3 _position;
-    float _rotation = 0.0f;
+    scmath::Vec3 _front;
+    scmath::Vec3 _up;
 };
 } // namespace sc

@@ -112,10 +112,8 @@ public:
 		sc::Renderer::beginScene(*(_cameraController.getCamera()));		//----------------- BEGIN SCENE -------------------------
 		
 		scmath::Mat4 scale = scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f));
-
 		_flatColorShader->bind();
 		_flatColorShader->uploadUniformFloat4("u_Color", _squareColor);
-
 		for (int y = 0; y < 20; y++)
 
 		{

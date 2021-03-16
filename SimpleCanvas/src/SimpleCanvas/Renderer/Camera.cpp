@@ -6,8 +6,12 @@ Camera::Camera(CameraType type, scmath::Mat4 const& projectionMatrix, scmath::Ma
 : _type(type)
 , _projMatrix(projectionMatrix)
 , _viewMatrix(viewMatrix)
+, _position(0.0f, 0.0f, 3.0f)
+, _front(0.0f, 0.0f, -1.0f)
+, _up(0.0f, 1.0f, 0.0f)
 {
-    _viewProjMatrix = _projMatrix * _viewMatrix;
+    //_viewProjMatrix = _projMatrix * _viewMatrix;
+    recalculateViewMatrix();
 }
 
 CameraType Camera::getType() const
@@ -26,15 +30,15 @@ scmath::Vec3 Camera::getPosition() const
     return _position;
 }
 
-void Camera::setRotation(float rotation) 
+void Camera::setFrontVector(scmath::Vec3 const& front)
 {
-    _rotation = rotation;
-    recalculateViewMatrix(); 
+    _front = front;
+    recalculateViewMatrix();
 }
 
-float Camera::getRotation() const 
+const scmath::Vec3& Camera::getFrontVector() const 
 { 
-    return _rotation; 
+    return _front; 
 }
 
 const scmath::Mat4& Camera::getProjMatrix() const 
@@ -54,8 +58,9 @@ const scmath::Mat4& Camera::getViewProjMatrix() const
 
 void Camera::recalculateViewMatrix()
 {
-    scmath::Mat4 transform = scmath::Mat4::translate(_position) * scmath::Mat4::rotate(scmath::degToRad(_rotation), scmath::Vec3(0, 0, 1));
-    _viewMatrix = scmath::Mat4::inverse(transform);
+   // scmath::Mat4 transform = scmath::Mat4::translate(_position);
+    //_viewMatrix = scmath::Mat4::inverse(transform);
+    _viewMatrix = scmath::Mat4::lookAt(_position,  _position + _front, _up);
     _viewProjMatrix = _projMatrix * _viewMatrix;
 }
 }

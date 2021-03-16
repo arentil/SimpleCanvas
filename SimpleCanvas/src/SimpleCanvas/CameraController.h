@@ -4,6 +4,7 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
+#include "Events/KeyEvent.h"
 
 #include <SCMath.h>
 
@@ -21,6 +22,7 @@ public:
     void onEvent(Event &event);
 
 private:
+    void onMouseMoved(MouseMovedEvent &event);
     void onMouseScrolled(MouseScrollEvent &event);
     void onWindowResize(WindowResizeEvent &event);
 
@@ -28,7 +30,10 @@ private:
     float _aspectX, _aspectY;
     CameraPtr _camera;
 
-    scmath::Vec3 _position;
     float _translationSpeed = 1.0f;
+    float _yaw = 0.0f;
+    float _pitch = 0.0f;
+    float _lastX, _lastY;
+    bool _isFirstMouse = true;
 };
 } // namespace sc

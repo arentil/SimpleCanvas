@@ -12,6 +12,7 @@ add_subdirectory(SimpleCanvas)
 # if build type is not specified, cmake will assume it is a Release build type
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
+  MESSAGE("============================== THIS IS RELEASE !!!!!!!!!!!!!!!!!")
 endif()
 
 if (MSVC)

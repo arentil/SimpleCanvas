@@ -84,8 +84,10 @@ public:
     Vec3& operator=(Vec3&& other);
     Vec3& operator=(Vec3 const& other);
     Vec3 operator+(Vec3 const& other) const;
+    Vec3& operator+=(Vec3 const& other);
     Vec3 operator+(float num) const;
     Vec3 operator-(Vec3 const& other) const;
+    Vec3& operator-=(Vec3 const& other);
     Vec3 operator-() const;
     bool operator==(Vec3 const& other) const;
     bool operator!=(Vec3 const& other) const;

@@ -363,17 +363,18 @@ Mat4 Mat4::inverse(Mat4 const& m)
     return Mat4::identity();
 }
 
-Mat4 Mat4::lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up)
+Mat4 Mat4::lookAt(Vec3 const& eye, Vec3 const& target, Vec3 const& up)
 {
-    Vec3 f = Vec3::normalized(center - eye);   // looking forward vector
-    Vec3 s = Vec3::cross(f, up);            // side looking vector
-    Vec3 u = Vec3::cross(s, f);             // camera upper
-    return Mat4(
-        {f, 0},
-        {u, 0},
-        {f, 0},
-        {-eye, 1}
-    );
+	Vec3 zaxis = Vec3::normalized(eye - target);
+	Vec3	xaxis = Vec3::normalized(Vec3::cross(up, zaxis));
+	Vec3	yaxis = Vec3::cross(zaxis, xaxis);
+
+	return Mat4(
+	{ xaxis.x, yaxis.x, zaxis.x, 0.0f },
+	{ xaxis.y, yaxis.y, zaxis.y, 0.0f },
+	{ xaxis.z, yaxis.z, zaxis.z, 0.0f },
+	{ -Vec3::dot(xaxis,eye), -Vec3::dot(yaxis,eye), -Vec3::dot(zaxis,eye), 1.0f }
+	);
 }
 
 Mat4 Mat4::frustum(float left, float right, float bottom, float top, float near, float far)

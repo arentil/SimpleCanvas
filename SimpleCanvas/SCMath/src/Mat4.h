@@ -56,7 +56,7 @@ public:
     static Mat4 adjugate(Mat4 const& inverse);
 
     // up is a normalized vector pointing up
-    static Mat4 lookAt(Vec3 const& eye, Vec3 const& center, Vec3 const& up);
+    static Mat4 lookAt(Vec3 const& eye, Vec3 const& target, Vec3 const& up);
 
     static Mat4 frustum(float left, float right, float bottom, float top, float near, float far);
     static Mat4 orthographic(float left, float right, float bottom, float top, float near, float far);

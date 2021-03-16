@@ -10,7 +10,9 @@ namespace sc
 CameraController::CameraController(float aspectX, float aspectY)
 : _aspectX(aspectX)
 , _aspectY(aspectY)
- , _camera(new PerspectiveCamera(70.0f, _aspectX / _aspectY, 0.0001f, 10.0f))
+, _camera(new PerspectiveCamera(70.0f, _aspectX / _aspectY, 0.0001f, 10.0f))
+, _lastX(1280 / 2.0f)
+, _lastY(720 / 2.0f)
 //, _camera(new OrthographicCamera(-_aspectX, _aspectX, -_aspectY,_aspectY, -1.0f, 1.0f)) // _camera(-1.6f, 1.6f, -0.9f, 0.9f)
 {
     Renderer::setCursorMode(CursorMode::CURSOR_DISABLED);
@@ -24,58 +26,80 @@ CameraPtr CameraController::getCamera() const
 void CameraController::onUpdate(float deltaTime)
 {
     // forward and backward
-    if (Input::isKeyPressed(KEY_UP))
-    {
-        _position.z -= _translationSpeed * deltaTime;
-    }
-    if (Input::isKeyPressed(KEY_DOWN))
-    {
-        _position.z += _translationSpeed * deltaTime;
-    }
+    scmath::Vec3 cameraPos = _camera->getPosition();
+    scmath::Vec3 cameraFront = _camera->getFrontVector();
 
-    // up and down
     if (Input::isKeyPressed(KEY_W))
     {
-        _position.y += _translationSpeed * deltaTime;
+        cameraPos += cameraFront * deltaTime;
+        _camera->setPosition(cameraPos);
     }
     if (Input::isKeyPressed(KEY_S))
     {
-        _position.y -= _translationSpeed * deltaTime;
+        cameraPos -= cameraFront * deltaTime;
+        _camera->setPosition(cameraPos);
     }
-
-    // left and right
     if (Input::isKeyPressed(KEY_A))
     {
-        _position.x -= _translationSpeed * deltaTime;
+        cameraPos -= scmath::Vec3::normalized(scmath::Vec3::cross(cameraFront, scmath::Vec3(0, 1, 0))) * deltaTime;
+        _camera->setPosition(cameraPos);
     }
-
     if (Input::isKeyPressed(KEY_D))
     {
-        _position.x += _translationSpeed * deltaTime;
+        cameraPos += scmath::Vec3::normalized(scmath::Vec3::cross(cameraFront, scmath::Vec3(0, 1, 0))) * deltaTime;
+        _camera->setPosition(cameraPos);
     }
 
     if (Input::isKeyPressed(KEY_ESC))
     {
         Renderer::setCursorMode(CursorMode::CURSOR_NORMAL);
     }
-
-    _camera->setPosition(_position);
 }
 
 void CameraController::onEvent(Event &event)
 {
 	EventDispatcher dispatcher;
-	dispatcher.subscribe(this, &CameraController::onMouseScrolled);
+    dispatcher.subscribe(this, &CameraController::onMouseMoved);
     dispatcher.subscribe(this, &CameraController::onWindowResize);
 	dispatcher.dispatch(event);
 }
 
-void CameraController::onMouseScrolled(MouseScrollEvent &event)
+void CameraController::onMouseMoved(MouseMovedEvent &event)
 {
-    ////_position.z  // divide by 5 to slow down zomming
-    //_zoom -= (event.GetYOffset() / 5);
-    if (_camera->getType() == CameraType::ORTHOGRAPHIC)
-        ((OrthographicCamera*)(_camera.get()))->setProjection(-(_aspectX / _aspectY) * _zoom, _aspectX / _aspectY * _zoom, -_zoom, _zoom, -1.0f, 1.0f);
+    float x = event.getX();
+    float y = event.getY();
+
+    if (_isFirstMouse)
+    {
+        _lastX = x;
+        _lastY = y;
+        _isFirstMouse = false;
+    }
+
+    float xoffset = x - _lastX;
+    float yoffset = _lastY - y;
+    _lastX = x;
+    _lastY = y;
+
+    float sensitivity = 0.1f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    _yaw += xoffset;
+    _pitch += yoffset;
+
+    if (_pitch > 89.0f)
+        _pitch = 89.0f;
+    if (_pitch < -89.0f)
+        _pitch = -89.0f;
+
+    scmath::Vec3 direction;
+    direction.x = cos(scmath::degToRad(_yaw)) * cos(scmath::degToRad(_pitch));
+    direction.y = sin(scmath::degToRad(_pitch));
+    direction.z = sin(scmath::degToRad(_yaw)) * cos(scmath::degToRad(_pitch));
+    _camera->setFrontVector(scmath::Vec3::normalized(direction));
+
+    LOG_ERROR("cmake build type: %s", std::string(CMAKE_BUILD_TYPE).c_str());
 }
 
 void CameraController::onWindowResize(WindowResizeEvent &event)
