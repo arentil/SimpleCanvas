@@ -26,7 +26,13 @@ private:
 };
 
 // for define vargs "##" means, if there will be no vards, comma will be removed
-#define LOG_INFO(format, ...) sc::Logger::instance().LogInfo(format, ##__VA_ARGS__);
-#define LOG_WARNING(format,  ...) sc::Logger::instance().LogWarning(format, ##__VA_ARGS__);	
-#define LOG_ERROR(format, ...) sc::Logger::instance().LogError(format, ##__VA_ARGS__);
+#ifdef BUILD_TYPE_DEBUG
+	#define LOG_INFO(format, ...) sc::Logger::instance().LogInfo(format, ##__VA_ARGS__);
+	#define LOG_WARNING(format,  ...) sc::Logger::instance().LogWarning(format, ##__VA_ARGS__);
+	#define LOG_ERROR(format, ...) sc::Logger::instance().LogError(format, ##__VA_ARGS__);
+#else
+	#define LOG_INFO(format, ...)
+	#define LOG_WARNING(format,  ...)
+	#define LOG_ERROR(format, ...)
+#endif
 } // namespace sc

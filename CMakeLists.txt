@@ -4,26 +4,21 @@ project(SimpleCanvas VERSION 1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_VERBOSE_MAKEFILE on)
 
 include_directories(${CMAKE_SOURCE_DIR}/SimpleCanvas/src)
 
 add_subdirectory(SimpleCanvas)
 
-# if build type is not specified, cmake will assume it is a Release build type
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release)
-  MESSAGE("============================== THIS IS RELEASE !!!!!!!!!!!!!!!!!")
-endif()
-
 if (MSVC)
-  add_compile_options(/W4 /std:c++latest) #/WX
-  set(CMAKE_CXX_FLAGS_DEBUG "/Od")
-  set(CMAKE_CXX_FLAGS_RELEASE "/O2")
+  add_compile_options(/W4 /std:c++latest)
+  set(CMAKE_CXX_FLAGS_DEBUG "/Od /Wall /std:c++latest")
+  set(CMAKE_CXX_FLAGS_RELEASE "/W0 /O2 /DNDEBUG")
   #set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
 else()
   add_compile_options(-std=c++17 -Wall -Wextra -pedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov)
   set(CMAKE_CXX_FLAGS_DEBUG "-g")
-  set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+  set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 endif ()
 
 

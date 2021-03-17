@@ -15,6 +15,7 @@ CameraController::CameraController(float aspectX, float aspectY)
 , _lastY(720 / 2.0f)
 //, _camera(new OrthographicCamera(-_aspectX, _aspectX, -_aspectY,_aspectY, -1.0f, 1.0f)) // _camera(-1.6f, 1.6f, -0.9f, 0.9f)
 {
+    _currentCursorMode = CursorMode::CURSOR_DISABLED;
     Renderer::setCursorMode(CursorMode::CURSOR_DISABLED);
 }
 
@@ -29,30 +30,35 @@ void CameraController::onUpdate(float deltaTime)
     scmath::Vec3 cameraPos = _camera->getPosition();
     scmath::Vec3 cameraFront = _camera->getFrontVector();
 
+    float shiftMultiplier = 1.0f;
+    if (Input::isKeyPressed(KEY_LEFT_SHIFT))
+        shiftMultiplier = 3.0f;
+
     if (Input::isKeyPressed(KEY_W))
     {
-        cameraPos += cameraFront * deltaTime;
+        cameraPos += cameraFront * deltaTime * shiftMultiplier;
         _camera->setPosition(cameraPos);
     }
     if (Input::isKeyPressed(KEY_S))
     {
-        cameraPos -= cameraFront * deltaTime;
+        cameraPos -= cameraFront * deltaTime * shiftMultiplier;
         _camera->setPosition(cameraPos);
     }
     if (Input::isKeyPressed(KEY_A))
     {
-        cameraPos -= scmath::Vec3::normalized(scmath::Vec3::cross(cameraFront, scmath::Vec3(0, 1, 0))) * deltaTime;
+        cameraPos -= scmath::Vec3::normalized(scmath::Vec3::cross(cameraFront, scmath::Vec3(0, 1, 0))) * deltaTime * shiftMultiplier;
         _camera->setPosition(cameraPos);
     }
     if (Input::isKeyPressed(KEY_D))
     {
-        cameraPos += scmath::Vec3::normalized(scmath::Vec3::cross(cameraFront, scmath::Vec3(0, 1, 0))) * deltaTime;
+        cameraPos += scmath::Vec3::normalized(scmath::Vec3::cross(cameraFront, scmath::Vec3(0, 1, 0))) * deltaTime * shiftMultiplier;
         _camera->setPosition(cameraPos);
     }
 
     if (Input::isKeyPressed(KEY_ESC))
     {
         Renderer::setCursorMode(CursorMode::CURSOR_NORMAL);
+        _currentCursorMode = CursorMode::CURSOR_NORMAL;
     }
 }
 
@@ -66,6 +72,9 @@ void CameraController::onEvent(Event &event)
 
 void CameraController::onMouseMoved(MouseMovedEvent &event)
 {
+    if (_currentCursorMode == CursorMode::CURSOR_NORMAL)
+        return;
+
     float x = event.getX();
     float y = event.getY();
 
@@ -93,13 +102,13 @@ void CameraController::onMouseMoved(MouseMovedEvent &event)
     if (_pitch < -89.0f)
         _pitch = -89.0f;
 
+    LOG_WARNING("YAW: %f PITCH: %f", _yaw, _pitch);
+
     scmath::Vec3 direction;
     direction.x = cos(scmath::degToRad(_yaw)) * cos(scmath::degToRad(_pitch));
     direction.y = sin(scmath::degToRad(_pitch));
     direction.z = sin(scmath::degToRad(_yaw)) * cos(scmath::degToRad(_pitch));
     _camera->setFrontVector(scmath::Vec3::normalized(direction));
-
-    LOG_ERROR("cmake build type: %s", std::string(CMAKE_BUILD_TYPE).c_str());
 }
 
 void CameraController::onWindowResize(WindowResizeEvent &event)

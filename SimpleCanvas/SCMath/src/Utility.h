@@ -6,6 +6,8 @@
 
 namespace scmath
 {
+constexpr float PI = (float)M_PI;
+
 inline bool f_equal(float first, float second)
 {
     return std::fabs(first - second) < std::numeric_limits<float>::epsilon();
@@ -13,12 +15,12 @@ inline bool f_equal(float first, float second)
 
 inline float radToDeg(float rad)
 {
-    return rad * 180 / M_PI;
+    return rad * 180 / PI;
 }
 
 inline float degToRad(float deg)
 {
-    return deg * M_PI / 180;
+    return deg * PI / 180;
 }
 
 template<typename T>

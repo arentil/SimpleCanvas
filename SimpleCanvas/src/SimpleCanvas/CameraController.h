@@ -35,5 +35,6 @@ private:
     float _pitch = 0.0f;
     float _lastX, _lastY;
     bool _isFirstMouse = true;
+    CursorMode _currentCursorMode;
 };
 } // namespace sc

@@ -148,20 +148,7 @@ public:
 
 	void onEvent(sc::Event &event) override
 	{
-		//sc::EventDispatcher dispatcher;
-		//dispatcher.subscribe(this, &ExampleLayer::onKeyPressedEvent);
-		//dispatcher.dispatch(event);
 		_cameraController.onEvent(event);
-		if (event.type() == sc::EventType::KeyPressed)
-		{
-			auto asd = sc::Input::getKeyName(((sc::KeyPressedEvent&)event).getKeyCode());
-			LOG_WARNING("%s", asd.c_str());
-		}
-		else if (event.type() == sc::EventType::MouseScrolled)
-		{
-			auto asd = ((sc::MouseScrollEvent&)event).name();
-			LOG_WARNING("%s", asd.c_str());
-		}
 	}
 
 private:

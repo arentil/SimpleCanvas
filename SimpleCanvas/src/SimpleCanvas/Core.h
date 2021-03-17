@@ -7,3 +7,9 @@
 #endif
 
 #define GLFW_INCLUDE_NONE
+
+#ifndef NDEBUG
+	#define BUILD_TYPE_DEBUG
+#else
+	#define BUILD_TYPE_RELEASE
+#endif
