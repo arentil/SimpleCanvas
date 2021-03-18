@@ -24,6 +24,7 @@ public:
 private:
     void onMouseMoved(MouseMovedEvent &event);
     void onMouseScrolled(MouseScrollEvent &event);
+    void onMouseButtonPressed(MouseButtonPressedEvent &event);
     void onWindowResize(WindowResizeEvent &event);
 
     float _zoom = 1.0f;

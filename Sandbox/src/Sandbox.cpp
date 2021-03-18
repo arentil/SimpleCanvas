@@ -10,7 +10,6 @@ public:
 	: Layer("Example")
 	, _cameraController(16.0f, 9.0f)//1280.0f / 720.0f)
 	{
-
 		std::vector<std::string> cubemapFacesFiles
 		{
 			"assets/textures/skybox/right.jpg",

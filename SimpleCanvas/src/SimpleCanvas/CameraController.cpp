@@ -10,7 +10,7 @@ namespace sc
 CameraController::CameraController(float aspectX, float aspectY)
 : _aspectX(aspectX)
 , _aspectY(aspectY)
-, _camera(new PerspectiveCamera(70.0f, _aspectX / _aspectY, 0.0001f, 10.0f))
+, _camera(new PerspectiveCamera(70.0f, _aspectX / _aspectY, 0.1f, 1000.0f))
 //, lastX(1280 / 2.0f)
 //, _lastY(720 / 2.0f)
 //, _camera(new OrthographicCamera(-_aspectX, _aspectX, -_aspectY,_aspectY, -1.0f, 1.0f)) // _camera(-1.6f, 1.6f, -0.9f, 0.9f)
@@ -66,6 +66,7 @@ void CameraController::onEvent(Event &event)
 {
 	EventDispatcher dispatcher;
     dispatcher.subscribe(this, &CameraController::onMouseMoved);
+    dispatcher.subscribe(this, &CameraController::onMouseButtonPressed);
     dispatcher.subscribe(this, &CameraController::onWindowResize);
 	dispatcher.dispatch(event);
 }
@@ -107,6 +108,15 @@ void CameraController::onMouseMoved(MouseMovedEvent &event)
     direction.y = sin(scmath::degToRad(_pitch));
     direction.z = sin(scmath::degToRad(_yaw)) * cos(scmath::degToRad(_pitch));
     _camera->setFrontVector(scmath::Vec3::normalized(direction));
+}
+
+void CameraController::onMouseButtonPressed(MouseButtonPressedEvent &event)
+{
+    if (_currentCursorMode != CursorMode::CURSOR_NORMAL)
+        return;
+
+    Renderer::setCursorMode(CursorMode::CURSOR_DISABLED);
+    _currentCursorMode = CursorMode::CURSOR_DISABLED;
 }
 
 void CameraController::onWindowResize(WindowResizeEvent &event)
