@@ -11,8 +11,8 @@ CameraController::CameraController(float aspectX, float aspectY)
 : _aspectX(aspectX)
 , _aspectY(aspectY)
 , _camera(new PerspectiveCamera(70.0f, _aspectX / _aspectY, 0.0001f, 10.0f))
-, _lastX(1280 / 2.0f)
-, _lastY(720 / 2.0f)
+//, lastX(1280 / 2.0f)
+//, _lastY(720 / 2.0f)
 //, _camera(new OrthographicCamera(-_aspectX, _aspectX, -_aspectY,_aspectY, -1.0f, 1.0f)) // _camera(-1.6f, 1.6f, -0.9f, 0.9f)
 {
     _currentCursorMode = CursorMode::CURSOR_DISABLED;
@@ -90,7 +90,7 @@ void CameraController::onMouseMoved(MouseMovedEvent &event)
     _lastX = x;
     _lastY = y;
 
-    float sensitivity = 0.1f;
+    float sensitivity = 0.05f;
     xoffset *= sensitivity;
     yoffset *= sensitivity;
 
@@ -101,8 +101,6 @@ void CameraController::onMouseMoved(MouseMovedEvent &event)
         _pitch = 89.0f;
     if (_pitch < -89.0f)
         _pitch = -89.0f;
-
-    LOG_WARNING("YAW: %f PITCH: %f", _yaw, _pitch);
 
     scmath::Vec3 direction;
     direction.x = cos(scmath::degToRad(_yaw)) * cos(scmath::degToRad(_pitch));

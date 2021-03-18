@@ -9,8 +9,52 @@ public:
 	ExampleLayer()
 	: Layer("Example")
 	, _cameraController(16.0f, 9.0f)//1280.0f / 720.0f)
-	, _squarePos(0, 0, 0)
 	{
+
+		std::vector<std::string> cubemapFacesFiles
+		{
+			"assets/textures/skybox/right.jpg",
+			"assets/textures/skybox/left.jpg",
+			"assets/textures/skybox/top.jpg",
+			"assets/textures/skybox/bottom.jpg",
+			"assets/textures/skybox/front.jpg",
+			"assets/textures/skybox/back.jpg"
+		};
+		_cubemap.reset(new sc::Cubemap(cubemapFacesFiles));
+		_cubemapVAO.reset(sc::VertexArray::create());
+		float cubemapVAO[8 * 3] = {
+			-1.0f, -1.0f, 1.0f,
+			1.0f, -1.0f, 1.0f,
+			1.0f, 1.0f, 1.0f,
+			-1.0f, 1.0f, 1.0f,
+			-1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f, -1.0f,
+			1.0f, 1.0f, -1.0f,
+			-1.0f, 1.0f, -1.0f
+		};
+		auto cubemapVBO = sc::VertexBuffer::create(cubemapVAO, sizeof(cubemapVAO));
+		sc::BufferLayout cubemapLayout = {
+			{ sc::ShaderDataType::Float3, "aPos"}
+		};
+
+		cubemapVBO->setLayout(cubemapLayout);
+		_cubemapVAO->addVertexBuffer(cubemapVBO);
+
+		unsigned int cubemapIndices[] = { 
+			5, 1, 2, 2, 6 ,5, // right
+			0, 4, 7, 7, 3, 0, // left
+			7, 6, 2, 2, 7, 3, // top
+			0, 1, 5, 5, 4, 0, // bottom
+			4, 5, 6, 6, 7, 4, // fromt
+			1, 0, 3, 3, 2, 1  // back
+		};
+		auto cubemapIndexBuffer = sc::IndexBuffer::create(cubemapIndices,  sizeof(cubemapIndices) / sizeof(uint32_t));
+		_cubemapVAO->setIndexBuffer(cubemapIndexBuffer);
+
+		_shadersContainer.addShaderFromFile("Cubemap", "assets/textures/shaders/Cubemap_vertex.glsl", "assets/textures/shaders/Cubemap_fragment.glsl");
+
+		// END OF CUBEMAP
+
 		_triangleVAO.reset(sc::VertexArray::create());
 
 		float triangleVAO[3 * 7] = {
@@ -34,8 +78,7 @@ public:
 		auto indexBuffer = sc::IndexBuffer::create(indices, 3);
 		_triangleVAO->setIndexBuffer(indexBuffer);
 
-		_shadersContainer.addShaderFromFile("TriangleShader", "assets/textures/shaders/ViewProj_vertex.glsl", "assets/textures/shaders/ViewProj_fragment.glsl");
-		_triangleShader = _shadersContainer.getShader("TriangleShader");
+		_shadersContainer.addShaderFromFile("Triangle", "assets/textures/shaders/ViewProj_vertex.glsl", "assets/textures/shaders/ViewProj_fragment.glsl");
 
 
 		_squareVAO.reset(sc::VertexArray::create());
@@ -62,8 +105,7 @@ public:
 		auto indexBuffer2 = sc::IndexBuffer::create(indices2, sizeof(indices2) / sizeof(uint32_t));
 		_squareVAO->setIndexBuffer(indexBuffer2);
 
-		_shadersContainer.addShaderFromFile("FlatColorShader", "assets/textures/shaders/FlatColor_vertex.glsl", "assets/textures/shaders/FlatColor_fragment.glsl");
-		_flatColorShader = _shadersContainer.getShader("FlatColorShader");
+		_shadersContainer.addShaderFromFile("FlatColor", "assets/textures/shaders/FlatColor_vertex.glsl", "assets/textures/shaders/FlatColor_fragment.glsl");
 
 		_cubeVAO.reset(sc::VertexArray::create());
 
@@ -110,10 +152,22 @@ public:
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		sc::RenderCommand::clear();		
 		sc::Renderer::beginScene(*(_cameraController.getCamera()));		//----------------- BEGIN SCENE -------------------------
-		
+	
+
+		// draw skybox first
+		glDepthMask(GL_FALSE);
+		auto cubemapShader = _shadersContainer.getShader("Cubemap");
+		cubemapShader->bind();
+		_cubemap->bind();
+		//scmath::Mat4 scaleCubemap = scmath::Mat4::scale(scmath::Vec3(4.0f, 4.0f, 4.0f));
+		sc::Renderer::submit(_cubemapVAO, cubemapShader, scmath::Mat4::translate(_cameraController.getCamera()->getPosition()));
+		glDepthMask(GL_TRUE);
+
+
 		scmath::Mat4 scale = scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f));
-		_flatColorShader->bind();
-		_flatColorShader->uploadUniformFloat4("u_Color", _squareColor);
+		auto flatColorShader = _shadersContainer.getShader("FlatColor");
+		flatColorShader->bind();
+		flatColorShader->uploadUniformFloat4("u_Color", _squareColor);
 		for (int y = 0; y < 20; y++)
 
 		{
@@ -121,7 +175,7 @@ public:
 			{
 				scmath::Vec3 pos(x * 0.11f, y * 0.11f, -0.4f);
 				scmath::Mat4 transform = scmath::Mat4::translate(pos) * scale;
-				sc::Renderer::submit(_squareVAO, _flatColorShader, transform);
+				sc::Renderer::submit(_squareVAO, flatColorShader, transform);
 			}
 		}
 
@@ -137,11 +191,11 @@ public:
 		rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
 		scmath::Vec3 normalizedAxis(0.0f, 0.0f, 1.0f);
 		scmath::Vec3 tranlPos(1.0f, 0.0f, 0.0f);
-		sc::Renderer::submit(_triangleVAO, _triangleShader, scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::translate(tranlPos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
+		sc::Renderer::submit(_triangleVAO,  _shadersContainer.getShader("Triangle"), scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::translate(tranlPos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
 
 		// cube
 		scmath::Vec3 moveCube(0.5f, 0.0f, 0.0f);
-		sc::Renderer::submit(_cubeVAO, _triangleShader, scmath::Mat4::translate(moveCube)* scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
+		sc::Renderer::submit(_cubeVAO, _shadersContainer.getShader("Triangle"), scmath::Mat4::translate(moveCube)* scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
 
 		sc::Renderer::endScene();		//---------------------------- END SCENE ---------------------------
 	}
@@ -154,13 +208,11 @@ public:
 private:
 	sc::ShadersContainer _shadersContainer;
 
-	sc::ShaderPtr _triangleShader;
 	sc::VertexArrayPtr _triangleVAO;
 
 	float rotationTriangle = 0.0f;
 	float rotationTriangleSpeed = 30.0f;
 
-	sc::ShaderPtr _flatColorShader;
 	sc::VertexArrayPtr _squareVAO;
 
 	//cube
@@ -171,10 +223,12 @@ private:
 
 	sc::CameraController _cameraController;
 
-	scmath::Vec3 _squarePos;
 	float _squareMoveSpeed = 1.0f;
 
 	scmath::Vec4 _squareColor = {0.2f, 0.3f, 0.8f, 1.0f};
+
+	sc::VertexArrayPtr _cubemapVAO;
+	sc::CubemapPtr _cubemap;
 };
 
 class Sandbox : public sc::Application

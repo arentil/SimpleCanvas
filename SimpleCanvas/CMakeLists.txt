@@ -53,6 +53,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/OrthographicCamera.cpp

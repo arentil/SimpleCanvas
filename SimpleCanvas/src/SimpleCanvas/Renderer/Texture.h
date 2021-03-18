@@ -2,19 +2,10 @@
 
 namespace sc
 {
-class Texture
-{
-public:
-    virtual uint32_t getWidth() const = 0;
-    virtual uint32_t getHeight() const = 0;
-    virtual void bind(uint32_t slot = 0) const = 0;
-};
-
 class Texture2d;
 using Texture2dPtr = std::shared_ptr<Texture2d>;
 
-
-class Texture2d : public Texture
+class Texture2d
 {
 public:
     Texture2d(std::string const& filePath);
@@ -22,11 +13,11 @@ public:
 
     static Texture2dPtr create(std::string const& filePath);
 
-    virtual uint32_t getWidth() const override { return _width; }
-    virtual uint32_t getHeight() const override {return _height; }
-    virtual void bind(uint32_t slot = 0) const override;
+    uint32_t getWidth() const { return _width; }
+    uint32_t getHeight() const {return _height; }
+    void bind(uint32_t slot = 0) const;
 
-private:
+protected:
     std::string _filePath;
     uint32_t _width, _height;
     uint32_t _rendererId;

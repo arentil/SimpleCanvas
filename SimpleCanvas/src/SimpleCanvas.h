@@ -34,3 +34,4 @@
 #include "SimpleCanvas/Renderer/Shader.h"
 #include "SimpleCanvas/Renderer/VertexArray.h"
 #include "SimpleCanvas/Renderer/Texture.h"
+#include "SimpleCanvas/Renderer/Cubemap.h"
