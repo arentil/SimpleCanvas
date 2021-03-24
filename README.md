@@ -44,3 +44,4 @@ Then run cmake and build with make:
 You will need to download and install a binary release of [CMake](https://cmake.org/download) and [python](https://www.python.org/downloads/windows/).
 Generate build system for Visual Studio 15 2017 or later.
 Make sure that Sandbox is "Set as StartUp Projekt"
+If you do not have any enviornment, you can use easy and lightweight Visual Studio Code. You can follow this [INSTRUCTION](https://code.visualstudio.com/docs/cpp/config-msvc).
