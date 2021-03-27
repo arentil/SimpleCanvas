@@ -1,6 +1,26 @@
-1. Rotations with quaternions
-2. Loading obj files or else to be able to render object with textures stored in files
-3. Refactor file and shader loader
-4. How to load and render many objects with different shaders easily
-5. Objects position and it's position related to parent
-6. Create save game system
+ - How to load and render object easily, single draw function for Model class (create Mesh and Model representation first)
+ - How to draw many objects without changing shader. (Sort objects by shaders, then draw?)
+ - Objects position and it's position related to parent (cycle list tree)
+ - Loaing obj files or else to be able to render object with textures stored in files(assipm?)
+ - basic lightning models  (ambient, diffuse, specular, Blinn-Phong?)
+ - Refactor file and shader loader (shader loader refactor done)
+ - Create save game system
+
+For the game
+ - perlin noise
+ - terrain generator
+ - oct tree
+
+ tinyobjloader
+ GLTF specification
+
+Sound:
+????? simple sound engine (salsa)
+
+ Game ideas:
+ simple duck shooter
+ tank battle?
+ square shooter with projectiles 
+
+ Book:
+ Game coding complete
