@@ -6,14 +6,15 @@
 #include "Input/Input.h"
 #include "Renderer/GLContext.h"
 
-namespace sc {
-namespace {
+namespace sc 
+{
+namespace 
+{
 static void GLFWErrorCallback(int error, const char* description)
 {
 	LOG_ERROR("GLFW ERROR CODE: %d, %s", error, description);
 }
 }
-
 
 Window::Window(WindowProperties const& properties)
 {

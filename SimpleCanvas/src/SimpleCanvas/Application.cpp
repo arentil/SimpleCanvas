@@ -5,7 +5,8 @@
 
 #include <GLFW/glfw3.h>
 
-namespace sc {
+namespace sc 
+{
 Application::Application()
 {
 	window = WindowPtr(Window::create());

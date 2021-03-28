@@ -1,0 +1,19 @@
+#pragma once
+
+#include "SimpleCanvas.h"
+
+#include <memory>
+
+class Cube
+{
+public:
+    Cube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2d const& texture);
+
+    void draw(scmath::Mat4 const& modelMatrix) const;
+
+private:
+    sc::Shader const& _shader;
+    sc::Camera const& _camera;
+
+    std::shared_ptr<sc::Model> _model;
+};

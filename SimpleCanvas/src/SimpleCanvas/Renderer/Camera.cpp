@@ -41,6 +41,11 @@ const scmath::Vec3& Camera::getFrontVector() const
     return _front; 
 }
 
+const scmath::Vec3& Camera::getUpVector() const
+{
+    return _up;
+}
+
 const scmath::Mat4& Camera::getProjMatrix() const 
 { 
     return _projMatrix; 

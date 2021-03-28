@@ -90,37 +90,37 @@ void Shader::unbind() const
     glUseProgram(0);
 }
 
-void Shader::uploadUniformInt(std::string const& name, int value)
+void Shader::uploadUniformInt(std::string const& name, int value) const
 {
     GLint location = glGetUniformLocation(_program, name.c_str());
     glUniform1i(location, value);
 }
 
-void Shader::uploadUniformFloat(std::string const& name, float value)
+void Shader::uploadUniformFloat(std::string const& name, float value) const
 {
     GLint location = glGetUniformLocation(_program, name.c_str());
     glUniform1f(location, value);
 }
 
-void Shader::uploadUniformFloat2(std::string const& name, scmath::Vec2 const& v)
+void Shader::uploadUniformFloat2(std::string const& name, scmath::Vec2 const& v) const
 {
     GLint location = glGetUniformLocation(_program, name.c_str());
     glUniform2f(location, v.x, v.y);
 }
 
-void Shader::uploadUniformFloat3(std::string const& name, scmath::Vec3 const& v)
+void Shader::uploadUniformFloat3(std::string const& name, scmath::Vec3 const& v) const
 {
     GLint location = glGetUniformLocation(_program, name.c_str());
     glUniform3f(location, v.x, v.y, v.z);
 }
 
-void Shader::uploadUniformFloat4(std::string const& name, scmath::Vec4 const& v)
+void Shader::uploadUniformFloat4(std::string const& name, scmath::Vec4 const& v) const
 {
     GLint location = glGetUniformLocation(_program, name.c_str());
     glUniform4f(location, v.x, v.y, v.z, v.w);
 }
 
-void Shader::uploadUniformMat4(std::string const& name, scmath::Mat4 const& m)
+void Shader::uploadUniformMat4(std::string const& name, scmath::Mat4 const& m) const
 {
     GLint location = glGetUniformLocation(_program, name.c_str());
     glUniformMatrix4fv(location, 1, GL_FALSE, m);

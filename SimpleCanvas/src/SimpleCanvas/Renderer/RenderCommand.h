@@ -18,8 +18,8 @@ public:
         glEnable(GL_DEPTH_TEST);
         //glEnable(GL_CULL_FACE); // for one side triangle draw
         //glCullFace(GL_BACK);    // for one side triangle draw
-        //glfwWindowHint(GLFW_SAMPLES, 4);
-        //glEnable(GL_MULTISAMPLE);
+        glfwWindowHint(GLFW_SAMPLES, 4);
+        glEnable(GL_MULTISAMPLE);
     }
 
     static void setClearColor(scmath::Vec4 const& color)

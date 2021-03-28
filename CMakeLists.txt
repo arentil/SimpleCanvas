@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_VERBOSE_MAKEFILE on)
 
 include_directories(${CMAKE_SOURCE_DIR}/SimpleCanvas/src)
-
 add_subdirectory(SimpleCanvas)
 
 if (MSVC)
@@ -21,8 +20,14 @@ else()
   set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 endif ()
 
+set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/Sandbox/src)
+set(SOURCE_FILES
+  ${SOURCE_DIR}/Sandbox.cpp
+  ${SOURCE_DIR}/Cube.cpp
+  #${SOURCE_DIR}/Cube.h
+)
 
-add_executable(Sandbox ${CMAKE_SOURCE_DIR}/Sandbox/src/Sandbox.cpp)
+add_executable(Sandbox  ${SOURCE_FILES})
 target_link_libraries(Sandbox PUBLIC SimpleCanvas)
 
 # move assets folder into binary folder

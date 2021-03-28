@@ -76,6 +76,10 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Utils/FileReader.h
 	${SOURCE_DIR}/SimpleCanvas/Window.cpp
 	${SOURCE_DIR}/SimpleCanvas/Window.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Mesh.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Mesh.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Model.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Model.h
 )
 
 add_library(SimpleCanvas STATIC ${SOURCE_FILES})

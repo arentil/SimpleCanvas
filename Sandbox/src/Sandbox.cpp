@@ -1,7 +1,11 @@
 #include "SimpleCanvas.h"
+#include "SimpleCanvas/EntryPoint.h"
+
+#include "Cube.h"
 
 #include <memory>
 #include <filesystem>
+#include <vector>
 
 class ExampleLayer : public sc::Layer
 {
@@ -143,6 +147,9 @@ public:
 		auto textureShader = _shadersContainer.getShader("Texture");
 		textureShader->bind();
 		textureShader->uploadUniformInt("v_TexCoord", 0);
+
+		_shadersContainer.addShaderFromFile("TexShader", "assets/textures/shaders/Tex_vertex.glsl", "assets/textures/shaders/Tex_fragment.glsl");
+		texCube = std::make_unique<Cube>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), *_chessboardTexture);
 	}
 
 	void update(float deltaTime) override
@@ -158,7 +165,6 @@ public:
 		auto cubemapShader = _shadersContainer.getShader("Cubemap");
 		cubemapShader->bind();
 		_cubemap->bind();
-		//scmath::Mat4 scaleCubemap = scmath::Mat4::scale(scmath::Vec3(4.0f, 4.0f, 4.0f));
 		sc::Renderer::submit(_cubemapVAO, cubemapShader, scmath::Mat4::translate(_cameraController.getCamera()->getPosition()));
 		glDepthMask(GL_TRUE);
 
@@ -196,6 +202,10 @@ public:
 		scmath::Vec3 moveCube(0.5f, 0.0f, 0.0f);
 		sc::Renderer::submit(_cubeVAO, _shadersContainer.getShader("Triangle"), scmath::Mat4::translate(moveCube)* scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
 
+
+		scmath::Vec3 moveCube2(3.0f, 0.0f, 2.0f);
+		texCube->draw(scmath::Mat4::translate(moveCube2) * scmath::Mat4::rotateY(scmath::degToRad(45.0f)));
+
 		sc::Renderer::endScene();		//---------------------------- END SCENE ---------------------------
 	}
 
@@ -228,6 +238,8 @@ private:
 
 	sc::VertexArrayPtr _cubemapVAO;
 	sc::CubemapPtr _cubemap;
+
+	std::unique_ptr<Cube> texCube;
 };
 
 class Sandbox : public sc::Application

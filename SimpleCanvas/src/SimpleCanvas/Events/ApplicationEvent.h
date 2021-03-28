@@ -2,7 +2,8 @@
 
 #include "Event.h"
 
-namespace sc {
+namespace sc 
+{
 class WindowResizeEvent : public Event
 {
 public:

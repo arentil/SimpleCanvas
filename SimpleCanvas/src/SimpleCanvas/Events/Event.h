@@ -2,7 +2,8 @@
 
 #include "SimpleCanvas/Core.h"
 
-namespace sc {
+namespace sc 
+{
 enum class EventType
 {
 	None = 0,

@@ -29,6 +29,8 @@ void CameraController::onUpdate(float deltaTime)
     // forward and backward
     scmath::Vec3 cameraPos = _camera->getPosition();
     scmath::Vec3 cameraFront = _camera->getFrontVector();
+    scmath::Vec3 cameraUp = _camera->getUpVector();
+    
 
     float shiftMultiplier = 1.0f;
     if (Input::isKeyPressed(KEY_LEFT_SHIFT))
@@ -52,6 +54,16 @@ void CameraController::onUpdate(float deltaTime)
     if (Input::isKeyPressed(KEY_D))
     {
         cameraPos += scmath::Vec3::normalized(scmath::Vec3::cross(cameraFront, scmath::Vec3(0, 1, 0))) * deltaTime * shiftMultiplier;
+        _camera->setPosition(cameraPos);
+    }
+    if (Input::isKeyPressed(KEY_E))
+    {
+        cameraPos += cameraUp * deltaTime * shiftMultiplier;
+        _camera->setPosition(cameraPos);
+    }
+    if (Input::isKeyPressed(KEY_Q))
+    {
+        cameraPos -= cameraUp * deltaTime * shiftMultiplier;
         _camera->setPosition(cameraPos);
     }
 

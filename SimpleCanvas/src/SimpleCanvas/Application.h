@@ -5,7 +5,8 @@
 #include "Events/ApplicationEvent.h"
 #include "LayerContainer.h"
 
-namespace sc {
+namespace sc 
+{
 class Application
 {
 public:
