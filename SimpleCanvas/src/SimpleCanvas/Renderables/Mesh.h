@@ -11,7 +11,7 @@ namespace sc
 struct Vertex
 {
     scmath::Vec3 position;
-    // scmath::Vec3 normal;
+    scmath::Vec3 normal;
     scmath::Vec2 texCoord;
 };
 
