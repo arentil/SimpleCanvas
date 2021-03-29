@@ -1,37 +1,47 @@
 #include "Cube.h"
 
+#include <vector>
+
+namespace
+{
+void applyMatrixAndAppend(std::vector<sc::Vertex> &vertices, scmath::Mat4 const& matrix)
+{
+    for (size_t i = 0; i < 4; i++)
+    {
+        sc::Vertex v{matrix * vertices[i].position, vertices[i].texCoord};
+        vertices.push_back(v);
+    }
+}
+}
+
 Cube::Cube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2d const& texture) 
 : _shader(shader), _camera(camera)
 {
-    float vert[5 * 8] = {
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-			0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-			0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-			-0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-			-0.5f, -0.5f, -1.0f, 0.0f, 0.0f,
-			0.5f, -0.5f, -1.0f, 1.0f, 0.0f,
-			0.5f, 0.5f, -1.0f, 1.0f, 1.0f,
-			-0.5f, 0.5f, -1.0f, 0.0f, 1.0f
-		};
-
-    std::vector<sc::Vertex> vertices;
-    vertices.reserve(8);
-    for (size_t i = 0; i < 8; i++)
-    {
-        sc::Vertex vertex;
-        vertex.position = scmath::Vec3(vert[i * 5], vert[i * 5 + 1], vert[i * 5 + 2]);
-        vertex.texCoord = scmath::Vec2(vert[i * 5 + 3], vert[i * 5 + 4]);
-        vertices.push_back(vertex);
-    }
-
-    std::vector<uint32_t> indices{	
-        0, 1, 2, 2, 3, 0, // front
-        6, 5, 4, 4, 7, 6, // back
-        3, 2, 6, 6, 7, 3, // top
-        0, 4, 5, 5, 1, 0, // bottom
-        4, 0, 3, 3, 7, 4, // left
-        1, 5, 6, 6, 2, 1 // right
+    std::vector<sc::Vertex> vertices{
+        {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f}},
+        {{0.5f, -0.5f, 0.0f}, {1.0f, 0.0f}},
+        {{0.5f, 0.5f, 0.0f}, {1.0f, 1.0f}},
+        {{-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f}}
     };
+    vertices.reserve(24);
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(-0.5f, 0.0f, -0.5f) * scmath::Mat4::rotateY(scmath::degToRad(90))); //left
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, 0.0f, -1.0f) * scmath::Mat4::rotateY(scmath::degToRad(180))); //back
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.5f, 0.0f, -0.5f) * scmath::Mat4::rotateY(scmath::degToRad(-90))); //right
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, 0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(90))); //top
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, -0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(-90))); //bottom
+
+    std::vector<uint32_t> indices;
+    indices.reserve(24);
+
+    for (int i = 0; i < 6; i++)
+    {
+        indices.push_back((i * 4));
+        indices.push_back((i * 4) + 1);
+        indices.push_back((i * 4) + 2);
+        indices.push_back((i * 4) + 2);
+        indices.push_back((i * 4) + 3);
+        indices.push_back((i * 4));
+    }
 
     std::vector<sc::Mesh> const meshes{{vertices, indices, texture}};
     _model = std::make_shared<sc::Model>(meshes);

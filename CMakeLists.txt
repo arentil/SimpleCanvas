@@ -23,8 +23,8 @@ endif ()
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/Sandbox/src)
 set(SOURCE_FILES
   ${SOURCE_DIR}/Sandbox.cpp
+  ${SOURCE_DIR}/Cube.h
   ${SOURCE_DIR}/Cube.cpp
-  #${SOURCE_DIR}/Cube.h
 )
 
 add_executable(Sandbox  ${SOURCE_FILES})

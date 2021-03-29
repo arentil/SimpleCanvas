@@ -121,7 +121,6 @@ Mat4 Mat4::operator/(float divider) const
         matrix[3] / divider
     );
 }
-
 Mat4 Mat4::operator*(Mat4 const& other) const
 {
     Mat4 result;
@@ -145,11 +144,17 @@ Vec4 Mat4::operator*(Vec4 const& v) const
     {
         float sum = 0.0f;
         for (int j = 0; j < 4; j++)
-            sum += matrix[i][j] * v[j];
+            sum += matrix[j][i] * v[j];
 
         result[i] = sum;
     }
     return result;
+}
+
+Vec3 Mat4::operator*(Vec3 const& v) const
+{
+    Vec4 result = operator*({v, 1.0f});
+    return Vec3(result.x, result.y, result.z);
 }
 
 Vec4& Mat4::operator[](int i)

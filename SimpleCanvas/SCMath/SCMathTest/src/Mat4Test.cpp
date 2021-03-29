@@ -139,7 +139,7 @@ TEST_F(Mat4Test, MAT4_ROTATION_MATRIX_TEST)
     Mat4 rotationAroundYMatrix = Mat4::rotate(degToRad(90.0f), Vec3(0, 1, 0));
 
     Vec4 toRotate(1, 0, 0, 1);
-    Vec4 expected(0, 0, 1, 1);
+    Vec4 expected(0, 0, -1, 1);
 
     EXPECT_EQ(expected, rotationAroundYMatrix * toRotate);
 }
@@ -206,4 +206,19 @@ TEST_F(Mat4Test, MAT4_INVERSE_MATRIX_TEST)
         {-0.0625,  0.0625,  0.0625,  0.0625});
 
     EXPECT_EQ(expected, Mat4::inverse(mat));
+}
+
+TEST_F(Mat4Test, MAT4_MULTIPLY_VEC4_TEST)
+{
+    Vec4 vecToMove(0, 0, 0, 1);
+
+    Mat4 mat(
+        { 1, 0, 0, 0},
+        { 0, 1, 0, 0},
+        { 0, 0, 1, 0},
+        { 1, 1, 1, 1});
+
+    Vec4 expected(1.0f, 1.0f, 1.0f, 1.0f);
+
+    EXPECT_EQ(expected, mat * vecToMove);
 }

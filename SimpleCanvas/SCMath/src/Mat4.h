@@ -28,6 +28,7 @@ public:
     Mat4 operator/(float divider) const;
     Mat4 operator*(Mat4 const& other) const;
     Vec4 operator*(Vec4 const& v) const;
+    Vec3 operator*(Vec3 const& v) const;
     Vec4& operator[](int i);
     Vec4 operator[](int i) const;
     operator float *();

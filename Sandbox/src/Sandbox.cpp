@@ -46,7 +46,7 @@ public:
 		unsigned int cubemapIndices[] = { 
 			5, 1, 2, 2, 6 ,5, // right
 			0, 4, 7, 7, 3, 0, // left
-			7, 6, 2, 2, 7, 3, // top
+			7, 6, 2, 2, 3, 7, // top
 			0, 1, 5, 5, 4, 0, // bottom
 			4, 5, 6, 6, 7, 4, // fromt
 			1, 0, 3, 3, 2, 1  // back
