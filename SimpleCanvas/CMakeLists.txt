@@ -80,6 +80,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Tools/stb_image.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/tiny_obj_loader.cpp
 	${SOURCE_DIR}/SimpleCanvas/Tools/tiny_obj_loader.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.cpp
 	${SOURCE_DIR}/SimpleCanvas/Window.cpp
 	${SOURCE_DIR}/SimpleCanvas/Window.h
 )

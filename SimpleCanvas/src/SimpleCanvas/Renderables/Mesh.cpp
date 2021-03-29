@@ -39,7 +39,7 @@ void Mesh::initialize()
 
     // vertex position
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0 , 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);  // nullptr change to (void*)0 if not work
+    glVertexAttribPointer(0 , 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
 
     // vertex normals
     glEnableVertexAttribArray(1);
