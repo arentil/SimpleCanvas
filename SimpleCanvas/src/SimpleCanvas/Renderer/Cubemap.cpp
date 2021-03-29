@@ -1,7 +1,7 @@
 #include "Cubemap.h"
 
 #include <glad/glad.h>
-#include "Utils/stb_image.h"
+#include "Tools/stb_image.h"
 
 namespace sc
 {

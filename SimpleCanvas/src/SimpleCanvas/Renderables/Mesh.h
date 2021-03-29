@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Shader.h"
-#include "Camera.h"
-#include "Texture.h"
+#include "Renderer/Shader.h"
+#include "Renderer/Camera.h"
+#include "Renderer/Texture.h"
 
 #include <SCMath.h>
 

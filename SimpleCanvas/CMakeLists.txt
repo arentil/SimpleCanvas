@@ -49,12 +49,16 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/LayerContainer.h
 	${SOURCE_DIR}/SimpleCanvas/Logger.cpp
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/OrthographicCamera.cpp
@@ -70,16 +74,14 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.h
-	${SOURCE_DIR}/SimpleCanvas/Utils/StringUtils.h
-	${SOURCE_DIR}/SimpleCanvas/Utils/stb_image.cpp
-	${SOURCE_DIR}/SimpleCanvas/Utils/stb_image.h
-	${SOURCE_DIR}/SimpleCanvas/Utils/FileReader.h
+	${SOURCE_DIR}/SimpleCanvas/Tools/FileReader.h
+	${SOURCE_DIR}/SimpleCanvas/Tools/StringUtils.h
+	${SOURCE_DIR}/SimpleCanvas/Tools/stb_image.cpp
+	${SOURCE_DIR}/SimpleCanvas/Tools/stb_image.h
+	${SOURCE_DIR}/SimpleCanvas/Tools/tiny_obj_loader.cpp
+	${SOURCE_DIR}/SimpleCanvas/Tools/tiny_obj_loader.h
 	${SOURCE_DIR}/SimpleCanvas/Window.cpp
 	${SOURCE_DIR}/SimpleCanvas/Window.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Mesh.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Mesh.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Model.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Model.h
 )
 
 add_library(SimpleCanvas STATIC ${SOURCE_FILES})

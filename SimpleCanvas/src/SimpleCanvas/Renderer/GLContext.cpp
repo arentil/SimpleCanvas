@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-#include "Utils/StringUtils.h"
+#include "Tools/StringUtils.h"
 
 namespace sc
 {
