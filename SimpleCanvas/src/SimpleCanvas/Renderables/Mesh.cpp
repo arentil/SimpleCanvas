@@ -4,8 +4,8 @@
 
 namespace sc
 {
-Mesh::Mesh(std::vector<Vertex> const& vertices, std::vector<uint32_t> const& indices, Texture2d const& texture)
-: _vertices(vertices), _indices(indices), _texture(texture)
+Mesh::Mesh(std::vector<Vertex> const& vertices, std::shared_ptr<Texture2d> texturePtr)
+: _vertices(vertices), _texturePtr(texturePtr)
 {
     initialize();
 }
@@ -13,13 +13,14 @@ Mesh::Mesh(std::vector<Vertex> const& vertices, std::vector<uint32_t> const& ind
 void Mesh::draw(Shader const& shader, Camera const& camera, scmath::Mat4 const& modelMatrix) const
 {
     shader.bind();
-    _texture.bind();
+    if (_texturePtr)
+        _texturePtr->bind();
     
     shader.uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
     shader.uploadUniformMat4("u_Model", modelMatrix);
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, nullptr);
+    glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
     glBindVertexArray(0);
 }
 
@@ -27,15 +28,10 @@ void Mesh::initialize()
 {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
     glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), _vertices.data(), GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(uint32_t), _indices.data(), GL_STATIC_DRAW);
 
     // vertex position
     glEnableVertexAttribArray(0);

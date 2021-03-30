@@ -49,10 +49,6 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/LayerContainer.h
 	${SOURCE_DIR}/SimpleCanvas/Logger.cpp
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.cpp
@@ -80,10 +76,14 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Tools/stb_image.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/tiny_obj_loader.cpp
 	${SOURCE_DIR}/SimpleCanvas/Tools/tiny_obj_loader.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.cpp
 	${SOURCE_DIR}/SimpleCanvas/Window.cpp
 	${SOURCE_DIR}/SimpleCanvas/Window.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.h
 )
 
 add_library(SimpleCanvas STATIC ${SOURCE_FILES})

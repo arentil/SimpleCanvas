@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <utility>
+#include <numeric>
 #include <algorithm>
 #include <functional>
 #include <cstdint>

@@ -25,6 +25,10 @@ set(SOURCE_FILES
   ${SOURCE_DIR}/Sandbox.cpp
   ${SOURCE_DIR}/Cube.h
   ${SOURCE_DIR}/Cube.cpp
+  ${SOURCE_DIR}/Teapot.h
+  ${SOURCE_DIR}/Teapot.cpp
+  ${SOURCE_DIR}/Sponza.h
+  ${SOURCE_DIR}/Sponza.cpp
 )
 
 add_executable(Sandbox  ${SOURCE_FILES})

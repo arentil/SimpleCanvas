@@ -139,6 +139,6 @@ void CameraController::onWindowResize(WindowResizeEvent &event)
     if (_camera->getType() == CameraType::ORTHOGRAPHIC)
         ((OrthographicCamera*)(_camera.get()))->setProjection(-(_aspectX / _aspectY) * _zoom, _aspectX / _aspectY * _zoom, -_zoom, _zoom, -1.0f, 1.0f);
     else if (_camera->getType() == CameraType::PERSPECTIVE)
-        ((PerspectiveCamera*)(_camera.get()))->setProjection(70.0f, aspectRatio, 0.0001f, 10.0f);
+        ((PerspectiveCamera*)(_camera.get()))->setProjection(70.0f, aspectRatio, 0.0001f, 1000.0f);
 }
 } // namespace sc

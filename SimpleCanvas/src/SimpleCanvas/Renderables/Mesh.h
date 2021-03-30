@@ -18,17 +18,16 @@ struct Vertex
 class Mesh
 {
 public:
-    Mesh(std::vector<Vertex> const& vertices, std::vector<uint32_t> const& indices, Texture2d const& texture);
+    Mesh(std::vector<Vertex> const& vertices, std::shared_ptr<Texture2d> texturePtr);
     ~Mesh() = default;
 
     void draw(Shader const& shader, Camera const& camera, scmath::Mat4 const& modelMatrix) const;
 
 private:
     std::vector<Vertex> const _vertices;
-    std::vector<uint32_t> const _indices;
-    Texture2d const& _texture;
+    std::shared_ptr<Texture2d> _texturePtr;
 
-    uint32_t VAO, VBO, EBO;
+    uint32_t VAO, VBO;
 
     void initialize();
 };

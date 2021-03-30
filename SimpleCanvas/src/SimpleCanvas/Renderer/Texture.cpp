@@ -9,6 +9,7 @@
 namespace sc
 {
 Texture2d::Texture2d(std::string const& filePath)
+: _filePath(filePath)
 {
     int width, height, channels;
     stbi_set_flip_vertically_on_load(1);
@@ -49,6 +50,11 @@ Texture2d::~Texture2d()
 Texture2dPtr Texture2d::create(std::string const& filePath)
 {
     return std::make_shared<Texture2d>(filePath);
+}
+
+std::string Texture2d::getFilePath() const
+{
+    return _filePath;
 }
 
 void Texture2d::bind(uint32_t slot) const

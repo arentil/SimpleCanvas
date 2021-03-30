@@ -15,10 +15,11 @@ public:
 
     uint32_t getWidth() const { return _width; }
     uint32_t getHeight() const {return _height; }
+    std::string getFilePath() const;
     void bind(uint32_t slot = 0) const;
 
 protected:
-    std::string _filePath;
+    std::string const _filePath;
     uint32_t _width, _height;
     uint32_t _rendererId;
 };

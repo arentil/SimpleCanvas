@@ -6,13 +6,27 @@
 
 namespace sc
 {
+namespace
+{
+// returns file parent folder
+std::string getFileParentFolder(std::string const& filePath)
+{
+    size_t i;
+    if (i = filePath.find_last_of('/'); i == std::string::npos)
+        return "";
+    return filePath.substr(0, i);
+}
+} // namespace
+
+
 Model ObjLoader::loadObjFromFile(std::string const& objFilePath) const
 {
+    std::string const parentFolder = getFileParentFolder(objFilePath);
+
     tinyobj::ObjReaderConfig reader_config;
-    reader_config.mtl_search_path = "./"; // Path to material files
+    reader_config.mtl_search_path = parentFolder; // Path to material files
 
     tinyobj::ObjReader reader;
-
     if (!reader.ParseFromFile(objFilePath, reader_config))
     {
         if (!reader.Error().empty())
@@ -31,20 +45,40 @@ Model ObjLoader::loadObjFromFile(std::string const& objFilePath) const
     const std::vector<tinyobj::shape_t> &shapes = reader.GetShapes();
     const std::vector<tinyobj::material_t> &materials = reader.GetMaterials();
 
+    // load diffuse textures
+    std::map<std::string, Texture2dPtr> textures;
+    for (tinyobj::material_t const& material: materials)
+    {
+        if (material.diffuse_texname.empty())
+        {
+            LOG_WARNING("Material texture name empty! Skipping...");
+            continue;
+        }
+
+        std::string const textureFilePath = parentFolder + "/" + material.diffuse_texname;
+        textures.emplace(textureFilePath, std::make_shared<Texture2d>(textureFilePath));
+    }
+
+
     std::vector<Mesh> meshes;
     meshes.reserve(shapes.size());
 
     // loop over shapes
     for (tinyobj::shape_t const& shape : shapes)
     {
-        size_t index_offset = 0;
+        std::vector<Vertex> vertices;
+        vertices.reserve(
+            std::accumulate(shape.mesh.num_face_vertices.begin(),
+                            shape.mesh.num_face_vertices.end(),
+                            0
+        ));
 
         // loop over faces(polygon)
+        size_t index_offset = 0;
         for (uint8_t asd : shape.mesh.num_face_vertices)
         {
-            size_t fv = size_t(asd);
-
             // loop over vertices in the face
+            size_t fv = size_t(asd);
             for (size_t v = 0; v < fv; v++)
             {
                 Vertex vertex;
@@ -68,14 +102,26 @@ Model ObjLoader::loadObjFromFile(std::string const& objFilePath) const
                     vertex.texCoord.x = attrib.texcoords[2 * size_t(idx.texcoord_index) + 0];
                     vertex.texCoord.y = attrib.texcoords[2 * size_t(idx.texcoord_index) + 1];
                 }
-
+                vertices.push_back(vertex);
             }
             index_offset += fv;
         }
+
+        auto const& faceTexture = materials[shape.mesh.material_ids.front()].diffuse_texname;
+        std::string const& textureFilePath = parentFolder + "/" + faceTexture;
+        if (textures.find(textureFilePath) == textures.end())
+        {
+            LOG_ERROR("Could not find texture at path: %s", textureFilePath);
+            Mesh mesh(vertices, nullptr);
+            meshes.push_back(mesh);
+            continue;
+        }
+        Mesh mesh(vertices, textures[textureFilePath]);
+        meshes.push_back(mesh);
     }
 
 
-    Model result({});
+    Model result(meshes);
     return result;
 }
 }

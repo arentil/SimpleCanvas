@@ -43,11 +43,11 @@ Cube::Cube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2d con
         indices.push_back((i * 4));
     }
 
-    std::vector<sc::Mesh> const meshes{{vertices, indices, texture}};
-    _model = std::make_shared<sc::Model>(meshes);
+    //std::vector<sc::Mesh> const meshes{{vertices, indices, texture}};
+    //_model = std::make_shared<sc::Model>(meshes);
 }
 
 void Cube::draw(scmath::Mat4 const& modelMatrix) const
 {
-    _model->draw(_shader, _camera, modelMatrix);
+    //_model->draw(_shader, _camera, modelMatrix);
 }

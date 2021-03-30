@@ -2,6 +2,8 @@
 #include "SimpleCanvas/EntryPoint.h"
 
 #include "Cube.h"
+#include "Teapot.h"
+#include "Sponza.h"
 
 #include <memory>
 #include <filesystem>
@@ -150,6 +152,8 @@ public:
 
 		_shadersContainer.addShaderFromFile("TexShader", "assets/textures/shaders/Tex_vertex.glsl", "assets/textures/shaders/Tex_fragment.glsl");
 		texCube = std::make_unique<Cube>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), *_chessboardTexture);
+		teapot = std::make_unique<Teapot>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
+		sponza = std::make_unique<Sponza>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
 	}
 
 	void update(float deltaTime) override
@@ -200,11 +204,16 @@ public:
 
 		// cube
 		scmath::Vec3 moveCube(0.5f, 0.0f, 0.0f);
-		sc::Renderer::submit(_cubeVAO, _shadersContainer.getShader("Triangle"), scmath::Mat4::translate(moveCube)* scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
+		sc::Renderer::submit(_cubeVAO, _shadersContainer.getShader("Triangle"), scmath::Mat4::translate(moveCube) * scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
 
 
 		scmath::Vec3 moveCube2(3.0f, 0.0f, 2.0f);
 		texCube->draw(scmath::Mat4::translate(moveCube2) * scmath::Mat4::rotateY(scmath::degToRad(45.0f)));
+
+		scmath::Vec3 teapotAxis(0.0f, 1.0f, 0.0f);
+		teapot->draw(scmath::Mat4::translate(-2.0f, 0.0f, 2.0f) * scmath::Mat4::rotateY(rotationTriangle) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
+
+		sponza->draw(scmath::Mat4::scale(1.01f, 1.01f, 1.01f));
 
 		sc::Renderer::endScene();		//---------------------------- END SCENE ---------------------------
 	}
@@ -240,6 +249,8 @@ private:
 	sc::CubemapPtr _cubemap;
 
 	std::unique_ptr<Cube> texCube;
+	std::unique_ptr<Teapot> teapot;
+	std::unique_ptr<Sponza> sponza;
 };
 
 class Sandbox : public sc::Application
