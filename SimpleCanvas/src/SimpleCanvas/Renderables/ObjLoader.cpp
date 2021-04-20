@@ -1,6 +1,8 @@
 #include "ObjLoader.h"
 
 #include "Tools/tiny_obj_loader.h"
+#include "Model.h"
+#include "Mesh.h"
 
 #include <vector>
 
@@ -59,13 +61,13 @@ Model ObjLoader::loadObjFromFile(std::string const& objFilePath)
     }
 
 
-    std::vector<Mesh> meshes;
+    std::vector<BaseMeshPtr> meshes;
     meshes.reserve(shapes.size());
 
     // loop over shapes
     for (tinyobj::shape_t const& shape : shapes)
     {
-        std::vector<Vertex> vertices;
+        std::vector<TextureVertex> vertices;
         vertices.reserve(
             std::accumulate(shape.mesh.num_face_vertices.begin(),
                             shape.mesh.num_face_vertices.end(),
@@ -80,7 +82,7 @@ Model ObjLoader::loadObjFromFile(std::string const& objFilePath)
             size_t fv = size_t(asd);
             for (size_t v = 0; v < fv; v++)
             {
-                Vertex vertex;
+                TextureVertex vertex;
 
                 tinyobj::index_t idx = shape.mesh.indices[index_offset + v];
                 vertex.position.x = attrib.vertices[3 * size_t(idx.vertex_index) + 0];
@@ -111,14 +113,12 @@ Model ObjLoader::loadObjFromFile(std::string const& objFilePath)
         if (textures.find(textureFilePath) == textures.end())
         {
             LOG_ERROR("Could not find texture at path: %s", textureFilePath);
-            Mesh mesh(vertices, nullptr);
-            meshes.push_back(mesh);
+            meshes.push_back(std::make_shared<TextureMesh>(vertices, nullptr));
             continue;
         }
-        Mesh mesh(vertices, textures[textureFilePath]);
-        meshes.push_back(mesh);
-    }
 
+        meshes.push_back(std::make_shared<TextureMesh>(vertices, textures[textureFilePath]));
+    }
 
     Model result(meshes);
     return result;

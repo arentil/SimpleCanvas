@@ -4,11 +4,11 @@
 
 namespace
 {
-void applyMatrixAndAppend(std::vector<sc::Vertex> &vertices, scmath::Mat4 const& matrix, scmath::Mat4 const& normalMatrix)
+void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4 const& matrix, scmath::Mat4 const& normalMatrix)
 {
     for (size_t i = 0; i < 6; i++)
     {
-        sc::Vertex v{matrix * vertices[i].position, normalMatrix * vertices[i].normal, vertices[i].texCoord};
+        sc::TextureVertex v{matrix * vertices[i].position, normalMatrix * vertices[i].normal, vertices[i].texCoord};
         vertices.push_back(v);
     }
 }
@@ -17,7 +17,7 @@ void applyMatrixAndAppend(std::vector<sc::Vertex> &vertices, scmath::Mat4 const&
 Cube::Cube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2dPtr const texture) 
 : _shader(shader), _camera(camera)
 {
-    std::vector<sc::Vertex> vertices{
+    std::vector<sc::TextureVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
         {{0.5f, -0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
         {{0.5f, 0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}},
@@ -32,7 +32,8 @@ Cube::Cube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2dPtr 
     applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, 0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(90)), scmath::Mat4::rotateX(scmath::degToRad(90))); //top
     applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, -0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(-90)), scmath::Mat4::rotateX(scmath::degToRad(-90))); //bottom
 
-    std::vector<sc::Mesh> const meshes{{vertices, texture}};
+    auto mesh = std::make_shared<sc::TextureMesh>(vertices, texture);
+    std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
 }
 

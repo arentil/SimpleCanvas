@@ -80,10 +80,15 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Window.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/BaseMesh.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.cpp
+	#${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.h
+	#${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.cpp
 )
 
 add_library(SimpleCanvas STATIC ${SOURCE_FILES})

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Model.h"
-
 namespace sc
 {
+class Model;
+
 class ObjLoader
 {
 public:

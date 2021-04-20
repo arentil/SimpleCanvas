@@ -2,7 +2,7 @@
 
 namespace sc
 {
-Model::Model(std::vector<Mesh> const meshes)
+Model::Model(std::vector<BaseMeshPtr> const meshes)
 : _meshes(meshes)
 {
     
@@ -10,9 +10,9 @@ Model::Model(std::vector<Mesh> const meshes)
 
 void Model::draw(Shader const& shader, Camera const& camera, scmath::Mat4 const& modelMatrix) const
 {
-    for (Mesh const& mesh : _meshes)
+    for (BaseMeshPtr const& mesh : _meshes)
     {
-        mesh.draw(shader, camera, modelMatrix);
+        mesh->draw(shader, camera, modelMatrix);
     }
 }
 } // namespace sc

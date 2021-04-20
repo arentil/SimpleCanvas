@@ -4,6 +4,7 @@
 #include "Cube.h"
 #include "Teapot.h"
 #include "Sponza.h"
+#include "Triangle.h"
 
 #include <memory>
 #include <filesystem>
@@ -60,32 +61,6 @@ public:
 
 		// END OF CUBEMAP
 
-		_triangleVAO.reset(sc::VertexArray::create());
-
-		float triangleVAO[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-			0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
-		};
-
-		auto triangleVBO = sc::VertexBuffer::create(triangleVAO, sizeof(triangleVAO));
-
-		sc::BufferLayout layout = {
-			{ sc::ShaderDataType::Float3, "a_Position"},
-			{ sc::ShaderDataType::Float4, "a_Color"}
-		};
-
-		triangleVBO->setLayout(layout);
-		_triangleVAO->addVertexBuffer(triangleVBO);
-		
-		
-		unsigned int indices[3] = { 0, 1, 2	};
-		auto indexBuffer = sc::IndexBuffer::create(indices, 3);
-		_triangleVAO->setIndexBuffer(indexBuffer);
-
-		_shadersContainer.addShaderFromFile("Triangle", "assets/textures/shaders/ViewProj_vertex.glsl", "assets/textures/shaders/ViewProj_fragment.glsl");
-
-
 		_squareVAO.reset(sc::VertexArray::create());
 
 		float squareVertices[5 * 4] = {
@@ -125,7 +100,12 @@ public:
 			-0.5f, 0.5f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f
 		};
 
+	_shadersContainer.addShaderFromFile("Triangle", "assets/textures/shaders/ViewProj_vertex.glsl", "assets/textures/shaders/ViewProj_fragment.glsl");
 		auto cubeVBO = sc::VertexBuffer::create(cubeVertices, sizeof(cubeVertices));
+		sc::BufferLayout layout = {
+			{ sc::ShaderDataType::Float3, "a_Position"},
+			{ sc::ShaderDataType::Float4, "a_Color"}
+		};
 		cubeVBO->setLayout(layout);
 		_cubeVAO->addVertexBuffer(cubeVBO);
 
@@ -151,6 +131,8 @@ public:
 		textureShader->uploadUniformInt("v_TexCoord", 0);
 
 		_shadersContainer.addShaderFromFile("TexShader", "assets/textures/shaders/Tex_vertex.glsl", "assets/textures/shaders/Tex_fragment.glsl");
+		_shadersContainer.addShaderFromFile("Flat", "assets/textures/shaders/Flat_vertex.glsl", "assets/textures/shaders/Flat_fragment.glsl");
+		triangle = std::make_unique<Triangle>(*(_shadersContainer.getShader("Flat")), *(_cameraController.getCamera()));
 		texCube = std::make_unique<Cube>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _chessboardTexture);
 		teapot = std::make_unique<Teapot>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
 		sponza = std::make_unique<Sponza>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
@@ -200,7 +182,8 @@ public:
 		rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
 		scmath::Vec3 normalizedAxis(0.0f, 0.0f, 1.0f);
 		scmath::Vec3 tranlPos(1.0f, 0.0f, 0.0f);
-		sc::Renderer::submit(_triangleVAO,  _shadersContainer.getShader("Triangle"), scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::translate(tranlPos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
+		auto triangleMatrix = scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::translate(tranlPos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
+		triangle->draw(triangleMatrix);
 
 		// cube
 		scmath::Vec3 moveCube(0.5f, 0.0f, 0.0f);
@@ -226,8 +209,6 @@ public:
 private:
 	sc::ShadersContainer _shadersContainer;
 
-	sc::VertexArrayPtr _triangleVAO;
-
 	float rotationTriangle = 0.0f;
 	float rotationTriangleSpeed = 30.0f;
 
@@ -241,13 +222,13 @@ private:
 
 	sc::CameraController _cameraController;
 
-	float _squareMoveSpeed = 1.0f;
 
 	scmath::Vec4 _squareColor = {0.2f, 0.3f, 0.8f, 1.0f};
 
 	sc::VertexArrayPtr _cubemapVAO;
 	sc::CubemapPtr _cubemap;
 
+	std::unique_ptr<Triangle> triangle;
 	std::unique_ptr<Cube> texCube;
 	std::unique_ptr<Teapot> teapot;
 	std::unique_ptr<Sponza> sponza;
@@ -260,7 +241,6 @@ public:
 	{
 		pushLayer(new ExampleLayer());
 	}
-
 
 	~Sandbox() {}
 };

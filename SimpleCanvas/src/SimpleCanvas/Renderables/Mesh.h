@@ -1,33 +1,50 @@
 #pragma once
 
-#include "Renderer/Shader.h"
-#include "Renderer/Camera.h"
 #include "Renderer/Texture.h"
-
-#include <SCMath.h>
+#include "BaseMesh.h"
 
 namespace sc
 {
-struct Vertex
+struct TextureVertex
 {
     scmath::Vec3 position;
     scmath::Vec3 normal;
     scmath::Vec2 texCoord;
 };
 
-class Mesh
+class TextureMesh : public BaseMesh
 {
 public:
-    Mesh(std::vector<Vertex> const& vertices, std::shared_ptr<Texture2d> texturePtr);
-    ~Mesh() = default;
+    TextureMesh(std::vector<TextureVertex> const& vertices, std::shared_ptr<Texture2d> texturePtr);
+    virtual ~TextureMesh() = default;
 
-    void draw(Shader const& shader, Camera const& camera, scmath::Mat4 const& modelMatrix) const;
+    virtual void draw(Shader const& shader, Camera const& camera, scmath::Mat4 const& modelMatrix) const override;
 
 private:
-    std::vector<Vertex> const _vertices;
+    std::vector<TextureVertex> const _vertices;
     std::shared_ptr<Texture2d> _texturePtr;
 
-    uint32_t VAO, VBO;
+    void initialize();
+};
+
+
+struct ColorVertex
+{
+    scmath::Vec3 position;
+    scmath::Vec3 normal;
+    scmath::Vec4 color;
+};
+
+class ColorMesh : public BaseMesh
+{
+public:
+    ColorMesh(std::vector<ColorVertex> const& vertices);
+    virtual ~ColorMesh() = default;
+
+    virtual void draw(Shader const& shader, Camera const& camera, scmath::Mat4 const& modelMatrix) const override;
+
+private:
+    std::vector<ColorVertex> const _vertices;
 
     void initialize();
 };
