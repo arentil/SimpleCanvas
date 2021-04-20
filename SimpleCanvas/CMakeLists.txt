@@ -87,8 +87,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.cpp
-	#${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.h
-	#${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.cpp
 )
 
 add_library(SimpleCanvas STATIC ${SOURCE_FILES})
