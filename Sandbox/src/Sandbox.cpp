@@ -151,7 +151,7 @@ public:
 		textureShader->uploadUniformInt("v_TexCoord", 0);
 
 		_shadersContainer.addShaderFromFile("TexShader", "assets/textures/shaders/Tex_vertex.glsl", "assets/textures/shaders/Tex_fragment.glsl");
-		texCube = std::make_unique<Cube>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), *_chessboardTexture);
+		texCube = std::make_unique<Cube>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _chessboardTexture);
 		teapot = std::make_unique<Teapot>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
 		sponza = std::make_unique<Sponza>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
 	}
@@ -213,7 +213,7 @@ public:
 		scmath::Vec3 teapotAxis(0.0f, 1.0f, 0.0f);
 		teapot->draw(scmath::Mat4::translate(-2.0f, 0.0f, 2.0f) * scmath::Mat4::rotateY(rotationTriangle) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
 
-		sponza->draw(scmath::Mat4::scale(1.01f, 1.01f, 1.01f));
+		sponza->draw(scmath::Mat4::translate(0.0f, -1.0f, 0.0f));
 
 		sc::Renderer::endScene();		//---------------------------- END SCENE ---------------------------
 	}

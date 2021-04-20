@@ -34,7 +34,7 @@ void CameraController::onUpdate(float deltaTime)
 
     float shiftMultiplier = 1.0f;
     if (Input::isKeyPressed(KEY_LEFT_SHIFT))
-        shiftMultiplier = 3.0f;
+        shiftMultiplier = 6.0f;
 
     if (Input::isKeyPressed(KEY_W))
     {

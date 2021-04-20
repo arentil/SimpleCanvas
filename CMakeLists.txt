@@ -29,6 +29,8 @@ set(SOURCE_FILES
   ${SOURCE_DIR}/Teapot.cpp
   ${SOURCE_DIR}/Sponza.h
   ${SOURCE_DIR}/Sponza.cpp
+  ${SOURCE_DIR}/Triangle.h
+  ${SOURCE_DIR}/Triangle.cpp
 )
 
 add_executable(Sandbox  ${SOURCE_FILES})

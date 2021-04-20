@@ -14,6 +14,5 @@ public:
 private:
     sc::Shader const& _shader;
     sc::Camera const& _camera;
-    sc::ObjLoader _objLoader;
     sc::Model _model;
 };

@@ -7,8 +7,6 @@ namespace sc
 class ObjLoader
 {
 public:
-    ObjLoader() = default;
-
-    Model loadObjFromFile(std::string const& objFilePath) const;
+    static Model loadObjFromFile(std::string const& objFilePath);
 };
 } // namespace sc

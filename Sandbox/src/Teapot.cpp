@@ -5,7 +5,7 @@
 Teapot::Teapot(sc::Shader const& shader, sc::Camera const& camera) 
 : _shader(shader)
 , _camera(camera)
-, _model(_objLoader.loadObjFromFile("assets/models/teapot/teapot.obj"))
+, _model(sc::ObjLoader::loadObjFromFile("assets/models/teapot/teapot.obj"))
 {
 }
 

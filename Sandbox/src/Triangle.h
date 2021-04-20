@@ -4,15 +4,15 @@
 
 #include <memory>
 
-class Teapot
+class Triangle
 {
 public:
-    Teapot(sc::Shader const& shader, sc::Camera const& camera);
+    Triangle(sc::Shader const& shader, sc::Camera const& camera);
 
     void draw(scmath::Mat4 const& modelMatrix) const;
 
 private:
     sc::Shader const& _shader;
     sc::Camera const& _camera;
-    sc::Model _model;
+    std::shared_ptr<sc::Model> _model;
 };

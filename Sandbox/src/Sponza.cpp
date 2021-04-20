@@ -5,7 +5,7 @@
 Sponza::Sponza(sc::Shader const& shader, sc::Camera const& camera) 
 : _shader(shader)
 , _camera(camera)
-, _model(_objLoader.loadObjFromFile("assets/models/sponza/sponza.obj"))
+, _model(sc::ObjLoader::loadObjFromFile("assets/models/sponza/sponza.obj"))
 {
 }
 
