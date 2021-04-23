@@ -47,7 +47,7 @@ Model ObjLoader::loadObjFromFile(std::string const& objFilePath)
     const std::vector<tinyobj::material_t> &materials = reader.GetMaterials();
 
     // load diffuse textures
-    std::map<std::string, Texture2dPtr> textures;
+    std::map<std::string, TexturePtr> textures;
     for (tinyobj::material_t const& material: materials)
     {
         if (material.diffuse_texname.empty())
@@ -57,7 +57,7 @@ Model ObjLoader::loadObjFromFile(std::string const& objFilePath)
         }
 
         std::string const textureFilePath = parentFolder + "/" + material.diffuse_texname;
-        textures.emplace(textureFilePath, std::make_shared<Texture2d>(textureFilePath));
+        textures.emplace(textureFilePath, Texture2d::create(textureFilePath));
     }
 
 

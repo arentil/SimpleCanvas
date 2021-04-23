@@ -20,6 +20,9 @@ public:
         glCullFace(GL_BACK);    // for one side triangle draw
         glfwWindowHint(GLFW_SAMPLES, 4);
         glEnable(GL_MULTISAMPLE);
+
+        //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); // for wireframe draw
+        //glPolygonMode( GL_FRONT_AND_BACK, GL_FILL ); // for normal draw
     }
 
     static void setClearColor(scmath::Vec4 const& color)

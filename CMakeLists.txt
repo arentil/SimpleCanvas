@@ -37,6 +37,8 @@ set(SOURCE_FILES
   ${SOURCE_DIR}/TileMap.cpp
   ${SOURCE_DIR}/BlendTexSquare.h
   ${SOURCE_DIR}/BlendTexSquare.cpp
+  ${SOURCE_DIR}/Skybox.h
+  ${SOURCE_DIR}/Skybox.cpp
 )
 
 add_executable(Sandbox  ${SOURCE_FILES})

@@ -1,8 +1,7 @@
-#include "Texture.h"
+#include "Texture2d.h"
 
 #include <cassert>
 
-#include <glad/glad.h>
 #include "Tools/stb_image.h"
 
 
@@ -42,12 +41,7 @@ Texture2d::Texture2d(std::string const& filePath)
     stbi_image_free(data);
 }
 
-Texture2d::~Texture2d()
-{
-    glDeleteTextures(1, &_rendererId);
-}
-
-Texture2dPtr Texture2d::create(std::string const& filePath)
+TexturePtr Texture2d::create(std::string const& filePath)
 {
     return std::make_shared<Texture2d>(filePath);
 }
@@ -57,8 +51,8 @@ std::string Texture2d::getFilePath() const
     return _filePath;
 }
 
-void Texture2d::bind(uint32_t slot) const
+void Texture2d::bind() const
 {
-    glBindTextureUnit(slot, _rendererId);
+    glBindTexture(GL_TEXTURE_2D, _rendererId);
 }
 } // namespace sc

@@ -66,7 +66,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Shader.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Shader.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture2d.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture2d.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.h

@@ -34,14 +34,13 @@ Cubemap::Cubemap(std::vector<std::string> const& facesFilePaths)
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 }
 
-
-Cubemap::~Cubemap()
-{
-    glDeleteTextures(1, &_rendererId);
-}
-
-void Cubemap::bind()
+void Cubemap::bind() const
 {
     glBindTexture(GL_TEXTURE_CUBE_MAP, _rendererId);
+}
+
+TexturePtr Cubemap::create(std::vector<std::string> const& facesFilePaths)
+{
+    return std::make_shared<Cubemap>(facesFilePaths);
 }
 } // namespace sc

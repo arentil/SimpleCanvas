@@ -7,7 +7,7 @@
 class BlendTexSquare
 {
 public:
-    BlendTexSquare(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2dPtr const texture);
+    BlendTexSquare(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture);
 
     void draw(scmath::Mat4 const& modelMatrix) const;
 

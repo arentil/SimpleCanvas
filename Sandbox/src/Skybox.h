@@ -4,10 +4,10 @@
 
 #include <memory>
 
-class TextureCube
+class Skybox
 {
 public:
-    TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture);
+    Skybox(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture);
 
     void draw(scmath::Mat4 const& modelMatrix) const;
 

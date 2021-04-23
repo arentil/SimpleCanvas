@@ -1,26 +1,23 @@
 #pragma once
 
+#include <glad/glad.h>
+
 namespace sc
 {
-class Texture2d;
-using Texture2dPtr = std::shared_ptr<Texture2d>;
+class Texture;
+using TexturePtr = std::shared_ptr<Texture>;
 
-class Texture2d
+class Texture
 {
 public:
-    Texture2d(std::string const& filePath);
-    virtual ~Texture2d();
+    virtual ~Texture()
+    {
+        glDeleteTextures(1, &_rendererId);
+    }
 
-    static Texture2dPtr create(std::string const& filePath);
-
-    uint32_t getWidth() const { return _width; }
-    uint32_t getHeight() const {return _height; }
-    std::string getFilePath() const;
-    void bind(uint32_t slot = 0) const;
+    virtual void bind() const = 0;
 
 protected:
-    std::string const _filePath;
-    uint32_t _width, _height;
     uint32_t _rendererId;
 };
 }

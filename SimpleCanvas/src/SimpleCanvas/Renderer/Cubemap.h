@@ -2,20 +2,17 @@
 
 #include <memory>
 
+#include "Texture.h"
+
 namespace sc
 {
-class Cubemap;
-using CubemapPtr = std::shared_ptr<Cubemap>;
-
-class Cubemap
+class Cubemap : public Texture
 {
 public:
     Cubemap(std::vector<std::string> const& facesFilePaths);
-    virtual ~Cubemap();
+    virtual ~Cubemap() = default;
 
-    void bind();
-
-protected:
-    uint32_t _rendererId;
+    virtual void bind() const override;
+    static TexturePtr create(std::vector<std::string> const& facesFilePaths);
 };
 } // namespace sc

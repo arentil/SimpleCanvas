@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Texture.h"
+#include "Renderer/Texture2d.h"
 #include "BaseMesh.h"
 
 namespace sc
@@ -15,14 +15,14 @@ struct TextureVertex
 class TextureMesh : public BaseMesh
 {
 public:
-    TextureMesh(std::vector<TextureVertex> const& vertices, std::shared_ptr<Texture2d> texturePtr);
+    TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr const texturePtr);
     virtual ~TextureMesh() = default;
 
     virtual void draw(Shader const& shader, Camera const& camera, scmath::Mat4 const& modelMatrix) const override;
 
 private:
     std::vector<TextureVertex> const _vertices;
-    std::shared_ptr<Texture2d> _texturePtr;
+    TexturePtr _texturePtr;
 
     void initialize();
 };

@@ -14,7 +14,7 @@ void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4
 }
 }
 
-TextureCube::TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2dPtr const texture) 
+TextureCube::TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture) 
 : _shader(shader), _camera(camera)
 {
     std::vector<sc::TextureVertex> vertices{

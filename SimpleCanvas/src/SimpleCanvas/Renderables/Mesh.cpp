@@ -4,7 +4,7 @@
 
 namespace sc
 {
-TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, std::shared_ptr<Texture2d> texturePtr)
+TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr const texturePtr)
 : _vertices(vertices), _texturePtr(texturePtr)
 {
     initialize();

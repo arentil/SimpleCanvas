@@ -1,6 +1,7 @@
 #include "SimpleCanvas.h"
 #include "SimpleCanvas/EntryPoint.h"
 
+#include "Skybox.h"
 #include "TextureCube.h"
 #include "ColorCube.h"
 #include "Teapot.h"
@@ -29,56 +30,23 @@ public:
 			"assets/textures/skybox/front.jpg",
 			"assets/textures/skybox/back.jpg"
 		};
-		_cubemap.reset(new sc::Cubemap(cubemapFacesFiles));
-		_cubemapVAO.reset(sc::VertexArray::create());
-		float cubemapVAO[8 * 3] = {
-			-1.0f, -1.0f, 1.0f,
-			1.0f, -1.0f, 1.0f,
-			1.0f, 1.0f, 1.0f,
-			-1.0f, 1.0f, 1.0f,
-			-1.0f, -1.0f, -1.0f,
-			1.0f, -1.0f, -1.0f,
-			1.0f, 1.0f, -1.0f,
-			-1.0f, 1.0f, -1.0f
-		};
-		auto cubemapVBO = sc::VertexBuffer::create(cubemapVAO, sizeof(cubemapVAO));
-		sc::BufferLayout cubemapLayout = {
-			{ sc::ShaderDataType::Float3, "aPos"}
-		};
 
-		cubemapVBO->setLayout(cubemapLayout);
-		_cubemapVAO->addVertexBuffer(cubemapVBO);
-
-		unsigned int cubemapIndices[] = { 
-			5, 1, 2, 2, 6 ,5, // right
-			0, 4, 7, 7, 3, 0, // left
-			7, 6, 2, 2, 3, 7, // top
-			0, 1, 5, 5, 4, 0, // bottom
-			4, 5, 6, 6, 7, 4, // fromt
-			1, 0, 3, 3, 2, 1  // back
-		};
-		auto cubemapIndexBuffer = sc::IndexBuffer::create(cubemapIndices,  sizeof(cubemapIndices) / sizeof(uint32_t));
-		_cubemapVAO->setIndexBuffer(cubemapIndexBuffer);
-
-		_shadersContainer.addShaderFromFile("Cubemap", "assets/textures/shaders/Cubemap_vertex.glsl", "assets/textures/shaders/Cubemap_fragment.glsl");
-
-		// END OF CUBEMAP
+		cubemap = sc::Cubemap::create(cubemapFacesFiles);
 
 		_chessboardTexture = sc::Texture2d::create("assets/textures/Checkerboard.png");
 		_transparentTexture = sc::Texture2d::create("assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
-
-		_shadersContainer.addShaderFromFile("TexShader", "assets/textures/shaders/Tex_vertex.glsl", "assets/textures/shaders/Tex_fragment.glsl");
-		_shadersContainer.addShaderFromFile("Flat", "assets/textures/shaders/Flat_vertex.glsl", "assets/textures/shaders/Flat_fragment.glsl");
+		
+		_shadersContainer.addShaderFromFile("Cubemap", "assets/textures/shaders/Cubemap_vertex.glsl", "assets/textures/shaders/Cubemap_fragment.glsl");
+		_shadersContainer.addShaderFromFile("TexShader", "assets/textures/shaders/Texture_vertex.glsl", "assets/textures/shaders/Texture_fragment.glsl");
 		_shadersContainer.addShaderFromFile("FlatColor", "assets/textures/shaders/FlatColor_vertex.glsl", "assets/textures/shaders/FlatColor_fragment.glsl");
-		_shadersContainer.addShaderFromFile("Triangle", "assets/textures/shaders/ViewProj_vertex.glsl", "assets/textures/shaders/ViewProj_fragment.glsl");
-		_shadersContainer.addShaderFromFile("Texture", "assets/textures/shaders/Texture_vertex.glsl", "assets/textures/shaders/Texture_fragment.glsl");
 
-		triangle = std::make_unique<Triangle>(*(_shadersContainer.getShader("Flat")), *(_cameraController.getCamera()));
+		skybox = std::make_unique<Skybox>(*(_shadersContainer.getShader("Cubemap")), *(_cameraController.getCamera()), cubemap);
+		triangle = std::make_unique<Triangle>(*(_shadersContainer.getShader("FlatColor")), *(_cameraController.getCamera()));
 		texCube = std::make_unique<TextureCube>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _chessboardTexture);
-		colorCube = std::make_unique<ColorCube>(*(_shadersContainer.getShader("Flat")), *(_cameraController.getCamera()));
+		colorCube = std::make_unique<ColorCube>(*(_shadersContainer.getShader("FlatColor")), *(_cameraController.getCamera()));
 		teapot = std::make_unique<Teapot>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
 		sponza = std::make_unique<Sponza>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
-		tileMap = std::make_unique<TileMap>(*(_shadersContainer.getShader("Flat")), *(_cameraController.getCamera()));
+		tileMap = std::make_unique<TileMap>(*(_shadersContainer.getShader("FlatColor")), *(_cameraController.getCamera()));
 		blendSquare = std::make_unique<BlendTexSquare>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _transparentTexture);
 	}
 
@@ -88,14 +56,8 @@ public:
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		sc::RenderCommand::clear();		
 		sc::Renderer::beginScene(*(_cameraController.getCamera()));		//----------------- BEGIN SCENE -------------------------
-	
-		// draw skybox first
-		glDepthMask(GL_FALSE);
-		auto cubemapShader = _shadersContainer.getShader("Cubemap");
-		cubemapShader->bind();
-		_cubemap->bind();
-		sc::Renderer::submit(_cubemapVAO, cubemapShader, scmath::Mat4::translate(_cameraController.getCamera()->getPosition()));
-		glDepthMask(GL_TRUE);
+
+		skybox->draw(scmath::Mat4::translate(_cameraController.getCamera()->getPosition()));
 
 		// draw tilemaps
 		tileMap->draw();
@@ -142,15 +104,15 @@ private:
 	float rotationTriangleSpeed = 30.0f;
 
 	sc::VertexArrayPtr _squareVAO;
-	sc::Texture2dPtr _chessboardTexture;
-	sc::Texture2dPtr _transparentTexture;
+	sc::TexturePtr _chessboardTexture;
+	sc::TexturePtr _transparentTexture;
 
 	sc::CameraController _cameraController;
 
 	scmath::Vec4 _squareColor = {0.2f, 0.3f, 0.8f, 1.0f};
 
-	sc::VertexArrayPtr _cubemapVAO;
-	sc::CubemapPtr _cubemap;
+	sc::TexturePtr cubemap;
+	std::unique_ptr<Skybox> skybox;
 
 	std::unique_ptr<Triangle> triangle;
 	std::unique_ptr<TextureCube> texCube;
