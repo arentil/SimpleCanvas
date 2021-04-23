@@ -32,7 +32,7 @@ struct ColorVertex
 {
     scmath::Vec3 position;
     scmath::Vec3 normal;
-    scmath::Vec4 color;
+    scmath::Vec3 color;
 };
 
 class ColorMesh : public BaseMesh

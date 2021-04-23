@@ -7,9 +7,9 @@ Triangle::Triangle(sc::Shader const& shader, sc::Camera const& camera)
 , _camera(camera)
 {
     std::vector<sc::ColorVertex> const vertices{
-        {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 1.0f, 1.0f}},
-        {{0.5f, -0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f, 1.0f}},
-        {{0.0f, 0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 0.0f, 1.0f}}
+        {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 1.0f}},
+        {{0.5f, -0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
+        {{0.0f, 0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 0.0f}}
     };
 
     auto mesh = std::make_shared<sc::ColorMesh>(vertices);

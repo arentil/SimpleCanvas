@@ -7,5 +7,7 @@ out vec4 fragColor;
 
 void main()
 {
-    fragColor = texture(u_Texture, v_TexCoord);
+    float ambientStrength = 0.3;
+    vec3 result = ambientStrength * vec3(texture(u_Texture, v_TexCoord));
+    fragColor = vec4(result, 1.0);
 }
