@@ -4,10 +4,10 @@
 
 #include <memory>
 
-class Cube
+class TextureCube
 {
 public:
-    Cube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2dPtr const texture);
+    TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2dPtr const texture);
 
     void draw(scmath::Mat4 const& modelMatrix) const;
 

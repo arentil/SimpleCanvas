@@ -1,10 +1,13 @@
 #include "SimpleCanvas.h"
 #include "SimpleCanvas/EntryPoint.h"
 
-#include "Cube.h"
+#include "TextureCube.h"
+#include "ColorCube.h"
 #include "Teapot.h"
 #include "Sponza.h"
 #include "Triangle.h"
+#include "TileMap.h"
+#include "BlendTexSquare.h"
 
 #include <memory>
 #include <filesystem>
@@ -61,81 +64,22 @@ public:
 
 		// END OF CUBEMAP
 
-		_squareVAO.reset(sc::VertexArray::create());
-
-		float squareVertices[5 * 4] = {
-			-0.5f, -0.5f, -1.0f, 0.0f, 0.0f,
-			0.5f, -0.5f, -1.0f, 1.0f, 0.0f,
-			0.5f, 0.5f, -1.0f, 1.0f, 1.0f,
-			-0.5f, 0.5f, -1.0f, 0.0f, 1.0f
-		};
-
-		auto squareVBO = sc::VertexBuffer::create(squareVertices, sizeof(squareVertices));
-
-		sc::BufferLayout layout2 = {
-			{ sc::ShaderDataType::Float3, "a_Position"},
-			{ sc::ShaderDataType::Float2, "a_TexCoord"}
-		};
-
-		squareVBO->setLayout(layout2);
-		_squareVAO->addVertexBuffer(squareVBO);
-		
-		
-		unsigned int indices2[6] = { 0, 1, 2, 2, 3, 0 };
-		auto indexBuffer2 = sc::IndexBuffer::create(indices2, sizeof(indices2) / sizeof(uint32_t));
-		_squareVAO->setIndexBuffer(indexBuffer2);
-
-		_shadersContainer.addShaderFromFile("FlatColor", "assets/textures/shaders/FlatColor_vertex.glsl", "assets/textures/shaders/FlatColor_fragment.glsl");
-
-		_cubeVAO.reset(sc::VertexArray::create());
-
-		float cubeVertices[7 * 8] = {
-			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-			0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-			-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-			-0.5f, -0.5f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-			0.5f, -0.5f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-			-0.5f, 0.5f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f
-		};
-
-	_shadersContainer.addShaderFromFile("Triangle", "assets/textures/shaders/ViewProj_vertex.glsl", "assets/textures/shaders/ViewProj_fragment.glsl");
-		auto cubeVBO = sc::VertexBuffer::create(cubeVertices, sizeof(cubeVertices));
-		sc::BufferLayout layout = {
-			{ sc::ShaderDataType::Float3, "a_Position"},
-			{ sc::ShaderDataType::Float4, "a_Color"}
-		};
-		cubeVBO->setLayout(layout);
-		_cubeVAO->addVertexBuffer(cubeVBO);
-
-
-		unsigned int cubeIndices[] = {	
-			0, 1, 2, 2, 3, 0, // front
-			6, 5, 4, 4, 7, 6, // back
-			3, 2, 6, 6, 7, 3, // top
-			0, 4, 5, 5, 1, 0, // bottom
-			4, 0, 3, 3, 7, 4, // left
-			1, 5, 6, 6, 2, 1 // right
-		};
-
-		auto cubeIndexBuffer = sc::IndexBuffer::create(cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t));
-		_cubeVAO->setIndexBuffer(cubeIndexBuffer);
-
 		_chessboardTexture = sc::Texture2d::create("assets/textures/Checkerboard.png");
 		_transparentTexture = sc::Texture2d::create("assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
 
-		_shadersContainer.addShaderFromFile("Texture", "assets/textures/shaders/Texture_vertex.glsl", "assets/textures/shaders/Texture_fragment.glsl");
-		auto textureShader = _shadersContainer.getShader("Texture");
-		textureShader->bind();
-		textureShader->uploadUniformInt("v_TexCoord", 0);
-
 		_shadersContainer.addShaderFromFile("TexShader", "assets/textures/shaders/Tex_vertex.glsl", "assets/textures/shaders/Tex_fragment.glsl");
 		_shadersContainer.addShaderFromFile("Flat", "assets/textures/shaders/Flat_vertex.glsl", "assets/textures/shaders/Flat_fragment.glsl");
+		_shadersContainer.addShaderFromFile("FlatColor", "assets/textures/shaders/FlatColor_vertex.glsl", "assets/textures/shaders/FlatColor_fragment.glsl");
+		_shadersContainer.addShaderFromFile("Triangle", "assets/textures/shaders/ViewProj_vertex.glsl", "assets/textures/shaders/ViewProj_fragment.glsl");
+		_shadersContainer.addShaderFromFile("Texture", "assets/textures/shaders/Texture_vertex.glsl", "assets/textures/shaders/Texture_fragment.glsl");
+
 		triangle = std::make_unique<Triangle>(*(_shadersContainer.getShader("Flat")), *(_cameraController.getCamera()));
-		texCube = std::make_unique<Cube>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _chessboardTexture);
+		texCube = std::make_unique<TextureCube>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _chessboardTexture);
+		colorCube = std::make_unique<ColorCube>(*(_shadersContainer.getShader("Flat")), *(_cameraController.getCamera()));
 		teapot = std::make_unique<Teapot>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
 		sponza = std::make_unique<Sponza>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
+		tileMap = std::make_unique<TileMap>(*(_shadersContainer.getShader("Flat")), *(_cameraController.getCamera()));
+		blendSquare = std::make_unique<BlendTexSquare>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _transparentTexture);
 	}
 
 	void update(float deltaTime) override
@@ -145,7 +89,6 @@ public:
 		sc::RenderCommand::clear();		
 		sc::Renderer::beginScene(*(_cameraController.getCamera()));		//----------------- BEGIN SCENE -------------------------
 	
-
 		// draw skybox first
 		glDepthMask(GL_FALSE);
 		auto cubemapShader = _shadersContainer.getShader("Cubemap");
@@ -154,29 +97,8 @@ public:
 		sc::Renderer::submit(_cubemapVAO, cubemapShader, scmath::Mat4::translate(_cameraController.getCamera()->getPosition()));
 		glDepthMask(GL_TRUE);
 
-
-		scmath::Mat4 scale = scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f));
-		auto flatColorShader = _shadersContainer.getShader("FlatColor");
-		flatColorShader->bind();
-		flatColorShader->uploadUniformFloat4("u_Color", _squareColor);
-		for (int y = 0; y < 20; y++)
-
-		{
-			for (int x = 0; x < 20; x++)
-			{
-				scmath::Vec3 pos(x * 0.11f, y * 0.11f, -0.4f);
-				scmath::Mat4 transform = scmath::Mat4::translate(pos) * scale;
-				sc::Renderer::submit(_squareVAO, flatColorShader, transform);
-			}
-		}
-
-		// square with chessboard texture
-		_chessboardTexture->bind();
-		sc::Renderer::submit(_squareVAO, _shadersContainer.getShader("Texture"), scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
-
-		// square with blend texture
-		_transparentTexture->bind();
-		sc::Renderer::submit(_squareVAO, _shadersContainer.getShader("Texture"), scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(0.1f, 0.1f, 0.1f)));
+		// draw tilemaps
+		tileMap->draw();
 
 		// triangle
 		rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
@@ -185,18 +107,25 @@ public:
 		auto triangleMatrix = scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::translate(tranlPos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
 		triangle->draw(triangleMatrix);
 
-		// cube
+		// color cube
 		scmath::Vec3 moveCube(0.5f, 0.0f, 0.0f);
-		sc::Renderer::submit(_cubeVAO, _shadersContainer.getShader("Triangle"), scmath::Mat4::translate(moveCube) * scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
+		auto transform = scmath::Mat4::translate(moveCube) * scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
+		colorCube->draw(transform);
 
-
+		// textured cube
 		scmath::Vec3 moveCube2(3.0f, 0.0f, 2.0f);
 		texCube->draw(scmath::Mat4::translate(moveCube2) * scmath::Mat4::rotateY(scmath::degToRad(45.0f)));
 
+		// teapot
 		scmath::Vec3 teapotAxis(0.0f, 1.0f, 0.0f);
 		teapot->draw(scmath::Mat4::translate(-2.0f, 0.0f, 2.0f) * scmath::Mat4::rotateY(rotationTriangle) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
 
+		// sponza (building)
 		sponza->draw(scmath::Mat4::translate(0.0f, -1.0f, 0.0f));
+		
+		// square with blend texture - to draw blend texture, make sure to draw in in the last place
+		auto transformBlend = scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(1.1f, 1.1f, 1.1f));
+		blendSquare->draw(transformBlend);
 
 		sc::Renderer::endScene();		//---------------------------- END SCENE ---------------------------
 	}
@@ -213,15 +142,10 @@ private:
 	float rotationTriangleSpeed = 30.0f;
 
 	sc::VertexArrayPtr _squareVAO;
-
-	//cube
-	sc::VertexArrayPtr _cubeVAO;
-
 	sc::Texture2dPtr _chessboardTexture;
 	sc::Texture2dPtr _transparentTexture;
 
 	sc::CameraController _cameraController;
-
 
 	scmath::Vec4 _squareColor = {0.2f, 0.3f, 0.8f, 1.0f};
 
@@ -229,9 +153,12 @@ private:
 	sc::CubemapPtr _cubemap;
 
 	std::unique_ptr<Triangle> triangle;
-	std::unique_ptr<Cube> texCube;
+	std::unique_ptr<TextureCube> texCube;
+	std::unique_ptr<ColorCube> colorCube;
 	std::unique_ptr<Teapot> teapot;
 	std::unique_ptr<Sponza> sponza;
+	std::unique_ptr<TileMap> tileMap;
+	std::unique_ptr<BlendTexSquare> blendSquare;
 };
 
 class Sandbox : public sc::Application

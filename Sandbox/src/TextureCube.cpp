@@ -1,4 +1,4 @@
-#include "Cube.h"
+#include "TextureCube.h"
 
 #include <vector>
 
@@ -14,7 +14,7 @@ void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4
 }
 }
 
-Cube::Cube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2dPtr const texture) 
+TextureCube::TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2dPtr const texture) 
 : _shader(shader), _camera(camera)
 {
     std::vector<sc::TextureVertex> vertices{
@@ -37,7 +37,7 @@ Cube::Cube(sc::Shader const& shader, sc::Camera const& camera, sc::Texture2dPtr 
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void Cube::draw(scmath::Mat4 const& modelMatrix) const
+void TextureCube::draw(scmath::Mat4 const& modelMatrix) const
 {
     _model->draw(_shader, _camera, modelMatrix);
 }
