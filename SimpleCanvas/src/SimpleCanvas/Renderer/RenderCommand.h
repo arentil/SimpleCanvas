@@ -23,6 +23,7 @@ public:
 
         //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); // for wireframe draw
         //glPolygonMode( GL_FRONT_AND_BACK, GL_FILL ); // for normal draw
+
     }
 
     static void setClearColor(scmath::Vec4 const& color)

@@ -10,7 +10,7 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
     initialize();
 }
 
-void TextureMesh::draw(Shader const& shader, Camera const& camera, scmath::Mat4 const& modelMatrix) const
+void TextureMesh::draw(Shader const& shader, Camera const& camera, Material const& material, scmath::Mat4 const& modelMatrix) const
 {
     shader.bind();
     if (_texturePtr)
@@ -18,6 +18,8 @@ void TextureMesh::draw(Shader const& shader, Camera const& camera, scmath::Mat4 
 
     shader.uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
     shader.uploadUniformMat4("u_Model", modelMatrix);
+    shader.uploadUniformFloat("u_Ambient", material.ambient);
+    shader.uploadUniformFloat3("u_Diffuse", material.diffuse);
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
@@ -54,13 +56,15 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
     initialize();
 }
 
-void ColorMesh::draw(Shader const& shader, Camera const& camera, scmath::Mat4 const& modelMatrix) const
+void ColorMesh::draw(Shader const& shader, Camera const& camera, Material const& material, scmath::Mat4 const& modelMatrix) const
 {
     shader.bind();
     // no texture binding since the plane color will be used
 
     shader.uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
     shader.uploadUniformMat4("u_Model", modelMatrix);
+    shader.uploadUniformFloat("u_Ambient", material.ambient);
+    shader.uploadUniformFloat3("u_Diffuse", material.diffuse);
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());

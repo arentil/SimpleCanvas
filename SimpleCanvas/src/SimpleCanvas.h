@@ -35,6 +35,7 @@
 #include "SimpleCanvas/Renderer/VertexArray.h"
 #include "SimpleCanvas/Renderer/Texture.h"
 #include "SimpleCanvas/Renderer/Cubemap.h"
+#include "SimpleCanvas/Renderer/Texture2d.h"
 
 /**
  *  Renrerables classes
@@ -42,3 +43,4 @@
 #include "SimpleCanvas/Renderables/Mesh.h"
 #include "SimpleCanvas/Renderables/Model.h"
 #include "SimpleCanvas/Renderables/ObjLoader.h"
+#include "SimpleCanvas/Renderables/Material.h"

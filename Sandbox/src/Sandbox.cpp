@@ -59,35 +59,41 @@ public:
 
 		skybox->draw(scmath::Mat4::translate(_cameraController.getCamera()->getPosition()));
 
+		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);            //_cameraController.getCamera()->getPosition();
+
+
+		sc::Material material{0.3f, diffusePos};
+		colorCube->draw(material, scmath::Mat4::translate(diffusePos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
+
 		// draw tilemaps
-		tileMap->draw();
+		tileMap->draw(material);
 
 		// triangle
 		rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
 		scmath::Vec3 normalizedAxis(0.0f, 0.0f, 1.0f);
 		scmath::Vec3 tranlPos(1.0f, 0.0f, 0.0f);
 		auto triangleMatrix = scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::translate(tranlPos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
-		triangle->draw(triangleMatrix);
+		triangle->draw(material, triangleMatrix);
 
 		// color cube
 		scmath::Vec3 moveCube(0.5f, 0.0f, 0.0f);
 		auto transform = scmath::Mat4::translate(moveCube) * scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
-		colorCube->draw(transform);
+		colorCube->draw(material, transform);
 
 		// textured cube
 		scmath::Vec3 moveCube2(3.0f, 0.0f, 2.0f);
-		texCube->draw(scmath::Mat4::translate(moveCube2) * scmath::Mat4::rotateY(scmath::degToRad(45.0f)));
+		texCube->draw(material, scmath::Mat4::translate(moveCube2) * scmath::Mat4::rotateY(scmath::degToRad(45.0f)));
 
 		// teapot
 		scmath::Vec3 teapotAxis(0.0f, 1.0f, 0.0f);
-		teapot->draw(scmath::Mat4::translate(-2.0f, 0.0f, 2.0f) * scmath::Mat4::rotateY(rotationTriangle) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
+		teapot->draw(material, scmath::Mat4::translate(-2.0f, 0.0f, 2.0f) * scmath::Mat4::rotateY(rotationTriangle) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
 
 		// sponza (building)
-		sponza->draw(scmath::Mat4::translate(0.0f, -1.0f, 0.0f));
+		sponza->draw(material, scmath::Mat4::translate(0.0f, -1.0f, 0.0f) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
 		
 		// square with blend texture - to draw blend texture, make sure to draw in in the last place
 		auto transformBlend = scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(1.1f, 1.1f, 1.1f));
-		blendSquare->draw(transformBlend);
+		blendSquare->draw(material, transformBlend);
 
 		sc::Renderer::endScene();		//---------------------------- END SCENE ---------------------------
 	}

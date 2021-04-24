@@ -8,7 +8,7 @@ void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4
 {
     for (size_t i = 0; i < 6; i++)
     {
-        sc::TextureVertex v{matrix * vertices[i].position, normalMatrix * vertices[i].normal, vertices[i].texCoord};
+        sc::TextureVertex v{matrix * vertices[i].position, matrix * vertices[i].normal, vertices[i].texCoord};
         vertices.push_back(v);
     }
 }
@@ -37,7 +37,7 @@ TextureCube::TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc:
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void TextureCube::draw(scmath::Mat4 const& modelMatrix) const
+void TextureCube::draw(sc::Material const& material, scmath::Mat4 const& modelMatrix) const
 {
-    _model->draw(_shader, _camera, modelMatrix);
+    _model->draw(_shader, _camera, material, modelMatrix);
 }

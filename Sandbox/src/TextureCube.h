@@ -9,7 +9,7 @@ class TextureCube
 public:
     TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture);
 
-    void draw(scmath::Mat4 const& modelMatrix) const;
+    void draw(sc::Material const& material, scmath::Mat4 const& modelMatrix) const;
 
 private:
     sc::Shader const& _shader;

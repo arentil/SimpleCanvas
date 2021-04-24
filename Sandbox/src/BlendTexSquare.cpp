@@ -31,7 +31,7 @@ BlendTexSquare::BlendTexSquare(sc::Shader const& shader, sc::Camera const& camer
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void BlendTexSquare::draw(scmath::Mat4 const& modelMatrix) const
+void BlendTexSquare::draw(sc::Material const& material, scmath::Mat4 const& modelMatrix) const
 {
-    _model->draw(_shader, _camera, modelMatrix);
+    _model->draw(_shader, _camera, material, modelMatrix);
 }

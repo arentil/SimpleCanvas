@@ -9,7 +9,7 @@ class TileMap
 public:
     TileMap(sc::Shader const& shader, sc::Camera const& camera);
 
-    void draw(scmath::Mat4 const& modelMatrix = scmath::Mat4::identity()) const;
+    void draw(sc::Material const& material, scmath::Mat4 const& modelMatrix = scmath::Mat4::identity()) const;
 
 private:
     sc::Shader const& _shader;

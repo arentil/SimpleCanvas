@@ -9,7 +9,7 @@ Teapot::Teapot(sc::Shader const& shader, sc::Camera const& camera)
 {
 }
 
-void Teapot::draw(scmath::Mat4 const& modelMatrix) const
+void Teapot::draw(sc::Material const& material, scmath::Mat4 const& modelMatrix) const
 {
-    _model.draw(_shader, _camera, modelMatrix);
+    _model.draw(_shader, _camera, material, modelMatrix);
 }
