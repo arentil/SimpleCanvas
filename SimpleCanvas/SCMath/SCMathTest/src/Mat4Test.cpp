@@ -222,3 +222,22 @@ TEST_F(Mat4Test, MAT4_MULTIPLY_VEC4_TEST)
 
     EXPECT_EQ(expected, mat * vecToMove);
 }
+
+TEST_F(Mat4Test, MAT4_TRANSPOSE_TEST)
+{
+    Mat4 mat(
+        {1,  2,  3,  4 },
+        {5,  6,  7,  8 },
+        {9,  10, 11, 12},
+        {13, 14, 15, 16}
+    );
+
+    Mat4 expected(
+        {1, 5, 9,  13},
+        {2, 6, 10, 14},
+        {3, 7, 11, 15},
+        {4, 8, 12, 16}
+    );
+
+    EXPECT_EQ(expected, Mat4::transpose(mat));
+}

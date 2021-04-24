@@ -18,6 +18,7 @@ void TextureMesh::draw(Shader const& shader, Camera const& camera, Material cons
 
     shader.uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
     shader.uploadUniformMat4("u_Model", modelMatrix);
+    shader.uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
     shader.uploadUniformFloat("u_Ambient", material.ambient);
     shader.uploadUniformFloat3("u_Diffuse", material.diffuse);
 
@@ -63,6 +64,7 @@ void ColorMesh::draw(Shader const& shader, Camera const& camera, Material const&
 
     shader.uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
     shader.uploadUniformMat4("u_Model", modelMatrix);
+    shader.uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
     shader.uploadUniformFloat("u_Ambient", material.ambient);
     shader.uploadUniformFloat3("u_Diffuse", material.diffuse);
 

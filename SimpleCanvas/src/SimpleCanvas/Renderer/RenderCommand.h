@@ -18,7 +18,7 @@ public:
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE); // for one side triangle draw
         glCullFace(GL_BACK);    // for one side triangle draw
-        glfwWindowHint(GLFW_SAMPLES, 4);
+        //glfwWindowHint(GLFW_SAMPLES, 4);   // this needs to be called before glfwCreateWindow !!!!!!!!!!!!!!!!
         glEnable(GL_MULTISAMPLE);
 
         //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); // for wireframe draw

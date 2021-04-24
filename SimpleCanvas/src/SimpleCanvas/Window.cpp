@@ -42,6 +42,8 @@ void Window::init(WindowProperties const& properties)
 		GLFW_INITIALIZED = true;
 	}
 
+	glfwWindowHint(GLFW_SAMPLES, 4);
+
 	// create GLFW window
 	glfwWindow = glfwCreateWindow(glfwData.width, glfwData.height, glfwData.title.c_str(), nullptr, nullptr);
 

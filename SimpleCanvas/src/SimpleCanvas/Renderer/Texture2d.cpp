@@ -34,8 +34,10 @@ Texture2d::Texture2d(std::string const& filePath)
     glCreateTextures(GL_TEXTURE_2D, 1, &_rendererId);
     glTextureStorage2D(_rendererId, 1, internalFormat, _width, _height);
 
-    glTextureParameteri(_rendererId, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);     // interpolated
-    glTextureParameteri(_rendererId, GL_TEXTURE_MAG_FILTER, GL_LINEAR);    // nearest neighbor
+    // nearest - nearest neighbor or point filtering (sharp)
+    // linear - interpolated (smooth)
+    glTextureParameteri(_rendererId, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);       // smooth texture when far
+    glTextureParameteri(_rendererId, GL_TEXTURE_MAG_FILTER, GL_NEAREST);                    // sharp texture when near
     glTextureSubImage2D(_rendererId, 0, 0, 0, _width, _height, dataFormat, GL_UNSIGNED_BYTE, data);
 
     stbi_image_free(data);

@@ -52,6 +52,8 @@ public:
     static Mat4 scale(float sX, float sY, float sZ);
     static Mat4 scale(Vec3 const& v);
 
+    static Mat4 transpose(Mat4 const& m);
+
     static float det(Mat4 const& mat);
     static Mat4 inverse(Mat4 const& inverse);
     static Mat4 adjugate(Mat4 const& inverse);
