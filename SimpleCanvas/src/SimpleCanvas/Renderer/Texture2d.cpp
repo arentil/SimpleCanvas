@@ -4,15 +4,36 @@
 
 #include "Tools/stb_image.h"
 
-
 namespace sc
 {
+namespace
+{
+std::string replaceSystemSlashes(std::string const& str)
+{
+    std::string result = str;
+
+    char toFind;
+    char replaceWith;
+    #ifdef _WIN32
+        toFind = '/';
+        replaceWith = '\\';
+    #else
+        toFind = '\\';
+        replaceWith = '/';
+    #endif
+
+    std::replace(result.begin(), result.end(), toFind, replaceWith);
+    return result;
+}
+} // namespace
+
 Texture2d::Texture2d(std::string const& filePath)
-: _filePath(filePath)
+: _filePath(replaceSystemSlashes(filePath))
 {
     int width, height, channels;
     stbi_set_flip_vertically_on_load(1);
-    stbi_uc* data = stbi_load(filePath.c_str(), &width, &height, &channels, 0);
+    stbi_uc* data = stbi_load(_filePath.c_str(), &width, &height, &channels, 0);
+    
     assert(data);
     _width = width;
     _height = height;
