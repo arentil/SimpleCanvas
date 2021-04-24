@@ -21,6 +21,8 @@ void TextureMesh::draw(Shader const& shader, Camera const& camera, Material cons
     shader.uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
     shader.uploadUniformFloat("u_Ambient", material.ambient);
     shader.uploadUniformFloat3("u_Diffuse", material.diffuse);
+    shader.uploadUniformFloat("u_Specular", material.specular);
+    shader.uploadUniformFloat3("u_ViewPos", camera.getPosition());
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
@@ -67,6 +69,8 @@ void ColorMesh::draw(Shader const& shader, Camera const& camera, Material const&
     shader.uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
     shader.uploadUniformFloat("u_Ambient", material.ambient);
     shader.uploadUniformFloat3("u_Diffuse", material.diffuse);
+    shader.uploadUniformFloat("u_Specular", material.specular);
+    shader.uploadUniformFloat3("u_ViewPos", camera.getPosition());
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());

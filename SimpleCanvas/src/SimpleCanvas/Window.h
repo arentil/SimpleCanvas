@@ -25,7 +25,7 @@ public:
 		uint32_t width;
 		uint32_t height;
 
-		WindowProperties(std::string const& pTitle = "Simple Canvas Window", uint32_t pWidth = 1280u, uint32_t pHeight = 720u)
+		WindowProperties(std::string const& pTitle = "Simple Canvas Window", uint32_t pWidth = 1920u, uint32_t pHeight = 1080u)
 			: title(pTitle), width(pWidth), height(pHeight) {}
 	};
 

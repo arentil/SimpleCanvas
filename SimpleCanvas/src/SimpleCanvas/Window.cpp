@@ -45,7 +45,7 @@ void Window::init(WindowProperties const& properties)
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	// create GLFW window
-	glfwWindow = glfwCreateWindow(glfwData.width, glfwData.height, glfwData.title.c_str(), nullptr, nullptr);
+	glfwWindow = glfwCreateWindow(glfwData.width, glfwData.height, glfwData.title.c_str(), nullptr /*glfwGetPrimaryMonitor() - for full screen */, nullptr);
 
 	glContext = new GLContext(glfwWindow);
 	glContext->init();

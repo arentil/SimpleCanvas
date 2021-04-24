@@ -59,10 +59,9 @@ public:
 
 		skybox->draw(scmath::Mat4::translate(_cameraController.getCamera()->getPosition()));
 
-		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);            //_cameraController.getCamera()->getPosition();
-
-
-		sc::Material material{0.3f, diffusePos};
+		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);
+		float specularStrength = 0.5f;
+		sc::Material material{0.3f, diffusePos, specularStrength};
 		colorCube->draw(material, scmath::Mat4::translate(diffusePos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
 
 		// draw tilemaps
