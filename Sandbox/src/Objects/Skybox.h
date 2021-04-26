@@ -4,15 +4,13 @@
 
 #include <memory>
 
-class Skybox
+class Skybox : public sc::SCObject
 {
 public:
-    Skybox(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture);
+    Skybox(sc::Shader const& shader);
 
-    void draw(scmath::Mat4 const& modelMatrix) const;
+    void draw(sc::Camera const& camera, sc::Lights const& lights) override;
 
 private:
-    sc::Shader const& _shader;
-    sc::Camera const& _camera;
-    std::shared_ptr<sc::Model> _model;
+    sc::TexturePtr cubemap;
 };

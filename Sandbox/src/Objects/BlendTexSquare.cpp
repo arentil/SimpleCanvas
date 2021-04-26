@@ -14,8 +14,8 @@ void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4
 }
 }
 
-BlendTexSquare::BlendTexSquare(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture) 
-: _shader(shader), _camera(camera)
+BlendTexSquare::BlendTexSquare(sc::Shader const& shader, sc::TexturePtr const texture) 
+: sc::SCObject("BlendTexSquare", shader)
 {
     std::vector<sc::TextureVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
@@ -29,9 +29,4 @@ BlendTexSquare::BlendTexSquare(sc::Shader const& shader, sc::Camera const& camer
     auto mesh = std::make_shared<sc::TextureMesh>(vertices, texture);
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
-}
-
-void BlendTexSquare::draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const
-{
-    _model->draw(_shader, _camera, material, modelMatrix);
 }

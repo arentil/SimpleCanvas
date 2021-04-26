@@ -107,6 +107,11 @@ SCObject* SCObject::findChildByName(std::string const& name)
     return nullptr;
 }
 
+const scmath::Mat4& SCObject::getModelMatrix() const
+{
+    return _modelMatrix;
+}
+
 void SCObject::onPrepare() 
 {
     processCollisions(findRoot());
@@ -121,6 +126,11 @@ void SCObject::onAnimate(float deltaTime)
 void SCObject::onDraw(Camera const& camera, Lights const& lights) 
 {
     if (_model)
-        _model->draw(_shader, camera, lights, _modelMatrix);
+    {
+        if (parentNode != nullptr)
+            _model->draw(_shader, camera, lights, _modelMatrix * ((SCObject*)parentNode)->getModelMatrix());
+        else
+            _model->draw(_shader, camera, lights, _modelMatrix);            
+    }        
 }
 } // namespace sc

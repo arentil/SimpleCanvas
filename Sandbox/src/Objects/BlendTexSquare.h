@@ -4,15 +4,8 @@
 
 #include <memory>
 
-class BlendTexSquare
+class BlendTexSquare : public sc::SCObject
 {
 public:
-    BlendTexSquare(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture);
-
-    void draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const;
-
-private:
-    sc::Shader const& _shader;
-    sc::Camera const& _camera;
-    std::shared_ptr<sc::Model> _model;
+    BlendTexSquare(sc::Shader const& shader, sc::TexturePtr const texture);
 };

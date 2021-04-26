@@ -14,10 +14,23 @@ void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4
 }
 }
 
-Skybox::Skybox(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture) 
-: _shader(shader), _camera(camera)
+Skybox::Skybox(sc::Shader const& shader) 
+: sc::SCObject("Skybox", shader)
 {
-    std::vector<sc::TextureVertex> vertices{        // front
+    std::vector<std::string> cubemapFacesFiles
+    {
+        "assets/textures/skybox/right.jpg",
+        "assets/textures/skybox/left.jpg",
+        "assets/textures/skybox/top.jpg",
+        "assets/textures/skybox/bottom.jpg",
+        "assets/textures/skybox/front.jpg",
+        "assets/textures/skybox/back.jpg"
+    };
+
+    cubemap = sc::Cubemap::create(cubemapFacesFiles);
+
+    std::vector<sc::TextureVertex> vertices
+    {
         {{-0.5f, -0.5f, -0.5f}},
         {{0.5f, -0.5f, -0.5f}},
         {{0.5f, 0.5f, -0.5f}},
@@ -32,14 +45,15 @@ Skybox::Skybox(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePt
     applyMatrixAndAppend(vertices, scmath::Mat4::rotateX(scmath::degToRad(90))); //bottom
     applyMatrixAndAppend(vertices, scmath::Mat4::rotateY(scmath::degToRad(180))); //back
 
-    auto mesh = std::make_shared<sc::TextureMesh>(vertices, texture);
+    auto mesh = std::make_shared<sc::TextureMesh>(vertices, cubemap);
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void Skybox::draw(scmath::Mat4 const& modelMatrix) const
+void Skybox::draw(sc::Camera const& camera, sc::Lights const& lights) 
 {
+    _modelMatrix = scmath::Mat4::translate(camera.getPosition());
     glDepthMask(GL_FALSE);
-    _model->draw(_shader, _camera, sc::Lights{}, modelMatrix);
+    sc::SCObject::draw(camera, sc::Lights{});
     glDepthMask(GL_TRUE);
 }

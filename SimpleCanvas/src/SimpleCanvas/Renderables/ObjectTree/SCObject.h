@@ -24,6 +24,7 @@ public:
     virtual void draw(Camera const& camera, Lights const& lights);
     SCObject* findRoot();
     SCObject* findChildByName(std::string const& name);
+    const scmath::Mat4 &getModelMatrix() const;
 
     scmath::Vec3 position;
     scmath::Vec3 velocity;

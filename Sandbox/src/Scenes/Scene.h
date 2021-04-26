@@ -4,6 +4,7 @@
 
 #include <memory>
 
+class Skybox;
 class Scene;
 using ScenePtr = std::shared_ptr<Scene>;
 
@@ -29,4 +30,5 @@ private:
 	sc::TexturePtr _transparentTexture;
 
     std::shared_ptr<sc::SCObject> rootObject;
+    std::shared_ptr<Skybox> skybox;
 };
