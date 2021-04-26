@@ -2,9 +2,8 @@
 
 #include <vector>
 
-Triangle::Triangle(sc::Shader const& shader, sc::Camera const& camera) 
-: _shader(shader)
-, _camera(camera)
+Triangle::Triangle(sc::Shader const& shader)
+: sc::SCObject("Triangle", shader)
 {
     std::vector<sc::ColorVertex> const vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 1.0f}},
@@ -17,7 +16,9 @@ Triangle::Triangle(sc::Shader const& shader, sc::Camera const& camera)
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void Triangle::draw(sc::Material const& material, scmath::Mat4 const& modelMatrix) const
+void Triangle::onAnimate(float deltaTime) 
 {
-    _model->draw(_shader, _camera, material, modelMatrix);
+    rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
+    scmath::Vec3 tranlPos(1.0f, 0.0f, 0.0f);
+    _modelMatrix = scmath::Mat4::rotate(rotationTriangle, rotateAxis) * scmath::Mat4::translate(tranlPos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
 }

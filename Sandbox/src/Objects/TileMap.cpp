@@ -49,7 +49,7 @@ TileMap::TileMap(sc::Shader const& shader, sc::Camera const& camera)
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void TileMap::draw(sc::Material const& material, scmath::Mat4 const& modelMatrix) const
+void TileMap::draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const
 {
     _model->draw(_shader, _camera, material, modelMatrix);
 }

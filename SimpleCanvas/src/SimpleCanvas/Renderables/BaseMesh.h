@@ -4,7 +4,7 @@
 
 #include "Renderer/Shader.h"
 #include "Renderer/Camera.h"
-#include "Material.h"
+#include "Lights.h"
 
 namespace sc
 {
@@ -15,7 +15,7 @@ class BaseMesh
 {
 public:
     virtual ~BaseMesh() = default;
-    virtual void draw(Shader const& shader, Camera const& camera, Material const& material, scmath::Mat4 const& modelMatrix) const = 0;
+    virtual void draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const = 0;
 
 protected:
     uint32_t VAO, VBO;

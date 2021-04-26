@@ -40,6 +40,6 @@ Skybox::Skybox(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePt
 void Skybox::draw(scmath::Mat4 const& modelMatrix) const
 {
     glDepthMask(GL_FALSE);
-    _model->draw(_shader, _camera, sc::Material{}, modelMatrix);
+    _model->draw(_shader, _camera, sc::Lights{}, modelMatrix);
     glDepthMask(GL_TRUE);
 }

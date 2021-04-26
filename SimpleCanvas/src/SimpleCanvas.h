@@ -40,7 +40,14 @@
 /**
  *  Renrerables classes
  */
+#include "SimpleCanvas/Renderables/Lights.h"
+#include "SimpleCanvas/Renderables/BaseMesh.h"
 #include "SimpleCanvas/Renderables/Mesh.h"
 #include "SimpleCanvas/Renderables/Model.h"
 #include "SimpleCanvas/Renderables/ObjLoader.h"
-#include "SimpleCanvas/Renderables/Material.h"
+
+/**
+ *  ObjectTree classes
+ */
+#include "SimpleCanvas/Renderables/ObjectTree/SCNode.h"
+#include "SimpleCanvas/Renderables/ObjectTree/SCObject.h"

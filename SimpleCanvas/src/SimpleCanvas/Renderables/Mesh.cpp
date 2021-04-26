@@ -10,7 +10,7 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
     initialize();
 }
 
-void TextureMesh::draw(Shader const& shader, Camera const& camera, Material const& material, scmath::Mat4 const& modelMatrix) const
+void TextureMesh::draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
     shader.bind();
     if (_texturePtr)
@@ -19,9 +19,9 @@ void TextureMesh::draw(Shader const& shader, Camera const& camera, Material cons
     shader.uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
     shader.uploadUniformMat4("u_Model", modelMatrix);
     shader.uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
-    shader.uploadUniformFloat("u_Ambient", material.ambient);
-    shader.uploadUniformFloat3("u_Diffuse", material.diffuse);
-    shader.uploadUniformFloat("u_Specular", material.specular);
+    shader.uploadUniformFloat("u_Ambient", lights.ambient);
+    shader.uploadUniformFloat3("u_Diffuse", lights.diffuse);
+    shader.uploadUniformFloat("u_Specular", lights.specular);
     shader.uploadUniformFloat3("u_ViewPos", camera.getPosition());
 
     glBindVertexArray(VAO);
@@ -59,7 +59,7 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
     initialize();
 }
 
-void ColorMesh::draw(Shader const& shader, Camera const& camera, Material const& material, scmath::Mat4 const& modelMatrix) const
+void ColorMesh::draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
     shader.bind();
     // no texture binding since the plane color will be used
@@ -67,9 +67,9 @@ void ColorMesh::draw(Shader const& shader, Camera const& camera, Material const&
     shader.uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
     shader.uploadUniformMat4("u_Model", modelMatrix);
     shader.uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
-    shader.uploadUniformFloat("u_Ambient", material.ambient);
-    shader.uploadUniformFloat3("u_Diffuse", material.diffuse);
-    shader.uploadUniformFloat("u_Specular", material.specular);
+    shader.uploadUniformFloat("u_Ambient", lights.ambient);
+    shader.uploadUniformFloat3("u_Diffuse", lights.diffuse);
+    shader.uploadUniformFloat("u_Specular", lights.specular);
     shader.uploadUniformFloat3("u_ViewPos", camera.getPosition());
 
     glBindVertexArray(VAO);

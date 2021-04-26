@@ -1,14 +1,15 @@
 #include "SimpleCanvas.h"
 #include "SimpleCanvas/EntryPoint.h"
 
-#include "Skybox.h"
-#include "TextureCube.h"
-#include "ColorCube.h"
-#include "Teapot.h"
-#include "Sponza.h"
-#include "Triangle.h"
-#include "TileMap.h"
-#include "BlendTexSquare.h"
+#include "Objects/Skybox.h"
+#include "Objects/TextureCube.h"
+#include "Objects/ColorCube.h"
+#include "Objects/Teapot.h"
+#include "Objects/Sponza.h"
+#include "Objects/Triangle.h"
+#include "Objects/TileMap.h"
+#include "Objects/BlendTexSquare.h"
+#include "Scenes/Scene.h"
 
 #include <memory>
 #include <filesystem>
@@ -35,64 +36,72 @@ public:
 
 		_chessboardTexture = sc::Texture2d::create("assets/textures/Checkerboard.png");
 		_transparentTexture = sc::Texture2d::create("assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
-		
-		_shadersContainer.addShaderFromFile("Cubemap", "assets/textures/shaders/Cubemap_vertex.glsl", "assets/textures/shaders/Cubemap_fragment.glsl");
-		_shadersContainer.addShaderFromFile("TexShader", "assets/textures/shaders/Texture_vertex.glsl", "assets/textures/shaders/Texture_fragment.glsl");
-		_shadersContainer.addShaderFromFile("FlatColor", "assets/textures/shaders/FlatColor_vertex.glsl", "assets/textures/shaders/FlatColor_fragment.glsl");
+
+		_shadersContainer.addShaderFromFile("Cubemap", "assets/shaders/Cubemap_vertex.glsl", "assets/shaders/Cubemap_fragment.glsl");
+		_shadersContainer.addShaderFromFile("TexShader", "assets/shaders/Texture_vertex.glsl", "assets/shaders/Texture_fragment.glsl");
+		_shadersContainer.addShaderFromFile("FlatColor", "assets/shaders/FlatColor_vertex.glsl", "assets/shaders/FlatColor_fragment.glsl");
 
 		skybox = std::make_unique<Skybox>(*(_shadersContainer.getShader("Cubemap")), *(_cameraController.getCamera()), cubemap);
-		triangle = std::make_unique<Triangle>(*(_shadersContainer.getShader("FlatColor")), *(_cameraController.getCamera()));
+		//triangle = std::make_unique<Triangle>(*(_shadersContainer.getShader("FlatColor")), *(_cameraController.getCamera()));
 		texCube = std::make_unique<TextureCube>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _chessboardTexture);
 		colorCube = std::make_unique<ColorCube>(*(_shadersContainer.getShader("FlatColor")), *(_cameraController.getCamera()));
 		teapot = std::make_unique<Teapot>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
 		sponza = std::make_unique<Sponza>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()));
 		tileMap = std::make_unique<TileMap>(*(_shadersContainer.getShader("FlatColor")), *(_cameraController.getCamera()));
 		blendSquare = std::make_unique<BlendTexSquare>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _transparentTexture);
+
+		// object on tree
+		triangle = std::make_unique<Triangle>(*(_shadersContainer.getShader("FlatColor")));
 	}
 
 	void update(float deltaTime) override
 	{
+		//int fps = 1.0f / deltaTime;
+
 		_cameraController.onUpdate(deltaTime);
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
-		sc::RenderCommand::clear();		
+		sc::RenderCommand::clear();
 		sc::Renderer::beginScene(*(_cameraController.getCamera()));		//----------------- BEGIN SCENE -------------------------
+		auto camera = *(_cameraController.getCamera());
 
 		skybox->draw(scmath::Mat4::translate(_cameraController.getCamera()->getPosition()));
 
 		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);
 		float specularStrength = 0.5f;
-		sc::Material material{0.3f, diffusePos, specularStrength};
-		colorCube->draw(material, scmath::Mat4::translate(diffusePos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
+		sc::Lights lights{0.3f, diffusePos, specularStrength};
+		colorCube->draw(lights, scmath::Mat4::translate(diffusePos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
 
 		// draw tilemaps
-		tileMap->draw(material);
+		tileMap->draw(lights);
 
 		// triangle
+		triangle->prepare();
+		triangle->animate(deltaTime);
+		triangle->processCollisions(triangle.get());
+		triangle->draw(camera, lights);
+
+
 		rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
 		scmath::Vec3 normalizedAxis(0.0f, 0.0f, 1.0f);
-		scmath::Vec3 tranlPos(1.0f, 0.0f, 0.0f);
-		auto triangleMatrix = scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::translate(tranlPos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
-		triangle->draw(material, triangleMatrix);
-
 		// color cube
 		scmath::Vec3 moveCube(0.5f, 0.0f, 0.0f);
 		auto transform = scmath::Mat4::translate(moveCube) * scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
-		colorCube->draw(material, transform);
+		colorCube->draw(lights, transform);
 
 		// textured cube
 		scmath::Vec3 moveCube2(3.0f, 0.0f, 2.0f);
-		texCube->draw(material, scmath::Mat4::translate(moveCube2) * scmath::Mat4::rotateY(scmath::degToRad(45.0f)));
+		texCube->draw(lights, scmath::Mat4::translate(moveCube2) * scmath::Mat4::rotateY(scmath::degToRad(45.0f)));
 
 		// teapot
 		scmath::Vec3 teapotAxis(0.0f, 1.0f, 0.0f);
-		teapot->draw(material, scmath::Mat4::translate(-2.0f, 0.0f, 2.0f) * scmath::Mat4::rotateY(rotationTriangle) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
+		teapot->draw(lights, scmath::Mat4::translate(-2.0f, 0.0f, 2.0f) * scmath::Mat4::rotateY(rotationTriangle) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
 
 		// sponza (building)
-		sponza->draw(material, scmath::Mat4::translate(0.0f, -1.0f, 0.0f) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
+		sponza->draw(lights, scmath::Mat4::translate(0.0f, -1.0f, 0.0f) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f));
 		
 		// square with blend texture - to draw blend texture, make sure to draw in in the last place
 		auto transformBlend = scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(1.1f, 1.1f, 1.1f));
-		blendSquare->draw(material, transformBlend);
+		blendSquare->draw(lights, transformBlend);
 
 		sc::Renderer::endScene();		//---------------------------- END SCENE ---------------------------
 	}

@@ -9,7 +9,7 @@ Sponza::Sponza(sc::Shader const& shader, sc::Camera const& camera)
 {
 }
 
-void Sponza::draw(sc::Material const& material, scmath::Mat4 const& modelMatrix) const
+void Sponza::draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const
 {
     _model.draw(_shader, _camera, material, modelMatrix);
 }

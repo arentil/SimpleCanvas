@@ -24,9 +24,9 @@ void Application::run()
 
 	while (_isRunning)
 	{
-		float time = (float)glfwGetTime();
-		float deltaTime = time - lastFrameDeltaTime;
-		lastFrameDeltaTime = time;
+		float currentTime = (float)glfwGetTime();
+		float deltaTime = currentTime - lastFrameDeltaTime;
+		lastFrameDeltaTime = currentTime;
 
 		if (!_windowMinimized)
 			for (Layer* layer : layerContainer)

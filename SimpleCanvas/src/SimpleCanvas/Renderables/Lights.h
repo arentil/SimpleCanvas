@@ -2,7 +2,7 @@
 
 namespace sc
 {
-struct Material
+struct Lights
 {
     float ambient;
     scmath::Vec3 diffuse;

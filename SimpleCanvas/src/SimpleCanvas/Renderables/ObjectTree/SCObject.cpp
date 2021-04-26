@@ -2,25 +2,31 @@
 
 namespace sc
 {
-SCObject::SCObject()
+SCObject::SCObject(std::string const& name, sc::Shader const& shader)
 : isDead(false)
+, _name(name)
+, _shader(shader)
+{}
+
+std::string SCObject::getName() const
 {
-    
+    return _name;
 }
 
-void SCObject::draw(Camera const& camera) 
+void SCObject::setName(std::string const& name) 
 {
-    onDraw(camera);
-    
+    _name = name;
+}
 
+void SCObject::prepare() 
+{
+    onPrepare();
 
-    // draw child send somehow translation matrix or sth
     if (hasChild())
-        ((SCObject*)childNode)->draw(camera);
-    
-    // draw sister nodes
+        ((SCObject*)childNode)->prepare();
+
     if (hasParent() && !isLastChild())
-        ((SCObject*)nextNode)->draw(camera);
+        ((SCObject*)nextNode)->prepare();
 }
 
 void SCObject::animate(float deltaTime) 
@@ -58,15 +64,17 @@ void SCObject::processCollisions(SCObject *object)
         processCollisions(  (SCObject*)(object->nextNode)  );
 }
 
-void SCObject::prepare() 
+void SCObject::draw(Camera const& camera, Lights const& lights) 
 {
-    onPrepare();
+    onDraw(camera, lights);
 
+    // draw child send somehow translation matrix or sth
     if (hasChild())
-        ((SCObject*)childNode)->prepare();
-
+        ((SCObject*)childNode)->draw(camera, lights);
+    
+    // draw sister nodes
     if (hasParent() && !isLastChild())
-        ((SCObject*)nextNode)->prepare();
+        ((SCObject*)nextNode)->draw(camera, lights);
 }
 
 SCObject* SCObject::findRoot() 
@@ -77,14 +85,41 @@ SCObject* SCObject::findRoot()
     return this;
 }
 
+SCObject* SCObject::findChildByName(std::string const& name) 
+{
+    if (_name == name)
+        return this;
+
+    SCObject *result = nullptr;
+    
+    if (hasChild())
+    {
+        if (SCObject* node = ((SCObject*)childNode)->findChildByName(name); node != nullptr)
+            return node;
+    }
+
+    if (hasParent() && !isLastChild())
+    {
+        if (SCObject* node = ((SCObject*)nextNode)->findChildByName(name); node != nullptr)
+            return node;
+    }
+
+    return nullptr;
+}
+
+void SCObject::onPrepare() 
+{
+    processCollisions(findRoot());
+}
+
 void SCObject::onAnimate(float deltaTime) 
 {
     position += velocity * deltaTime;
     velocity += acceleration * deltaTime;
 }
 
-void SCObject::onPrepare() 
+void SCObject::onDraw(Camera const& camera, Lights const& lights) 
 {
-    processCollisions(findRoot());
+    _model->draw(_shader, camera, lights, _modelMatrix);
 }
 } // namespace sc

@@ -2,7 +2,7 @@
 
 #include "Renderer/Texture2d.h"
 #include "BaseMesh.h"
-#include "Material.h"
+#include "Lights.h"
 
 
 namespace sc
@@ -20,7 +20,7 @@ public:
     TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr const texturePtr);
     virtual ~TextureMesh() = default;
 
-    virtual void draw(Shader const& shader, Camera const& camera, Material const& diffuse, scmath::Mat4 const& modelMatrix) const override;
+    virtual void draw(Shader const& shader, Camera const& camera, Lights const& diffuse, scmath::Mat4 const& modelMatrix) const override;
 
 private:
     std::vector<TextureVertex> const _vertices;
@@ -43,7 +43,7 @@ public:
     ColorMesh(std::vector<ColorVertex> const& vertices);
     virtual ~ColorMesh() = default;
 
-    virtual void draw(Shader const& shader, Camera const& camera, Material const& diffuse, scmath::Mat4 const& modelMatrix) const override;
+    virtual void draw(Shader const& shader, Camera const& camera, Lights const& diffuse, scmath::Mat4 const& modelMatrix) const override;
 
 private:
     std::vector<ColorVertex> const _vertices;

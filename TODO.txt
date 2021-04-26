@@ -1,15 +1,18 @@
- - How to load and render object easily, single draw function for Model class (create Mesh and Model representation first)
- - How to draw many objects without changing shader. (Sort objects by shaders, then draw?)
- - Objects position and it's position related to parent (cycle list tree)
- - Loaing obj files or else to be able to render object with textures stored in files(assipm?)
- - basic lightning models  (ambient, diffuse, specular, Blinn-Phong?)
- - Refactor file and shader loader (shader loader refactor done)
- - Create save game system
+TODO - must:
+    - Objects position and it's position related to parent (cycle list tree)
+    - (DONE) Loaing obj files or else to be able to render object with textures stored in files(assipm?)
+    - basic lightning models  (ambient, diffuse, specular, Blinn-Phong?)
+    - (DONE)How to load and render object easily, single draw function for Model class (create Mesh and Model representation first)
+    - Frustrum clipping
+    - simple sound engine (salsa)
 
-For the game
- - perlin noise
- - terrain generator
- - oct tree
+TODO - optional:
+    - How to draw many objects without changing shader. (Sort objects by shaders, then draw?)
+    - Create save game system
+
+
+ - Refactor file and shader loader (shader loader refactor done)
+
 
  GLTF specification
 
@@ -17,7 +20,7 @@ Sound:
 ????? simple sound engine (salsa)
 
  Game ideas:
- simple duck shooter
+ simple duck shooter (duck sound?)
  tank battle?
  square shooter with projectiles 
 

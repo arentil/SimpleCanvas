@@ -13,7 +13,6 @@ if (MSVC)
   add_compile_options(/W4 /std:c++latest)
   set(CMAKE_CXX_FLAGS_DEBUG "/Od /Wall /std:c++latest")
   set(CMAKE_CXX_FLAGS_RELEASE "/W0 /O2 /DNDEBUG")
-  #set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
 else()
   add_compile_options(-std=c++17 -Wall -Wextra -pedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov)
   set(CMAKE_CXX_FLAGS_DEBUG "-g")
@@ -23,24 +22,29 @@ endif ()
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/Sandbox/src)
 set(SOURCE_FILES
   ${SOURCE_DIR}/Sandbox.cpp
-  ${SOURCE_DIR}/TextureCube.h
-  ${SOURCE_DIR}/TextureCube.cpp
-  ${SOURCE_DIR}/ColorCube.h
-  ${SOURCE_DIR}/ColorCube.cpp
-  ${SOURCE_DIR}/Teapot.h
-  ${SOURCE_DIR}/Teapot.cpp
-  ${SOURCE_DIR}/Sponza.h
-  ${SOURCE_DIR}/Sponza.cpp
-  ${SOURCE_DIR}/Triangle.h
-  ${SOURCE_DIR}/Triangle.cpp
-  ${SOURCE_DIR}/TileMap.h
-  ${SOURCE_DIR}/TileMap.cpp
-  ${SOURCE_DIR}/BlendTexSquare.h
-  ${SOURCE_DIR}/BlendTexSquare.cpp
-  ${SOURCE_DIR}/Skybox.h
-  ${SOURCE_DIR}/Skybox.cpp
+  ${SOURCE_DIR}/Objects/TextureCube.h
+  ${SOURCE_DIR}/Objects/TextureCube.cpp
+  ${SOURCE_DIR}/Objects/ColorCube.h
+  ${SOURCE_DIR}/Objects/ColorCube.cpp
+  ${SOURCE_DIR}/Objects/Teapot.h
+  ${SOURCE_DIR}/Objects/Teapot.cpp
+  ${SOURCE_DIR}/Objects/Sponza.h
+  ${SOURCE_DIR}/Objects/Sponza.cpp
+  ${SOURCE_DIR}/Objects/Triangle.h
+  ${SOURCE_DIR}/Objects/Triangle.cpp
+  ${SOURCE_DIR}/Objects/TileMap.h
+  ${SOURCE_DIR}/Objects/TileMap.cpp
+  ${SOURCE_DIR}/Objects/BlendTexSquare.h
+  ${SOURCE_DIR}/Objects/BlendTexSquare.cpp
+  ${SOURCE_DIR}/Objects/Skybox.h
+  ${SOURCE_DIR}/Objects/Skybox.cpp
+  ${SOURCE_DIR}/Scenes/Scene.cpp
+  ${SOURCE_DIR}/Scenes/Scene.h
+  ${SOURCE_DIR}/World/World.cpp
+  ${SOURCE_DIR}/World/World.h
 )
 
+include_directories(${CMAKE_SOURCE_DIR}/Sandbox/src)
 add_executable(Sandbox  ${SOURCE_FILES})
 target_link_libraries(Sandbox PUBLIC SimpleCanvas)
 
