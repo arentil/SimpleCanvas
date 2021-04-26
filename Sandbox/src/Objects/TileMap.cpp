@@ -14,8 +14,8 @@ void applyMatrixAndAppend(std::vector<sc::ColorVertex> &vertices, scmath::Mat4 c
 }
 }
 
-TileMap::TileMap(sc::Shader const& shader, sc::Camera const& camera) 
-: _shader(shader), _camera(camera)
+TileMap::TileMap(sc::Shader const& shader)
+: sc::SCObject("TileMap", shader)
 {
     std::vector<sc::ColorVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.2f, 0.3f, 0.8f}},
@@ -47,9 +47,4 @@ TileMap::TileMap(sc::Shader const& shader, sc::Camera const& camera)
     auto mesh = std::make_shared<sc::ColorMesh>(vertices);
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
-}
-
-void TileMap::draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const
-{
-    _model->draw(_shader, _camera, material, modelMatrix);
 }

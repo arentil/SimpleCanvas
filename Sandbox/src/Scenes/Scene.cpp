@@ -5,6 +5,7 @@
 #include <Objects/Terrain.h>
 #include <Objects/TextureCube.h>
 #include <Objects/Teapot.h>
+#include <Objects/TileMap.h>
 
 Scene::Scene() 
 {
@@ -15,10 +16,11 @@ Scene::Scene()
     _transparentTexture = sc::Texture2d::create("assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
 
     rootObject = std::make_shared<Terrain>(*getShader("FlatColor"));
-        rootObject->attach(new Sponza(*getShader("Texture")));
+        //rootObject->attach(new Sponza(*getShader("Texture")));
         rootObject->attach(new Triangle(*getShader("FlatColor")));
         rootObject->attach(new TextureCube(*getShader("Texture"), _chessboardTexture));
         rootObject->attach(new Teapot(*getShader("Texture")));
+        rootObject->attach(new TileMap(*getShader("FlatColor")));
 }
 
 void Scene::prepare() 

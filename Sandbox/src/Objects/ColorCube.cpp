@@ -14,8 +14,8 @@ void applyMatrixAndAppend(std::vector<sc::ColorVertex> &vertices, scmath::Mat4 c
 }
 }
 
-ColorCube::ColorCube(sc::Shader const& shader, sc::Camera const& camera) 
-: _shader(shader), _camera(camera)
+ColorCube::ColorCube(sc::Shader const& shader) 
+: sc::SCObject("ColorCube", shader)
 {
     std::vector<sc::ColorVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
@@ -37,7 +37,8 @@ ColorCube::ColorCube(sc::Shader const& shader, sc::Camera const& camera)
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void ColorCube::draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const
+void ColorCube::onAnimate(float deltaTime) 
 {
-    _model->draw(_shader, _camera, material, modelMatrix);
+    rotationAngle += scmath::degToRad(rotationSpeed) * deltaTime;
+    _modelMatrix = scmath::Mat4::translate(pos) * scmath::Mat4::rotateZ(rotationAngle) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
 }

@@ -10,7 +10,7 @@
 namespace scmath
 {
 Mat4::Mat4()
-: matrix{Vec4(), Vec4(), Vec4(), Vec4()}
+: Mat4(Mat4::identity())
 {}
 
 Mat4::Mat4(Vec4 const& v1, Vec4 const& v2, Vec4 const& v3, Vec4 const& v4)

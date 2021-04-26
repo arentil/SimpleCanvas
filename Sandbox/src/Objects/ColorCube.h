@@ -4,15 +4,15 @@
 
 #include <memory>
 
-class ColorCube
+class ColorCube : public sc::SCObject
 {
 public:
-    ColorCube(sc::Shader const& shader, sc::Camera const& camera);
+    ColorCube(sc::Shader const& shader);
 
-    void draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const;
+    void onAnimate(float deltaTime) override;
 
-private:
-    sc::Shader const& _shader;
-    sc::Camera const& _camera;
-    sc::ModelPtr _model;
+public:
+    float rotationAngle = 0.0f;
+    float rotationSpeed = 30.0f;
+    scmath::Vec3 pos{0.5f, 0.0f, 0.0f};
 };

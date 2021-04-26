@@ -2,11 +2,7 @@
 #include "SimpleCanvas/EntryPoint.h"
 
 #include "Objects/Skybox.h"
-#include "Objects/TextureCube.h"
 #include "Objects/ColorCube.h"
-#include "Objects/Teapot.h"
-#include "Objects/Sponza.h"
-#include "Objects/TileMap.h"
 #include "Objects/BlendTexSquare.h"
 
 #include "World/World.h"
@@ -38,11 +34,8 @@ public:
 
 		_shadersContainer.addShaderFromFile("Cubemap", "assets/shaders/Cubemap_vertex.glsl", "assets/shaders/Cubemap_fragment.glsl");
 		_shadersContainer.addShaderFromFile("TexShader", "assets/shaders/Texture_vertex.glsl", "assets/shaders/Texture_fragment.glsl");
-		_shadersContainer.addShaderFromFile("FlatColor", "assets/shaders/FlatColor_vertex.glsl", "assets/shaders/FlatColor_fragment.glsl");
 
 		skybox = std::make_unique<Skybox>(*(_shadersContainer.getShader("Cubemap")), *(_cameraController.getCamera()), cubemap);
-		colorCube = std::make_unique<ColorCube>(*(_shadersContainer.getShader("FlatColor")), *(_cameraController.getCamera()));
-		tileMap = std::make_unique<TileMap>(*(_shadersContainer.getShader("FlatColor")), *(_cameraController.getCamera()));
 		blendSquare = std::make_unique<BlendTexSquare>(*(_shadersContainer.getShader("TexShader")), *(_cameraController.getCamera()), _transparentTexture);
 
 		world = std::make_unique<World>();
@@ -53,44 +46,30 @@ public:
 		//int fps = 1.0f / deltaTime;
 
 		_cameraController.onUpdate(deltaTime);
+		auto camera = *(_cameraController.getCamera());
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		sc::RenderCommand::clear();
-		sc::Renderer::beginScene(*(_cameraController.getCamera()));		//----------------- BEGIN SCENE -------------------------
-		auto camera = *(_cameraController.getCamera());
+		sc::Renderer::beginScene(camera);
+		
 
-		skybox->draw(scmath::Mat4::translate(_cameraController.getCamera()->getPosition()));
+		skybox->draw(scmath::Mat4::translate(camera.getPosition()));
 
 		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);
 		float specularStrength = 0.5f;
 		sc::Lights lights{0.3f, diffusePos, specularStrength};
-		colorCube->draw(lights, scmath::Mat4::translate(diffusePos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
+		//colorCube->draw(lights, scmath::Mat4::translate(diffusePos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f)));
 
-		// draw tilemaps
-		tileMap->draw(lights);
 
-		
 		world->prepare();
-
 		world->animate(deltaTime);
-
 		world->processCollisions();
-
 		world->draw(camera, lights);
-		
 
-
-		rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
-		scmath::Vec3 normalizedAxis(0.0f, 0.0f, 1.0f);
-		// color cube
-		scmath::Vec3 moveCube(0.5f, 0.0f, 0.0f);
-		auto transform = scmath::Mat4::translate(moveCube) * scmath::Mat4::rotate(rotationTriangle, normalizedAxis) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
-		colorCube->draw(lights, transform);
-		
 		// square with blend texture - to draw blend texture, make sure to draw in in the last place
 		auto transformBlend = scmath::Mat4::translate(scmath::Vec3(0.0f, 0.0f, 0.01f)) * scmath::Mat4::scale(scmath::Vec3(1.1f, 1.1f, 1.1f));
 		blendSquare->draw(lights, transformBlend);
 
-		sc::Renderer::endScene();		//---------------------------- END SCENE ---------------------------
+		sc::Renderer::endScene();
 	}
 
 	void onEvent(sc::Event &event) override
@@ -109,13 +88,11 @@ private:
 
 	sc::CameraController _cameraController;
 
-	scmath::Vec4 _squareColor = {0.2f, 0.3f, 0.8f, 1.0f};
 
 	sc::TexturePtr cubemap;
 	std::unique_ptr<Skybox> skybox;
 
 	std::unique_ptr<ColorCube> colorCube;
-	std::unique_ptr<TileMap> tileMap;
 	std::unique_ptr<BlendTexSquare> blendSquare;
 
 	std::unique_ptr<World> world;
