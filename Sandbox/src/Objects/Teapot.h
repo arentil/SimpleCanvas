@@ -4,15 +4,15 @@
 
 #include <memory>
 
-class Teapot
+class Teapot : public sc::SCObject
 {
 public:
-    Teapot(sc::Shader const& shader, sc::Camera const& camera);
+    Teapot(sc::Shader const& shader);
 
-    void draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const;
+    void onAnimate(float deltaTime) override;
 
 private:
-    sc::Shader const& _shader;
-    sc::Camera const& _camera;
-    sc::Model _model;
+	float rotationTriangle = 0.0f;
+	float rotationTriangleSpeed = 30.0f;
+    scmath::Vec3 rotationAxis{0.0f, 1.0f, 0.0f};
 };

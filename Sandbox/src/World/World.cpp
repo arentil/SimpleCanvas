@@ -3,7 +3,8 @@
 
 World::World() 
 {
-   
+   _scenesMap["MainScene"] = std::make_shared<Scene>();
+   setCurrentScene("MainScene");
 }
 
 ScenePtr World::getScene(std::string const& name) const

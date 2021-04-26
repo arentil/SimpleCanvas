@@ -10,7 +10,7 @@ using ScenePtr = std::shared_ptr<Scene>;
 class Scene
 {
 public:
-    Scene() = default;
+    Scene();
     virtual ~Scene() = default;
 
     virtual void loadScene() {};
@@ -18,9 +18,15 @@ public:
     void prepare();
     void animate(float deltaTime);
     void processCollisions();
-    // void input() ??????
+    // void process input() ??????
     void draw(sc::Camera const& camera, sc::Lights const& lights);
 
 private:
+    sc::ShaderPtr getShader(std::string const& name);
+
+    sc::ShadersContainer _shadersContainer;
+    sc::TexturePtr _chessboardTexture;
+	sc::TexturePtr _transparentTexture;
+
     std::shared_ptr<sc::SCObject> rootObject;
 };

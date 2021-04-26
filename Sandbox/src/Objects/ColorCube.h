@@ -14,5 +14,5 @@ public:
 private:
     sc::Shader const& _shader;
     sc::Camera const& _camera;
-    std::shared_ptr<sc::Model> _model;
+    sc::ModelPtr _model;
 };

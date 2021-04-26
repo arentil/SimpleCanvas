@@ -57,7 +57,7 @@ void SCObject::processCollisions(SCObject *object)
             ((SCObject*)nextNode)->processCollisions(object);
     }
 
-    if (hasChild())
+    if (object->hasChild())
         processCollisions(  (SCObject*)(object->childNode)  );
 
     if (object->hasParent() && !object->isLastChild())
@@ -120,6 +120,7 @@ void SCObject::onAnimate(float deltaTime)
 
 void SCObject::onDraw(Camera const& camera, Lights const& lights) 
 {
-    _model->draw(_shader, camera, lights, _modelMatrix);
+    if (_model)
+        _model->draw(_shader, camera, lights, _modelMatrix);
 }
 } // namespace sc

@@ -16,7 +16,7 @@ Triangle::Triangle(sc::Shader const& shader)
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void Triangle::onAnimate(float deltaTime) 
+void Triangle::onAnimate(float deltaTime)
 {
     rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
     scmath::Vec3 tranlPos(1.0f, 0.0f, 0.0f);

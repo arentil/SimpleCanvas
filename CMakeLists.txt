@@ -32,6 +32,8 @@ set(SOURCE_FILES
   ${SOURCE_DIR}/Objects/Sponza.cpp
   ${SOURCE_DIR}/Objects/Triangle.h
   ${SOURCE_DIR}/Objects/Triangle.cpp
+  ${SOURCE_DIR}/Objects/Terrain.h
+  ${SOURCE_DIR}/Objects/Terrain.cpp
   ${SOURCE_DIR}/Objects/TileMap.h
   ${SOURCE_DIR}/Objects/TileMap.cpp
   ${SOURCE_DIR}/Objects/BlendTexSquare.h

@@ -1,15 +1,8 @@
 #include "Sponza.h"
 
-#include <vector>
-
-Sponza::Sponza(sc::Shader const& shader, sc::Camera const& camera) 
-: _shader(shader)
-, _camera(camera)
-, _model(sc::ObjLoader::loadObjFromFile("assets/models/sponza/sponza.obj"))
+Sponza::Sponza(sc::Shader const& shader) 
+: sc::SCObject("Sponza", shader)
 {
-}
-
-void Sponza::draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const
-{
-    _model.draw(_shader, _camera, material, modelMatrix);
+    _model = sc::ObjLoader::loadObjFromFile("assets/models/sponza/sponza.obj");
+    _modelMatrix = scmath::Mat4::translate(0.0f, -1.0f, 0.0f) * scmath::Mat4::scale(0.01f, 0.01f, 0.01f);
 }

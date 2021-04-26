@@ -4,15 +4,8 @@
 
 #include <memory>
 
-class TextureCube
+class TextureCube : public sc::SCObject
 {
 public:
-    TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture);
-
-    void draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const;
-
-private:
-    sc::Shader const& _shader;
-    sc::Camera const& _camera;
-    std::shared_ptr<sc::Model> _model;
+    TextureCube(sc::Shader const& shader, sc::TexturePtr const texture);
 };

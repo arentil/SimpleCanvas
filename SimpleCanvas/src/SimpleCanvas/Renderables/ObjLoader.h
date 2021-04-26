@@ -3,10 +3,11 @@
 namespace sc
 {
 class Model;
+using ModelPtr = std::shared_ptr<Model>;
 
 class ObjLoader
 {
 public:
-    static Model loadObjFromFile(std::string const& objFilePath);
+    static ModelPtr loadObjFromFile(std::string const& objFilePath);
 };
 } // namespace sc

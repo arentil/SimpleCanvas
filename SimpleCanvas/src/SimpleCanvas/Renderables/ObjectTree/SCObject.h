@@ -18,10 +18,10 @@ public:
     virtual void load() {}
     virtual void unload() {}
 
-    void prepare();
-    void animate(float deltaTime);
-    void processCollisions(SCObject *object);
-    void draw(Camera const& camera, Lights const& lights);
+    virtual void prepare();
+    virtual void animate(float deltaTime);
+    virtual void processCollisions(SCObject *object);
+    virtual void draw(Camera const& camera, Lights const& lights);
     SCObject* findRoot();
     SCObject* findChildByName(std::string const& name);
 
@@ -37,8 +37,8 @@ protected:
     virtual void onDraw(Camera const& camera, Lights const& lights);
 
     std::string _name;
-    sc::Shader const& _shader;
-    std::shared_ptr<Model> _model;
+    Shader const& _shader;
+    ModelPtr _model;
     scmath::Mat4 _modelMatrix;
 };
 } // namespace sc

@@ -76,7 +76,7 @@ void SCNode::attach(SCNode *newChild)
 
     newChild->parentNode = this;
 
-    if (childNode)
+    if (childNode != nullptr)
     {
         newChild->prevNode = childNode->prevNode;
         newChild->nextNode = childNode;

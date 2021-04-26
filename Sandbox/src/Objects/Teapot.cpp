@@ -2,14 +2,16 @@
 
 #include <vector>
 
-Teapot::Teapot(sc::Shader const& shader, sc::Camera const& camera) 
-: _shader(shader)
-, _camera(camera)
-, _model(sc::ObjLoader::loadObjFromFile("assets/models/teapot/teapot.obj"))
+Teapot::Teapot(sc::Shader const& shader) 
+: sc::SCObject("Teapot", shader)
 {
+    _model = sc::ObjLoader::loadObjFromFile("assets/models/teapot/teapot.obj");
 }
 
-void Teapot::draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const
+void Teapot::onAnimate(float deltaTime) 
 {
-    _model.draw(_shader, _camera, material, modelMatrix);
+    rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
+    _modelMatrix = scmath::Mat4::translate(-2.0f, 0.0f, 2.0f) * 
+        scmath::Mat4::rotateY(rotationTriangle) *
+        scmath::Mat4::scale(0.01f, 0.01f, 0.01f);
 }

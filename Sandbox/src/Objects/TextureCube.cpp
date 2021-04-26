@@ -14,8 +14,8 @@ void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4
 }
 }
 
-TextureCube::TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc::TexturePtr const texture) 
-: _shader(shader), _camera(camera)
+TextureCube::TextureCube(sc::Shader const& shader, sc::TexturePtr const texture) 
+: sc::SCObject("TextureCube", shader)
 {
     std::vector<sc::TextureVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
@@ -35,9 +35,7 @@ TextureCube::TextureCube(sc::Shader const& shader, sc::Camera const& camera, sc:
     auto mesh = std::make_shared<sc::TextureMesh>(vertices, texture);
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
-}
 
-void TextureCube::draw(sc::Lights const& material, scmath::Mat4 const& modelMatrix) const
-{
-    _model->draw(_shader, _camera, material, modelMatrix);
+	scmath::Vec3 pos(3.0f, 0.0f, 2.0f);
+    _modelMatrix = scmath::Mat4::translate(pos) * scmath::Mat4::rotateY(scmath::degToRad(45.0f));
 }

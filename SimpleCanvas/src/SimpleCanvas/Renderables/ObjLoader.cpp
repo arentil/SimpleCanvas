@@ -20,7 +20,7 @@ std::string getFileParentFolder(std::string const& filePath)
 }
 } // namespace
 
-Model ObjLoader::loadObjFromFile(std::string const& objFilePath)
+ModelPtr ObjLoader::loadObjFromFile(std::string const& objFilePath)
 {
     std::string const parentFolder = getFileParentFolder(objFilePath);
 
@@ -120,7 +120,6 @@ Model ObjLoader::loadObjFromFile(std::string const& objFilePath)
         meshes.push_back(std::make_shared<TextureMesh>(vertices, textures[textureFilePath]));
     }
 
-    Model result(meshes);
-    return result;
+    return std::make_shared<Model>(meshes);
 }
 }
