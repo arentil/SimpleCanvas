@@ -11,7 +11,13 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
 }
 
 void TextureMesh::draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
-{
+{   
+    if (!_aabb.isInFrustrum(camera, modelMatrix))
+    {
+        return;
+    }
+
+
     shader.bind();
     if (_texturePtr)
         _texturePtr->bind();
@@ -51,6 +57,21 @@ void TextureMesh::initialize()
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(TextureVertex), (void*)offsetof(TextureVertex, texCoord));
 
     glBindVertexArray(0);
+
+    // aabb bounding for frustrum clipping
+    scmath::Vec3 minVertex = _vertices.front().position;
+    scmath::Vec3 maxVertex = _vertices.front().position;
+    for (auto const& vertex : _vertices)
+    {
+        minVertex.x = std::min(minVertex.x, vertex.position.x);
+        minVertex.y = std::min(minVertex.y, vertex.position.y);
+        minVertex.z = std::min(minVertex.z, vertex.position.z);
+
+        maxVertex.x = std::max(maxVertex.x, vertex.position.x);
+        maxVertex.y = std::max(maxVertex.y, vertex.position.y);
+        maxVertex.z = std::max(maxVertex.z, vertex.position.z);
+    }
+    _aabb.setMinMax(minVertex, maxVertex);
 }
 
 ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
@@ -61,6 +82,11 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
 
 void ColorMesh::draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
+    if (!_aabb.isInFrustrum(camera, modelMatrix))
+    {
+        return;
+    }
+
     shader.bind();
     // no texture binding since the plane color will be used
 
@@ -99,5 +125,21 @@ void ColorMesh::initialize()
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), (void*)offsetof(ColorVertex, color));
 
     glBindVertexArray(0);
+
+
+    // aabb bounding for frustrum clipping
+    scmath::Vec3 minVertex = _vertices.front().position;
+    scmath::Vec3 maxVertex = _vertices.front().position;
+    for (auto const& vertex : _vertices)
+    {
+        minVertex.x = std::min(minVertex.x, vertex.position.x);
+        minVertex.y = std::min(minVertex.y, vertex.position.y);
+        minVertex.z = std::min(minVertex.z, vertex.position.z);
+
+        maxVertex.x = std::max(maxVertex.x, vertex.position.x);
+        maxVertex.y = std::max(maxVertex.y, vertex.position.y);
+        maxVertex.z = std::max(maxVertex.z, vertex.position.z);
+    }
+    _aabb.setMinMax(minVertex, maxVertex);
 }
 } // namespace sc

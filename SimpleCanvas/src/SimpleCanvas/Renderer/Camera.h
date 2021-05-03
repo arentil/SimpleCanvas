@@ -28,10 +28,8 @@ public:
 
     void setFrontVector(scmath::Vec3 const& front);
     const scmath::Vec3& getFrontVector() const;
-
     const scmath::Vec3& getUpVector() const;
 
-    
     const scmath::Mat4& getProjMatrix() const;
     const scmath::Mat4& getViewMatrix() const;
     const scmath::Mat4& getViewProjMatrix() const;

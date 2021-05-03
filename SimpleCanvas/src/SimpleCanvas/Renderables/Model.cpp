@@ -2,7 +2,7 @@
 
 namespace sc
 {
-Model::Model(std::vector<BaseMeshPtr> const meshes)
+Model::Model(std::vector<BaseMeshPtr> const& meshes)
 : _meshes(meshes)
 {}
 

@@ -17,7 +17,8 @@ using ModelPtr = std::shared_ptr<Model>;
 class Model
 {
 public:
-    Model(std::vector<BaseMeshPtr> const meshes);
+    Model() = default;
+    Model(std::vector<BaseMeshPtr> const& meshes);
     ~Model() = default;
 
     void draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const;

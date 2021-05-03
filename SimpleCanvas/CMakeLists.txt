@@ -86,6 +86,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/AABB.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/AABB.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.h

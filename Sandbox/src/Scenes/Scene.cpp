@@ -22,7 +22,7 @@ Scene::Scene()
     _transparentTexture = sc::Texture2d::create("assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
 
     rootObject = std::make_shared<Terrain>(*getShader("FlatColor"));
-        //rootObject->attach(new Sponza(*getShader("Texture")));
+        rootObject->attach(new Sponza(*getShader("Texture")));
         rootObject->attach(new ColorCube(*getShader("FlatColor")));
             rootObject->findChildByName("ColorCube")->attach(new Triangle(*getShader("FlatColor")));
         rootObject->attach(new TextureCube(*getShader("Texture"), _chessboardTexture));
@@ -48,7 +48,7 @@ void Scene::processCollisions()
 
 void Scene::draw(sc::Camera const& camera, sc::Lights const& lights) 
 {
-    skybox->draw(camera, lights);
+    //skybox->draw(camera, lights);
     rootObject->draw(camera, lights);
 }
 

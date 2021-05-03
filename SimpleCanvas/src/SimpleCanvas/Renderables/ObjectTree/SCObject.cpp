@@ -125,12 +125,6 @@ void SCObject::onAnimate(float deltaTime)
 
 void SCObject::onDraw(Camera const& camera, Lights const& lights) 
 {
-    if (_model)
-    {
-        if (parentNode != nullptr)
-            _model->draw(_shader, camera, lights, _modelMatrix * ((SCObject*)parentNode)->getModelMatrix());
-        else
-            _model->draw(_shader, camera, lights, _modelMatrix);            
-    }        
+    _model->draw(_shader, camera, lights, _modelMatrix);
 }
 } // namespace sc

@@ -44,6 +44,7 @@
 #include "SimpleCanvas/Renderables/BaseMesh.h"
 #include "SimpleCanvas/Renderables/Mesh.h"
 #include "SimpleCanvas/Renderables/Model.h"
+#include "SimpleCanvas/Renderables/AABB.h"
 #include "SimpleCanvas/Renderables/ObjLoader.h"
 
 /**

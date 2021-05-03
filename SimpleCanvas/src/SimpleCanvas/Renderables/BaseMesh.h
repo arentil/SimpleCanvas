@@ -4,7 +4,8 @@
 
 #include "Renderer/Shader.h"
 #include "Renderer/Camera.h"
-#include "Lights.h"
+#include "Renderables/AABB.h"
+#include "Renderables/Lights.h"
 
 namespace sc
 {
@@ -18,6 +19,7 @@ public:
     virtual void draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const = 0;
 
 protected:
+    AABB _aabb;
     uint32_t VAO, VBO;
 };
 } // namespace sc

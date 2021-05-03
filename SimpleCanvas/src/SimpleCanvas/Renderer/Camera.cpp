@@ -10,7 +10,6 @@ Camera::Camera(CameraType type, scmath::Mat4 const& projectionMatrix, scmath::Ma
 , _front(0.0f, 0.0f, -1.0f)
 , _up(0.0f, 1.0f, 0.0f)
 {
-    //_viewProjMatrix = _projMatrix * _viewMatrix;
     recalculateViewMatrix();
 }
 

@@ -26,7 +26,7 @@ public:
 		//int fps = 1.0f / deltaTime;
 
 		_cameraController.onUpdate(deltaTime);
-		auto camera = *(_cameraController.getCamera());
+		sc::Camera const& camera = *(_cameraController.getCamera());
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		sc::RenderCommand::clear();
 		sc::Renderer::beginScene(camera);
