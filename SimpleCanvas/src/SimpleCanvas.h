@@ -4,8 +4,7 @@
 #include "SimpleCanvas/Application.h"
 #include "SimpleCanvas/Logger.h"
 //#include "SimpleCanvas/EntryPoint.h"  // this mess #include "SimpleCanvas.h" because of exterm
-#include "SimpleCanvas/Layer.h"
-#include "SimpleCanvas/LayerContainer.h"
+#include "SimpleCanvas/Canvas.h"
 #include "SimpleCanvas/CameraController.h"
 
 /**
@@ -25,14 +24,12 @@
 /**
  *  Renderer classes
  */
-#include "SimpleCanvas/Renderer/Buffer.h"
 #include "SimpleCanvas/Renderer/GLContext.h"
 #include "SimpleCanvas/Renderer/OrthographicCamera.h"
 #include "SimpleCanvas/Renderer/PerspectiveCamera.h"
 #include "SimpleCanvas/Renderer/RenderCommand.h"
 #include "SimpleCanvas/Renderer/Renderer.h"
 #include "SimpleCanvas/Renderer/Shader.h"
-#include "SimpleCanvas/Renderer/VertexArray.h"
 #include "SimpleCanvas/Renderer/Texture.h"
 #include "SimpleCanvas/Renderer/Cubemap.h"
 #include "SimpleCanvas/Renderer/Texture2d.h"

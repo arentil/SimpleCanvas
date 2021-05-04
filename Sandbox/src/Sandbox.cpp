@@ -11,12 +11,11 @@
 #include <filesystem>
 #include <vector>
 
-class ExampleLayer : public sc::Layer
+class ExampleCanvas : public sc::Canvas
 {
 public:
-	ExampleLayer()
-	: Layer("Example")
-	, _cameraController(16.0f, 9.0f)//1280.0f / 720.0f)
+	ExampleCanvas()
+	: _cameraController(16.0f, 9.0f)//1280.0f / 720.0f)
 	{
 		world = std::make_unique<World>();
 	}
@@ -29,7 +28,6 @@ public:
 		sc::Camera const& camera = *(_cameraController.getCamera());
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		sc::RenderCommand::clear();
-		sc::Renderer::beginScene(camera);
 
 		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);
 		float specularStrength = 0.5f;
@@ -39,8 +37,6 @@ public:
 		world->animate(deltaTime);
 		world->processCollisions();
 		world->draw(camera, lights);
-
-		sc::Renderer::endScene();
 	}
 
 	void onEvent(sc::Event &event) override
@@ -58,7 +54,7 @@ class Sandbox : public sc::Application
 public:
 	Sandbox() 
 	{
-		pushLayer(new ExampleLayer());
+		initCanvas(new ExampleCanvas());
 	}
 
 	~Sandbox() {}

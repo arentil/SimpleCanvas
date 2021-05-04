@@ -3,7 +3,7 @@
 #include "Core.h"
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
-#include "LayerContainer.h"
+#include "Canvas.h"
 
 namespace sc 
 {
@@ -18,14 +18,13 @@ public:
 	void onWindowClose(WindowCloseEvent &event);
 	void onWindowResize(WindowResizeEvent &event);
 
-	void pushLayer(Layer * layer);
-	void pushOverlay(Layer * overlay);
+	void initCanvas(Canvas *canvas);
 
 private:
 	WindowPtr window;
 	bool _isRunning = false;
 	bool _windowMinimized = false;
-	LayerContainer layerContainer;
+	Canvas *_currentCanvas;
 };
 
 // to be defined in client

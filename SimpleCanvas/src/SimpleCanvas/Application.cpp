@@ -16,7 +16,9 @@ Application::Application()
 }
 
 Application::~Application()
-{}
+{
+	delete _currentCanvas;
+}
 
 void Application::run()
 {
@@ -29,8 +31,7 @@ void Application::run()
 		lastFrameDeltaTime = currentTime;
 
 		if (!_windowMinimized)
-			for (Layer* layer : layerContainer)
-				layer->update(deltaTime);
+			_currentCanvas->update(deltaTime);
 
 		window->update();
 	}
@@ -42,12 +43,7 @@ void Application::onEvent(Event &event)
 	dispatcher.subscribe(this, &Application::onWindowClose);
 	dispatcher.subscribe(this, &Application::onWindowResize);
 
-	for (auto it = layerContainer.end(); it != layerContainer.begin(); )
-	{
-		(*--it)->onEvent(event);
-		if (event.isHandled())
-			break;
-	}
+	_currentCanvas->onEvent(event);
 
 	dispatcher.dispatch(event);
 }
@@ -66,14 +62,8 @@ void Application::onWindowResize(WindowResizeEvent &event)
 	Renderer::setViewport(0, 0, event.getWidth(), event.getHeight());
 }
 
-void Application::pushLayer(Layer * layer)
+void Application::initCanvas(Canvas *canvas) 
 {
-	layerContainer.pushLayer(layer);
+	_currentCanvas = canvas;
 }
-
-void Application::pushOverlay(Layer * overlay)
-{
-	layerContainer.pushOverlay(overlay);
-}
-
 } // namespace sc

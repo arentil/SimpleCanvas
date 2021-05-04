@@ -43,14 +43,9 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Input/Input.cpp
 	${SOURCE_DIR}/SimpleCanvas/Input/Input.h
 	${SOURCE_DIR}/SimpleCanvas/Input/InputBindings.h
-	${SOURCE_DIR}/SimpleCanvas/Layer.cpp
-	${SOURCE_DIR}/SimpleCanvas/Layer.h
-	${SOURCE_DIR}/SimpleCanvas/LayerContainer.cpp
-	${SOURCE_DIR}/SimpleCanvas/LayerContainer.h
+	${SOURCE_DIR}/SimpleCanvas/Canvas.h
 	${SOURCE_DIR}/SimpleCanvas/Logger.cpp
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Buffer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Camera.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.cpp
@@ -69,8 +64,6 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture2d.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture2d.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderer/VertexArray.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/FileReader.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/StringUtils.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/stb_image.cpp
