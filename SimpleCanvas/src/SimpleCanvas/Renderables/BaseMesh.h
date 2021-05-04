@@ -3,7 +3,7 @@
 #include <SCMath.h>
 
 #include "Renderer/Shader.h"
-#include "Camera/Camera.h"
+#include "Camera/FPSCamera.h"
 #include "Renderables/AABB.h"
 #include "Renderables/Lights.h"
 
@@ -16,7 +16,7 @@ class BaseMesh
 {
 public:
     virtual ~BaseMesh() = default;
-    virtual void draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const = 0;
+    virtual void draw(Shader const& shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const = 0;
 
 protected:
     AABB _aabb;

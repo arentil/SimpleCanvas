@@ -2,7 +2,7 @@
 
 #include <SCMath.h>
 
-#include "Camera/Camera.h"
+#include "Camera/FPSCamera.h"
 #include "Renderer/Shader.h"
 #include "Tools/FileReader.h"
 
@@ -16,8 +16,11 @@ public:
     virtual ~AABB() = default;
 
     void setMinMax(scmath::Vec3 const& min, scmath::Vec3 const& max);
-    bool isInFrustrum(Camera const& camera, scmath::Mat4 const& modelMatrix) const;
-    void draw(Camera const& camera, scmath::Mat4 const& modelMatrix) const;
+    // bool isInFrustrum(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const;
+    // void draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const;
+
+    // for frustum culling check
+    scmath::Vec3 getVertexP(scmath::Vec3 const& normal) const;
 
 
     scmath::Vec3 _min;

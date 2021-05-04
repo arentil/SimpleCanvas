@@ -46,9 +46,9 @@ void Scene::processCollisions()
     rootObject->processCollisions(rootObject.get());
 }
 
-void Scene::draw(sc::Camera const& camera, sc::Lights const& lights) 
+void Scene::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 
 {
-    //skybox->draw(camera, lights);
+    skybox->draw(camera, lights);
     rootObject->draw(camera, lights);
 }
 

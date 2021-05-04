@@ -20,7 +20,7 @@ public:
     void animate(float deltaTime);
     void processCollisions();
     // void process input() ??????
-    void draw(sc::Camera const& camera, sc::Lights const& lights);
+    void draw(sc::FPSCamera const& camera, sc::Lights const& lights);
 
 private:
     sc::ShaderPtr getShader(std::string const& name);

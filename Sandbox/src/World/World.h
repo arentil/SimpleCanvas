@@ -22,7 +22,7 @@ public:
     void animate(float deltaTime);
     void processCollisions();
     // void input() ??????
-    void draw(sc::Camera const& camera, sc::Lights const& lights);
+    void draw(sc::FPSCamera const& camera, sc::Lights const& lights);
 
 private:
     std::map<std::string, ScenePtr> _scenesMap;

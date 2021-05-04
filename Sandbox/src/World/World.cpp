@@ -47,7 +47,7 @@ void World::processCollisions()
     _currentScene->processCollisions();
 }
 
-void World::draw(sc::Camera const& camera, sc::Lights const& lights) 
+void World::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 
 {
     _currentScene->draw(camera, lights);
 }

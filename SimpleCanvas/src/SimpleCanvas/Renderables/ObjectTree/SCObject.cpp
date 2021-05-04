@@ -64,7 +64,7 @@ void SCObject::processCollisions(SCObject *object)
         processCollisions(  (SCObject*)(object->nextNode)  );
 }
 
-void SCObject::draw(Camera const& camera, Lights const& lights) 
+void SCObject::draw(FPSCamera const& camera, Lights const& lights) 
 {
     onDraw(camera, lights);
 
@@ -123,7 +123,7 @@ void SCObject::onAnimate(float deltaTime)
     velocity += acceleration * deltaTime;
 }
 
-void SCObject::onDraw(Camera const& camera, Lights const& lights) 
+void SCObject::onDraw(FPSCamera const& camera, Lights const& lights) 
 {
     _model->draw(_shader, camera, lights, _modelMatrix);
 }

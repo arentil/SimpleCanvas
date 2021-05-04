@@ -10,12 +10,12 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
     initialize();
 }
 
-void TextureMesh::draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
+void TextureMesh::draw(Shader const& shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {   
-    if (!_aabb.isInFrustrum(camera, modelMatrix))
-    {
-        return;
-    }
+    // if (!_aabb.isInFrustrum(camera, modelMatrix))
+    // {
+    //     return;
+    // }
 
 
     shader.bind();
@@ -80,12 +80,12 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
     initialize();
 }
 
-void ColorMesh::draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
+void ColorMesh::draw(Shader const& shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
-    if (!_aabb.isInFrustrum(camera, modelMatrix))
-    {
-        return;
-    }
+    // if (!_aabb.isInFrustrum(camera, modelMatrix))
+    // {
+    //     return;
+    // }
 
     shader.bind();
     // no texture binding since the plane color will be used

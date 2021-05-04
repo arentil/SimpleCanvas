@@ -50,7 +50,7 @@ Skybox::Skybox(sc::Shader const& shader)
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void Skybox::draw(sc::Camera const& camera, sc::Lights const& lights) 
+void Skybox::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 
 {
     _modelMatrix = scmath::Mat4::translate(camera.getPosition());
     glDepthMask(GL_FALSE);

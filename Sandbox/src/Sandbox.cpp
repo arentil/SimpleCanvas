@@ -15,19 +15,17 @@ class ExampleCanvas : public sc::Canvas
 {
 public:
 	ExampleCanvas()
-	: _cameraController(16.0f, 9.0f)//1280.0f / 720.0f)
+	: _camera(scmath::Vec3(0.0f, 0.0f, 3.0f))
 	{
 		world = std::make_unique<World>();
 	}
 
 	void update(float deltaTime) override
 	{
-		//int fps = 1.0f / deltaTime;
-
-		_cameraController.onUpdate(deltaTime);
-		sc::Camera const& camera = *(_cameraController.getCamera());
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		sc::RenderCommand::clear();
+
+		_camera.update(deltaTime);
 
 		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);
 		float specularStrength = 0.5f;
@@ -36,23 +34,23 @@ public:
 		world->prepare();
 		world->animate(deltaTime);
 		world->processCollisions();
-		world->draw(camera, lights);
+		world->draw(_camera, lights);
 	}
 
 	void onEvent(sc::Event &event) override
 	{
-		_cameraController.onEvent(event);
+		_camera.onEvent(event);
 	}
 
 private:
-	sc::CameraController _cameraController;
+	sc::FPSCamera _camera;
 	std::unique_ptr<World> world;
 };
 
 class Sandbox : public sc::Application
 {
 public:
-	Sandbox() 
+	Sandbox()
 	{
 		initCanvas(new ExampleCanvas());
 	}

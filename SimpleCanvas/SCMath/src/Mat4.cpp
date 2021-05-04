@@ -380,15 +380,15 @@ Mat4 Mat4::inverse(Mat4 const& m)
 
 Mat4 Mat4::lookAt(Vec3 const& eye, Vec3 const& target, Vec3 const& up)
 {
-	Vec3 zaxis = Vec3::normalized(eye - target);
-	Vec3 xaxis = Vec3::normalized(Vec3::cross(up, zaxis));
-	Vec3 yaxis = Vec3::cross(zaxis, xaxis);
+	Vec3 zaxis = (eye - target).normalized();
+	Vec3 xaxis = Vec3::cross(up, zaxis).normalized();
+	Vec3 yaxis = zaxis.cross(xaxis);
 
 	return Mat4(
 	{ xaxis.x, yaxis.x, zaxis.x, 0.0f },
 	{ xaxis.y, yaxis.y, zaxis.y, 0.0f },
 	{ xaxis.z, yaxis.z, zaxis.z, 0.0f },
-	{ -Vec3::dot(xaxis,eye), -Vec3::dot(yaxis,eye), -Vec3::dot(zaxis,eye), 1.0f }
+	{ -Vec3::dot(xaxis, eye), -Vec3::dot(yaxis, eye), -Vec3::dot(zaxis, eye), 1.0f }
 	);
 }
 

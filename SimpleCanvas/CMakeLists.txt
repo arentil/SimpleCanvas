@@ -32,8 +32,7 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas.h
 	${SOURCE_DIR}/SimpleCanvas/Application.cpp
 	${SOURCE_DIR}/SimpleCanvas/Application.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.h
+
 	${SOURCE_DIR}/SimpleCanvas/Core.h
 	${SOURCE_DIR}/SimpleCanvas/EntryPoint.h
 	${SOURCE_DIR}/SimpleCanvas/Events/ApplicationEvent.h
@@ -46,16 +45,24 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Canvas.h
 	${SOURCE_DIR}/SimpleCanvas/Logger.cpp
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/OrthographicCamera.cpp
 	${SOURCE_DIR}/SimpleCanvas/Camera/OrthographicCamera.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/PerspectiveCamera.cpp
 	${SOURCE_DIR}/SimpleCanvas/Camera/PerspectiveCamera.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/Plane.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/Plane.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/RenderCommand.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.h

@@ -2,7 +2,7 @@
 
 #include "BaseMesh.h"
 #include "Renderer/Shader.h"
-#include "Camera/Camera.h"
+#include "Camera/FPSCamera.h"
 #include "Renderables/Lights.h"
 
 #include <SCMath.h>
@@ -21,7 +21,7 @@ public:
     Model(std::vector<BaseMeshPtr> const& meshes);
     ~Model() = default;
 
-    void draw(Shader const& shader, Camera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const;
+    void draw(Shader const& shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const;
 
 private:
     std::vector<BaseMeshPtr> const _meshes;
