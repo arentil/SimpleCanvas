@@ -5,7 +5,6 @@
 #include "SimpleCanvas/Logger.h"
 //#include "SimpleCanvas/EntryPoint.h"  // this mess #include "SimpleCanvas.h" because of exterm
 #include "SimpleCanvas/Canvas.h"
-#include "SimpleCanvas/CameraController.h"
 
 /**
  *  Event classes
@@ -55,3 +54,4 @@
 #include "SimpleCanvas/Camera/Camera.h"
 #include "SimpleCanvas/Camera/OrthographicCamera.h"
 #include "SimpleCanvas/Camera/PerspectiveCamera.h"
+#include "SimpleCanvas/Camera/CameraController.h"

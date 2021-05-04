@@ -32,8 +32,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas.h
 	${SOURCE_DIR}/SimpleCanvas/Application.cpp
 	${SOURCE_DIR}/SimpleCanvas/Application.h
-	${SOURCE_DIR}/SimpleCanvas/CameraController.cpp
-	${SOURCE_DIR}/SimpleCanvas/CameraController.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.h
 	${SOURCE_DIR}/SimpleCanvas/Core.h
 	${SOURCE_DIR}/SimpleCanvas/EntryPoint.h
 	${SOURCE_DIR}/SimpleCanvas/Events/ApplicationEvent.h
