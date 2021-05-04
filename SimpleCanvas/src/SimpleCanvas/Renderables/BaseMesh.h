@@ -16,7 +16,7 @@ class BaseMesh
 {
 public:
     virtual ~BaseMesh() = default;
-    virtual void draw(Shader const& shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const = 0;
+    virtual void draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const = 0;
 
 protected:
     AABB _aabb;

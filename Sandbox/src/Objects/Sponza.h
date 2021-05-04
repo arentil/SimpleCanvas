@@ -7,5 +7,5 @@
 class Sponza : public sc::SCObject
 {
 public:
-    Sponza(sc::Shader const& shader);
+    Sponza(sc::AssetsContainer const& assets);
 };

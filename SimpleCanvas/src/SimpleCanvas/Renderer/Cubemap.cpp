@@ -13,6 +13,7 @@ Cubemap::Cubemap(std::vector<std::string> const& facesFilePaths)
     int width, height, nrChannels;
     for (unsigned int i = 0; i < facesFilePaths.size(); i++)
     {
+        stbi_set_flip_vertically_on_load(false);
         unsigned char *data = stbi_load(facesFilePaths[i].c_str(), &width, &height, &nrChannels, 0);
         if (data)
         {

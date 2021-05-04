@@ -4,13 +4,13 @@
 
 namespace sc
 {
-TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr const texturePtr)
+TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr texturePtr)
 : _vertices(vertices), _texturePtr(texturePtr)
 {
     initialize();
 }
 
-void TextureMesh::draw(Shader const& shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
+void TextureMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {   
     //_aabb.draw(camera, modelMatrix);
     if (! camera._frustum.boxInFrustum(_aabb, modelMatrix))
@@ -18,17 +18,17 @@ void TextureMesh::draw(Shader const& shader, FPSCamera const& camera, Lights con
         return;
     }
 
-    shader.bind();
+    shader->bind();
     if (_texturePtr)
         _texturePtr->bind();
 
-    shader.uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
-    shader.uploadUniformMat4("u_Model", modelMatrix);
-    shader.uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
-    shader.uploadUniformFloat("u_Ambient", lights.ambient);
-    shader.uploadUniformFloat3("u_Diffuse", lights.diffuse);
-    shader.uploadUniformFloat("u_Specular", lights.specular);
-    shader.uploadUniformFloat3("u_ViewPos", camera.getPosition());
+    shader->uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
+    shader->uploadUniformMat4("u_Model", modelMatrix);
+    shader->uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
+    shader->uploadUniformFloat("u_Ambient", lights.ambient);
+    shader->uploadUniformFloat3("u_Diffuse", lights.diffuse);
+    shader->uploadUniformFloat("u_Specular", lights.specular);
+    shader->uploadUniformFloat3("u_ViewPos", camera.getPosition());
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
@@ -80,7 +80,7 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
     initialize();
 }
 
-void ColorMesh::draw(Shader const& shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
+void ColorMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
     //_aabb.draw(camera, modelMatrix);
     if (! camera._frustum.boxInFrustum(_aabb, modelMatrix))
@@ -88,16 +88,16 @@ void ColorMesh::draw(Shader const& shader, FPSCamera const& camera, Lights const
         return;
     }
 
-    shader.bind();
+    shader->bind();
     // no texture binding since the plane color will be used
 
-    shader.uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
-    shader.uploadUniformMat4("u_Model", modelMatrix);
-    shader.uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
-    shader.uploadUniformFloat("u_Ambient", lights.ambient);
-    shader.uploadUniformFloat3("u_Diffuse", lights.diffuse);
-    shader.uploadUniformFloat("u_Specular", lights.specular);
-    shader.uploadUniformFloat3("u_ViewPos", camera.getPosition());
+    shader->uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
+    shader->uploadUniformMat4("u_Model", modelMatrix);
+    shader->uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
+    shader->uploadUniformFloat("u_Ambient", lights.ambient);
+    shader->uploadUniformFloat3("u_Diffuse", lights.diffuse);
+    shader->uploadUniformFloat("u_Specular", lights.specular);
+    shader->uploadUniformFloat3("u_ViewPos", camera.getPosition());
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());

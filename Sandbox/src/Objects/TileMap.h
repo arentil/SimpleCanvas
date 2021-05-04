@@ -7,5 +7,5 @@
 class TileMap : public sc::SCObject
 {
 public:
-    TileMap(sc::Shader const& shader);
+    TileMap(sc::AssetsContainer const& assets);
 };

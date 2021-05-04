@@ -2,10 +2,10 @@
 
 #include <vector>
 
-Teapot::Teapot(sc::Shader const& shader) 
-: sc::SCObject("Teapot", shader)
+Teapot::Teapot(sc::AssetsContainer const& assets) 
+: sc::SCObject("Teapot", assets.Shaders.getShader("Texture"))
 {
-    _model = sc::ObjLoader::loadObjFromFile("assets/models/teapot/teapot.obj");
+    _model = assets.Models.getModel("Teapot");
 }
 
 void Teapot::onAnimate(float deltaTime) 

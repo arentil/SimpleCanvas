@@ -14,8 +14,8 @@ void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4
 }
 }
 
-TextureCube::TextureCube(sc::Shader const& shader, sc::TexturePtr const texture) 
-: sc::SCObject("TextureCube", shader)
+TextureCube::TextureCube(sc::AssetsContainer const& assets) 
+: sc::SCObject("TextureCube", assets.Shaders.getShader("Texture"))
 {
     std::vector<sc::TextureVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
@@ -32,7 +32,7 @@ TextureCube::TextureCube(sc::Shader const& shader, sc::TexturePtr const texture)
     applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, 0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(90)), scmath::Mat4::rotateX(scmath::degToRad(90))); //top
     applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, -0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(-90)), scmath::Mat4::rotateX(scmath::degToRad(-90))); //bottom
 
-    auto mesh = std::make_shared<sc::TextureMesh>(vertices, texture);
+    auto mesh = std::make_shared<sc::TextureMesh>(vertices, assets.Textures.getTexture("Chess"));
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
 

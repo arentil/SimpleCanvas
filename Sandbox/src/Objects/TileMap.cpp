@@ -14,8 +14,8 @@ void applyMatrixAndAppend(std::vector<sc::ColorVertex> &vertices, scmath::Mat4 c
 }
 }
 
-TileMap::TileMap(sc::Shader const& shader)
-: sc::SCObject("TileMap", shader)
+TileMap::TileMap(sc::AssetsContainer const& assets)
+: sc::SCObject("TileMap", assets.Shaders.getShader("FlatColor"))
 {
     std::vector<sc::ColorVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.2f, 0.3f, 0.8f}},

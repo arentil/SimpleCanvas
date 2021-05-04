@@ -2,7 +2,7 @@
 
 namespace sc
 {
-SCObject::SCObject(std::string const& name, sc::Shader const& shader)
+SCObject::SCObject(std::string const& name, ShaderPtr shader)
 : isDead(false)
 , _name(name)
 , _shader(shader)

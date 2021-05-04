@@ -11,11 +11,11 @@ add_subdirectory(SimpleCanvas)
 
 if (MSVC)
   add_compile_options(/W4 /std:c++latest)
-  set(CMAKE_CXX_FLAGS_DEBUG "/Od /Wall /std:c++latest")
+  set(CMAKE_CXX_FLAGS_DEBUG "/Od /Wall /std:c++latest /DSC_ASSERT_ENABLED")
   set(CMAKE_CXX_FLAGS_RELEASE "/W0 /O2 /DNDEBUG")
 else()
   add_compile_options(-std=c++17 -Wall -Wextra -pedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov)
-  set(CMAKE_CXX_FLAGS_DEBUG "-g")
+  set(CMAKE_CXX_FLAGS_DEBUG "-g -DSC_ASSERT_ENABLED")
   set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 endif ()
 

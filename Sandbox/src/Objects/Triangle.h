@@ -7,7 +7,7 @@
 class Triangle : public sc::SCObject
 {
 public:
-    Triangle(sc::Shader const& shader);
+    Triangle(sc::AssetsContainer const& assets);
     virtual ~Triangle() = default;
 
     void onAnimate(float deltaTime) override;

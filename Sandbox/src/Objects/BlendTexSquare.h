@@ -7,5 +7,5 @@
 class BlendTexSquare : public sc::SCObject
 {
 public:
-    BlendTexSquare(sc::Shader const& shader, sc::TexturePtr const texture);
+    BlendTexSquare(sc::AssetsContainer const& assets);
 };

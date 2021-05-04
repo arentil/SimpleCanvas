@@ -73,6 +73,7 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.h
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/AssetsContainer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.cpp
@@ -85,6 +86,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture2d.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture2d.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/TextureContainer.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderer/TextureContainer.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/FileReader.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/StringUtils.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/stb_image.cpp

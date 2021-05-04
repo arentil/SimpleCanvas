@@ -2,8 +2,8 @@
 
 #include <vector>
 
-Triangle::Triangle(sc::Shader const& shader)
-: sc::SCObject("Triangle", shader)
+Triangle::Triangle(sc::AssetsContainer const& assets)
+: sc::SCObject("Triangle", assets.Shaders.getShader("FlatColor"))
 {
     std::vector<sc::ColorVertex> const vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 1.0f}},

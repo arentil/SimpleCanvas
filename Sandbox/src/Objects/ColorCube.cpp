@@ -14,8 +14,8 @@ void applyMatrixAndAppend(std::vector<sc::ColorVertex> &vertices, scmath::Mat4 c
 }
 }
 
-ColorCube::ColorCube(sc::Shader const& shader) 
-: sc::SCObject("ColorCube", shader)
+ColorCube::ColorCube(sc::AssetsContainer const& assets) 
+: sc::SCObject("ColorCube", assets.Shaders.getShader("FlatColor"))
 {
     std::vector<sc::ColorVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},

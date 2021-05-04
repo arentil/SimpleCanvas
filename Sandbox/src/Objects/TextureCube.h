@@ -7,5 +7,5 @@
 class TextureCube : public sc::SCObject
 {
 public:
-    TextureCube(sc::Shader const& shader, sc::TexturePtr const texture);
+    TextureCube(sc::AssetsContainer const& assets);
 };

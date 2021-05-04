@@ -19,7 +19,7 @@ Shader::~Shader()
 
 void Shader::compile(std::unordered_map<uint32_t, std::string> const& shaderSources)
 {
-    GLuint program = glCreateProgram();
+    GLuint program = glCreateProgram(); // should be called in main GL thread!
     std::vector<uint32_t> glShaderIds;
     glShaderIds.reserve(shaderSources.size());
 
@@ -53,7 +53,6 @@ void Shader::compile(std::unordered_map<uint32_t, std::string> const& shaderSour
     }
 
     _program = program;
-
 
     glLinkProgram(_program);
 

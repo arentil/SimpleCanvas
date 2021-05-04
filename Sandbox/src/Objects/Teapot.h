@@ -7,7 +7,7 @@
 class Teapot : public sc::SCObject
 {
 public:
-    Teapot(sc::Shader const& shader);
+    Teapot(sc::AssetsContainer const& assets);
 
     void onAnimate(float deltaTime) override;
 

@@ -9,7 +9,7 @@ namespace sc
 class SCObject : public SCNode
 {
 public:
-    SCObject(std::string const& name, sc::Shader const& shader);
+    SCObject(std::string const& name, ShaderPtr shader);
     virtual ~SCObject() = default;
 
     std::string getName() const;
@@ -38,7 +38,7 @@ protected:
     virtual void onDraw(FPSCamera const& camera, Lights const& lights);
 
     std::string _name;
-    Shader const& _shader;
+    ShaderPtr _shader;
     ModelPtr _model;
     scmath::Mat4 _modelMatrix;
 };

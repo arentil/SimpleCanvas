@@ -30,6 +30,8 @@
 #include "SimpleCanvas/Renderer/Texture.h"
 #include "SimpleCanvas/Renderer/Cubemap.h"
 #include "SimpleCanvas/Renderer/Texture2d.h"
+#include "SimpleCanvas/Renderer/TextureContainer.h"
+#include "SimpleCanvas/Renderer/AssetsContainer.h"
 
 /**
  *  Renrerables classes

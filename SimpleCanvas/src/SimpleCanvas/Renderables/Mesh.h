@@ -16,10 +16,10 @@ struct TextureVertex
 class TextureMesh : public BaseMesh
 {
 public:
-    TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr const texturePtr);
+    TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr texturePtr);
     virtual ~TextureMesh() = default;
 
-    virtual void draw(Shader const& shader, FPSCamera const& camera, Lights const& diffuse, scmath::Mat4 const& modelMatrix) const override;
+    virtual void draw(ShaderPtr shader, FPSCamera const& camera, Lights const& diffuse, scmath::Mat4 const& modelMatrix) const override;
 
 private:
     std::vector<TextureVertex> const _vertices;
@@ -42,7 +42,7 @@ public:
     ColorMesh(std::vector<ColorVertex> const& vertices);
     virtual ~ColorMesh() = default;
 
-    virtual void draw(Shader const& shader, FPSCamera const& camera, Lights const& diffuse, scmath::Mat4 const& modelMatrix) const override;
+    virtual void draw(ShaderPtr shader, FPSCamera const& camera, Lights const& diffuse, scmath::Mat4 const& modelMatrix) const override;
 
 private:
     std::vector<ColorVertex> const _vertices;

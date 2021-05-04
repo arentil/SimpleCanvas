@@ -31,10 +31,10 @@ Texture2d::Texture2d(std::string const& filePath)
 : _filePath(replaceSystemSlashes(filePath))
 {
     int width, height, channels;
-    stbi_set_flip_vertically_on_load(1);
+    stbi_set_flip_vertically_on_load(true);
     stbi_uc* data = stbi_load(_filePath.c_str(), &width, &height, &channels, 0);
     
-    assert(data);
+    SC_ASSERT(data, "%s() stbi returned null texture!", __FUNCTION__);
     _width = width;
     _height = height;
 
@@ -50,7 +50,7 @@ Texture2d::Texture2d(std::string const& filePath)
         dataFormat = GL_RGB;
     }
 
-    assert(internalFormat & dataFormat);
+    SC_ASSERT(internalFormat & dataFormat);
 
     glCreateTextures(GL_TEXTURE_2D, 1, &_rendererId);
     glTextureStorage2D(_rendererId, 1, internalFormat, _width, _height);
