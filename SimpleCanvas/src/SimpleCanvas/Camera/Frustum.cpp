@@ -18,24 +18,24 @@ void Frustum::setCamInternals(float pangle, float pratio, float pnearD, float pf
 	fw = fh * ratio;
 }
 
-void Frustum::setCamDef(scmath::Vec3 &p, scmath::Vec3 &l, scmath::Vec3 &u) 
+void Frustum::setCamDef(scmath::Vec3 const& eye, scmath::Vec3 const& target, scmath::Vec3 const& up)
 {
     scmath::Vec3 nc,fc,X,Y,Z;
 
 	// compute the Z axis of camera
 	// this axis points in the opposite direction from
 	// the looking direction
-	Z = (p - l).normalized();
+	Z = (eye - target).normalized();
 
 	// X axis of camera with given "up" vector and Z axis
-	X = u.cross(Z).normalized();
+	X = up.cross(Z).normalized();
 
 	// the real "up" vector is the cross product of Z and X
 	Y = Z.cross(X);
 
 	// compute the centers of the near and far planes
-	nc = p - Z * nearD;
-	fc = p - Z * farD;
+	nc = eye - Z * nearD;
+	fc = eye - Z * farD;
 
 	// compute the 4 corners of the frustum on the near plane
 	ntl = nc + Y * nh - X * nw;
@@ -84,7 +84,7 @@ bool Frustum::boxInFrustum(AABB const& b, scmath::Mat4 const& modelMatrix) const
 {
 	for(int i=0; i < 6; i++)
     {
-		if (pl[i].distance(modelMatrix * b.getVertexP(pl[i].normal)) < 0.0f)
+		if (pl[i].distance(modelMatrix * b.getVertexP(pl[i].normal)) < -1.0f)	// 0.0f ?
 			return false;
 	}
 	return true;

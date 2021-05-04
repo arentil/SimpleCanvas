@@ -22,6 +22,7 @@
 #include <map>
 #include <unordered_map>
 
+#include <future>
 #include <thread>
 #include <mutex>
 #include <chrono>

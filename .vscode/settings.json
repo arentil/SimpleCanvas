@@ -87,6 +87,7 @@
         "xlocmon": "cpp",
         "xloctime": "cpp",
         "filesystem": "cpp",
-        "*.rh": "cpp"
+        "*.rh": "cpp",
+        "future": "cpp"
       },
 }
