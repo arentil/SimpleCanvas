@@ -14,7 +14,7 @@ constexpr float YAW         = -90.0f;
 constexpr float PITCH       =  0.0f;
 constexpr float SPEED       =  2.5f;
 constexpr float SENSITIVITY =  0.1f;
-constexpr float ZOOM        =  70.0f;
+constexpr float FOV        =  70.0f;
 
 class FPSCamera
 {
@@ -48,7 +48,7 @@ public:
     //camera options
     float _movementSpeed;
     float _mouseSensitivity;
-    float _zoom;
+    float _fov;
 
     scmath::Mat4 _projectionMatrix;
     scmath::Mat4 _viewMatrix;
@@ -58,5 +58,7 @@ public:
     float lastX, lastY;
 
     CursorMode _currentCursorMode;
+
+    Frustum _frustum;
 };
 } // namespace sc

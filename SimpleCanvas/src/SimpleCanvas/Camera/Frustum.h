@@ -16,7 +16,7 @@ public:
 	void setCamDef(scmath::Vec3 &p, scmath::Vec3 &l, scmath::Vec3 &u);
 	bool pointInFrustum(scmath::Vec3 const& point) const;
 	bool sphereInFrustum(scmath::Vec3 const& point, float radius) const;
-	// bool boxInFrustum(AABB const& b) const;
+	bool boxInFrustum(AABB const& b, scmath::Mat4 const& modelMatrix) const;
 
     Plane pl[6];
     scmath::Vec3 ntl,ntr,nbl,nbr,ftl,ftr,fbl,fbr;

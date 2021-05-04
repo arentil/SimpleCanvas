@@ -29,10 +29,25 @@ add_subdirectory(SCMath)
 # -------------------
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES
+
 	${SOURCE_DIR}/SimpleCanvas.h
 	${SOURCE_DIR}/SimpleCanvas/Application.cpp
 	${SOURCE_DIR}/SimpleCanvas/Application.h
-
+	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/OrthographicCamera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/OrthographicCamera.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/PerspectiveCamera.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/PerspectiveCamera.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/Plane.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/Plane.h
+	${SOURCE_DIR}/SimpleCanvas/Canvas.h
 	${SOURCE_DIR}/SimpleCanvas/Core.h
 	${SOURCE_DIR}/SimpleCanvas/EntryPoint.h
 	${SOURCE_DIR}/SimpleCanvas/Events/ApplicationEvent.h
@@ -42,35 +57,34 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Input/Input.cpp
 	${SOURCE_DIR}/SimpleCanvas/Input/Input.h
 	${SOURCE_DIR}/SimpleCanvas/Input/InputBindings.h
-	${SOURCE_DIR}/SimpleCanvas/Canvas.h
 	${SOURCE_DIR}/SimpleCanvas/Logger.cpp
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/AABB.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/AABB.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/BaseMesh.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Lights.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.h
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.cpp
+	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/GLContext.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/OrthographicCamera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/OrthographicCamera.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/PerspectiveCamera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/PerspectiveCamera.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/Plane.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/Plane.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/RenderCommand.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Renderer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Shader.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Shader.h
+	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture2d.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture2d.h
-	${SOURCE_DIR}/SimpleCanvas/Renderer/Texture.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/FileReader.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/StringUtils.h
 	${SOURCE_DIR}/SimpleCanvas/Tools/stb_image.cpp
@@ -79,20 +93,6 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Tools/tiny_obj_loader.h
 	${SOURCE_DIR}/SimpleCanvas/Window.cpp
 	${SOURCE_DIR}/SimpleCanvas/Window.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/BaseMesh.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/AABB.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/AABB.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Lights.h
 )
 
 add_library(SimpleCanvas STATIC ${SOURCE_FILES})

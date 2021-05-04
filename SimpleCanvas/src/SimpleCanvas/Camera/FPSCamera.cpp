@@ -11,9 +11,10 @@ FPSCamera::FPSCamera(scmath::Vec3 const& position, scmath::Vec3 const& worldUp, 
 , _pitch(pitch)
 , _movementSpeed(SPEED)
 , _mouseSensitivity(SENSITIVITY)
-, _zoom(ZOOM)
-, _projectionMatrix(scmath::Mat4::perspective(70.0f, 1280.0f/720.0f , 0.01f, 100.0f))
+, _fov(FOV)
+, _projectionMatrix(scmath::Mat4::perspective(_fov, 1280.0f/720.0f , 0.01f, 100.0f))
 {
+    _frustum.setCamInternals(_fov, 1280.0f/720.0f, 0.01f, 100.0f);
     updateCameraVectors();
     Renderer::setCursorMode(CursorMode::CURSOR_DISABLED);
 }
@@ -30,6 +31,8 @@ void FPSCamera::updateCameraVectors()
     // recalculate right and up vector
     _right = _front.cross(_worldUp).normalized();
     _up = _right.cross(_front).normalized();
+
+    _frustum.setCamDef(_position, _position + _front, _up);
 }
 
 scmath::Mat4 FPSCamera::getViewProjMatrix() const
@@ -80,6 +83,8 @@ void FPSCamera::update(float deltaTime)
         Renderer::setCursorMode(CursorMode::CURSOR_NORMAL);
         _currentCursorMode = CursorMode::CURSOR_NORMAL;
     }
+
+    updateCameraVectors();
 }
 
 void FPSCamera::onEvent(Event &event) 
@@ -131,9 +136,10 @@ void FPSCamera::onMouseMoved(MouseMovedEvent &event)
 
 void FPSCamera::onMouseScrolled(MouseScrollEvent &event) 
 {
-    float offset = _zoom - (event.GetYOffset() * 2);
-    _zoom = std::clamp(offset, 20.0f, 120.0f);    
-    _projectionMatrix = scmath::Mat4::perspective(_zoom, 1280.0f/720.0f , 0.01f, 100.0f);
+    float offset = _fov - (event.GetYOffset() * 2);
+    _fov = std::clamp(offset, 20.0f, 120.0f);    
+    _projectionMatrix = scmath::Mat4::perspective(_fov, 1280.0f/720.0f , 0.01f, 100.0f);
+    updateCameraVectors();
 }
 
 void FPSCamera::onMouseButtonPressed(MouseButtonPressedEvent &event) 
@@ -148,6 +154,7 @@ void FPSCamera::onMouseButtonPressed(MouseButtonPressedEvent &event)
 void FPSCamera::onWindowResize(WindowResizeEvent &event) 
 {
     auto aspectRatio = (float)event.getWidth() / (float)event.getHeight();
-    _projectionMatrix = scmath::Mat4::perspective(_zoom, aspectRatio , 0.01f, 100.0f);
+    _projectionMatrix = scmath::Mat4::perspective(_fov, aspectRatio , 0.01f, 100.0f);
+    _frustum.setCamInternals(_fov, aspectRatio, 0.01f, 100.0f);
 }
 } // namespace sc

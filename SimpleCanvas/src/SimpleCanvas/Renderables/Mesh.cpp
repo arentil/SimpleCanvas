@@ -12,11 +12,11 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
 
 void TextureMesh::draw(Shader const& shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {   
-    // if (!_aabb.isInFrustrum(camera, modelMatrix))
-    // {
-    //     return;
-    // }
-
+    //_aabb.draw(camera, modelMatrix);
+    if (! camera._frustum.boxInFrustum(_aabb, modelMatrix))
+    {
+        return;
+    }
 
     shader.bind();
     if (_texturePtr)
@@ -82,10 +82,11 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
 
 void ColorMesh::draw(Shader const& shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
-    // if (!_aabb.isInFrustrum(camera, modelMatrix))
-    // {
-    //     return;
-    // }
+    //_aabb.draw(camera, modelMatrix);
+    if (! camera._frustum.boxInFrustum(_aabb, modelMatrix))
+    {
+        return;
+    }
 
     shader.bind();
     // no texture binding since the plane color will be used
