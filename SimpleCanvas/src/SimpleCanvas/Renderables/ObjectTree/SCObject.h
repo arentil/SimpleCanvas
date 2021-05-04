@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderables/ObjectTree/SCNode.h"
-#include "Renderer/Camera.h"
+#include "Camera/Camera.h"
 #include "Renderables/Model.h"
 
 namespace sc

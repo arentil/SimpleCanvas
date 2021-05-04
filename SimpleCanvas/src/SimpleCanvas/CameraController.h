@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Camera.h"
+#include "Camera/Camera.h"
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"

@@ -3,7 +3,7 @@
 #include <SCMath.h>
 
 #include "Renderer/Shader.h"
-#include "Renderer/Camera.h"
+#include "Camera/Camera.h"
 #include "Renderables/AABB.h"
 #include "Renderables/Lights.h"
 

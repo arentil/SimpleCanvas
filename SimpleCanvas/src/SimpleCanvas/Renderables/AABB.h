@@ -2,7 +2,7 @@
 
 #include <SCMath.h>
 
-#include "Renderer/Camera.h"
+#include "Camera/Camera.h"
 #include "Renderer/Shader.h"
 #include "Tools/FileReader.h"
 

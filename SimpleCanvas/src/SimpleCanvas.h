@@ -25,8 +25,6 @@
  *  Renderer classes
  */
 #include "SimpleCanvas/Renderer/GLContext.h"
-#include "SimpleCanvas/Renderer/OrthographicCamera.h"
-#include "SimpleCanvas/Renderer/PerspectiveCamera.h"
 #include "SimpleCanvas/Renderer/RenderCommand.h"
 #include "SimpleCanvas/Renderer/Renderer.h"
 #include "SimpleCanvas/Renderer/Shader.h"
@@ -49,3 +47,11 @@
  */
 #include "SimpleCanvas/Renderables/ObjectTree/SCNode.h"
 #include "SimpleCanvas/Renderables/ObjectTree/SCObject.h"
+
+
+/**
+ *  Camera classes
+ */
+#include "SimpleCanvas/Camera/Camera.h"
+#include "SimpleCanvas/Camera/OrthographicCamera.h"
+#include "SimpleCanvas/Camera/PerspectiveCamera.h"

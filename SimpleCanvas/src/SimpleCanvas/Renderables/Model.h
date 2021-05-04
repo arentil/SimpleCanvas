@@ -2,7 +2,7 @@
 
 #include "BaseMesh.h"
 #include "Renderer/Shader.h"
-#include "Renderer/Camera.h"
+#include "Camera/Camera.h"
 #include "Renderables/Lights.h"
 
 #include <SCMath.h>

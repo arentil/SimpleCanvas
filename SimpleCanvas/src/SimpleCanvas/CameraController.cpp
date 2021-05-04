@@ -1,7 +1,7 @@
 #include "CameraController.h"
 
-#include "Renderer/PerspectiveCamera.h"
-#include "Renderer/OrthographicCamera.h"
+#include "Camera/PerspectiveCamera.h"
+#include "Camera/OrthographicCamera.h"
 #include "Renderer/Renderer.h"
 #include "Input/Input.h"
 
