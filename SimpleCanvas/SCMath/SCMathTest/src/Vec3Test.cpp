@@ -73,7 +73,7 @@ TEST_F(Vec3Test, VEC3_LENGTH_TEST)
 TEST_F(Vec3Test, VEC3_PROJECTION_TEST)
 {
     Vec3 v1(1, 4, 0);
-    Vec3 v2(4, 2, 4);
+    Vec3 v2 = Vec3(4, 2, 4).normalized();
     Vec3 expected(4.f/3, 2.f/3, 4.f/3);
 
     EXPECT_EQ(expected, Vec3::projection(v1, v2));

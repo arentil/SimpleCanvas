@@ -381,8 +381,8 @@ Mat4 Mat4::inverse(Mat4 const& m)
 Mat4 Mat4::lookAt(Vec3 const& eye, Vec3 const& target, Vec3 const& up)
 {
 	Vec3 zaxis = Vec3::normalized(eye - target);
-	Vec3	xaxis = Vec3::normalized(Vec3::cross(up, zaxis));
-	Vec3	yaxis = Vec3::cross(zaxis, xaxis);
+	Vec3 xaxis = Vec3::normalized(Vec3::cross(up, zaxis));
+	Vec3 yaxis = Vec3::cross(zaxis, xaxis);
 
 	return Mat4(
 	{ xaxis.x, yaxis.x, zaxis.x, 0.0f },

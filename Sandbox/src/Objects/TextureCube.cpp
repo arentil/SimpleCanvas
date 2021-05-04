@@ -36,6 +36,6 @@ TextureCube::TextureCube(sc::Shader const& shader, sc::TexturePtr const texture)
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
 
-	// scmath::Vec3 pos(3.0f, 0.0f, 2.0f);
-    // _modelMatrix = scmath::Mat4::translate(pos) * scmath::Mat4::rotateY(scmath::degToRad(45.0f));
+	scmath::Vec3 pos(3.0f, 0.0f, 2.0f);
+    _modelMatrix = scmath::Mat4::translate(pos) * scmath::Mat4::rotateY(scmath::degToRad(45.0f));
 }

@@ -41,8 +41,9 @@ float Vec3::length() const
 
 Vec3 Vec3::normalized() const
 {
-    assert(!isZero());
-    return *this / this->length();
+    float magnitude = length();
+    assert(magnitude != 0.0f && "Can not normalize zero-length vector!");
+    return *this / magnitude;
 }
 
 bool Vec3::isZero() const

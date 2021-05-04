@@ -10,7 +10,7 @@ namespace sc
 CameraController::CameraController(float aspectX, float aspectY)
 : _aspectX(aspectX)
 , _aspectY(aspectY)
-, _camera(new PerspectiveCamera(70.0f, _aspectX / _aspectY, 0.1f, 1000.0f))
+, _camera(new PerspectiveCamera(70.0f, _aspectX / _aspectY, 0.01f, 1000.0f))
 //, lastX(1280 / 2.0f)
 //, _lastY(720 / 2.0f)
 //, _camera(new OrthographicCamera(-_aspectX, _aspectX, -_aspectY,_aspectY, -1.0f, 1.0f)) // _camera(-1.6f, 1.6f, -0.9f, 0.9f)
@@ -139,6 +139,6 @@ void CameraController::onWindowResize(WindowResizeEvent &event)
     if (_camera->getType() == CameraType::ORTHOGRAPHIC)
         ((OrthographicCamera*)(_camera.get()))->setProjection(-(_aspectX / _aspectY) * _zoom, _aspectX / _aspectY * _zoom, -_zoom, _zoom, -1.0f, 1.0f);
     else if (_camera->getType() == CameraType::PERSPECTIVE)
-        ((PerspectiveCamera*)(_camera.get()))->setProjection(70.0f, aspectRatio, 0.0001f, 1000.0f);
+        ((PerspectiveCamera*)(_camera.get()))->setProjection(70.0f, aspectRatio, 0.01f, 1000.0f);
 }
 } // namespace sc
