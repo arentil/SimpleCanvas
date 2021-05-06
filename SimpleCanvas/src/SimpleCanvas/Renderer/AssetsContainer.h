@@ -2,7 +2,7 @@
 
 #include "TextureContainer.h"
 #include "Shader.h"
-#include "Renderables/Model.h"
+#include "ObjectLogic/Model.h"
 
 namespace sc
 {

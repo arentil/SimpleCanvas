@@ -4,8 +4,8 @@
 
 #include "Renderer/Shader.h"
 #include "Camera/FPSCamera.h"
-#include "Renderables/AABB.h"
-#include "Renderables/Lights.h"
+#include "ObjectLogic/AABB.h"
+#include "ObjectLogic/Lights.h"
 
 namespace sc
 {

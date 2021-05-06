@@ -36,18 +36,18 @@
 /**
  *  Renrerables classes
  */
-#include "SimpleCanvas/Renderables/Lights.h"
-#include "SimpleCanvas/Renderables/BaseMesh.h"
-#include "SimpleCanvas/Renderables/Mesh.h"
-#include "SimpleCanvas/Renderables/Model.h"
-#include "SimpleCanvas/Renderables/AABB.h"
-#include "SimpleCanvas/Renderables/ObjLoader.h"
+#include "SimpleCanvas/ObjectLogic/Lights.h"
+#include "SimpleCanvas/ObjectLogic/BaseMesh.h"
+#include "SimpleCanvas/ObjectLogic/Mesh.h"
+#include "SimpleCanvas/ObjectLogic/Model.h"
+#include "SimpleCanvas/ObjectLogic/AABB.h"
+#include "SimpleCanvas/ObjectLogic/ObjLoader.h"
 
 /**
  *  ObjectTree classes
  */
-#include "SimpleCanvas/Renderables/ObjectTree/SCNode.h"
-#include "SimpleCanvas/Renderables/ObjectTree/SCObject.h"
+#include "SimpleCanvas/ObjectLogic/ObjectTree/SCNode.h"
+#include "SimpleCanvas/ObjectLogic/ObjectTree/SCObject.h"
 
 
 /**

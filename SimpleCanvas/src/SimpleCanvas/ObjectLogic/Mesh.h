@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Renderer/Texture2d.h"
-#include "Renderables/BaseMesh.h"
-#include "Renderables/Lights.h"
+#include "ObjectLogic/BaseMesh.h"
+#include "ObjectLogic/Lights.h"
 
 namespace sc
 {

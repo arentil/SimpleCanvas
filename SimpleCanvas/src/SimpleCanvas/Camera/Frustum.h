@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Plane.h"
-#include "Renderables/AABB.h"
+#include "ObjectLogic/AABB.h"
 
 namespace sc
 {

@@ -59,20 +59,20 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Input/InputBindings.h
 	${SOURCE_DIR}/SimpleCanvas/Logger.cpp
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/AABB.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/AABB.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/BaseMesh.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Lights.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Mesh.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/Model.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjLoader.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCNode.h
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.cpp
-	${SOURCE_DIR}/SimpleCanvas/Renderables/ObjectTree/SCObject.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/AABB.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/AABB.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/BaseMesh.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Lights.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Mesh.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Mesh.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Model.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Model.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjLoader.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjLoader.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCNode.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCNode.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCObject.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCObject.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/AssetsContainer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.h

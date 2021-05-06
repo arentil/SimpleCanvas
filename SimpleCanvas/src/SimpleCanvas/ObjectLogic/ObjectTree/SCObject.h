@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Renderables/ObjectTree/SCNode.h"
+#include "ObjectLogic/ObjectTree/SCNode.h"
 #include "Camera/FPSCamera.h"
-#include "Renderables/Model.h"
+#include "ObjectLogic/Model.h"
 
 namespace sc
 {

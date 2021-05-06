@@ -1,10 +1,7 @@
 #include "World.h"
 
-#include <future>
-
 World::World() 
 {
-    //std::async(std::launch::async, std::bind(&World::loadWorld, this));
     loadWorld();
    _scenesMap["MainScene"] = std::make_shared<Scene>(_assets);
    setCurrentScene("MainScene");
@@ -57,7 +54,7 @@ void World::draw(sc::FPSCamera const& camera, sc::Lights const& lights)
 
 void World::loadWorld() 
 {
-    _assets.Models.addModelFromFile("Sponza", "assets/models/sponza/sponza.obj");
+    //_assets.Models.addModelFromFile("Sponza", "assets/models/sponza/sponza.obj");
     _assets.Models.addModelFromFile("Teapot", "assets/models/teapot/teapot.obj");
 
     _assets.Shaders.addShaderFromFile("Skybox", "assets/shaders/Cubemap_vertex.glsl", "assets/shaders/Cubemap_fragment.glsl");

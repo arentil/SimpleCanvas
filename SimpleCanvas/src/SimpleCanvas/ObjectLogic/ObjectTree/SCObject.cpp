@@ -1,4 +1,4 @@
-#include "Renderables/ObjectTree/SCObject.h"
+#include "ObjectLogic/ObjectTree/SCObject.h"
 
 namespace sc
 {

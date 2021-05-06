@@ -3,8 +3,8 @@
 #include "BaseMesh.h"
 #include "Renderer/Shader.h"
 #include "Camera/FPSCamera.h"
-#include "Renderables/Lights.h"
-#include "Renderables/ObjLoader.h"
+#include "ObjectLogic/Lights.h"
+#include "ObjectLogic/ObjLoader.h"
 
 #include <SCMath.h>
 #include <vector>
