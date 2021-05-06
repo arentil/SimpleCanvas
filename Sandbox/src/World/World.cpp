@@ -1,9 +1,10 @@
 #include "World.h"
 
-World::World() 
+World::World(sc::FPSCamera const& camera)
+: _camera(camera)
 {
     loadWorld();
-   _scenesMap["MainScene"] = std::make_shared<Scene>(_assets);
+   _scenesMap["MainScene"] = std::make_shared<Scene>(_assets, _camera);
    setCurrentScene("MainScene");
 }
 

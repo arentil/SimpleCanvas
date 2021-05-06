@@ -17,7 +17,7 @@ public:
 	ExampleCanvas()
 	: _camera(scmath::Vec3(0.0f, 0.0f, 3.0f))
 	{
-		world = std::make_unique<World>();
+		world = std::make_unique<World>(_camera);
 	}
 
 	void update(float deltaTime) override

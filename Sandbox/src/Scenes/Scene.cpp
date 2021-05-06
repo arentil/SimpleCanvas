@@ -10,9 +10,9 @@
 #include <Objects/TileMap.h>
 #include <Objects/BlendTexSquare.h>
 
-Scene::Scene(sc::AssetsContainer &assets) 
+Scene::Scene(sc::AssetsContainer &assets, sc::FPSCamera const& camera) 
 {
-    skybox = std::make_shared<Skybox>(assets);
+    skybox = std::make_shared<Skybox>(assets, camera);
 
     rootObject = std::make_shared<Terrain>(assets);
         //rootObject->attach(new Sponza(*getShader("Texture")));
@@ -31,6 +31,7 @@ void Scene::prepare()
 
 void Scene::animate(float deltaTime) 
 {
+    skybox->animate(deltaTime);
     rootObject->animate(deltaTime);
 }
 
@@ -41,6 +42,6 @@ void Scene::processCollisions()
 
 void Scene::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 
 {
-    skybox->draw(camera, lights);
-    rootObject->draw(camera, lights);
+    skybox->draw(camera, sc::Lights{}, scmath::Mat4::identity());
+    rootObject->draw(camera, lights, scmath::Mat4::identity());
 }

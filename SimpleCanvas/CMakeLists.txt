@@ -69,6 +69,7 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Model.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjLoader.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjLoader.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/TransformComponent.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCNode.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCNode.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCObject.cpp

@@ -14,8 +14,9 @@ void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4
 }
 }
 
-Skybox::Skybox(sc::AssetsContainer const& assets) 
+Skybox::Skybox(sc::AssetsContainer const& assets, sc::FPSCamera const& camera) 
 : sc::SCObject("Skybox", assets.Shaders.getShader("Skybox"))
+, _camera(camera)
 {
     std::vector<sc::TextureVertex> vertices
     {
@@ -38,10 +39,14 @@ Skybox::Skybox(sc::AssetsContainer const& assets)
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void Skybox::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 
+void Skybox::onAnimate(float deltaTime) 
 {
-    _modelMatrix = scmath::Mat4::translate(camera.getPosition());
+    Transform.Translation = _camera.getPosition();
+}
+
+void Skybox::onDraw(sc::FPSCamera const& camera, sc::Lights const& lights, scmath::Mat4 const& modelMatrix)
+{
     glDepthMask(GL_FALSE);
-    sc::SCObject::draw(camera, sc::Lights{});
+    sc::SCObject::onDraw(camera, lights, modelMatrix);
     glDepthMask(GL_TRUE);
 }

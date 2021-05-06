@@ -14,11 +14,12 @@ Triangle::Triangle(sc::AssetsContainer const& assets)
     auto mesh = std::make_shared<sc::ColorMesh>(vertices);
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
+
+    Transform.Translation = scmath::Vec3(4.0f, 0.0f, 0.0f);
+    //Transform.Scale = scmath::Vec3(0.3f, 0.3f, 0.3f);
 }
 
 void Triangle::onAnimate(float deltaTime)
 {
-    rotationTriangle += scmath::degToRad(rotationTriangleSpeed) * deltaTime;
-    scmath::Vec3 tranlPos(1.0f, 0.0f, 0.0f);
-    _modelMatrix = scmath::Mat4::rotate(rotationTriangle, rotateAxis) * scmath::Mat4::translate(tranlPos) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
+    Transform.Rotation.z += scmath::degToRad(50) * deltaTime;
 }

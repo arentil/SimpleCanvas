@@ -7,10 +7,12 @@
 class Skybox : public sc::SCObject
 {
 public:
-    Skybox(sc::AssetsContainer const& assets);
+    Skybox(sc::AssetsContainer const& assets, sc::FPSCamera const& camera);
 
-    void draw(sc::FPSCamera const& camera, sc::Lights const& lights) override;
+    void onAnimate(float deltaTime) override;
+    void onDraw(sc::FPSCamera const& camera, sc::Lights const& lights, scmath::Mat4 const& modelMatrix) override;
 
 private:
     sc::TexturePtr cubemap;
+    sc::FPSCamera const& _camera;
 };

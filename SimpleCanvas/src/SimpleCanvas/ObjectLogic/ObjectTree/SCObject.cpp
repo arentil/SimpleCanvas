@@ -4,19 +4,9 @@ namespace sc
 {
 SCObject::SCObject(std::string const& name, ShaderPtr shader)
 : isDead(false)
-, _name(name)
+, Name(name)
 , _shader(shader)
 {}
-
-std::string SCObject::getName() const
-{
-    return _name;
-}
-
-void SCObject::setName(std::string const& name) 
-{
-    _name = name;
-}
 
 void SCObject::prepare() 
 {
@@ -64,17 +54,17 @@ void SCObject::processCollisions(SCObject *object)
         processCollisions(  (SCObject*)(object->nextNode)  );
 }
 
-void SCObject::draw(FPSCamera const& camera, Lights const& lights) 
+void SCObject::draw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 
 {
-    onDraw(camera, lights);
+    // apply all parents model transforms, add it another this transform and position
+    scmath::Mat4 const allTransforms = modelMatrix * Transform.GetTransform();
+    onDraw(camera, lights, allTransforms);
 
-    // draw child send somehow translation matrix or sth
     if (hasChild())
-        ((SCObject*)childNode)->draw(camera, lights);
+        ((SCObject*)childNode)->draw(camera, lights, allTransforms);
     
-    // draw sister nodes
     if (hasParent() && !isLastChild())
-        ((SCObject*)nextNode)->draw(camera, lights);
+        ((SCObject*)nextNode)->draw(camera, lights, modelMatrix);
 }
 
 SCObject* SCObject::findRoot() 
@@ -87,7 +77,7 @@ SCObject* SCObject::findRoot()
 
 SCObject* SCObject::findChildByName(std::string const& name) 
 {
-    if (_name == name)
+    if (Name == name)
         return this;
 
     SCObject *result = nullptr;
@@ -107,11 +97,6 @@ SCObject* SCObject::findChildByName(std::string const& name)
     return nullptr;
 }
 
-const scmath::Mat4& SCObject::getModelMatrix() const
-{
-    return _modelMatrix;
-}
-
 void SCObject::onPrepare() 
 {
     processCollisions(findRoot());
@@ -119,12 +104,12 @@ void SCObject::onPrepare()
 
 void SCObject::onAnimate(float deltaTime) 
 {
-    position += velocity * deltaTime;
+    Transform.Translation += velocity * deltaTime;
     velocity += acceleration * deltaTime;
 }
 
-void SCObject::onDraw(FPSCamera const& camera, Lights const& lights) 
+void SCObject::onDraw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 
 {
-    _model->draw(_shader, camera, lights, _modelMatrix);
+    _model->draw(_shader, camera, lights, modelMatrix);
 }
 } // namespace sc

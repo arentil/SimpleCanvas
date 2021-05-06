@@ -11,7 +11,7 @@ using ScenePtr = std::shared_ptr<Scene>;
 class Scene
 {
 public:
-    Scene(sc::AssetsContainer &assets);
+    Scene(sc::AssetsContainer &assets, sc::FPSCamera const& camera);
     virtual ~Scene() = default;
 
     virtual void loadScene() {};

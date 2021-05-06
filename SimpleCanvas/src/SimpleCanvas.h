@@ -34,7 +34,7 @@
 #include "SimpleCanvas/Renderer/AssetsContainer.h"
 
 /**
- *  Renrerables classes
+ *  ObjectLogic classes
  */
 #include "SimpleCanvas/ObjectLogic/Lights.h"
 #include "SimpleCanvas/ObjectLogic/BaseMesh.h"
@@ -42,9 +42,10 @@
 #include "SimpleCanvas/ObjectLogic/Model.h"
 #include "SimpleCanvas/ObjectLogic/AABB.h"
 #include "SimpleCanvas/ObjectLogic/ObjLoader.h"
+#include "SimpleCanvas/ObjectLogic/TransformComponent.h"
 
 /**
- *  ObjectTree classes
+ *  ObjectLogic/ObjectTree classes
  */
 #include "SimpleCanvas/ObjectLogic/ObjectTree/SCNode.h"
 #include "SimpleCanvas/ObjectLogic/ObjectTree/SCObject.h"

@@ -35,10 +35,12 @@ ColorCube::ColorCube(sc::AssetsContainer const& assets)
     auto mesh = std::make_shared<sc::ColorMesh>(vertices);
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
+
+    Transform.Translation = scmath::Vec3(0.5f, 0.0f, 0.0f);
+    Transform.Scale = scmath::Vec3(0.3f, 0.3f, 0.3f);
 }
 
 void ColorCube::onAnimate(float deltaTime) 
 {
-    rotationAngle += scmath::degToRad(rotationSpeed) * deltaTime;
-    _modelMatrix = scmath::Mat4::translate(pos) * scmath::Mat4::rotateZ(rotationAngle) * scmath::Mat4::scale(scmath::Vec3(0.3f, 0.3f, 0.3f));
+    Transform.Rotation.z += scmath::degToRad(30) * deltaTime;
 }
