@@ -2,8 +2,6 @@
 
 #include "SimpleCanvas.h"
 
-#include <memory>
-
 class BlendTexSquare : public sc::SCObject
 {
 public:
