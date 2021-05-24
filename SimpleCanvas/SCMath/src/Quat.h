@@ -24,14 +24,27 @@ public:
     Quat operator/(float multiplier) const;
     operator Vec4() const;
 
+    Quat conjugate() const;
+
+    Quat inverse() const;
+
     // quaternion must be normalized
-    Mat4 asMatrix() const;
+    Mat4 rotationMatrix() const;
 
     // length??
     float magnitude() const;
 
     Quat normalized() const;
 
+    static Quat identity();
+
+    // rotate around x(roll), y(pitch), z(yaw)
+    static Quat eulerToQuat(float roll, float pitch, float yaw);
+
+    // x, y, z as roll, pitch, yaw
+    static Quat eulerToQuat(Vec3 const& v);
+
+    static Quat slerp(Quat const& from, Quat const& target, float t);
 
     float w;
     Vec3 v;

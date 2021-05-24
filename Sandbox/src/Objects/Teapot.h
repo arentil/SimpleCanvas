@@ -10,5 +10,5 @@ public:
     void onAnimate(float deltaTime) override;
 
 private:
-	float rotationSpeed = 30.0f;
+	float rotationAngle = 70.0f;
 };
