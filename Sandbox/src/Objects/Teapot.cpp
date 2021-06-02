@@ -11,7 +11,5 @@ Teapot::Teapot(sc::AssetsContainer const& assets)
 
 void Teapot::onAnimate(float deltaTime) 
 {
-    Transform.Rotation.x += scmath::degToRad(rotationAngle) * deltaTime;
     Transform.Rotation.y += scmath::degToRad(rotationAngle) * deltaTime;
-    Transform.Rotation.z += scmath::degToRad(rotationAngle) * deltaTime;
 }

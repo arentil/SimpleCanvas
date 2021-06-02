@@ -102,6 +102,13 @@ void AABB::draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL ); // for normal draw
 }
 
+bool AABB::isCollision(AABB const& other) const
+{
+    return (_min.x <= other._max.x && _max.x >= other._min.x) &&
+           (_min.y <= other._max.y && _max.y >= other._min.y) &&
+           (_min.z <= other._max.z && _max.z >= other._min.z);
+}
+
 scmath::Vec3 AABB::getVertexP(scmath::Vec3 const& normal) const
 {
     scmath::Vec3 result(_min);

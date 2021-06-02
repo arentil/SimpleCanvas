@@ -3,13 +3,14 @@
 namespace sc
 {
 SCObject::SCObject(std::string const& name, ShaderPtr shader)
-: isDead(false)
+: IsDead(false)
 , Name(name)
 , _shader(shader)
 {}
 
 void SCObject::prepare() 
 {
+    prepareCollider();
     onPrepare();
 
     if (hasChild())
@@ -29,14 +30,14 @@ void SCObject::animate(float deltaTime)
     if (hasParent() && !isLastChild())
         ((SCObject*)nextNode)->animate(deltaTime);
 
-    if (isDead)
+    if (IsDead)
         delete this;
 }
 
 void SCObject::processCollisions(SCObject *object) 
 {
     // TODO: IMPLEMENT AABB AND USE HERE
-    if (object != (SCObject*)this /* && collidersOverlapp(object, this)*/)
+    if (object != (SCObject*)this && Collider.isCollision(object->Collider))
     {
         onCollision(object);
 
@@ -97,6 +98,11 @@ SCObject* SCObject::findChildByName(std::string const& name)
     return nullptr;
 }
 
+void SCObject::prepareCollider() 
+{
+    //_model->
+}
+
 void SCObject::onPrepare() 
 {
     processCollisions(findRoot());
@@ -104,8 +110,8 @@ void SCObject::onPrepare()
 
 void SCObject::onAnimate(float deltaTime) 
 {
-    Transform.Translation += velocity * deltaTime;
-    velocity += acceleration * deltaTime;
+    Transform.Translation += Velocity * deltaTime;
+    Velocity += Acceleration * deltaTime;
 }
 
 void SCObject::onDraw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 

@@ -12,7 +12,7 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
 
 void TextureMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {   
-    _aabb.draw(camera, modelMatrix);
+    //_aabb.draw(camera, modelMatrix);
     if (! camera._frustum.boxInFrustum(_aabb, modelMatrix))
     {
         return;
@@ -82,7 +82,7 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
 
 void ColorMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
-    _aabb.draw(camera, modelMatrix);
+    //_aabb.draw(camera, modelMatrix);
     if (! camera._frustum.boxInFrustum(_aabb, modelMatrix))
     {
         return;

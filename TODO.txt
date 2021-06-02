@@ -1,8 +1,8 @@
-Rotacja obiektów za pomocą kwaternionów(na tą chwile nadal operują na kątach eulera)
 Wykrywanie kolizji za pomocą boxów AABB
 Prosta fizyka np.: grawitacja kamery FPS + chodzenie + utrzymywanie się na powierzchni wielkiego sześcianu z colliderem
 Uproszczenie dodawania światła/eł na scene(na tą chwilę na scenie znajduje się ręcznie dodane oświetlenie phonga)
 Zrobienie prostej gry
+Tekst?????
 
 Sound:
 simple sound engine (salsa)

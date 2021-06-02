@@ -30,9 +30,12 @@ public:
     std::string Name;
 
     // rigidbody?
-    scmath::Vec3 velocity;
-    scmath::Vec3 acceleration;
-    bool isDead;
+    scmath::Vec3 Velocity;
+    scmath::Vec3 Acceleration;
+    bool IsDead;
+
+    AABB Collider;
+    void prepareCollider();
 
 protected:
     virtual void onPrepare();
