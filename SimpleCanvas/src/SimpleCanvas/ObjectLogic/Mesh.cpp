@@ -143,4 +143,45 @@ void ColorMesh::initialize()
     }
     _aabb.setMinMax(minVertex, maxVertex);
 }
+
+CubemapMesh::CubemapMesh(std::vector<CubemapVertex> const& vertices, TexturePtr texturePtr) 
+: _vertices(vertices), _texturePtr(texturePtr)
+{
+    initialize();
+}
+void CubemapMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& , scmath::Mat4 const& modelMatrix) const 
+{
+    shader->bind();
+    if (_texturePtr)
+        _texturePtr->bind();
+
+    shader->uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
+    shader->uploadUniformMat4("u_Model", modelMatrix);
+    shader->uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
+    shader->uploadUniformFloat3("u_ViewPos", camera.getPosition());
+
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+    glBindVertexArray(0);
+}
+
+void CubemapMesh::initialize()
+{
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(CubemapVertex), _vertices.data(), GL_STATIC_DRAW);
+
+    // vertex position
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0 , 3, GL_FLOAT, GL_FALSE, sizeof(CubemapVertex), nullptr);
+
+    // vertex texture coords
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(CubemapVertex), (void*)offsetof(CubemapVertex, texCoord));
+
+    glBindVertexArray(0);
+}
 } // namespace sc

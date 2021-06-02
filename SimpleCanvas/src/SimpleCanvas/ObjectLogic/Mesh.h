@@ -49,4 +49,24 @@ private:
 
     void initialize();
 };
+
+struct CubemapVertex
+{
+    scmath::Vec3 position;
+    scmath::Vec2 texCoord;
+};
+
+class CubemapMesh : public BaseMesh
+{
+public:
+    CubemapMesh(std::vector<CubemapVertex> const& vertices, TexturePtr texturePtr);
+    virtual ~CubemapMesh() = default;
+
+    virtual void draw(ShaderPtr shader, FPSCamera const& camera, Lights const& , scmath::Mat4 const& modelMatrix) const override;
+
+private:
+    std::vector<CubemapVertex> const _vertices;
+    TexturePtr _texturePtr;
+    void initialize();
+};
 } // namespace sc

@@ -4,11 +4,11 @@
 
 namespace
 {
-void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4 const& matrix)
+void applyMatrixAndAppend(std::vector<sc::CubemapVertex> &vertices, scmath::Mat4 const& matrix)
 {
     for (size_t i = 0; i < 6; i++)
     {
-        sc::TextureVertex v{matrix * vertices[i].position};
+        sc::CubemapVertex v{matrix * vertices[i].position};
         vertices.push_back(v);
     }
 }
@@ -18,7 +18,7 @@ Skybox::Skybox(sc::AssetsContainer const& assets, sc::FPSCamera const& camera)
 : sc::SCObject("Skybox", assets.Shaders.getShader("Skybox"))
 , _camera(camera)
 {
-    std::vector<sc::TextureVertex> vertices
+    std::vector<sc::CubemapVertex> vertices
     {
         {{-0.5f, -0.5f, -0.5f}},
         {{0.5f, -0.5f, -0.5f}},
@@ -34,7 +34,7 @@ Skybox::Skybox(sc::AssetsContainer const& assets, sc::FPSCamera const& camera)
     applyMatrixAndAppend(vertices, scmath::Mat4::rotateX(scmath::degToRad(90))); //bottom
     applyMatrixAndAppend(vertices, scmath::Mat4::rotateY(scmath::degToRad(180))); //back
 
-    auto mesh = std::make_shared<sc::TextureMesh>(vertices, assets.Textures.getTexture("Skybox"));
+    auto mesh = std::make_shared<sc::CubemapMesh>(vertices, assets.Textures.getTexture("Skybox"));
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
 }
