@@ -26,6 +26,11 @@ public:
     SCObject* findRoot();
     SCObject* findChildByName(std::string const& name);
 
+    // unsafe! make shure that object has a parent!
+    SCObject* getParent();
+    // unsafe! make shure that object has a child!
+    SCObject* getChild();
+
     TransformComponent Transform;
     std::string Name;
 

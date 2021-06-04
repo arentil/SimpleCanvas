@@ -4,6 +4,55 @@
 
 namespace sc
 {
+namespace
+{
+std::vector<scmath::Vec3> aabb8Corners(AABB const& aabb)
+{
+    const float minX = aabb._min.x;
+    const float minY = aabb._min.y;
+    const float minZ = aabb._min.z;
+    const float maxX = aabb._max.x;
+    const float maxY = aabb._max.y;
+    const float maxZ = aabb._max.z;
+
+    return
+    {
+        aabb._max, // minX, minY, minZ
+        aabb._min, // maxX, maxY, maxZ
+        {minX, maxY, maxZ},
+        {minX, maxY, minZ},
+        {maxX, maxY, minZ},
+        {maxX, minY, minZ},
+        {maxX, minY, maxZ},
+        {minX, minY, maxZ},
+    };
+}
+
+AABB findAABB(AABB const& aabb, scmath::Mat4 const& modelMatrix)
+{
+    std::vector<scmath::Vec3> corners = aabb.corners;
+    for (auto & corner : corners)
+    {
+        corner = modelMatrix * corner;
+    }
+        // aabb bounding for frustrum clipping
+    scmath::Vec3 minVertex = corners.front();
+    scmath::Vec3 maxVertex = corners.front();
+    for (auto const& corner : corners)
+    {
+        minVertex.x = std::min(minVertex.x, corner.x);
+        minVertex.y = std::min(minVertex.y, corner.y);
+        minVertex.z = std::min(minVertex.z, corner.z);
+
+        maxVertex.x = std::max(maxVertex.x, corner.x);
+        maxVertex.y = std::max(maxVertex.y, corner.y);
+        maxVertex.z = std::max(maxVertex.z, corner.z);
+    }
+    AABB result(minVertex, maxVertex);
+    return result;
+}
+}
+
 TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr texturePtr)
 : _vertices(vertices), _texturePtr(texturePtr)
 {
@@ -12,8 +61,10 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
 
 void TextureMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {   
+    AABB newAABB = findAABB(_aabb, modelMatrix);
+    newAABB.draw(camera, scmath::Mat4::identity());//scmath::Mat4::scale(scmath::Vec3(0.01f, 0.01f, 0.01f)));
     //_aabb.draw(camera, modelMatrix);
-    if (! camera._frustum.boxInFrustum(_aabb, modelMatrix))
+    if (! camera._frustum.boxInFrustum(newAABB, modelMatrix))
     {
         return;
     }
@@ -72,6 +123,7 @@ void TextureMesh::initialize()
         maxVertex.z = std::max(maxVertex.z, vertex.position.z);
     }
     _aabb.setMinMax(minVertex, maxVertex);
+    _aabb.corners = aabb8Corners(_aabb);
 }
 
 ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)

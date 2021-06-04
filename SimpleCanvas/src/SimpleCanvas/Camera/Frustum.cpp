@@ -84,7 +84,7 @@ bool Frustum::boxInFrustum(AABB const& b, scmath::Mat4 const& modelMatrix) const
 {
 	for(int i=0; i < 6; i++)
     {
-		if (pl[i].distance(modelMatrix * b.getVertexP(pl[i].normal)) < -1.0f)	// 0.0f ?
+		if (pl[i].distance(modelMatrix * b.getVertexP(pl[i].normal)) < 0.0f)	// 0.0f ?
 			return false;
 	}
 	return true;

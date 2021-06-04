@@ -8,4 +8,6 @@ class TextureCube : public sc::SCObject
 {
 public:
     TextureCube(sc::AssetsContainer const& assets);
+
+    virtual void onAnimate(float deltaTime) override;
 };

@@ -37,5 +37,9 @@ TextureCube::TextureCube(sc::AssetsContainer const& assets)
     _model = std::make_shared<sc::Model>(meshes);
 
 	Transform.Translation = scmath::Vec3(3.0f, 0.0f, 2.0f);
-    //_modelMatrix = scmath::Mat4::translate(pos) * scmath::Mat4::rotateY(scmath::degToRad(45.0f));
+}
+
+void TextureCube::onAnimate(float deltaTime) 
+{
+    Transform.Rotation.y += scmath::degToRad(70) * deltaTime;
 }

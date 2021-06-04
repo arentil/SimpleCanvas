@@ -24,7 +24,8 @@ void AABB::setMinMax(scmath::Vec3 const& min, scmath::Vec3 const& max)
     _min = min;
     _max = max;
 
-    debugShader = std::make_shared<Shader>(FileReader().readFile("assets/shaders/Debug_vertex.glsl"), FileReader().readFile("assets/shaders/Debug_fragment.glsl"));
+    if (!debugShader)
+        debugShader = std::make_shared<Shader>(FileReader().readFile("assets/shaders/Debug_vertex.glsl"), FileReader().readFile("assets/shaders/Debug_fragment.glsl"));
 }
 
 void AABB::draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const
@@ -34,8 +35,8 @@ void AABB::draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const
         {_min.x, _max.y, _min.z},   // up
         {_min.x, _max.y, _max.z},
         {_max.x, _max.y, _max.z},
+        {_max.x, _max.y, _max.z},
         {_max.x, _max.y, _min.z},
-        {_min.x, _max.y, _min.z},
         {_min.x, _max.y, _min.z},
 
         {_min.x, _min.y, _max.z},   // front
@@ -74,7 +75,6 @@ void AABB::draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const
         {_max.x, _min.y, _min.z}
     };
 
-
     uint32_t VAO, VBO;
 
     glGenVertexArrays(1, &VAO);
@@ -90,14 +90,14 @@ void AABB::draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const
 
     glBindVertexArray(0);
 
-    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); // for wireframe draw
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // for wireframe draw
     debugShader->bind();
     
     debugShader->uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
     debugShader->uploadUniformMat4("u_Model", modelMatrix);
 
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+    glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
     glBindVertexArray(0);
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL ); // for normal draw
 }

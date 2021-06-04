@@ -26,6 +26,7 @@ public:
 
     scmath::Vec3 _min;
     scmath::Vec3 _max;
+    std::vector<scmath::Vec3> corners;
     ShaderPtr debugShader;
 };
 } // namespace sc

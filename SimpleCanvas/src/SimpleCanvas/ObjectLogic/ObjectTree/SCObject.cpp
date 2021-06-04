@@ -98,9 +98,19 @@ SCObject* SCObject::findChildByName(std::string const& name)
     return nullptr;
 }
 
+SCObject* SCObject::getParent() 
+{
+    return ((SCObject*)parentNode);
+}
+
+SCObject* SCObject::getChild() 
+{
+    return ((SCObject*)childNode);
+}
+
 void SCObject::prepareCollider() 
 {
-    //_model->
+    //getParent()->Transform
 }
 
 void SCObject::onPrepare() 
