@@ -3,6 +3,7 @@
 #include <SCMath.h>
 
 #include "Frustum.h"
+#include "CameraSettings.h"
 #include "Events/Event.h"
 #include "Events/MouseEvent.h"
 #include "Events/ApplicationEvent.h"
@@ -19,7 +20,7 @@ constexpr float FOV        =  70.0f;
 class FPSCamera
 {
 public:
-    FPSCamera(scmath::Vec3 const& position = scmath::Vec3(0.0f, 0.0f, 0.0f),
+    FPSCamera(CameraSettings const& camSettings,
               scmath::Vec3 const& worldUp = scmath::Vec3(0.0f, 1.0f, 0.0f),
               float yaw = YAW,
               float pitch = PITCH);
@@ -40,7 +41,7 @@ public:
     scmath::Vec3 _front;
     scmath::Vec3 _up;
     scmath::Vec3 _right;
-    scmath::Vec3 _worldUp;  // !!!
+    scmath::Vec3 _worldUp;      // static world up vector, different than up that is relative to the camera rotation etc...
 
     // euler angles
     float _yaw, _pitch;
@@ -48,7 +49,7 @@ public:
     //camera options
     float _movementSpeed;
     float _mouseSensitivity;
-    float _fov;
+    CameraSettings settings;
 
     scmath::Mat4 _projectionMatrix;
     scmath::Mat4 _viewMatrix;

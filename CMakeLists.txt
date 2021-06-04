@@ -21,25 +21,25 @@ endif ()
 
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/Sandbox/src)
 set(SOURCE_FILES
-  ${SOURCE_DIR}/Sandbox.cpp
-  ${SOURCE_DIR}/Objects/TextureCube.h
-  ${SOURCE_DIR}/Objects/TextureCube.cpp
-  ${SOURCE_DIR}/Objects/ColorCube.h
-  ${SOURCE_DIR}/Objects/ColorCube.cpp
-  ${SOURCE_DIR}/Objects/Teapot.h
-  ${SOURCE_DIR}/Objects/Teapot.cpp
-  ${SOURCE_DIR}/Objects/Sponza.h
-  ${SOURCE_DIR}/Objects/Sponza.cpp
-  ${SOURCE_DIR}/Objects/Triangle.h
-  ${SOURCE_DIR}/Objects/Triangle.cpp
-  ${SOURCE_DIR}/Objects/Terrain.h
-  ${SOURCE_DIR}/Objects/Terrain.cpp
-  ${SOURCE_DIR}/Objects/TileMap.h
-  ${SOURCE_DIR}/Objects/TileMap.cpp
-  ${SOURCE_DIR}/Objects/BlendTexSquare.h
   ${SOURCE_DIR}/Objects/BlendTexSquare.cpp
-  ${SOURCE_DIR}/Objects/Skybox.h
+  ${SOURCE_DIR}/Objects/BlendTexSquare.h
+  ${SOURCE_DIR}/Objects/ColorCube.cpp
+  ${SOURCE_DIR}/Objects/ColorCube.h
   ${SOURCE_DIR}/Objects/Skybox.cpp
+  ${SOURCE_DIR}/Objects/Skybox.h
+  ${SOURCE_DIR}/Objects/Sponza.cpp
+  ${SOURCE_DIR}/Objects/Sponza.h
+  ${SOURCE_DIR}/Objects/Teapot.cpp
+  ${SOURCE_DIR}/Objects/Teapot.h
+  ${SOURCE_DIR}/Objects/Terrain.cpp
+  ${SOURCE_DIR}/Objects/Terrain.h
+  ${SOURCE_DIR}/Objects/TextureCube.cpp
+  ${SOURCE_DIR}/Objects/TextureCube.h
+  ${SOURCE_DIR}/Objects/TileMap.cpp
+  ${SOURCE_DIR}/Objects/TileMap.h
+  ${SOURCE_DIR}/Objects/Triangle.cpp
+  ${SOURCE_DIR}/Objects/Triangle.h
+  ${SOURCE_DIR}/Sandbox.cpp
   ${SOURCE_DIR}/Scenes/Scene.cpp
   ${SOURCE_DIR}/Scenes/Scene.h
   ${SOURCE_DIR}/World/World.cpp

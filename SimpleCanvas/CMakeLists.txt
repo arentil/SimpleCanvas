@@ -29,7 +29,6 @@ add_subdirectory(SCMath)
 # -------------------
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_FILES
-
 	${SOURCE_DIR}/SimpleCanvas.h
 	${SOURCE_DIR}/SimpleCanvas/Application.cpp
 	${SOURCE_DIR}/SimpleCanvas/Application.h
@@ -37,6 +36,7 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.cpp
 	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/CameraSettings.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.cpp
 	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.cpp
@@ -69,11 +69,11 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Model.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjLoader.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjLoader.h
-	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/TransformComponent.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCNode.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCNode.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCObject.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCObject.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/TransformComponent.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/AssetsContainer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.cpp
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.h
