@@ -59,6 +59,6 @@ public:
 
     CursorMode _currentCursorMode;
 
-    Frustum _frustum;
+    Frustum frustum;
 };
 } // namespace sc

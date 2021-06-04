@@ -28,7 +28,7 @@ std::vector<scmath::Vec3> aabb8Corners(AABB const& aabb)
     };
 }
 
-AABB findAABB(AABB const& aabb, scmath::Mat4 const& modelMatrix)
+AABB findNewAABB(AABB const& aabb, scmath::Mat4 const& modelMatrix)
 {
     std::vector<scmath::Vec3> corners = aabb.corners;
     for (auto & corner : corners)
@@ -61,10 +61,10 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
 
 void TextureMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {   
-    AABB newAABB = findAABB(_aabb, modelMatrix);
-    newAABB.draw(camera, scmath::Mat4::identity());//scmath::Mat4::scale(scmath::Vec3(0.01f, 0.01f, 0.01f)));
+    AABB newAABB = findNewAABB(_aabb, modelMatrix);
+    newAABB.draw(camera, scmath::Mat4::identity());
     //_aabb.draw(camera, modelMatrix);
-    if (! camera._frustum.boxInFrustum(newAABB, modelMatrix))
+    if (!camera.frustum.isAABBvisible(newAABB))
     {
         return;
     }
@@ -135,7 +135,7 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
 void ColorMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
     //_aabb.draw(camera, modelMatrix);
-    if (! camera._frustum.boxInFrustum(_aabb, modelMatrix))
+    if (! camera.frustum.isAABBvisible(_aabb))
     {
         return;
     }
