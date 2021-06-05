@@ -10,7 +10,7 @@ SCObject::SCObject(std::string const& name, ShaderPtr shader)
 
 void SCObject::prepare() 
 {
-    prepareCollider();
+    updateCollider();
     onPrepare();
 
     if (hasChild())
@@ -37,7 +37,9 @@ void SCObject::animate(float deltaTime)
 void SCObject::processCollisions(SCObject *object) 
 {
     // TODO: IMPLEMENT AABB AND USE HERE
-    if (object != (SCObject*)this && Collider.isCollision(object->Collider))
+    if (Collider.has_value() &&
+        object != (SCObject*)this &&
+        Collider->isCollision(object->Collider.value()))
     {
         onCollision(object);
 
@@ -49,10 +51,10 @@ void SCObject::processCollisions(SCObject *object)
     }
 
     if (object->hasChild())
-        processCollisions(  (SCObject*)(object->childNode)  );
+        processCollisions((SCObject*)(object->childNode));
 
     if (object->hasParent() && !object->isLastChild())
-        processCollisions(  (SCObject*)(object->nextNode)  );
+        processCollisions((SCObject*)(object->nextNode));
 }
 
 void SCObject::draw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 
@@ -108,9 +110,12 @@ SCObject* SCObject::getChild()
     return ((SCObject*)childNode);
 }
 
-void SCObject::prepareCollider() 
+void SCObject::updateCollider() 
 {
-    //getParent()->Transform
+    if (!Collider.has_value())
+        return;
+
+    Collider = _model->getAABBForModel();
 }
 
 void SCObject::onPrepare() 

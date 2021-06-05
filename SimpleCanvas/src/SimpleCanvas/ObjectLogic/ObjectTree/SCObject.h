@@ -39,8 +39,8 @@ public:
     scmath::Vec3 Acceleration;
     bool IsDead;
 
-    AABB Collider;
-    void prepareCollider();
+    std::optional<AABB> Collider;
+    void updateCollider();
 
 protected:
     virtual void onPrepare();

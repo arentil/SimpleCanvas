@@ -16,6 +16,7 @@
 #include <cassert>
 #include <string>
 #include <cstring>
+#include <optional>
 
 #include <vector>
 #include <array>

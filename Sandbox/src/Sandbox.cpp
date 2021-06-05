@@ -15,7 +15,15 @@ class ExampleCanvas : public sc::Canvas
 {
 public:
 	ExampleCanvas()
-	: _camera(scmath::Vec3(0.0f, 0.0f, 3.0f))
+	: cameraSettings
+		{ 
+			70,								// fov
+		  	1280,							// aspect ratio width
+		  	720,							// aspect ratio height
+		  	0.01f,							// camera near plane distance
+			100								// camera far plane distance
+		}								
+	, _camera(cameraSettings)
 	{
 		world = std::make_unique<World>(_camera);
 	}
@@ -43,6 +51,7 @@ public:
 	}
 
 private:
+	sc::CameraSettings cameraSettings;
 	sc::FPSCamera _camera;
 	std::unique_ptr<World> world;
 };
