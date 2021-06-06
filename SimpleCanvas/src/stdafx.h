@@ -17,6 +17,7 @@
 #include <string>
 #include <cstring>
 #include <optional>
+#include <limits>
 
 #include <vector>
 #include <array>

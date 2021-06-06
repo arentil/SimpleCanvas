@@ -103,6 +103,8 @@ public:
     static Vec3 cross(Vec3 const& v1, Vec3 const& v2);
     static Vec3 projection(Vec3 const& v, Vec3 const& onVector);
     static Vec3 perpendicular(Vec3 const& v, Vec3 const& onVector);
+    static Vec3 Max();
+    static Vec3 Min();
 
     /**
      * Reflects the in vector on a plane perpendicular to normal

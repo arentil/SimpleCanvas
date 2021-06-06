@@ -61,7 +61,10 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/AABB.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/AABB.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/BaseMesh.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/BaseMesh.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/BoundingBox.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/BoundingBox.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Lights.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Mesh.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Mesh.h

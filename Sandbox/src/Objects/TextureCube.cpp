@@ -41,5 +41,7 @@ TextureCube::TextureCube(sc::AssetsContainer const& assets)
 
 void TextureCube::onAnimate(float deltaTime) 
 {
-    Transform.Rotation.y += scmath::degToRad(70) * deltaTime;
+    Transform.Rotation.x += scmath::degToRad(90) * deltaTime;
+    Transform.Rotation.y += scmath::degToRad(60) * deltaTime;
+    Transform.Rotation.z += scmath::degToRad(30) * deltaTime;
 }

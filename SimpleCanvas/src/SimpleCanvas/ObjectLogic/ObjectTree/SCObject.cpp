@@ -115,7 +115,7 @@ void SCObject::updateCollider()
     if (!Collider.has_value())
         return;
 
-    Collider = _model->getAABBForModel();
+    //Collider = _model->getModelAABB();
 }
 
 void SCObject::onPrepare() 

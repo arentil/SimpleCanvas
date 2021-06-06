@@ -6,73 +6,64 @@
 
 namespace sc
 {
-namespace
-{
-bool isInRange(float min, float value, float max)
-{
-    return min < value && value < max;
-}
-} // namespace
 
 AABB::AABB(scmath::Vec3 const& min, scmath::Vec3 const& max)
-{
-    setMinMax(min, max);
-}
+: bb(min, max)
+{}
 
-void AABB::setMinMax(scmath::Vec3 const& min, scmath::Vec3 const& max) 
+void AABB::initDebugShader() 
 {
-    _min = min;
-    _max = max;
-
     if (!debugShader)
         debugShader = std::make_shared<Shader>(FileReader().readFile("assets/shaders/Debug_vertex.glsl"), FileReader().readFile("assets/shaders/Debug_fragment.glsl"));
 }
 
 void AABB::draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const
 {
+    scmath::Vec3 const& min = bb.min;
+    scmath::Vec3 const& max = bb.max;
     std::vector<scmath::Vec3> const vertices
     {
-        {_min.x, _max.y, _min.z},   // up
-        {_min.x, _max.y, _max.z},
-        {_max.x, _max.y, _max.z},
-        {_max.x, _max.y, _max.z},
-        {_max.x, _max.y, _min.z},
-        {_min.x, _max.y, _min.z},
+        {min.x, max.y, min.z},   // up
+        {min.x, max.y, max.z},
+        {max.x, max.y, max.z},
+        {max.x, max.y, max.z},
+        {max.x, max.y, min.z},
+        {min.x, max.y, min.z},
 
-        {_min.x, _min.y, _max.z},   // front
-        {_max.x, _min.y, _max.z},
-        {_max.x, _max.y, _max.z},
-        {_max.x, _max.y, _max.z},
-        {_min.x, _max.y, _max.z},
-        {_min.x, _min.y, _max.z},
+        {min.x, min.y, max.z},   // front
+        {max.x, min.y, max.z},
+        {max.x, max.y, max.z},
+        {max.x, max.y, max.z},
+        {min.x, max.y, max.z},
+        {min.x, min.y, max.z},
 
-        {_max.x, _min.y, _max.z},  // right
-        {_max.x, _min.y, _min.z},
-        {_max.x, _max.y, _min.z},
-        {_max.x, _max.y, _min.z},
-        {_max.x, _max.y, _max.z},
-        {_max.x, _min.y, _max.z},
+        {max.x, min.y, max.z},  // right
+        {max.x, min.y, min.z},
+        {max.x, max.y, min.z},
+        {max.x, max.y, min.z},
+        {max.x, max.y, max.z},
+        {max.x, min.y, max.z},
 
-        {_min.x, _min.y, _min.z},   // left
-        {_min.x, _min.y, _max.z},
-        {_min.x, _max.y, _max.z},
-        {_min.x, _max.y, _max.z},
-        {_min.x, _max.y, _min.z},
-        {_min.x, _min.y, _min.z},
+        {min.x, min.y, min.z},   // left
+        {min.x, min.y, max.z},
+        {min.x, max.y, max.z},
+        {min.x, max.y, max.z},
+        {min.x, max.y, min.z},
+        {min.x, min.y, min.z},
 
-        {_max.x, _min.y, _max.z},   // down
-        {_min.x, _min.y, _max.z},
-        {_min.x, _min.y, _min.z},
-        {_min.x, _min.y, _min.z},
-        {_max.x, _min.y, _min.z},
-        {_max.x, _min.y, _max.z},
+        {max.x, min.y, max.z},   // down
+        {min.x, min.y, max.z},
+        {min.x, min.y, min.z},
+        {min.x, min.y, min.z},
+        {max.x, min.y, min.z},
+        {max.x, min.y, max.z},
 
-        {_max.x, _min.y, _min.z},   // back
-        {_min.x, _min.y, _min.z},
-        {_min.x, _max.y, _min.z},
-        {_min.x, _max.y, _min.z},
-        {_max.x, _max.y, _min.z},
-        {_max.x, _min.y, _min.z}
+        {max.x, min.y, min.z},   // back
+        {min.x, min.y, min.z},
+        {min.x, max.y, min.z},
+        {min.x, max.y, min.z},
+        {max.x, max.y, min.z},
+        {max.x, min.y, min.z}
     };
 
     uint32_t VAO, VBO;
@@ -104,20 +95,20 @@ void AABB::draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const
 
 bool AABB::isCollision(AABB const& other) const
 {
-    return (_min.x <= other._max.x && _max.x >= other._min.x) &&
-           (_min.y <= other._max.y && _max.y >= other._min.y) &&
-           (_min.z <= other._max.z && _max.z >= other._min.z);
+    return (bb.min.x <= other.bb.max.x && bb.max.x >= other.bb.min.x) &&
+           (bb.min.y <= other.bb.max.y && bb.max.y >= other.bb.min.y) &&
+           (bb.min.z <= other.bb.max.z && bb.max.z >= other.bb.min.z);
 }
 
 scmath::Vec3 AABB::getVertexP(scmath::Vec3 const& normal) const
 {
-    scmath::Vec3 result(_min);
+    scmath::Vec3 result(bb.min);
 	if (normal.x >= 0)
-		result.x = _max.x;
+		result.x = bb.max.x;
 	if (normal.y >= 0)
-		result.y = _max.y;
+		result.y = bb.max.y;
 	if (normal.z >= 0)
-		result.z = _max.z;
+		result.z = bb.max.z;
     return result;
 }
 } // namespace sc

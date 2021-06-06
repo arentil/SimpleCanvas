@@ -7,33 +7,11 @@ Model::Model(std::vector<BaseMeshPtr> const& meshes)
 {}
 
 void Model::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
-{
+{    
     for (BaseMeshPtr const& mesh : _meshes)
     {
         mesh->draw(shader, camera, lights, modelMatrix);
     }
-}
-
-AABB Model::getAABBForModel() const
-{
-    std::vector<scmath::Vec3> allMeshesAABBvertices;
-    allMeshesAABBvertices.reserve(_meshes.size() * 8);
-    for (auto const& mesh : _meshes)
-    {
-        allMeshesAABBvertices.insert(allMeshesAABBvertices.end(), mesh->getAABB().corners.begin(), mesh->getAABB().corners.end());
-    }
-
-    auto const& firstMeshAABB = _meshes.front()->getAABB().corners.front();
-    scmath::Vec3 min = firstMeshAABB;
-    scmath::Vec3 max = firstMeshAABB;
-
-    for (auto const& vertex : allMeshesAABBvertices)
-    {
-        
-    }
-
-    AABB result(min, max);
-    return result;
 }
 
 void ModelsContainer::addModel(std::string const& modelName, ModelPtr const& model) 

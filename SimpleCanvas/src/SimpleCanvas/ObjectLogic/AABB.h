@@ -4,6 +4,7 @@
 
 #include "Renderer/Shader.h"
 #include "Tools/FileReader.h"
+#include "BoundingBox.h"
 
 namespace sc
 {
@@ -16,17 +17,17 @@ public:
     AABB(scmath::Vec3 const& min, scmath::Vec3 const& max);
     virtual ~AABB() = default;
 
-    void setMinMax(scmath::Vec3 const& min, scmath::Vec3 const& max);
-    void draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const;
     bool isCollision(AABB const& other) const;
+
+    // for test/debug purpose only!
+    void initDebugShader();
+    // for test/debug purpose only!
+    void draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const;
 
     // for frustum culling check
     scmath::Vec3 getVertexP(scmath::Vec3 const& normal) const;
 
-
-    scmath::Vec3 _min;
-    scmath::Vec3 _max;
-    std::vector<scmath::Vec3> corners;
+    BoundingBox bb;
     ShaderPtr debugShader;
 };
 } // namespace sc

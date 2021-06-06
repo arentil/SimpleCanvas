@@ -7,6 +7,8 @@
 namespace scmath
 {
 constexpr float PI = (float)M_PI;
+constexpr float FLOAT_MAX = std::numeric_limits<float>::max();
+constexpr float FLOAT_MIN = std::numeric_limits<float>::min();
 
 inline bool f_equal(float first, float second)
 {

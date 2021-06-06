@@ -4,67 +4,17 @@
 
 namespace sc
 {
-namespace
-{
-std::vector<scmath::Vec3> aabb8Corners(AABB const& aabb)
-{
-    const float minX = aabb._min.x;
-    const float minY = aabb._min.y;
-    const float minZ = aabb._min.z;
-    const float maxX = aabb._max.x;
-    const float maxY = aabb._max.y;
-    const float maxZ = aabb._max.z;
-
-    return
-    {
-        aabb._max, // minX, minY, minZ
-        aabb._min, // maxX, maxY, maxZ
-        {minX, maxY, maxZ},
-        {minX, maxY, minZ},
-        {maxX, maxY, minZ},
-        {maxX, minY, minZ},
-        {maxX, minY, maxZ},
-        {minX, minY, maxZ},
-    };
-}
-
-AABB findNewAABB(AABB const& aabb, scmath::Mat4 const& modelMatrix)
-{
-    std::vector<scmath::Vec3> corners = aabb.corners;
-    for (auto & corner : corners)
-    {
-        corner = modelMatrix * corner;
-    }
-        // aabb bounding for frustrum clipping
-    scmath::Vec3 minVertex = corners.front();
-    scmath::Vec3 maxVertex = corners.front();
-    for (auto const& corner : corners)
-    {
-        minVertex.x = std::min(minVertex.x, corner.x);
-        minVertex.y = std::min(minVertex.y, corner.y);
-        minVertex.z = std::min(minVertex.z, corner.z);
-
-        maxVertex.x = std::max(maxVertex.x, corner.x);
-        maxVertex.y = std::max(maxVertex.y, corner.y);
-        maxVertex.z = std::max(maxVertex.z, corner.z);
-    }
-    AABB result(minVertex, maxVertex);
-    return result;
-}
-}
-
 TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr texturePtr)
 : _vertices(vertices), _texturePtr(texturePtr)
 {
     initialize();
 }
 
-void TextureMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
+void TextureMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {   
-    AABB newAABB = findNewAABB(_aabb, modelMatrix);
-    newAABB.draw(camera, scmath::Mat4::identity());
-    //_aabb.draw(camera, modelMatrix);
-    if (!camera.frustum.isAABBvisible(newAABB))
+    updateAABB(modelMatrix);
+    aabb.draw(camera, scmath::Mat4::identity());
+    if (!camera.frustum.isAABBvisible(aabb))
     {
         return;
     }
@@ -110,20 +60,20 @@ void TextureMesh::initialize()
     glBindVertexArray(0);
 
     // aabb bounding for frustrum clipping
-    scmath::Vec3 minVertex = _vertices.front().position;
-    scmath::Vec3 maxVertex = _vertices.front().position;
+    scmath::Vec3 min = scmath::Vec3::Max();
+    scmath::Vec3 max = scmath::Vec3::Min();
     for (auto const& vertex : _vertices)
     {
-        minVertex.x = std::min(minVertex.x, vertex.position.x);
-        minVertex.y = std::min(minVertex.y, vertex.position.y);
-        minVertex.z = std::min(minVertex.z, vertex.position.z);
+        min.x = std::min(min.x, vertex.position.x);
+        min.y = std::min(min.y, vertex.position.y);
+        min.z = std::min(min.z, vertex.position.z);
 
-        maxVertex.x = std::max(maxVertex.x, vertex.position.x);
-        maxVertex.y = std::max(maxVertex.y, vertex.position.y);
-        maxVertex.z = std::max(maxVertex.z, vertex.position.z);
+        max.x = std::max(max.x, vertex.position.x);
+        max.y = std::max(max.y, vertex.position.y);
+        max.z = std::max(max.z, vertex.position.z);
     }
-    _aabb.setMinMax(minVertex, maxVertex);
-    _aabb.corners = aabb8Corners(_aabb);
+    bb.setMinMax(min, max);
+    aabb.initDebugShader();
 }
 
 ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
@@ -132,10 +82,11 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
     initialize();
 }
 
-void ColorMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
+void ColorMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {
-    //_aabb.draw(camera, modelMatrix);
-    if (! camera.frustum.isAABBvisible(_aabb))
+    updateAABB(modelMatrix);
+    aabb.draw(camera, scmath::Mat4::identity());
+    if (!camera.frustum.isAABBvisible(aabb))
     {
         return;
     }
@@ -179,21 +130,21 @@ void ColorMesh::initialize()
 
     glBindVertexArray(0);
 
-
     // aabb bounding for frustrum clipping
-    scmath::Vec3 minVertex = _vertices.front().position;
-    scmath::Vec3 maxVertex = _vertices.front().position;
+    scmath::Vec3 min = scmath::Vec3::Max();
+    scmath::Vec3 max = scmath::Vec3::Min();
     for (auto const& vertex : _vertices)
     {
-        minVertex.x = std::min(minVertex.x, vertex.position.x);
-        minVertex.y = std::min(minVertex.y, vertex.position.y);
-        minVertex.z = std::min(minVertex.z, vertex.position.z);
+        min.x = std::min(min.x, vertex.position.x);
+        min.y = std::min(min.y, vertex.position.y);
+        min.z = std::min(min.z, vertex.position.z);
 
-        maxVertex.x = std::max(maxVertex.x, vertex.position.x);
-        maxVertex.y = std::max(maxVertex.y, vertex.position.y);
-        maxVertex.z = std::max(maxVertex.z, vertex.position.z);
+        max.x = std::max(max.x, vertex.position.x);
+        max.y = std::max(max.y, vertex.position.y);
+        max.z = std::max(max.z, vertex.position.z);
     }
-    _aabb.setMinMax(minVertex, maxVertex);
+    bb.setMinMax(min, max);
+    aabb.initDebugShader();
 }
 
 CubemapMesh::CubemapMesh(std::vector<CubemapVertex> const& vertices, TexturePtr texturePtr) 
@@ -201,7 +152,7 @@ CubemapMesh::CubemapMesh(std::vector<CubemapVertex> const& vertices, TexturePtr 
 {
     initialize();
 }
-void CubemapMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& , scmath::Mat4 const& modelMatrix) const 
+void CubemapMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& , scmath::Mat4 const& modelMatrix) 
 {
     shader->bind();
     if (_texturePtr)
