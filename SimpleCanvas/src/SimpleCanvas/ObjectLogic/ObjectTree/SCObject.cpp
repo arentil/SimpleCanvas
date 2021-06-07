@@ -36,9 +36,9 @@ void SCObject::animate(float deltaTime)
 
 void SCObject::processCollisions(SCObject *object) 
 {
-    // TODO: IMPLEMENT AABB AND USE HERE
-    if (Collider.has_value() &&
-        object != (SCObject*)this &&
+    if (object != (SCObject*)this &&
+        Collider.has_value() &&
+        object->Collider.has_value() &&
         Collider->isCollision(object->Collider.value()))
     {
         onCollision(object);
@@ -112,10 +112,7 @@ SCObject* SCObject::getChild()
 
 void SCObject::updateCollider() 
 {
-    if (!Collider.has_value())
-        return;
-
-    //Collider = _model->getModelAABB();
+    Collider = _model->getModelAABB();
 }
 
 void SCObject::onPrepare() 
@@ -131,6 +128,13 @@ void SCObject::onAnimate(float deltaTime)
 
 void SCObject::onDraw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 
 {
+    // for collider draw
+    // if (Collider.has_value())
+    // {
+    //     auto &aabb = Collider.value();
+    //     aabb.initDebugShader();
+    //     aabb.draw(camera, scmath::Mat4::identity());
+    // }
     _model->draw(_shader, camera, lights, modelMatrix);
 }
 } // namespace sc

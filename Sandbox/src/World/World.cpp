@@ -1,6 +1,6 @@
 #include "World.h"
 
-World::World(sc::FPSCamera const& camera)
+World::World(sc::FPSCamera & camera)
 : _camera(camera)
 {
     loadWorld();

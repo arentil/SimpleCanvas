@@ -22,6 +22,7 @@ public:
     ~Model() = default;
 
     void draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const;
+    AABB getModelAABB() const;
 
 private:
     std::vector<BaseMeshPtr> const _meshes;

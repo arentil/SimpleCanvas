@@ -10,4 +10,7 @@ public:
     TextureCube(sc::AssetsContainer const& assets);
 
     virtual void onAnimate(float deltaTime) override;
+
+private:
+    float rot = 0.0f;
 };

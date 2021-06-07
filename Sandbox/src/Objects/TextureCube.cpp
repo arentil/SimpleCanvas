@@ -36,12 +36,15 @@ TextureCube::TextureCube(sc::AssetsContainer const& assets)
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
 
-	Transform.Translation = scmath::Vec3(3.0f, 0.0f, 2.0f);
+	Transform.Translation = scmath::Vec3(-3.0f, 0.0f, 2.0f);
 }
 
 void TextureCube::onAnimate(float deltaTime) 
 {
-    Transform.Rotation.x += scmath::degToRad(90) * deltaTime;
-    Transform.Rotation.y += scmath::degToRad(60) * deltaTime;
-    Transform.Rotation.z += scmath::degToRad(30) * deltaTime;
+    rot += (scmath::degToRad(50) * deltaTime);
+    Transform.Translation.x += std::sin(rot) * deltaTime;
+    Transform.Translation.z += std::cos(rot) * deltaTime;
+    // Transform.Rotation.x += scmath::degToRad(90) * deltaTime;
+    // Transform.Rotation.y += scmath::degToRad(60) * deltaTime;
+    // Transform.Rotation.z += scmath::degToRad(30) * deltaTime;
 }

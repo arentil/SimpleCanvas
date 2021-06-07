@@ -3,20 +3,20 @@
 #include <Objects/Skybox.h>
 #include <Objects/ColorCube.h>
 #include <Objects/Triangle.h>
-#include <Objects/Sponza.h>
+#include <Objects/Player.h>
 #include <Objects/Terrain.h>
 #include <Objects/TextureCube.h>
 #include <Objects/Teapot.h>
 #include <Objects/TileMap.h>
 #include <Objects/BlendTexSquare.h>
 
-Scene::Scene(sc::AssetsContainer &assets, sc::FPSCamera const& camera) 
+Scene::Scene(sc::AssetsContainer &assets, sc::FPSCamera & camera) 
 {
     skybox = std::make_shared<Skybox>(assets, camera);
 
     rootObject = std::make_shared<Terrain>(assets);
     {
-        //rootObject->attach(new Sponza(assets));
+        rootObject->attach(new Player(assets, camera));
         rootObject->attach(new ColorCube(assets));
         {
             rootObject->findChildByName("ColorCube")->attach(new Triangle(assets));

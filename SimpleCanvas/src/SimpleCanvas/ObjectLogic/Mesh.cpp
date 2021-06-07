@@ -13,7 +13,7 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
 void TextureMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {   
     updateAABB(modelMatrix);
-    aabb.draw(camera, scmath::Mat4::identity());
+    // aabb.draw(camera, scmath::Mat4::identity());
     if (!camera.frustum.isAABBvisible(aabb))
     {
         return;
@@ -85,7 +85,7 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
 void ColorMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {
     updateAABB(modelMatrix);
-    aabb.draw(camera, scmath::Mat4::identity());
+    // aabb.draw(camera, scmath::Mat4::identity());
     if (!camera.frustum.isAABBvisible(aabb))
     {
         return;

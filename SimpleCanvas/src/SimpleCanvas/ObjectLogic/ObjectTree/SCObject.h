@@ -40,7 +40,7 @@ public:
     bool IsDead;
 
     std::optional<AABB> Collider;
-    void updateCollider();
+    virtual void updateCollider();
 
 protected:
     virtual void onPrepare();

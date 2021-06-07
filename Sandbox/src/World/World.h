@@ -6,7 +6,7 @@
 class World
 {
 public:
-    World(sc::FPSCamera const& camera);
+    World(sc::FPSCamera & camera);
     virtual ~World() = default;
 
     ScenePtr getScene(std::string const& name) const;
@@ -28,5 +28,5 @@ private:
     std::map<std::string, ScenePtr> _scenesMap;
     std::string _currentSceneName;
     ScenePtr _currentScene;
-    sc::FPSCamera const& _camera;
+    sc::FPSCamera & _camera;
 };
