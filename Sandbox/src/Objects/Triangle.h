@@ -10,5 +10,5 @@ public:
     Triangle(sc::AssetsContainer const& assets);
     virtual ~Triangle() = default;
 
-    void onAnimate(float deltaTime) override;
+    void onUpdate() override;
 };

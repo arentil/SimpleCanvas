@@ -8,53 +8,68 @@ SCObject::SCObject(std::string const& name, ShaderPtr shader)
 , _shader(shader)
 {}
 
-void SCObject::prepare() 
+void SCObject::prepare(float deltaT) 
 {
-    updateCollider();
+    deltaTime = deltaT;
     onPrepare();
+    checkCollision(findRoot());
 
     if (hasChild())
-        ((SCObject*)childNode)->prepare();
+        ((SCObject*)childNode)->prepare(deltaTime);
 
     if (hasParent() && !isLastChild())
-        ((SCObject*)nextNode)->prepare();
+        ((SCObject*)nextNode)->prepare(deltaTime);
 }
 
-void SCObject::animate(float deltaTime) 
+void SCObject::physic() 
 {
-    onAnimate(deltaTime);
+    onPhysic();
 
     if (hasChild())
-        ((SCObject*)childNode)->animate(deltaTime);
+        ((SCObject*)childNode)->physic();
 
     if (hasParent() && !isLastChild())
-        ((SCObject*)nextNode)->animate(deltaTime);
+        ((SCObject*)nextNode)->physic();
 
     if (IsDead)
         delete this;
 }
 
-void SCObject::processCollisions(SCObject *object) 
+void SCObject::checkCollision(SCObject *object) 
 {
+    updateCollider();
+
     if (object != (SCObject*)this &&
         Collider.has_value() &&
         object->Collider.has_value() &&
         Collider->isCollision(object->Collider.value()))
     {
         onCollision(object);
+        
 
         if (hasChild())
-            ((SCObject*)childNode)->processCollisions(object);
+            ((SCObject*)childNode)->checkCollision(object);
 
         if (hasParent() && !isLastChild())
-            ((SCObject*)nextNode)->processCollisions(object);
+            ((SCObject*)nextNode)->checkCollision(object);
     }
 
     if (object->hasChild())
-        processCollisions((SCObject*)(object->childNode));
+        checkCollision((SCObject*)(object->childNode));
 
     if (object->hasParent() && !object->isLastChild())
-        processCollisions((SCObject*)(object->nextNode));
+        checkCollision((SCObject*)(object->nextNode));
+}
+
+void SCObject::update() 
+{
+    onUpdate();
+
+    if (hasChild())
+        ((SCObject*)childNode)->update();
+
+    if (hasParent() && !isLastChild())
+        ((SCObject*)nextNode)->update();
 }
 
 void SCObject::draw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 
@@ -115,12 +130,7 @@ void SCObject::updateCollider()
     Collider = _model->getModelAABB();
 }
 
-void SCObject::onPrepare() 
-{
-    processCollisions(findRoot());
-}
-
-void SCObject::onAnimate(float deltaTime) 
+void SCObject::onPhysic() 
 {
     Transform.Translation += Velocity * deltaTime;
     Velocity += Acceleration * deltaTime;
@@ -128,13 +138,12 @@ void SCObject::onAnimate(float deltaTime)
 
 void SCObject::onDraw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 
 {
-    // for collider draw
-    // if (Collider.has_value())
-    // {
-    //     auto &aabb = Collider.value();
-    //     aabb.initDebugShader();
-    //     aabb.draw(camera, scmath::Mat4::identity());
-    // }
+    if (Collider.has_value())
+    {
+        auto &aabb = Collider.value();
+        aabb.initDebugShader();
+        aabb.draw(camera, scmath::Mat4::identity());
+    }
     _model->draw(_shader, camera, lights, modelMatrix);
 }
 } // namespace sc

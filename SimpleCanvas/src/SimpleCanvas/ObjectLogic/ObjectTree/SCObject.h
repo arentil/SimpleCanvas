@@ -18,9 +18,10 @@ public:
 
     // these methods are called while traverse through tree
     // can not be overriden
-    void prepare();
-    void animate(float deltaTime);
-    void processCollisions(SCObject *object);
+    void prepare(float deltaT);
+    void physic();
+    void checkCollision(SCObject *object);
+    void update();
     void draw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix);
 
     SCObject* findRoot();
@@ -31,6 +32,7 @@ public:
     // unsafe! make sure that object has a child!
     SCObject* getChild();
 
+    float deltaTime = 0.0f;
     TransformComponent Transform;
     std::string Name;
 
@@ -40,12 +42,14 @@ public:
     bool IsDead;
 
     std::optional<AABB> Collider;
-    virtual void updateCollider();
+    
 
 protected:
-    virtual void onPrepare();
-    virtual void onAnimate(float deltaTime);
-    virtual void onCollision(SCObject *collisionObject) {}
+    virtual void onPrepare() {}
+    virtual void onPhysic();
+    virtual void updateCollider();
+    virtual void onCollision(SCObject *object) {}
+    virtual void onUpdate() {}
     virtual void onDraw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix);
 
     ShaderPtr _shader;

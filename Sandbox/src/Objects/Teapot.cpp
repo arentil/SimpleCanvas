@@ -9,7 +9,7 @@ Teapot::Teapot(sc::AssetsContainer const& assets)
     Transform.Scale = scmath::Vec3(0.01f, 0.01f, 0.01f);
 }
 
-void Teapot::onAnimate(float deltaTime) 
+void Teapot::onUpdate()
 {
     Transform.Rotation.y += scmath::degToRad(rotationAngle) * deltaTime;
 }

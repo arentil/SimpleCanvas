@@ -39,9 +39,10 @@ public:
 		float specularStrength = 0.5f;
 		sc::Lights lights{0.3f, diffusePos, specularStrength};
 
-		world->prepare();
-		world->animate(deltaTime);
-		world->processCollisions();
+		world->prepare(deltaTime);
+		world->physic();
+		world->checkCollision();
+		world->update();
 		world->draw(_camera, lights);
 	}
 

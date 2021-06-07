@@ -40,7 +40,7 @@ ColorCube::ColorCube(sc::AssetsContainer const& assets)
     Transform.Scale = scmath::Vec3(0.3f, 0.3f, 0.3f);
 }
 
-void ColorCube::onAnimate(float deltaTime) 
+void ColorCube::onUpdate() 
 {
     Transform.Rotation.z += scmath::degToRad(30) * deltaTime;
 }

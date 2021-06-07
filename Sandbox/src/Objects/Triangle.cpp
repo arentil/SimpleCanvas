@@ -19,7 +19,7 @@ Triangle::Triangle(sc::AssetsContainer const& assets)
     Transform.Scale = scmath::Vec3(2.0f, 2.0f, 2.0f);
 }
 
-void Triangle::onAnimate(float deltaTime)
+void Triangle::onUpdate()
 {
     Transform.Rotation.z += scmath::degToRad(50) * deltaTime;
 }

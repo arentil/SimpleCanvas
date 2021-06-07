@@ -39,7 +39,7 @@ Skybox::Skybox(sc::AssetsContainer const& assets, sc::FPSCamera const& camera)
     _model = std::make_shared<sc::Model>(meshes);
 }
 
-void Skybox::onAnimate(float deltaTime) 
+void Skybox::onUpdate()
 {
     Transform.Translation = _camera.getPosition();
 }

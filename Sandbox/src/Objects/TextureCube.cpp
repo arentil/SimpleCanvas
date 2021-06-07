@@ -39,7 +39,7 @@ TextureCube::TextureCube(sc::AssetsContainer const& assets)
 	Transform.Translation = scmath::Vec3(-3.0f, 0.0f, 2.0f);
 }
 
-void TextureCube::onAnimate(float deltaTime) 
+void TextureCube::onUpdate()
 {
     rot += (scmath::degToRad(50) * deltaTime);
     Transform.Translation.x += std::sin(rot) * deltaTime;

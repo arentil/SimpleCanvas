@@ -16,9 +16,10 @@ public:
 
     virtual void loadScene() {};
 
-    void prepare();
-    void animate(float deltaTime);
-    void processCollisions();
+    void prepare(float deltaTime);
+    void physic();
+    void checkCollision();
+    void update();
     void draw(sc::FPSCamera const& camera, sc::Lights const& lights);
 
 private:

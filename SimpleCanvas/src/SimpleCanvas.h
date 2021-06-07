@@ -44,6 +44,7 @@
 #include "SimpleCanvas/ObjectLogic/AABB.h"
 #include "SimpleCanvas/ObjectLogic/ObjLoader.h"
 #include "SimpleCanvas/ObjectLogic/TransformComponent.h"
+#include "SimpleCanvas/ObjectLogic/Rigidbody.h"
 
 /**
  *  ObjectLogic/ObjectTree classes

@@ -76,6 +76,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCNode.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCObject.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCObject.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Rigidbody.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Rigidbody.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/TransformComponent.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/AssetsContainer.h
 	${SOURCE_DIR}/SimpleCanvas/Renderer/Cubemap.cpp

@@ -33,19 +33,24 @@ void World::setCurrentScene(std::string const& name)
     _currentScene = _scenesMap[_currentSceneName];
 }
 
-void World::prepare() 
+void World::prepare(float deltaTime) 
 {
-    _currentScene->prepare();
+    _currentScene->prepare(deltaTime);
 }
 
-void World::animate(float deltaTime) 
+void World::physic()
 {
-    _currentScene->animate(deltaTime);
+    _currentScene->physic();
 }
 
-void World::processCollisions() 
+void World::checkCollision() 
 {
-    _currentScene->processCollisions();
+    _currentScene->checkCollision();
+}
+
+void World::update()
+{
+    _currentScene->update();
 }
 
 void World::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 

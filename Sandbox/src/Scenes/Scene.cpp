@@ -28,20 +28,25 @@ Scene::Scene(sc::AssetsContainer &assets, sc::FPSCamera & camera)
     }
 }
 
-void Scene::prepare() 
+void Scene::prepare(float deltaTime) 
 {
-    rootObject->prepare();
+    rootObject->prepare(deltaTime);
 }
 
-void Scene::animate(float deltaTime) 
+void Scene::physic() 
 {
-    skybox->animate(deltaTime);
-    rootObject->animate(deltaTime);
+    rootObject->physic();
 }
 
-void Scene::processCollisions() 
+void Scene::update()
 {
-    rootObject->processCollisions(rootObject.get());
+    skybox->update();
+    rootObject->update();
+}
+
+void Scene::checkCollision() 
+{
+    rootObject->checkCollision(rootObject.get());
 }
 
 void Scene::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 
