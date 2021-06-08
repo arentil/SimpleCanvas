@@ -4,7 +4,6 @@ project(SimpleCanvas VERSION 1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_VERBOSE_MAKEFILE on)
 
 include_directories(${CMAKE_SOURCE_DIR}/SimpleCanvas/src)
 add_subdirectory(SimpleCanvas)
@@ -17,6 +16,7 @@ else()
   add_compile_options(-std=c++17 -Wall -Wextra -pedantic -Wconversion -Wcast-align -Wunused -Wshadow -Wold-style-cast -lgcov)
   set(CMAKE_CXX_FLAGS_DEBUG "-g -DSC_ASSERT_ENABLED")
   set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+  set(CMAKE_VERBOSE_MAKEFILE on)
 endif ()
 
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/Sandbox/src)

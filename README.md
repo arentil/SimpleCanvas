@@ -40,7 +40,17 @@ Then run cmake and build with make:
   $ git submodule init && git submodule update
   $ mkdir build && cd build
   $ cmake ..
-  $ make
+  $ make -j
+```
+
+You can also specify the build type:
+
+```
+  $ cmake -DCMAKE_BUILD_TYPE=Debug ..
+
+  or
+
+  $ cmake -DCMAKE_BUILD_TYPE=Release ..
 ```
 
 #### Windows
