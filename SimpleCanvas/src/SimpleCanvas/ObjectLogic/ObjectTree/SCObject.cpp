@@ -12,7 +12,6 @@ void SCObject::prepare(float deltaT)
 {
     deltaTime = deltaT;
     onPrepare();
-    checkCollision(findRoot());
 
     if (hasChild())
         ((SCObject*)childNode)->prepare(deltaTime);
@@ -24,6 +23,8 @@ void SCObject::prepare(float deltaT)
 void SCObject::physic() 
 {
     onPhysic();
+    updateCollider();
+    checkCollision(findRoot());
 
     if (hasChild())
         ((SCObject*)childNode)->physic();
@@ -37,8 +38,6 @@ void SCObject::physic()
 
 void SCObject::checkCollision(SCObject *object) 
 {
-    updateCollider();
-
     if (object != (SCObject*)this &&
         Collider.has_value() &&
         object->Collider.has_value() &&

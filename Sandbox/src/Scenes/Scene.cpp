@@ -46,7 +46,7 @@ void Scene::update()
 
 void Scene::checkCollision() 
 {
-    rootObject->checkCollision(rootObject.get());
+    //rootObject->checkCollision(rootObject.get());
 }
 
 void Scene::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 
