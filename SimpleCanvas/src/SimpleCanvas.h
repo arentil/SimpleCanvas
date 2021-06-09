@@ -52,9 +52,9 @@
 #include "SimpleCanvas/ObjectLogic/ObjectTree/SCNode.h"
 #include "SimpleCanvas/ObjectLogic/ObjectTree/SCObject.h"
 
-
 /**
  *  Camera classes
  */
 #include "SimpleCanvas/Camera/CameraSettings.h"
 #include "SimpleCanvas/Camera/FPSCamera.h"
+#include "SimpleCanvas/Camera/CameraController.h"

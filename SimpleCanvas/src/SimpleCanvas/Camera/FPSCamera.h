@@ -3,61 +3,40 @@
 #include <SCMath.h>
 
 #include "Frustum.h"
+#include "ObjectLogic/AABB.h"
 #include "CameraSettings.h"
-#include "Events/Event.h"
-#include "Events/MouseEvent.h"
-#include "Events/ApplicationEvent.h"
 
 namespace sc
 {
-// defaults
-constexpr float YAW         = -90.0f;
-constexpr float PITCH       =  0.0f;
-constexpr float SPEED       =  2.5f;
-constexpr float SENSITIVITY =  0.1f;
-constexpr float FOV        =  70.0f;
-
 class FPSCamera
 {
 public:
-    FPSCamera(CameraSettings const& camSettings,
-              scmath::Vec3 const& worldUp = scmath::Vec3(0.0f, 1.0f, 0.0f),
-              float yaw = YAW,
-              float pitch = PITCH);
+    FPSCamera(CameraSettings const& camSettings, float pYaw, float pPitch);
 
     void updateCameraVectors();
-    scmath::Mat4 getViewProjMatrix() const;
-    scmath::Vec3 getPosition() const;
+    void setPosition(scmath::Vec3 const& pPosition);
+    void setYawPitch(float pYaw, float pPitch);
+    void setZoom(float yOffset);
+    void setAspectSize(float width, float height);
 
-    void update(float deltaTime);
-    void onEvent(Event &event);
+    scmath::Mat4 getViewProj() const;
+    bool isAABBvisible(AABB const& aabb) const;
 
-    void onMouseMoved(MouseMovedEvent &event);
-    void onMouseScrolled(MouseScrollEvent &event);
-    void onMouseButtonPressed(MouseButtonPressedEvent &event);
-    void onWindowResize(WindowResizeEvent &event);
+    // saving position, yaw and pitch as reference
+    // so we do not need to call update fields functions all the time
+    scmath::Vec3 position;
+    float yaw;
+    float pitch;
 
-    scmath::Vec3 _position;
-    scmath::Vec3 _front;
-    scmath::Vec3 _up;
-    scmath::Vec3 _right;
-    scmath::Vec3 _worldUp;      // static world up vector, different than up that is relative to the camera rotation etc...
+    scmath::Vec3 front;
+    scmath::Vec3 up;
+    scmath::Vec3 right;
+    scmath::Vec3 worldUp = {0.0f, 1.0f, 0.0f};      // static world up vector, different than up that is relative to the camera rotation etc...
 
-    // euler angles
-    float _yaw, _pitch;
-
-    //camera options
-    float _movementSpeed;
-    float _mouseSensitivity;
     CameraSettings settings;
 
-    scmath::Mat4 _projectionMatrix;
-
-    bool firstMouse = true;
-    float lastX, lastY;
-
-    CursorMode _currentCursorMode;
-
+private:
+    scmath::Mat4 projectionMatrix;
     Frustum frustum;
 };
 } // namespace sc

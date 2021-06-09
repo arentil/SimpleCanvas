@@ -10,11 +10,11 @@ TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr 
     initialize();
 }
 
-void TextureMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix)
+void TextureMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {   
     updateAABB(modelMatrix);
     // aabb.draw(camera, scmath::Mat4::identity());
-    if (!camera.frustum.isAABBvisible(aabb))
+    if (!camCtrl.isAABBvisible(aabb))
     {
         return;
     }
@@ -23,13 +23,13 @@ void TextureMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& 
     if (_texturePtr)
         _texturePtr->bind();
 
-    shader->uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
+    shader->uploadUniformMat4("u_ViewProjection", camCtrl.getViewProj());
     shader->uploadUniformMat4("u_Model", modelMatrix);
     shader->uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
     shader->uploadUniformFloat("u_Ambient", lights.ambient);
     shader->uploadUniformFloat3("u_Diffuse", lights.diffuse);
     shader->uploadUniformFloat("u_Specular", lights.specular);
-    shader->uploadUniformFloat3("u_ViewPos", camera.getPosition());
+    shader->uploadUniformFloat3("u_ViewPos", camCtrl.getPosition());
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
@@ -82,11 +82,11 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
     initialize();
 }
 
-void ColorMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix)
+void ColorMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {
     updateAABB(modelMatrix);
     // aabb.draw(camera, scmath::Mat4::identity());
-    if (!camera.frustum.isAABBvisible(aabb))
+    if (!camCtrl.isAABBvisible(aabb))
     {
         return;
     }
@@ -94,13 +94,13 @@ void ColorMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& li
     shader->bind();
     // no texture binding since the plane color will be used
 
-    shader->uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
+    shader->uploadUniformMat4("u_ViewProjection", camCtrl.getViewProj());
     shader->uploadUniformMat4("u_Model", modelMatrix);
     shader->uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
     shader->uploadUniformFloat("u_Ambient", lights.ambient);
     shader->uploadUniformFloat3("u_Diffuse", lights.diffuse);
     shader->uploadUniformFloat("u_Specular", lights.specular);
-    shader->uploadUniformFloat3("u_ViewPos", camera.getPosition());
+    shader->uploadUniformFloat3("u_ViewPos", camCtrl.getPosition());
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
@@ -152,16 +152,16 @@ CubemapMesh::CubemapMesh(std::vector<CubemapVertex> const& vertices, TexturePtr 
 {
     initialize();
 }
-void CubemapMesh::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& , scmath::Mat4 const& modelMatrix) 
+void CubemapMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& , scmath::Mat4 const& modelMatrix) 
 {
     shader->bind();
     if (_texturePtr)
         _texturePtr->bind();
 
-    shader->uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
+    shader->uploadUniformMat4("u_ViewProjection", camCtrl.getViewProj());
     shader->uploadUniformMat4("u_Model", modelMatrix);
     shader->uploadUniformMat4("u_ModelInvT", scmath::Mat4::transpose(scmath::Mat4::inverse(modelMatrix)));
-    shader->uploadUniformFloat3("u_ViewPos", camera.getPosition());
+    shader->uploadUniformFloat3("u_ViewPos", camCtrl.getPosition());
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());

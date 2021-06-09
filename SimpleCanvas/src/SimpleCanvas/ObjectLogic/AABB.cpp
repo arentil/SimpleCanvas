@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-#include "Camera/FPSCamera.h"
+#include "Camera/CameraController.h"
 
 namespace sc
 {
@@ -17,7 +17,7 @@ void AABB::initDebugShader()
         debugShader = std::make_shared<Shader>(FileReader().readFile("assets/shaders/Debug_vertex.glsl"), FileReader().readFile("assets/shaders/Debug_fragment.glsl"));
 }
 
-void AABB::draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const
+void AABB::draw(CameraController const& camCtrl, scmath::Mat4 const& modelMatrix) const
 {
     scmath::Vec3 const& min = bb.min;
     scmath::Vec3 const& max = bb.max;
@@ -84,7 +84,7 @@ void AABB::draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // for wireframe draw
     debugShader->bind();
     
-    debugShader->uploadUniformMat4("u_ViewProjection", camera.getViewProjMatrix());
+    debugShader->uploadUniformMat4("u_ViewProjection", camCtrl.getViewProj());
     debugShader->uploadUniformMat4("u_Model", modelMatrix);
 
     glBindVertexArray(VAO);

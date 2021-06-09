@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ObjectLogic/ObjectTree/SCNode.h"
-#include "Camera/FPSCamera.h"
+#include "Camera/CameraController.h"
 #include "ObjectLogic/Model.h"
 #include "ObjectLogic/TransformComponent.h"
 #include "ObjectLogic/Rigidbody.h"
@@ -23,7 +23,7 @@ public:
     void physic();
     void checkCollision(SCObject *object);
     void update();
-    void draw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix);
+    void draw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix);
 
     SCObject* findRoot();
     SCObject* findChildByName(std::string const& name);
@@ -41,7 +41,7 @@ protected:
     virtual void updateCollider();
     virtual void onCollision(SCObject *object) {}
     virtual void onUpdate() {}
-    virtual void onDraw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix);
+    virtual void onDraw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix);
 
     ShaderPtr _shader;
     ModelPtr _model;

@@ -4,161 +4,66 @@
 
 namespace sc
 {
-FPSCamera::FPSCamera(CameraSettings const& camSettings, scmath::Vec3 const& worldUp, float yaw, float pitch)
+FPSCamera::FPSCamera(CameraSettings const& camSettings, float pYaw, float pPitch)
 : settings(camSettings)
-, _position(scmath::Vec3(0.0f, 0.0f, 3.0f))
-, _worldUp(worldUp)
-, _yaw(yaw)
-, _pitch(pitch)
-, _movementSpeed(SPEED)
-, _mouseSensitivity(SENSITIVITY)
-, _projectionMatrix(scmath::Mat4::perspective(settings.Fov, settings.getAspect() , settings.Near, settings.Far))
+, yaw(pYaw)
+, pitch(pPitch)
+, projectionMatrix(scmath::Mat4::perspective(settings.Fov, settings.getAspect() , settings.Near, settings.Far))
 {
     frustum.setCamInternals(settings.Fov, settings.getAspect() , settings.Near, settings.Far);
     updateCameraVectors();
-    Renderer::setCursorMode(CursorMode::CURSOR_DISABLED);
 }
 
 void FPSCamera::updateCameraVectors() 
 {
-    // calculate new front
-    scmath::Vec3 front;
-    front.x = std::cos(scmath::degToRad(_yaw)) * std::cos(scmath::degToRad(_pitch));
-    front.y = std::sin(scmath::degToRad(_pitch));
-    front.z = std::sin(scmath::degToRad(_yaw)) * std::cos(scmath::degToRad(_pitch));
-    _front = front.normalized();
+    // recalculate front vector
+    front.x = std::cos(scmath::degToRad(yaw)) * std::cos(scmath::degToRad(pitch));
+    front.y = std::sin(scmath::degToRad(pitch));
+    front.z = std::sin(scmath::degToRad(yaw)) * std::cos(scmath::degToRad(pitch));
+    front = front.normalized();
 
     // recalculate right and up vector
-    _right = _front.cross(_worldUp).normalized();
-    _up = _right.cross(_front).normalized();
+    right = front.cross(worldUp).normalized();
+    up = right.cross(front).normalized();
 
-    frustum.setCamDef(_position, _position + _front, _up);
+    frustum.setCamDef(position, position + front, up);
 }
 
-scmath::Mat4 FPSCamera::getViewProjMatrix() const
+void FPSCamera::setPosition(scmath::Vec3 const& pPosition) 
 {
-    return _projectionMatrix * scmath::Mat4::lookAt(_position,  _position + _front, _up);
+    position = pPosition;
 }
 
-scmath::Vec3 FPSCamera::getPosition() const
+void FPSCamera::setYawPitch(float pYaw, float pPitch) 
 {
-    return _position;
+    yaw = pYaw;
+    pitch = pPitch;
 }
 
-void FPSCamera::update(float deltaTime) 
+void FPSCamera::setZoom(float yOffset) 
 {
-    float shiftMultiplier = 1.0f;
-    if (Input::isKeyPressed(KEY_LEFT_SHIFT))
-        shiftMultiplier = 6.0f;
-
-    float velocity = _movementSpeed * shiftMultiplier * deltaTime;
-
-    if (Input::isKeyPressed(KEY_W))
-    {
-        _position += _front * velocity;
-    }
-    if (Input::isKeyPressed(KEY_S))
-    {
-        _position -= _front * velocity;
-    }
-    if (Input::isKeyPressed(KEY_A))
-    {
-        _position -= _right * velocity;
-    }
-    if (Input::isKeyPressed(KEY_D))
-    {
-        _position += _right * velocity;
-    }
-    if (Input::isKeyPressed(KEY_E))
-    {
-        _position += _up * velocity;
-    }
-    if (Input::isKeyPressed(KEY_Q))
-    {
-        _position -= _up * velocity;
-    }
-
-    if (Input::isKeyPressed(KEY_ESC))
-    {
-        Renderer::setCursorMode(CursorMode::CURSOR_NORMAL);
-        _currentCursorMode = CursorMode::CURSOR_NORMAL;
-        firstMouse = true;
-    }
-
-    updateCameraVectors();
-}
-
-void FPSCamera::onEvent(Event &event) 
-{
-	EventDispatcher dispatcher;
-    dispatcher.subscribe(this, &FPSCamera::onMouseMoved);
-    dispatcher.subscribe(this, &FPSCamera::onMouseButtonPressed);
-    dispatcher.subscribe(this, &FPSCamera::onWindowResize);
-    dispatcher.subscribe(this, &FPSCamera::onMouseScrolled);
-	dispatcher.dispatch(event);
-}
-
-void FPSCamera::onMouseMoved(MouseMovedEvent &event) 
-{
-    if (_currentCursorMode == CursorMode::CURSOR_NORMAL)
-        return;
-
-    float xpos = event.getX();
-    float ypos = event.getY();
-
-    if (firstMouse)
-    {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
-
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-    lastX = xpos;
-    lastY = ypos;
-
-    xoffset *= _mouseSensitivity;
-    yoffset *= _mouseSensitivity;
-
-    _yaw   += xoffset;
-    _pitch += yoffset;
-
-    // make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (_pitch > 89.0f)
-        _pitch = 89.0f;
-    if (_pitch < -89.0f)
-        _pitch = -89.0f;
-
-    // update Front, Right and Up Vectors using the updated Euler angles
-    updateCameraVectors();
-}
-
-void FPSCamera::onMouseScrolled(MouseScrollEvent &event) 
-{
-    float offset = settings.Fov - (event.GetYOffset() * 2);
-    settings.Fov = std::clamp(offset, 20.0f, 120.0f);    
-    _projectionMatrix = scmath::Mat4::perspective(settings.Fov, settings.getAspect(), settings.Near, settings.Far);
+    float offset = settings.Fov - (yOffset * 2);
+    settings.Fov = std::clamp(offset, settings.zoomMin, settings.zoomMax);    
+    projectionMatrix = scmath::Mat4::perspective(settings.Fov, settings.getAspect(), settings.Near, settings.Far);
     updateCameraVectors();
     frustum.setCamInternals(settings.Fov, settings.getAspect(), settings.Near, settings.Far);
 }
 
-void FPSCamera::onMouseButtonPressed(MouseButtonPressedEvent &event) 
-{    
-    if (_currentCursorMode != CursorMode::CURSOR_NORMAL)
-        return;
-
-    Renderer::setCursorMode(CursorMode::CURSOR_DISABLED);
-    _currentCursorMode = CursorMode::CURSOR_DISABLED;
+void FPSCamera::setAspectSize(float width, float height) 
+{
+    settings.AspectWidth = width;
+    settings.AspectHeight = height;
+    projectionMatrix = scmath::Mat4::perspective(settings.Fov, settings.getAspect(), settings.Near, settings.Far);
+    frustum.setCamInternals(settings.Fov, settings.getAspect(), settings.Near, settings.Far);
 }
 
-void FPSCamera::onWindowResize(WindowResizeEvent &event) 
+scmath::Mat4 FPSCamera::getViewProj() const
 {
-    settings.AspectWidth = (float)event.getWidth();
-    settings.AspectHeight = (float)event.getHeight();
-    _projectionMatrix = scmath::Mat4::perspective(
-        settings.Fov, settings.getAspect(), settings.Near, settings.Far);
-    frustum.setCamInternals(settings.Fov, settings.getAspect(), settings.Near, settings.Far);
+    return projectionMatrix * scmath::Mat4::lookAt(position,  position + front, up);
+}
+
+bool FPSCamera::isAABBvisible(AABB const& aabb) const
+{
+    return frustum.isAABBvisible(aabb);
 }
 } // namespace sc

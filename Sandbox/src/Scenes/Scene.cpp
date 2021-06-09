@@ -10,13 +10,15 @@
 #include <Objects/TileMap.h>
 #include <Objects/BlendTexSquare.h>
 
-Scene::Scene(sc::AssetsContainer &assets, sc::FPSCamera & camera) 
+Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl) 
 {
-    skybox = std::make_shared<Skybox>(assets, camera);
+    skybox = std::make_shared<Skybox>(assets, camCtrl);
 
     rootObject = std::make_shared<Terrain>(assets);
     {
-        rootObject->attach(new Player(assets, camera));
+        Player *player = new Player(assets, camCtrl);
+        camCtrl.attachObject(player);
+        rootObject->attach(player);
         rootObject->attach(new ColorCube(assets));
         {
             rootObject->findChildByName("ColorCube")->attach(new Triangle(assets));
@@ -49,8 +51,8 @@ void Scene::checkCollision()
     //rootObject->checkCollision(rootObject.get());
 }
 
-void Scene::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 
+void Scene::draw(sc::CameraController const& camCtrl, sc::Lights const& lights) 
 {
-    skybox->draw(camera, sc::Lights{}, scmath::Mat4::identity());
-    rootObject->draw(camera, lights, scmath::Mat4::identity());
+    skybox->draw(camCtrl, sc::Lights{}, scmath::Mat4::identity());
+    rootObject->draw(camCtrl, lights, scmath::Mat4::identity());
 }

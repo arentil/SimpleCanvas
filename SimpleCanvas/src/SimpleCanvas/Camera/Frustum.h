@@ -2,7 +2,6 @@
 
 #include "Plane.h"
 #include "ObjectLogic/AABB.h"
-
 namespace sc
 {
 class Frustum

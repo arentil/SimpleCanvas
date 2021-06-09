@@ -8,7 +8,7 @@
 
 namespace sc
 {
-class FPSCamera;
+class CameraController;
 
 class AABB
 {
@@ -22,7 +22,7 @@ public:
     // for test/debug purpose only!
     void initDebugShader();
     // for test/debug purpose only!
-    void draw(FPSCamera const& camera, scmath::Mat4 const& modelMatrix) const;
+    void draw(CameraController const& camCtrl, scmath::Mat4 const& modelMatrix) const;
 
     // for frustum culling check
     scmath::Vec3 getVertexP(scmath::Vec3 const& normal) const;

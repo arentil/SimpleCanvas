@@ -70,17 +70,17 @@ void SCObject::update()
         ((SCObject*)nextNode)->update();
 }
 
-void SCObject::draw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 
+void SCObject::draw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix) 
 {
     // apply all parents model transforms, add it another this transform and position
     scmath::Mat4 const allTransforms = modelMatrix * Transform.GetTransform();
-    onDraw(camera, lights, allTransforms);
+    onDraw(camCtrl, lights, allTransforms);
 
     if (hasChild())
-        ((SCObject*)childNode)->draw(camera, lights, allTransforms);
+        ((SCObject*)childNode)->draw(camCtrl, lights, allTransforms);
     
     if (hasParent() && !isLastChild())
-        ((SCObject*)nextNode)->draw(camera, lights, modelMatrix);
+        ((SCObject*)nextNode)->draw(camCtrl, lights, modelMatrix);
 }
 
 SCObject* SCObject::findRoot() 
@@ -127,15 +127,15 @@ void SCObject::updateCollider()
     Rigidbody->setColliderMinMax(modelAABB.bb.min, modelAABB.bb.max);
 }
 
-void SCObject::onDraw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 
+void SCObject::onDraw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix) 
 {
     if (Rigidbody.has_value())
     {
         auto &aabb = Rigidbody->Collider;
         aabb.initDebugShader();
-        aabb.draw(camera, scmath::Mat4::identity());
+        aabb.draw(camCtrl, scmath::Mat4::identity());
     }
 
-    _model->draw(_shader, camera, lights, modelMatrix);
+    _model->draw(_shader, camCtrl, lights, modelMatrix);
 }
 } // namespace sc

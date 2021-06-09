@@ -14,9 +14,9 @@ void applyMatrixAndAppend(std::vector<sc::CubemapVertex> &vertices, scmath::Mat4
 }
 }
 
-Skybox::Skybox(sc::AssetsContainer const& assets, sc::FPSCamera const& camera) 
+Skybox::Skybox(sc::AssetsContainer const& assets, sc::CameraController const& camCtrl) 
 : sc::SCObject("Skybox", assets.Shaders.getShader("Skybox"))
-, _camera(camera)
+, cam(camCtrl)
 {
     std::vector<sc::CubemapVertex> vertices
     {
@@ -41,12 +41,12 @@ Skybox::Skybox(sc::AssetsContainer const& assets, sc::FPSCamera const& camera)
 
 void Skybox::onUpdate()
 {
-    Transform.Translation = _camera.getPosition();
+    Transform.Translation = cam.getPosition();
 }
 
-void Skybox::onDraw(sc::FPSCamera const& camera, sc::Lights const& lights, scmath::Mat4 const& modelMatrix)
+void Skybox::onDraw(sc::CameraController const& camCtrl, sc::Lights const& lights, scmath::Mat4 const& modelMatrix)
 {
     glDepthMask(GL_FALSE);
-    sc::SCObject::onDraw(camera, lights, modelMatrix);
+    sc::SCObject::onDraw(cam, lights, modelMatrix);
     glDepthMask(GL_TRUE);
 }

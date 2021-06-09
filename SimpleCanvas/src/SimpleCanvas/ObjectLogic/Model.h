@@ -2,7 +2,7 @@
 
 #include "BaseMesh.h"
 #include "Renderer/Shader.h"
-#include "Camera/FPSCamera.h"
+#include "Camera/CameraController.h"
 #include "ObjectLogic/Lights.h"
 #include "ObjectLogic/ObjLoader.h"
 
@@ -21,7 +21,7 @@ public:
     Model(std::vector<BaseMeshPtr> const& meshes);
     ~Model() = default;
 
-    void draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const;
+    void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix) const;
     AABB getModelAABB() const;
 
 private:

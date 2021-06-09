@@ -11,6 +11,8 @@ struct CameraSettings
     float AspectHeight;
     float Near;
     float Far;
+    float zoomMin = 20.0f;
+    float zoomMax = 120.0f;
 
     float getAspect() const
     {

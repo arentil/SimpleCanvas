@@ -23,9 +23,9 @@ public:
 		  	0.01f,							// camera near plane distance
 			100								// camera far plane distance
 		}								
-	, _camera(cameraSettings)
+	, camCtrl(cameraSettings)
 	{
-		world = std::make_unique<World>(_camera);
+		world = std::make_unique<World>(camCtrl);
 	}
 
 	void update(float deltaTime) override
@@ -33,7 +33,7 @@ public:
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		sc::RenderCommand::clear();
 
-		_camera.update(deltaTime);
+		camCtrl.update(deltaTime);
 
 		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);
 		float specularStrength = 0.5f;
@@ -43,17 +43,17 @@ public:
 		world->physic();
 		world->checkCollision();
 		world->update();
-		world->draw(_camera, lights);
+		world->draw(camCtrl, lights);
 	}
 
 	void onEvent(sc::Event &event) override
 	{
-		_camera.onEvent(event);
+		camCtrl.onEvent(event);
 	}
 
 private:
 	sc::CameraSettings cameraSettings;
-	sc::FPSCamera _camera;
+	sc::CameraController camCtrl;
 	std::unique_ptr<World> world;
 };
 

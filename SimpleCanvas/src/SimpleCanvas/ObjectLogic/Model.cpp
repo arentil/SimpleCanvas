@@ -6,11 +6,11 @@ Model::Model(std::vector<BaseMeshPtr> const& meshes)
 : _meshes(meshes)
 {}
 
-void Model::draw(ShaderPtr shader, FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) const
+void Model::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
     for (BaseMeshPtr const& mesh : _meshes)
     {
-        mesh->draw(shader, camera, lights, modelMatrix);
+        mesh->draw(shader, camCtrl, lights, modelMatrix);
     }
 }
 

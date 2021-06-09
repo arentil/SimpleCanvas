@@ -7,13 +7,13 @@
 class Player : public sc::SCObject
 {
 public:
-    Player(sc::AssetsContainer const& assets, sc::FPSCamera & cam);
+    Player(sc::AssetsContainer const& assets, sc::CameraController const& camCtrl);
 
     virtual void onCollision(SCObject *collisionObject) override;
     virtual void updateCollider() override;
 
 private:
-    sc::FPSCamera const& camera;
+    sc::CameraController const& cam;
     scmath::Vec3 min;
     scmath::Vec3 max;
 };

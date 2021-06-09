@@ -35,6 +35,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Camera/CameraSettings.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.cpp
 	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.h
+	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.cpp
+	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.cpp
 	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/Plane.cpp

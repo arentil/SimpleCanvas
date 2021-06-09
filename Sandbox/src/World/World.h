@@ -6,7 +6,7 @@
 class World
 {
 public:
-    World(sc::FPSCamera & camera);
+    World(sc::CameraController & camCtrl);
     virtual ~World() = default;
 
     ScenePtr getScene(std::string const& name) const;
@@ -21,7 +21,7 @@ public:
     void physic();
     void checkCollision();
     void update();
-    void draw(sc::FPSCamera const& camera, sc::Lights const& lights);
+    void draw(sc::CameraController const& camCtrl, sc::Lights const& lights);
 
 private:
     sc::AssetsContainer _assets;
@@ -29,5 +29,4 @@ private:
     std::map<std::string, ScenePtr> _scenesMap;
     std::string _currentSceneName;
     ScenePtr _currentScene;
-    sc::FPSCamera & _camera;
 };

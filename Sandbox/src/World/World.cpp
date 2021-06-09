@@ -1,10 +1,9 @@
 #include "World.h"
 
-World::World(sc::FPSCamera & camera)
-: _camera(camera)
+World::World(sc::CameraController & camCtrl)
 {
     loadWorld();
-   _scenesMap["MainScene"] = std::make_shared<Scene>(_assets, _camera);
+   _scenesMap["MainScene"] = std::make_shared<Scene>(_assets, camCtrl);
    setCurrentScene("MainScene");
 }
 
@@ -53,9 +52,9 @@ void World::update()
     _currentScene->update();
 }
 
-void World::draw(sc::FPSCamera const& camera, sc::Lights const& lights) 
+void World::draw(sc::CameraController const& camCtrl, sc::Lights const& lights) 
 {
-    _currentScene->draw(camera, lights);
+    _currentScene->draw(camCtrl, lights);
 }
 
 void World::loadWorld() 
