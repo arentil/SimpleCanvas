@@ -56,9 +56,5 @@
 /**
  *  Camera classes
  */
-#include "SimpleCanvas/Camera/Camera.h"
 #include "SimpleCanvas/Camera/CameraSettings.h"
 #include "SimpleCanvas/Camera/FPSCamera.h"
-#include "SimpleCanvas/Camera/OrthographicCamera.h"
-#include "SimpleCanvas/Camera/PerspectiveCamera.h"
-#include "SimpleCanvas/Camera/CameraController.h"

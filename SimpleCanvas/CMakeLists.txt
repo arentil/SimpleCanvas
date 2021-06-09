@@ -32,19 +32,11 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas.h
 	${SOURCE_DIR}/SimpleCanvas/Application.cpp
 	${SOURCE_DIR}/SimpleCanvas/Application.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/Camera.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/CameraController.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/CameraSettings.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.cpp
 	${SOURCE_DIR}/SimpleCanvas/Camera/FPSCamera.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.cpp
 	${SOURCE_DIR}/SimpleCanvas/Camera/Frustum.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/OrthographicCamera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/OrthographicCamera.h
-	${SOURCE_DIR}/SimpleCanvas/Camera/PerspectiveCamera.cpp
-	${SOURCE_DIR}/SimpleCanvas/Camera/PerspectiveCamera.h
 	${SOURCE_DIR}/SimpleCanvas/Camera/Plane.cpp
 	${SOURCE_DIR}/SimpleCanvas/Camera/Plane.h
 	${SOURCE_DIR}/SimpleCanvas/Canvas.h
