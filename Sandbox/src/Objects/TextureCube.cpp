@@ -41,10 +41,8 @@ TextureCube::TextureCube(sc::AssetsContainer const& assets)
 
 void TextureCube::onUpdate()
 {
-    rot += (scmath::degToRad(50) * deltaTime);
-    Transform.Translation.x += std::sin(rot) * deltaTime;
-    Transform.Translation.z += std::cos(rot) * deltaTime;
-    // Transform.Rotation.x += scmath::degToRad(90) * deltaTime;
-    // Transform.Rotation.y += scmath::degToRad(60) * deltaTime;
-    // Transform.Rotation.z += scmath::degToRad(30) * deltaTime;
+    float omega = 3.0f;     // speed
+    theta += omega * deltaTime;
+    Transform.Translation.x = std::cos(theta) - 1.5f;
+    Transform.Translation.z = std::sin(theta) + 1.5f;
 }

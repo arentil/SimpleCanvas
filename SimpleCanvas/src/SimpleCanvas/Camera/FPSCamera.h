@@ -52,8 +52,6 @@ public:
     CameraSettings settings;
 
     scmath::Mat4 _projectionMatrix;
-    scmath::Mat4 _viewMatrix;
-    scmath::Mat4 _viewProjMatrix;
 
     bool firstMouse = true;
     float lastX, lastY;

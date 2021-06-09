@@ -6,7 +6,9 @@ SCObject::SCObject(std::string const& name, ShaderPtr shader)
 : IsDead(false)
 , Name(name)
 , _shader(shader)
-{}
+{
+    Rigidbody.emplace();
+}
 
 void SCObject::prepare(float deltaT) 
 {
@@ -23,8 +25,6 @@ void SCObject::prepare(float deltaT)
 void SCObject::physic() 
 {
     onPhysic();
-    updateCollider();
-    checkCollision(findRoot());
 
     if (hasChild())
         ((SCObject*)childNode)->physic();
@@ -39,12 +39,11 @@ void SCObject::physic()
 void SCObject::checkCollision(SCObject *object) 
 {
     if (object != (SCObject*)this &&
-        Collider.has_value() &&
-        object->Collider.has_value() &&
-        Collider->isCollision(object->Collider.value()))
+        Rigidbody.has_value() &&
+        object->Rigidbody.has_value() &&
+        Rigidbody->isCollision(object->Rigidbody.value()))
     {
         onCollision(object);
-        
 
         if (hasChild())
             ((SCObject*)childNode)->checkCollision(object);
@@ -96,8 +95,6 @@ SCObject* SCObject::findChildByName(std::string const& name)
 {
     if (Name == name)
         return this;
-
-    SCObject *result = nullptr;
     
     if (hasChild())
     {
@@ -114,35 +111,31 @@ SCObject* SCObject::findChildByName(std::string const& name)
     return nullptr;
 }
 
-SCObject* SCObject::getParent() 
+void SCObject::onPhysic()
 {
-    return ((SCObject*)parentNode);
-}
+    if (!Rigidbody.has_value())
+        return;
 
-SCObject* SCObject::getChild() 
-{
-    return ((SCObject*)childNode);
+    Rigidbody->physic(Transform.Translation, deltaTime);
+    updateCollider();
+    checkCollision(findRoot());
 }
 
 void SCObject::updateCollider() 
 {
-    Collider = _model->getModelAABB();
-}
-
-void SCObject::onPhysic() 
-{
-    Transform.Translation += Velocity * deltaTime;
-    Velocity += Acceleration * deltaTime;
+    AABB const& modelAABB = _model->getModelAABB();
+    Rigidbody->setColliderMinMax(modelAABB.bb.min, modelAABB.bb.max);
 }
 
 void SCObject::onDraw(FPSCamera const& camera, Lights const& lights, scmath::Mat4 const& modelMatrix) 
 {
-    if (Collider.has_value())
+    if (Rigidbody.has_value())
     {
-        auto &aabb = Collider.value();
+        auto &aabb = Rigidbody->Collider;
         aabb.initDebugShader();
         aabb.draw(camera, scmath::Mat4::identity());
     }
+
     _model->draw(_shader, camera, lights, modelMatrix);
 }
 } // namespace sc

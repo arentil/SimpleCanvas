@@ -13,7 +13,7 @@ public:
     virtual void updateCollider() override;
 
 private:
-    sc::FPSCamera & camera;
+    sc::FPSCamera const& camera;
     scmath::Vec3 min;
     scmath::Vec3 max;
 };

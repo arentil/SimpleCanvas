@@ -7,8 +7,8 @@ Player::Player(sc::AssetsContainer const& assets, sc::FPSCamera & cam)
 , max(0.5f, 0.5f, 0.5f)
 {
     _model = std::make_shared<sc::Model>();
-    Collider.emplace(min, max);
-    Collider->initDebugShader();
+    Rigidbody->setColliderMinMax(min, max);
+    Rigidbody->Collider.initDebugShader();
 }
 
 void Player::onCollision(SCObject *collisionObject) 
@@ -18,6 +18,6 @@ void Player::onCollision(SCObject *collisionObject)
 
 void Player::updateCollider() 
 {
-    Collider->bb.setMinMax(min + camera._position, max + camera._position);
+    Rigidbody->setColliderMinMax(min + camera._position, max + camera._position);
 }
 

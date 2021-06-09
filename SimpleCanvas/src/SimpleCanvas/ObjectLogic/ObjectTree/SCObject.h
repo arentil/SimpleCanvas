@@ -4,6 +4,7 @@
 #include "Camera/FPSCamera.h"
 #include "ObjectLogic/Model.h"
 #include "ObjectLogic/TransformComponent.h"
+#include "ObjectLogic/Rigidbody.h"
 
 namespace sc
 {
@@ -27,22 +28,12 @@ public:
     SCObject* findRoot();
     SCObject* findChildByName(std::string const& name);
 
-    // unsafe! make sure that object has a parent!
-    SCObject* getParent();
-    // unsafe! make sure that object has a child!
-    SCObject* getChild();
-
     float deltaTime = 0.0f;
-    TransformComponent Transform;
     std::string Name;
+    TransformComponent Transform;
+    std::optional<Rigidbody> Rigidbody;
 
-    // rigidbody?
-    scmath::Vec3 Velocity;
-    scmath::Vec3 Acceleration;
     bool IsDead;
-
-    std::optional<AABB> Collider;
-    
 
 protected:
     virtual void onPrepare() {}

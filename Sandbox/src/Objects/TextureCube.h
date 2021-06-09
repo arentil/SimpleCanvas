@@ -12,5 +12,5 @@ public:
     virtual void onUpdate() override;
 
 private:
-    float rot = 0.0f;
+    float theta = 0.0f;
 };
