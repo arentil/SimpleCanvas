@@ -64,7 +64,6 @@ void World::destroy()
 
 void World::loadWorld() 
 {
-    //_assets.Models.addModelFromFile("Sponza", "assets/models/sponza/sponza.obj");
     _assets.Models.addModelFromFile("Teapot", "assets/models/teapot/teapot.obj");
 
     _assets.Shaders.addShaderFromFile("Skybox", "assets/shaders/Cubemap_vertex.glsl", "assets/shaders/Cubemap_fragment.glsl");
