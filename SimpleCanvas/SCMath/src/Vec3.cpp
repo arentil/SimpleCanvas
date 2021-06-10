@@ -220,6 +220,36 @@ Vec3 Vec3::Min()
     );
 }
 
+Vec3 Vec3::Up() 
+{
+    return Vec3(0.0f, 1.0f, 0.0f);
+}
+
+Vec3 Vec3::Down() 
+{
+    return Vec3(0.0f, -1.0f, 0.0f);
+}
+
+Vec3 Vec3::Front() 
+{
+    return Vec3(0.0f, 0.0f, -1.0f);
+}
+
+Vec3 Vec3::Back() 
+{
+    return Vec3(0.0f, 0.0f, 1.0f);
+}
+
+Vec3 Vec3::Left() 
+{
+    return Vec3(-1.0f, 0.0f, 0.0f);
+}
+
+Vec3 Vec3::Right() 
+{
+    return Vec3(1.0f, 0.0f, 0.0f);
+}
+
 Vec3 Vec3::reflect(Vec3 const& in, Vec3 const& normal)
 {
     return in.reflect(normal);

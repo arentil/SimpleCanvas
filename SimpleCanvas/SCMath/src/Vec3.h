@@ -105,6 +105,12 @@ public:
     static Vec3 perpendicular(Vec3 const& v, Vec3 const& onVector);
     static Vec3 Max();
     static Vec3 Min();
+    static Vec3 Up();
+    static Vec3 Down();
+    static Vec3 Front();
+    static Vec3 Back();
+    static Vec3 Left();
+    static Vec3 Right();
 
     /**
      * Reflects the in vector on a plane perpendicular to normal

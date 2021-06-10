@@ -22,16 +22,18 @@ Application::~Application()
 
 void Application::run()
 {
-	float lastFrameDeltaTime = 0.0;
+	float lastFrameDeltaTime = (float)glfwGetTime();
 
 	while (_isRunning)
 	{
 		float currentTime = (float)glfwGetTime();
 		float deltaTime = currentTime - lastFrameDeltaTime;
 		lastFrameDeltaTime = currentTime;
-
+		
 		if (!_windowMinimized)
+		{
 			_currentCanvas->update(deltaTime);
+		}
 
 		window->update();
 	}

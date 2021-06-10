@@ -11,12 +11,14 @@ void Rigidbody::physic(scmath::Vec3 & objectPosition, float deltaTime)
     if (!IsKinematic)
         return;
 
-    scmath::Vec3 forces = scmath::Vec3(0.0f, -1.0f, 0.0f) * G;
+    if (!IsGrounded)
+        Acceleration += scmath::Vec3::Down() * G * Mass * deltaTime;
 
-    float mass = 100.0f;
-    scmath::Vec3 acc = forces / mass;
-    Velocity += acc * deltaTime;
+    Velocity += Acceleration;
     objectPosition += Velocity * deltaTime;
+
+    IsGrounded = false;
+    Acceleration = scmath::Vec3(0.0f, 0.0f, 0.0f);
 }
 
 bool Rigidbody::isCollision(Rigidbody const& other) const
@@ -27,5 +29,10 @@ bool Rigidbody::isCollision(Rigidbody const& other) const
 void Rigidbody::setColliderMinMax(scmath::Vec3 const& min, scmath::Vec3 const& max)
 {
     Collider.bb.setMinMax(min, max);
+}
+
+void Rigidbody::addForce(scmath::Vec3 const& force) 
+{
+    Acceleration += force / Mass;
 }
 } // namespace sc

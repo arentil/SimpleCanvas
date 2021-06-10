@@ -14,16 +14,16 @@ Player::Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl
     Rigidbody->Collider.initDebugShader();
     Rigidbody->IsKinematic = true;
 
-    Transform.Translation = scmath::Vec3(0.0f, 0.0f, 3.0f);
+    Transform.Translation = scmath::Vec3(0.0f, 4.0f, 3.0f);
 }
 
 void Player::onCollision(SCObject *collisionObject) 
 {
-    LOG_ERROR("Collision %s with %s", Name.c_str(), collisionObject->Name.c_str());
-    // if (collisionObject->Name != "Terrain")
-    // {
-    //     // add up force to rigidbody that will keep player on the ground
-    // }
+    if (collisionObject->Name != "Terrain")
+        return;
+    Rigidbody->IsGrounded = true;
+    // set negative velocity.y so that player can stay on terrain
+    Rigidbody->Velocity.y = -(Rigidbody->Velocity.y) * terrainBounceModifier;
 }
 
 void Player::updateCollider() 

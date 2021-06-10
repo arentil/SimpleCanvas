@@ -16,13 +16,16 @@ public:
 
     void physic(scmath::Vec3 & objectPosition, float deltaTime);
     bool isCollision(Rigidbody const& other) const;
-
     void setColliderMinMax(scmath::Vec3 const& min, scmath::Vec3 const& max);
+    void addForce(scmath::Vec3 const& force);
 
-    float Mass = 100.0f;
-    scmath::Vec3 Velocity;
-    scmath::Vec3 Acceleration;
     bool IsKinematic = false;
+
+    float Mass = 1.0f;
+    scmath::Vec3 Velocity = {0.0f, 0.0f, 0.0f};
+    scmath::Vec3 Acceleration = {0.0f, 0.0f, 0.0f};
+    bool IsGrounded = false;
+    
     AABB Collider;
 };
 } // namespace sc

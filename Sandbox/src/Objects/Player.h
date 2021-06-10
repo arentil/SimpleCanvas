@@ -17,4 +17,6 @@ private:
     sc::CameraController & cam;
     scmath::Vec3 min;
     scmath::Vec3 max;
+
+    float terrainBounceModifier = 0.1f;
 };
