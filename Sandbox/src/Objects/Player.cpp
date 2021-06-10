@@ -14,7 +14,7 @@ Player::Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl
     Rigidbody->Collider.initDebugShader();
     Rigidbody->IsKinematic = true;
 
-    Transform.Translation = scmath::Vec3(0.0f, 4.0f, 3.0f);
+    Transform.Translation = scmath::Vec3(0.0f, 3.0f, 3.0f);
 }
 
 void Player::onCollision(SCObject *collisionObject) 

@@ -36,7 +36,7 @@ public:
     float pitch = 0.0f;
 
     float movementSpeed = 2.5f;
-    float shiftMultiplier = 6.0f;
+    float shiftMultiplier = 2.0f;
     float jumpForceMultiplier = 7.0f;
 
     CursorMode cursorMode;
