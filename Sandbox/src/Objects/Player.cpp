@@ -39,10 +39,13 @@ void Player::onUpdate()
         Rigidbody->Velocity = scmath::Vec3::Zero();
         Transform.Translation = initialPosition;
     }
+
+    // this is for propagate rotation of player to child(gun)
+    Transform.Rotation.x = scmath::degToRad(cam.pitch);
+    Transform.Rotation.y = -scmath::degToRad(cam.yaw + 90.0f);
 }
 
 void Player::onLateUpdate() 
 {
     cam.setPosition(Transform.Translation);
 }
-

@@ -27,6 +27,7 @@ public:
     void draw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix);
     void destroy();
 
+    SCObject* getParent();
     SCObject* findRoot();
     SCObject* findChildByName(std::string const& name);
 

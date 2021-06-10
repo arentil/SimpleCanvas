@@ -24,6 +24,8 @@ set(SOURCE_FILES
   ${SOURCE_DIR}/Objects/BlendTexSquare.h
   ${SOURCE_DIR}/Objects/ColorCube.cpp
   ${SOURCE_DIR}/Objects/ColorCube.h
+  ${SOURCE_DIR}/Objects/Gun.cpp
+  ${SOURCE_DIR}/Objects/Gun.h
   ${SOURCE_DIR}/Objects/Player.cpp
   ${SOURCE_DIR}/Objects/Player.h
   ${SOURCE_DIR}/Objects/Skybox.cpp

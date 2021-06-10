@@ -3,6 +3,7 @@
 #include <Objects/Skybox.h>
 #include <Objects/ColorCube.h>
 #include <Objects/Triangle.h>
+#include <Objects/Gun.h>
 #include <Objects/Player.h>
 #include <Objects/Terrain.h>
 #include <Objects/TextureCube.h>
@@ -18,6 +19,8 @@ Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl)
     auto terrain = rootObject;
     
     Player *player = new Player(assets, camCtrl);
+    player->attach(new Gun(assets));
+
     camCtrl.attachObject(player);
     terrain->attach(player);
 

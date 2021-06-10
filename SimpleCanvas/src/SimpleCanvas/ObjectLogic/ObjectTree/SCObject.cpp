@@ -103,6 +103,11 @@ void SCObject::destroy()
         ((SCObject*)nextNode)->destroy();
 }
 
+SCObject* SCObject::getParent() 
+{
+    return ((SCObject*)parentNode);
+}
+
 SCObject* SCObject::findRoot() 
 {
     if (parentNode != nullptr)
