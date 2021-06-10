@@ -70,9 +70,9 @@ void World::loadWorld()
     _assets.Shaders.addShaderFromFile("Skybox", "assets/shaders/Cubemap_vertex.glsl", "assets/shaders/Cubemap_fragment.glsl");
     _assets.Shaders.addShaderFromFile("Texture", "assets/shaders/Texture_vertex.glsl", "assets/shaders/Texture_fragment.glsl");
     _assets.Shaders.addShaderFromFile("FlatColor", "assets/shaders/FlatColor_vertex.glsl", "assets/shaders/FlatColor_fragment.glsl");
-
     _assets.Textures.addTexture2dFromFile("Chess", "assets/textures/Checkerboard.png");
     _assets.Textures.addTexture2dFromFile("Blend", "assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
+    _assets.Textures.addTexture2dFromFile("Grass", "assets/textures/Grass.jpg");
 
     std::vector<std::string> cubemapFacesFiles
     {

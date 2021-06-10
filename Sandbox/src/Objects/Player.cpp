@@ -14,7 +14,7 @@ Player::Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl
     Rigidbody->Collider.initDebugShader();
     Rigidbody->IsKinematic = true;
 
-    Transform.Translation = scmath::Vec3(0.0f, 3.0f, 3.0f);
+    Transform.Translation = initialPosition;
 }
 
 void Player::onCollision(SCObject *collisionObject) 
@@ -29,6 +29,16 @@ void Player::onCollision(SCObject *collisionObject)
 void Player::updateCollider() 
 {
     Rigidbody->setColliderMinMax(min + cam.getPosition(), max + cam.getPosition());
+}
+
+void Player::onUpdate() 
+{
+    if (Transform.Translation.y < -50.0f)
+    {
+        Rigidbody->Acceleration = scmath::Vec3::Zero();
+        Rigidbody->Velocity = scmath::Vec3::Zero();
+        Transform.Translation = initialPosition;
+    }
 }
 
 void Player::onLateUpdate() 

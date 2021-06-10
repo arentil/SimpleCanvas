@@ -36,11 +36,14 @@ Terrain::Terrain(sc::AssetsContainer const& assets)
     {
         vertex.position = scmath::Mat4::translate(0.0f, -2.0f, 25.0f) *
             scmath::Mat4::scale(50.0f, 1.0f, 50.0f) * vertex.position;
+
+        // multiplying tex coords will force to repeat texture over the surface
+        vertex.texCoord.x *= 15.0f;
+        vertex.texCoord.y *= 15.0f;
     }
 
-    auto mesh = std::make_shared<sc::TextureMesh>(vertices, assets.Textures.getTexture("Chess"));
+    auto mesh = std::make_shared<sc::TextureMesh>(vertices, assets.Textures.getTexture("Grass"));
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
-
     Rigidbody.emplace();
 }

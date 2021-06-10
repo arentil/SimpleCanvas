@@ -202,9 +202,14 @@ Vec3 Vec3::perpendicular(Vec3 const& v, Vec3 const& onVector)
     return (v - Vec3::projection(v, onVector));
 }
 
+Vec3 Vec3::Zero() 
+{
+    return Vec3(0.0f, 0.0f, 0.0f);
+}
+
 Vec3 Vec3::Max() 
 {
-    return scmath::Vec3(
+    return Vec3(
         std::numeric_limits<float>::max(),
         std::numeric_limits<float>::max(),
         std::numeric_limits<float>::max()
