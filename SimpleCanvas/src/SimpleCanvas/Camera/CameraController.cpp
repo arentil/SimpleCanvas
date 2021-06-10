@@ -18,11 +18,9 @@ void CameraController::attachObject(SCObject *obj)
 
 void CameraController::update(float deltaTime)
 {
-    float shiftMultiplier = 1.0f;
+    float speed = movementSpeed * deltaTime;
     if (Input::isKeyPressed(KEY_LEFT_SHIFT))
-        shiftMultiplier = 6.0f;
-
-    float speed = movementSpeed * shiftMultiplier;
+        speed *= shiftMultiplier;
 
     scmath::Vec3 const right = camera.right;
     scmath::Vec3 const front = right.cross(scmath::Vec3::Up() * -1);
@@ -30,23 +28,23 @@ void CameraController::update(float deltaTime)
     scmath::Vec3 &objectPos = object->Transform.Translation;
     if (Input::isKeyPressed(KEY_W))
     {
-        objectPos += front * speed * deltaTime;
+        objectPos += front * speed;
     }
     if (Input::isKeyPressed(KEY_S))
     {
-        objectPos -= front * speed * deltaTime;
+        objectPos -= front * speed;
     }
     if (Input::isKeyPressed(KEY_D))
     {
-        objectPos += right * speed * deltaTime;
+        objectPos += right * speed;
     }
     if (Input::isKeyPressed(KEY_A))
     {
-        objectPos -= right * speed * deltaTime;
+        objectPos -= right * speed;
     }
     if (Input::isKeyPressed(KEY_SPACE) && object->Rigidbody->IsGrounded)
     {
-        object->Rigidbody->addForce(scmath::Vec3::Up() * 7.0f);
+        object->Rigidbody->addForce(scmath::Vec3::Up() * jumpForceMultiplier);
     }
 
     if (Input::isKeyPressed(KEY_ESC))

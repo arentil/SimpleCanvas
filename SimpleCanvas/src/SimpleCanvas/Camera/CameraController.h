@@ -34,9 +34,12 @@ public:
     float mouseSensitivity = 0.1f;
     float yaw =  -90.0f;
     float pitch = 0.0f;
-    float movementSpeed = 2.5f;
-    CursorMode cursorMode;
 
+    float movementSpeed = 2.5f;
+    float shiftMultiplier = 6.0f;
+    float jumpForceMultiplier = 7.0f;
+
+    CursorMode cursorMode;
     FPSCamera camera;
     // object that the camera is attached to
     SCObject *object;
