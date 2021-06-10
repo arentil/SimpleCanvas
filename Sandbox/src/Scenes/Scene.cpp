@@ -13,21 +13,23 @@
 Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl) 
 {
     skybox = std::make_shared<Skybox>(assets, camCtrl);
-
     rootObject = std::make_shared<Terrain>(assets);
-    {
-        Player *player = new Player(assets, camCtrl);
-        camCtrl.attachObject(player);
-        rootObject->attach(player);
-        rootObject->attach(new ColorCube(assets));
-        {
-            rootObject->findChildByName("ColorCube")->attach(new Triangle(assets));
-        }
-        rootObject->attach(new TextureCube(assets));
-        rootObject->attach(new Teapot(assets));
-        rootObject->attach(new TileMap(assets));
-        rootObject->attach(new BlendTexSquare(assets));
-    }
+
+    auto terrain = rootObject;
+    
+    Player *player = new Player(assets, camCtrl);
+    camCtrl.attachObject(player);
+    terrain->attach(player);
+
+    terrain->attach(new ColorCube(assets));
+    auto colorCube = rootObject->findChildByName("ColorCube");
+    colorCube->attach(new Triangle(assets));
+    
+    terrain->attach(new TextureCube(assets));
+    terrain->attach(new Teapot(assets));
+    terrain->attach(new TileMap(assets));
+    terrain->attach(new BlendTexSquare(assets));
+    
 }
 
 void Scene::prepare(float deltaTime) 
@@ -46,13 +48,18 @@ void Scene::update()
     rootObject->update();
 }
 
-void Scene::checkCollision() 
+void Scene::lateUpdate() 
 {
-    //rootObject->checkCollision(rootObject.get());
+    rootObject->lateUpdate();
 }
 
 void Scene::draw(sc::CameraController const& camCtrl, sc::Lights const& lights) 
 {
     skybox->draw(camCtrl, sc::Lights{}, scmath::Mat4::identity());
     rootObject->draw(camCtrl, lights, scmath::Mat4::identity());
+}
+
+void Scene::destroy() 
+{
+    rootObject->destroy();
 }

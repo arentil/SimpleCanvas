@@ -61,6 +61,11 @@ void CameraController::update(float deltaTime)
     camera.updateCameraVectors();
 }
 
+void CameraController::setPosition(scmath::Vec3 const& position) 
+{
+    camera.setPosition(position);
+}
+
 scmath::Vec3 CameraController::getPosition() const
 {
     return object->Transform.Translation;

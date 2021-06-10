@@ -22,8 +22,10 @@ public:
     void prepare(float deltaT);
     void physic();
     void checkCollision(SCObject *object);
+    void lateUpdate();
     void update();
     void draw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix);
+    void destroy();
 
     SCObject* findRoot();
     SCObject* findChildByName(std::string const& name);
@@ -36,12 +38,14 @@ public:
     bool IsDead;
 
 protected:
-    virtual void onPrepare() {}
-    virtual void onPhysic();
-    virtual void updateCollider();
-    virtual void onCollision(SCObject *object) {}
-    virtual void onUpdate() {}
-    virtual void onDraw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix);
+    virtual void onPrepare() {} //----------------------------------------------------------------------------------// define object preparation
+    virtual void onPhysic(); //-------------------------------------------------------------------------------------// define your own physics
+    virtual void updateCollider(); //-------------------------------------------------------------------------------// define your own collider
+    virtual void onCollision(SCObject *object) {} //----------------------------------------------------------------// check if collision occured
+    virtual void onUpdate() {} //-----------------------------------------------------------------------------------// script everything you want
+    virtual void onLateUpdate() {} //-------------------------------------------------------------------------------// update camera position
+    virtual void onDraw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix); //-// define own draw function
+    virtual void onDestroy() {} //----------------------------------------------------------------------------------// define behaviour on destroy
 
     ShaderPtr _shader;
     ModelPtr _model;

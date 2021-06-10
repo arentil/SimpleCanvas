@@ -42,9 +42,9 @@ void World::physic()
     _currentScene->physic();
 }
 
-void World::checkCollision() 
+void World::lateUpdate() 
 {
-    _currentScene->checkCollision();
+    _currentScene->lateUpdate();
 }
 
 void World::update()
@@ -55,6 +55,11 @@ void World::update()
 void World::draw(sc::CameraController const& camCtrl, sc::Lights const& lights) 
 {
     _currentScene->draw(camCtrl, lights);
+}
+
+void World::destroy() 
+{
+    _currentScene->destroy();
 }
 
 void World::loadWorld() 

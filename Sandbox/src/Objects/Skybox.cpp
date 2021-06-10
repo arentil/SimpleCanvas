@@ -41,7 +41,7 @@ Skybox::Skybox(sc::AssetsContainer const& assets, sc::CameraController const& ca
 
 void Skybox::onUpdate()
 {
-    Transform.Translation = cam.getPosition();
+    Transform.Translation = cam.object->Transform.Translation;
 }
 
 void Skybox::onDraw(sc::CameraController const& camCtrl, sc::Lights const& lights, scmath::Mat4 const& modelMatrix)

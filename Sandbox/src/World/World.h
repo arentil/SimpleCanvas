@@ -19,9 +19,10 @@ public:
 
     void prepare(float deltaTime);
     void physic();
-    void checkCollision();
+    void lateUpdate();
     void update();
     void draw(sc::CameraController const& camCtrl, sc::Lights const& lights);
+    void destroy();
 
 private:
     sc::AssetsContainer _assets;

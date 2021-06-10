@@ -18,6 +18,7 @@ public:
 
     void attachObject(SCObject *obj);
     void update(float deltaTime);
+    void setPosition(scmath::Vec3 const& position);
     scmath::Vec3 getPosition() const;
     scmath::Mat4 getViewProj() const;
     bool isAABBvisible(AABB const& aabb) const;
@@ -27,7 +28,6 @@ public:
     void onMouseScrolled(MouseScrollEvent &event);
     void onMouseButtonPressed(MouseButtonPressedEvent &event);
     void onWindowResize(WindowResizeEvent &event);
-
 
     bool isFirstMouseEnter = true;
     float mouseLastX, mouseLastY;

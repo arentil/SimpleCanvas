@@ -18,9 +18,10 @@ public:
 
     void prepare(float deltaTime);
     void physic();
-    void checkCollision();
     void update();
+    void lateUpdate();
     void draw(sc::CameraController const& camCtrl, sc::Lights const& lights);
+    void destroy();
 
 private:
     std::shared_ptr<sc::SCObject> rootObject;

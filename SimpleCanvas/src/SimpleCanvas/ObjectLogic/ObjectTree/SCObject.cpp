@@ -6,9 +6,7 @@ SCObject::SCObject(std::string const& name, ShaderPtr shader)
 : IsDead(false)
 , Name(name)
 , _shader(shader)
-{
-    Rigidbody.emplace();
-}
+{}
 
 void SCObject::prepare(float deltaT) 
 {
@@ -59,6 +57,17 @@ void SCObject::checkCollision(SCObject *object)
         checkCollision((SCObject*)(object->nextNode));
 }
 
+void SCObject::lateUpdate() 
+{
+    onLateUpdate();
+
+    if (hasChild())
+        ((SCObject*)childNode)->lateUpdate();
+
+    if (hasParent() && !isLastChild())
+        ((SCObject*)nextNode)->lateUpdate();
+}
+
 void SCObject::update() 
 {
     onUpdate();
@@ -81,6 +90,17 @@ void SCObject::draw(CameraController const& camCtrl, Lights const& lights, scmat
     
     if (hasParent() && !isLastChild())
         ((SCObject*)nextNode)->draw(camCtrl, lights, modelMatrix);
+}
+
+void SCObject::destroy() 
+{
+    onDestroy();
+
+    if (hasChild())
+        ((SCObject*)childNode)->destroy();
+
+    if (hasParent() && !isLastChild())
+        ((SCObject*)nextNode)->destroy();
 }
 
 SCObject* SCObject::findRoot() 

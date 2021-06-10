@@ -41,4 +41,6 @@ Terrain::Terrain(sc::AssetsContainer const& assets)
     auto mesh = std::make_shared<sc::TextureMesh>(vertices, assets.Textures.getTexture("Chess"));
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };
     _model = std::make_shared<sc::Model>(meshes);
+
+    Rigidbody.emplace();
 }

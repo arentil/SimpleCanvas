@@ -41,9 +41,10 @@ public:
 
 		world->prepare(deltaTime);
 		world->physic();
-		world->checkCollision();
 		world->update();
+		world->lateUpdate();
 		world->draw(camCtrl, lights);
+		world->destroy();
 	}
 
 	void onEvent(sc::Event &event) override

@@ -13,7 +13,7 @@ void Frustum::setCamInternals(float pangle, float pratio, float pnearD, float pf
 	nearD = pnearD;
 	farD = pfarD;
 
-	tang = (float)tan(scmath::degToRad(angle) * 0.5) ;
+	tang = (float)tan(scmath::degToRad(angle) * 0.5);
 	nh = nearD * tang;
 	nw = nh * ratio;
 	fh = farD  * tang;
