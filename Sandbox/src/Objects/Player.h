@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SimpleCanvas.h"
+#include "Gun.h"
 
 #include <memory>
 
@@ -21,4 +22,5 @@ private:
 
     scmath::Vec3 const initialPosition = scmath::Vec3(0.0f, 3.0f, 3.0f);
     float terrainBounceModifier = 0.1f;
+    float timeSinceLastShoot = 0.0f;
 };

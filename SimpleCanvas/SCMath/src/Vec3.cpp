@@ -265,7 +265,7 @@ Vec3 Vec3::refract(Vec3 const& in, Vec3 const& normal, float factor)
     return in.refract(normal, factor);
 }
 
-Vec3 Vec3::distance(Vec3 const& first, Vec3 const& second)
+float Vec3::distance(Vec3 const& first, Vec3 const& second)
 {
     return first.distance(second);
 }

@@ -18,5 +18,23 @@ struct TransformComponent
             * rotation
             * scmath::Mat4::scale(Scale);
     }
+
+    scmath::Vec3 Front() const
+    {
+        scmath::Mat4 rotation = scmath::Quat::eulerToQuat(Rotation).rotationMatrix();
+        return rotation * scmath::Vec3::Front();
+    }
+
+    scmath::Vec3 Up() const
+    {
+        scmath::Mat4 rotation = scmath::Quat::eulerToQuat(Rotation).rotationMatrix();
+        return rotation * scmath::Vec3::Up();
+    }
+
+    scmath::Vec3 Right() const
+    {
+        scmath::Mat4 rotation = scmath::Quat::eulerToQuat(Rotation).rotationMatrix();
+        return rotation * scmath::Vec3::Right();
+    }
 };
 } // namespace sc

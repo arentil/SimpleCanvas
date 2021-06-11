@@ -137,7 +137,7 @@ public:
      * @param second Vec3, end vector
      * @return float distance between first and second vector
     */
-    static Vec3 distance(Vec3 const& first, Vec3 const& second);
+    static float distance(Vec3 const& first, Vec3 const& second);
 
     static Vec3 normalized(Vec3 const& v);
 

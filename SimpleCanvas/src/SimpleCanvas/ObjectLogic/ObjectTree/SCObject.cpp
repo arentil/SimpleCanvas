@@ -103,12 +103,12 @@ void SCObject::destroy()
         ((SCObject*)nextNode)->destroy();
 }
 
-SCObject* SCObject::getParent() 
+SCObject* SCObject::getParent()
 {
     return ((SCObject*)parentNode);
 }
 
-SCObject* SCObject::findRoot() 
+SCObject* SCObject::findRoot()
 {
     if (parentNode != nullptr)
         return ((SCObject*)parentNode)->findRoot();
@@ -116,7 +116,7 @@ SCObject* SCObject::findRoot()
     return this;
 }
 
-SCObject* SCObject::findChildByName(std::string const& name) 
+SCObject* SCObject::findChildByName(std::string const& name)
 {
     if (Name == name)
         return this;
@@ -135,6 +135,28 @@ SCObject* SCObject::findChildByName(std::string const& name)
 
     return nullptr;
 }
+
+SCObject* SCObject::findByName(std::string const& name)
+{
+    return findRoot()->findChildByName(name);
+}
+
+scmath::Vec3 SCObject::getGlobalPos()
+{
+    if (parentNode != nullptr)
+        return Transform.Translation + getParent()->getGlobalPos();
+
+    return Transform.Translation;
+}
+
+scmath::Mat4 SCObject::getGlobalTransform() 
+{
+    if (parentNode != nullptr)
+        return Transform.GetTransform() * getParent()->getGlobalTransform();
+
+    return Transform.GetTransform();
+}
+
 
 void SCObject::onPhysic()
 {
@@ -163,5 +185,14 @@ void SCObject::onDraw(CameraController const& camCtrl, Lights const& lights, scm
     // }
 
     _model->draw(_shader, camCtrl, lights, modelMatrix);
+}
+
+void SCObject::onDestroy() 
+{
+    if (IsDead)
+    {
+        detach();
+        delete this;
+    }
 }
 } // namespace sc

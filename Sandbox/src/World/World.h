@@ -30,4 +30,6 @@ private:
     std::map<std::string, ScenePtr> _scenesMap;
     std::string _currentSceneName;
     ScenePtr _currentScene;
+
+    sc::ModelPtr createProjectileModel() const;
 };

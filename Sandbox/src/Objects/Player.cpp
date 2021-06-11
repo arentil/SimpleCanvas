@@ -3,7 +3,7 @@
 Player::Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl)
 :  sc::SCObject("Player", assets.Shaders.getShader("FlatColor"))
 , cam(camCtrl)
-, min(-0.5f, -0.5f, -0.5f)
+, min(-0.5f, -1.0f, -0.5f)
 , max(0.5f, 0.5f, 0.5f)
 {
     _model = std::make_shared<sc::Model>();
@@ -33,6 +33,17 @@ void Player::updateCollider()
 
 void Player::onUpdate() 
 {
+    if (sc::Input::isMousePressed(sc::BUTTON_LEFT))
+    {
+        timeSinceLastShoot += deltaTime;
+        if (timeSinceLastShoot > 0.05f)
+        {
+            auto gun = (Gun*)(findChildByName("AK-47"));
+            gun->shoot();
+            timeSinceLastShoot = 0.0f;
+        }
+    }
+
     if (Transform.Translation.y < -50.0f)
     {
         Rigidbody->Acceleration = scmath::Vec3::Zero();

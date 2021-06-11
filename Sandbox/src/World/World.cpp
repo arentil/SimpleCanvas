@@ -1,5 +1,17 @@
 #include "World.h"
 
+namespace
+{
+void applyMatrixAndAppend(std::vector<sc::ColorVertex> &vertices, scmath::Mat4 const& matrix, scmath::Mat4 const& normalMatrix)
+{
+    for (size_t i = 0; i < 6; i++)
+    {
+        sc::ColorVertex v{matrix * vertices[i].position, normalMatrix * vertices[i].normal, vertices[i].color};
+        vertices.push_back(v);
+    }
+}
+} // namespace
+
 World::World(sc::CameraController & camCtrl)
 {
     loadWorld();
@@ -62,10 +74,33 @@ void World::destroy()
     _currentScene->destroy();
 }
 
+sc::ModelPtr World::createProjectileModel() const
+{
+    std::vector<sc::ColorVertex> vertices{
+        {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 0.0f}},
+        {{0.5f, -0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 0.0f}},
+        {{0.5f, 0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 0.0f}},
+        {{0.5f, 0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 0.0f}},
+        {{-0.5f, 0.5f, 0.0f},  {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 0.0f}},
+        {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 0.0f}}
+    };
+    vertices.reserve(24);
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(-0.5f, 0.0f, -0.5f) * scmath::Mat4::rotateY(scmath::degToRad(90)), scmath::Mat4::rotateY(scmath::degToRad(90))); //left
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, 0.0f, -1.0f) * scmath::Mat4::rotateY(scmath::degToRad(180)), scmath::Mat4::rotateY(scmath::degToRad(180))); //back
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.5f, 0.0f, -0.5f) * scmath::Mat4::rotateY(scmath::degToRad(-90)), scmath::Mat4::rotateY(scmath::degToRad(-90))); //right
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, 0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(90)), scmath::Mat4::rotateX(scmath::degToRad(90))); //top
+    applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, -0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(-90)), scmath::Mat4::rotateX(scmath::degToRad(-90))); //bottom
+
+    auto mesh = std::make_shared<sc::ColorMesh>(vertices);
+    std::vector<sc::BaseMeshPtr> const meshes{ mesh };
+    return std::make_shared<sc::Model>(meshes);
+}
+
 void World::loadWorld() 
 {
     _assets.Models.addModelFromFile("Teapot", "assets/models/teapot/teapot.obj");
     _assets.Models.addModelFromFile("AK-47", "assets/models/AK-47/AK-47.obj");
+    _assets.Models.addModel("Projectile", createProjectileModel());
 
     _assets.Shaders.addShaderFromFile("Skybox", "assets/shaders/Cubemap_vertex.glsl", "assets/shaders/Cubemap_fragment.glsl");
     _assets.Shaders.addShaderFromFile("Texture", "assets/shaders/Texture_vertex.glsl", "assets/shaders/Texture_fragment.glsl");
@@ -84,5 +119,4 @@ void World::loadWorld()
         "assets/textures/skybox/back.jpg"
     };
     _assets.Textures.addCubemapFromFile("Skybox", cubemapFacesFiles);
-
 }

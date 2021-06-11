@@ -30,6 +30,10 @@ public:
     SCObject* getParent();
     SCObject* findRoot();
     SCObject* findChildByName(std::string const& name);
+    SCObject* findByName(std::string const& name);
+
+    scmath::Vec3 getGlobalPos();
+    scmath::Mat4 getGlobalTransform();
 
     float deltaTime = 0.0f;
     std::string Name;
@@ -46,7 +50,7 @@ protected:
     virtual void onUpdate() {} //-----------------------------------------------------------------------------------// script everything you want
     virtual void onLateUpdate() {} //-------------------------------------------------------------------------------// update camera position
     virtual void onDraw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix); //-// define own draw function
-    virtual void onDestroy() {} //----------------------------------------------------------------------------------// define behaviour on destroy
+    virtual void onDestroy(); //----------------------------------------------------------------------------------// define behaviour on destroy
 
     ShaderPtr _shader;
     ModelPtr _model;
