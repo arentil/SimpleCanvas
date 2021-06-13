@@ -5,6 +5,7 @@
 #include <Objects/Gun.h>
 #include <Objects/Player.h>
 #include <Objects/Terrain.h>
+#include <Objects/Target.h>
 
 Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl) 
 {
@@ -21,6 +22,9 @@ Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl)
 
     // gun
     player->attach(new Gun(assets));
+
+    // target
+    terrain->attach(new Target(assets));
 }
 
 void Scene::prepare(float deltaTime) 

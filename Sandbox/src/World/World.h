@@ -31,5 +31,5 @@ private:
     std::string _currentSceneName;
     ScenePtr _currentScene;
 
-    sc::ModelPtr createProjectileModel() const;
+    sc::ModelPtr createCubeModel() const;
 };

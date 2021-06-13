@@ -74,7 +74,7 @@ void World::destroyCheck()
     _currentScene->destroyCheck();
 }
 
-sc::ModelPtr World::createProjectileModel() const
+sc::ModelPtr World::createCubeModel() const
 {
     std::vector<sc::ColorVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f, 0.0f}},
@@ -100,12 +100,12 @@ void World::loadWorld()
 {
     _assets.Models.addModelFromFile("Teapot", "assets/models/teapot/teapot.obj");
     _assets.Models.addModelFromFile("AK-47", "assets/models/AK-47/AK-47.obj");
-    _assets.Models.addModel("Projectile", createProjectileModel());
+    _assets.Models.addModel("Cube", createCubeModel());
     _assets.Models.addModelFromFile("RedSphere", "assets/models/RedSphere/untitled.obj");
 
     _assets.Shaders.addShaderFromFile("Skybox", "assets/shaders/Cubemap_vertex.glsl", "assets/shaders/Cubemap_fragment.glsl");
     _assets.Shaders.addShaderFromFile("Texture", "assets/shaders/Texture_vertex.glsl", "assets/shaders/Texture_fragment.glsl");
-    _assets.Shaders.addShaderFromFile("FlatColor", "assets/shaders/FlatColor_vertex.glsl", "assets/shaders/FlatColor_fragment.glsl");
+    _assets.Shaders.addShaderFromFile("Color", "assets/shaders/FlatColor_vertex.glsl", "assets/shaders/FlatColor_fragment.glsl");
     _assets.Textures.addTexture2dFromFile("Chess", "assets/textures/Checkerboard.png");
     _assets.Textures.addTexture2dFromFile("Blend", "assets/textures/d4500b058db6706e4b28e2ab24c4e365.png");
     _assets.Textures.addTexture2dFromFile("Grass", "assets/textures/Grass.jpg");

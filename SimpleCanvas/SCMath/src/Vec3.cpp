@@ -202,6 +202,11 @@ Vec3 Vec3::perpendicular(Vec3 const& v, Vec3 const& onVector)
     return (v - Vec3::projection(v, onVector));
 }
 
+Vec3 Vec3::lerp(Vec3 const& v1, Vec3 const& v2, float t)
+{
+    return v2 * t + (1.0f - t) * v1;
+}
+
 Vec3 Vec3::Zero() 
 {
     return Vec3(0.0f, 0.0f, 0.0f);

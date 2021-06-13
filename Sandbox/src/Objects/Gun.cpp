@@ -38,8 +38,34 @@ void Gun::onPrepare()
     }
 }
 
+void Gun::onUpdate() 
+{
+    // animate!
+    float timeBetweenShots = 1.0f / fireRate;
+    if (timeSinceLastShoot < (timeBetweenShots / 2.0f))
+    {
+        
+        Transform.Translation.z += 0.09f;
+        timesToReturn++;
+    }
+    else
+    {
+        if (timesToReturn != 0)
+        {
+            Transform.Translation.z -= 0.09f;
+            timesToReturn--;
+        }
+    }
+    Transform.Translation.z = std::clamp(Transform.Translation.z, -0.6f, 0.30f);
+
+    timeSinceLastShoot += deltaTime;
+}
+
 void Gun::shoot() 
 {
-    // pojectile will be created in onPrepare()
-    createProjectile = true;
+    if (timeSinceLastShoot > (1.0f / fireRate))
+    {
+        createProjectile = true;
+        timeSinceLastShoot = 0.0f;
+    }
 }

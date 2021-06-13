@@ -11,7 +11,7 @@ class Vec3Test : public ::testing::Test
 TEST_F(Vec3Test, VEC3_ASSERT_TEST)
 {
     ASSERT_DEATH(Vec3() / 0.0f, "divider != 0.0f");
-    ASSERT_DEATH(Vec3().normalized(), "!isZero");
+    ASSERT_DEATH(Vec3().normalized(), "Can not normalize zero-length vector!");
     ASSERT_DEATH(Vec3()[-1], "i < 3 && i >= 0");
     ASSERT_DEATH(Vec3()[4], "i < 3 && i >= 0");
 }
@@ -109,4 +109,20 @@ TEST_F(Vec3Test, VEC3_IMPLICIT_FLOAT_ARRAY_CONVERSION_TEST)
     EXPECT_EQ(99, getArrItem(arr, 0));
     EXPECT_EQ(55, getArrItem(arr, 1));
     EXPECT_EQ(11, getArrItem(arr, 2));
+}
+
+TEST_F(Vec3Test, VEC3_LERP_TEST)
+{
+    Vec3 first(0, 0, 0);
+    Vec3 second(4, 4, 4);
+
+    Vec3 expected1(2, 2, 2);
+    EXPECT_EQ(expected1, Vec3::lerp(first, second, 0.5f));
+
+    Vec3 expected2(1, 1, 1);
+    EXPECT_EQ(expected2, Vec3::lerp(first, second, 0.25f));
+
+    EXPECT_EQ(first, Vec3::lerp(first, second, 0.0f));
+
+    EXPECT_EQ(second, Vec3::lerp(first, second, 1.0f));
 }
