@@ -5,9 +5,10 @@
 namespace sc
 {
 TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr texturePtr)
-: _vertices(vertices), _texturePtr(texturePtr)
+: BaseMesh(vertices.size())
+, _texturePtr(texturePtr)
 {
-    initialize();
+    initialize(vertices);
 }
 
 void TextureMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
@@ -32,18 +33,19 @@ void TextureMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights
     shader->uploadUniformFloat3("u_ViewPos", camCtrl.getPosition());
 
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+    glDrawArrays(GL_TRIANGLES, 0, verticesCount);
     glBindVertexArray(0);
 }
 
-void TextureMesh::initialize() 
+void TextureMesh::initialize(std::vector<TextureVertex> const& vertices) 
 {
+    uint32_t VBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(TextureVertex), _vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(TextureVertex), vertices.data(), GL_STATIC_DRAW);
 
     // vertex position
     glEnableVertexAttribArray(0);
@@ -62,7 +64,7 @@ void TextureMesh::initialize()
     // aabb bounding for frustrum clipping
     scmath::Vec3 min = scmath::Vec3::Max();
     scmath::Vec3 max = scmath::Vec3::Min();
-    for (auto const& vertex : _vertices)
+    for (auto const& vertex : vertices)
     {
         min.x = std::min(min.x, vertex.position.x);
         min.y = std::min(min.y, vertex.position.y);
@@ -77,9 +79,9 @@ void TextureMesh::initialize()
 }
 
 ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
-: _vertices(vertices)
+: BaseMesh(vertices.size())
 {
-    initialize();
+    initialize(vertices);
 }
 
 void ColorMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
@@ -103,18 +105,19 @@ void ColorMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights c
     shader->uploadUniformFloat3("u_ViewPos", camCtrl.getPosition());
 
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+    glDrawArrays(GL_TRIANGLES, 0, verticesCount);
     glBindVertexArray(0);
 }
 
-void ColorMesh::initialize() 
+void ColorMesh::initialize(std::vector<ColorVertex> const& vertices) 
 {
+    uint32_t VBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(ColorVertex), _vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(ColorVertex), vertices.data(), GL_STATIC_DRAW);
 
     // vertex position
     glEnableVertexAttribArray(0);
@@ -133,7 +136,7 @@ void ColorMesh::initialize()
     // aabb bounding for frustrum clipping
     scmath::Vec3 min = scmath::Vec3::Max();
     scmath::Vec3 max = scmath::Vec3::Min();
-    for (auto const& vertex : _vertices)
+    for (auto const& vertex : vertices)
     {
         min.x = std::min(min.x, vertex.position.x);
         min.y = std::min(min.y, vertex.position.y);
@@ -148,9 +151,10 @@ void ColorMesh::initialize()
 }
 
 CubemapMesh::CubemapMesh(std::vector<CubemapVertex> const& vertices, TexturePtr texturePtr) 
-: _vertices(vertices), _texturePtr(texturePtr)
+: BaseMesh(vertices.size())
+, _texturePtr(texturePtr)
 {
-    initialize();
+    initialize(vertices);
 }
 void CubemapMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& , scmath::Mat4 const& modelMatrix) 
 {
@@ -164,18 +168,19 @@ void CubemapMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights
     shader->uploadUniformFloat3("u_ViewPos", camCtrl.getPosition());
 
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+    glDrawArrays(GL_TRIANGLES, 0, verticesCount);
     glBindVertexArray(0);
 }
 
-void CubemapMesh::initialize()
-{
+void CubemapMesh::initialize(std::vector<CubemapVertex> const& vertices)
+{   
+    uint32_t VBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(CubemapVertex), _vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(CubemapVertex), vertices.data(), GL_STATIC_DRAW);
 
     // vertex position
     glEnableVertexAttribArray(0);

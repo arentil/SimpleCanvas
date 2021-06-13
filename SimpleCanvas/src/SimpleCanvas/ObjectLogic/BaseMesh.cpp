@@ -2,6 +2,10 @@
 
 namespace sc
 {
+BaseMesh::BaseMesh(size_t numberOfVertices)
+: verticesCount(numberOfVertices)
+{}
+
 void BaseMesh::updateAABB(scmath::Mat4 const& modelMatrix) 
 {
     scmath::Vec3 min = scmath::Vec3::Max();

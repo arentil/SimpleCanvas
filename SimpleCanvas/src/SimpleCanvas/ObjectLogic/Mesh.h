@@ -22,10 +22,9 @@ public:
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& diffuse, scmath::Mat4 const& modelMatrix) override;
 
 private:
-    std::vector<TextureVertex> const _vertices;
     TexturePtr _texturePtr;
 
-    void initialize();
+    void initialize(std::vector<TextureVertex> const& vertices);
 };
 
 
@@ -45,9 +44,7 @@ public:
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& diffuse, scmath::Mat4 const& modelMatrix) override;
 
 private:
-    std::vector<ColorVertex> const _vertices;
-
-    void initialize();
+    void initialize(std::vector<ColorVertex> const& vertices);
 };
 
 struct CubemapVertex
@@ -65,8 +62,7 @@ public:
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& , scmath::Mat4 const& modelMatrix) override;
 
 private:
-    std::vector<CubemapVertex> const _vertices;
     TexturePtr _texturePtr;
-    void initialize();
+    void initialize(std::vector<CubemapVertex> const& vertices);
 };
 } // namespace sc
