@@ -54,14 +54,14 @@ void World::physic()
     _currentScene->physic();
 }
 
-void World::lateUpdate() 
-{
-    _currentScene->lateUpdate();
-}
-
 void World::update()
 {
     _currentScene->update();
+}
+
+void World::lateUpdate() 
+{
+    _currentScene->lateUpdate();
 }
 
 void World::draw(sc::CameraController const& camCtrl, sc::Lights const& lights) 
@@ -69,9 +69,9 @@ void World::draw(sc::CameraController const& camCtrl, sc::Lights const& lights)
     _currentScene->draw(camCtrl, lights);
 }
 
-void World::destroy() 
+void World::destroyCheck() 
 {
-    _currentScene->destroy();
+    _currentScene->destroyCheck();
 }
 
 sc::ModelPtr World::createProjectileModel() const

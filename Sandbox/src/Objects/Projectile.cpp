@@ -13,10 +13,10 @@ void Projectile::onUpdate()
     Transform.Translation += Transform.Front() * speed;
 
     if (Transform.Translation.distance(scmath::Vec3::Zero()) > 50.0f)
-        IsDead = true;
+        destroy();
 }
 
 void Projectile::onCollision(SCObject *object) 
 {
-    IsDead = true;
+    destroy();
 }

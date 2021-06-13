@@ -21,10 +21,12 @@ public:
     // can not be overriden
     void prepare(float deltaT);
     void physic();
-    void checkCollision(SCObject *object);
-    void lateUpdate();
     void update();
+    void lateUpdate();
     void draw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix);
+    void destroyCheck();
+
+    void checkCollision(SCObject *object);
     void destroy();
 
     SCObject* getParent();
@@ -40,8 +42,6 @@ public:
     TransformComponent Transform;
     std::optional<Rigidbody> Rigidbody;
 
-    bool IsDead = false;
-
 protected:
     virtual void onPrepare() {} //----------------------------------------------------------------------------------// define object preparation
     virtual void onPhysic(); //-------------------------------------------------------------------------------------// define your own physics
@@ -50,9 +50,12 @@ protected:
     virtual void onUpdate() {} //-----------------------------------------------------------------------------------// script everything you want
     virtual void onLateUpdate() {} //-------------------------------------------------------------------------------// update camera position
     virtual void onDraw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix); //-// define own draw function
-    virtual void onDestroy(); //----------------------------------------------------------------------------------// define behaviour on destroy
+    virtual void onDestroyCheck(); //----------------------------------------------------------------------------------// define behaviour on destroy
 
     ShaderPtr _shader;
     ModelPtr _model;
+
+private:
+    bool isDestroyed = false;
 };
 } // namespace sc

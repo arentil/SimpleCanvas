@@ -44,7 +44,7 @@ public:
 		world->update();
 		world->lateUpdate();
 		world->draw(camCtrl, lights);
-		world->destroy();
+		world->destroyCheck();
 	}
 
 	void onEvent(sc::Event &event) override

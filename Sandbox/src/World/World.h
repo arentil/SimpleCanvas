@@ -19,10 +19,10 @@ public:
 
     void prepare(float deltaTime);
     void physic();
-    void lateUpdate();
     void update();
+    void lateUpdate();
     void draw(sc::CameraController const& camCtrl, sc::Lights const& lights);
-    void destroy();
+    void destroyCheck();
 
 private:
     sc::AssetsContainer _assets;

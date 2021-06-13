@@ -30,29 +30,6 @@ void SCObject::physic()
         ((SCObject*)nextNode)->physic();
 }
 
-void SCObject::checkCollision(SCObject *object) 
-{
-    if (object != (SCObject*)this &&
-        Rigidbody.has_value() &&
-        object->Rigidbody.has_value() &&
-        Rigidbody->isCollision(object->Rigidbody.value()))
-    {
-        onCollision(object);
-
-        if (hasChild())
-            ((SCObject*)childNode)->checkCollision(object);
-
-        if (hasParent() && !isLastChild())
-            ((SCObject*)nextNode)->checkCollision(object);
-    }
-
-    if (object->hasChild())
-        checkCollision((SCObject*)(object->childNode));
-
-    if (object->hasParent() && !object->isLastChild())
-        checkCollision((SCObject*)(object->nextNode));
-}
-
 void SCObject::lateUpdate() 
 {
     onLateUpdate();
@@ -88,15 +65,43 @@ void SCObject::draw(CameraController const& camCtrl, Lights const& lights, scmat
         ((SCObject*)nextNode)->draw(camCtrl, lights, modelMatrix);
 }
 
-void SCObject::destroy() 
+void SCObject::destroyCheck() 
 {
     if (hasChild())
-        ((SCObject*)childNode)->destroy();
+        ((SCObject*)childNode)->destroyCheck();
 
     if (hasParent() && !isLastChild())
-        ((SCObject*)nextNode)->destroy();
+        ((SCObject*)nextNode)->destroyCheck();
 
-    onDestroy();
+    onDestroyCheck();
+}
+
+void SCObject::checkCollision(SCObject *object) 
+{
+    if (object != (SCObject*)this &&
+        Rigidbody.has_value() &&
+        object->Rigidbody.has_value() &&
+        Rigidbody->isCollision(object->Rigidbody.value()))
+    {
+        onCollision(object);
+
+        if (hasChild())
+            ((SCObject*)childNode)->checkCollision(object);
+
+        if (hasParent() && !isLastChild())
+            ((SCObject*)nextNode)->checkCollision(object);
+    }
+
+    if (object->hasChild())
+        checkCollision((SCObject*)(object->childNode));
+
+    if (object->hasParent() && !object->isLastChild())
+        checkCollision((SCObject*)(object->nextNode));
+}
+
+void SCObject::destroy() 
+{
+    isDestroyed = true;
 }
 
 SCObject* SCObject::getParent()
@@ -183,9 +188,9 @@ void SCObject::onDraw(CameraController const& camCtrl, Lights const& lights, scm
     _model->draw(_shader, camCtrl, lights, modelMatrix);
 }
 
-void SCObject::onDestroy() 
+void SCObject::onDestroyCheck() 
 {
-    if (IsDead)
+    if (isDestroyed)
     {
         detach();
         delete this;

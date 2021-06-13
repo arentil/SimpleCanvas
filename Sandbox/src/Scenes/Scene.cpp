@@ -62,7 +62,7 @@ void Scene::draw(sc::CameraController const& camCtrl, sc::Lights const& lights)
     rootObject->draw(camCtrl, lights, scmath::Mat4::identity());
 }
 
-void Scene::destroy() 
+void Scene::destroyCheck() 
 {
-    rootObject->destroy();
+    rootObject->destroyCheck();
 }

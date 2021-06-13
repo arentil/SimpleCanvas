@@ -21,7 +21,7 @@ public:
     void update();
     void lateUpdate();
     void draw(sc::CameraController const& camCtrl, sc::Lights const& lights);
-    void destroy();
+    void destroyCheck();
 
 private:
     std::shared_ptr<sc::SCObject> rootObject;
