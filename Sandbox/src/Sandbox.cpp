@@ -2,8 +2,6 @@
 #include "SimpleCanvas/EntryPoint.h"
 
 #include "Objects/Skybox.h"
-#include "Objects/ColorCube.h"
-#include "Objects/BlendTexSquare.h"
 
 #include "World/World.h"
 
@@ -17,11 +15,11 @@ public:
 	ExampleCanvas()
 	: cameraSettings
 		{ 
-			70,								// fov
-		  	1280,							// aspect ratio width
-		  	720,							// aspect ratio height
-		  	0.01f,							// camera near plane distance
-			100								// camera far plane distance
+			70,			// fov
+		  	1280,		// aspect ratio width
+		  	720,		// aspect ratio height
+		  	0.01f,		// camera near plane distance
+			100			// camera far plane distance
 		}								
 	, camCtrl(cameraSettings)
 	{

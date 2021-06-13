@@ -1,38 +1,26 @@
 #include "Scene.h"
 
 #include <Objects/Skybox.h>
-#include <Objects/ColorCube.h>
 #include <Objects/Triangle.h>
 #include <Objects/Gun.h>
 #include <Objects/Player.h>
 #include <Objects/Terrain.h>
-#include <Objects/TextureCube.h>
-#include <Objects/Teapot.h>
-#include <Objects/TileMap.h>
-#include <Objects/BlendTexSquare.h>
 
 Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl) 
 {
     skybox = std::make_shared<Skybox>(assets, camCtrl);
     rootObject = std::make_shared<Terrain>(assets);
 
+    // terrain (root)
     auto terrain = rootObject;
     
+    // player
     Player *player = new Player(assets, camCtrl);
-    player->attach(new Gun(assets));
-
-    camCtrl.attachObject(player);
     terrain->attach(player);
+    camCtrl.attachObject(player);
 
-    terrain->attach(new ColorCube(assets));
-    auto colorCube = rootObject->findChildByName("ColorCube");
-    colorCube->attach(new Triangle(assets));
-    
-    terrain->attach(new TextureCube(assets));
-    terrain->attach(new Teapot(assets));
-    terrain->attach(new TileMap(assets));
-    terrain->attach(new BlendTexSquare(assets));
-    
+    // gun
+    player->attach(new Gun(assets));
 }
 
 void Scene::prepare(float deltaTime) 
