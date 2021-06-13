@@ -40,7 +40,7 @@ public:
     TransformComponent Transform;
     std::optional<Rigidbody> Rigidbody;
 
-    bool IsDead;
+    bool IsDead = false;
 
 protected:
     virtual void onPrepare() {} //----------------------------------------------------------------------------------// define object preparation

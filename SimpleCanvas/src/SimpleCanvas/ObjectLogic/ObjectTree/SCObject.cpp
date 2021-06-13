@@ -3,8 +3,7 @@
 namespace sc
 {
 SCObject::SCObject(std::string const& name, ShaderPtr shader)
-: IsDead(false)
-, Name(name)
+: Name(name)
 , _shader(shader)
 {}
 
@@ -29,9 +28,6 @@ void SCObject::physic()
 
     if (hasParent() && !isLastChild())
         ((SCObject*)nextNode)->physic();
-
-    if (IsDead)
-        delete this;
 }
 
 void SCObject::checkCollision(SCObject *object) 
@@ -176,13 +172,13 @@ void SCObject::updateCollider()
 
 void SCObject::onDraw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix) 
 {
-    // this is just for debug and will draw AABB collider
-    // if (Rigidbody.has_value())
-    // {
-    //     auto &aabb = Rigidbody->Collider;
-    //     aabb.initDebugShader();
-    //     aabb.draw(camCtrl, scmath::Mat4::identity());
-    // }
+    //this is just for debug and will draw AABB collider
+    if (Rigidbody.has_value())
+    {
+        auto &aabb = Rigidbody->Collider;
+        aabb.initDebugShader();
+        aabb.draw(camCtrl, scmath::Mat4::identity());
+    }
 
     _model->draw(_shader, camCtrl, lights, modelMatrix);
 }
@@ -191,7 +187,9 @@ void SCObject::onDestroy()
 {
     if (IsDead)
     {
+        LOG_ERROR("Destroying");
         detach();
+        LOG_ERROR("Detached!");
         delete this;
     }
 }

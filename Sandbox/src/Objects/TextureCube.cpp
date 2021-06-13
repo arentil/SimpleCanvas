@@ -37,6 +37,7 @@ TextureCube::TextureCube(sc::AssetsContainer const& assets)
     _model = std::make_shared<sc::Model>(meshes);
 
 	Transform.Translation = scmath::Vec3(-3.0f, 0.0f, 2.0f);
+    Rigidbody.emplace();
 }
 
 void TextureCube::onUpdate()

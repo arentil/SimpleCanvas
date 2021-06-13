@@ -101,6 +101,7 @@ void World::loadWorld()
     _assets.Models.addModelFromFile("Teapot", "assets/models/teapot/teapot.obj");
     _assets.Models.addModelFromFile("AK-47", "assets/models/AK-47/AK-47.obj");
     _assets.Models.addModel("Projectile", createProjectileModel());
+    _assets.Models.addModelFromFile("RedSphere", "assets/models/RedSphere/untitled.obj");
 
     _assets.Shaders.addShaderFromFile("Skybox", "assets/shaders/Cubemap_vertex.glsl", "assets/shaders/Cubemap_fragment.glsl");
     _assets.Shaders.addShaderFromFile("Texture", "assets/shaders/Texture_vertex.glsl", "assets/shaders/Texture_fragment.glsl");
