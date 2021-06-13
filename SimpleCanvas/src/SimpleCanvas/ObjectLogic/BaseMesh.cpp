@@ -6,6 +6,10 @@ BaseMesh::BaseMesh(size_t numberOfVertices)
 : verticesCount(numberOfVertices)
 {}
 
+BaseMesh::BaseMesh(BaseMesh const& other)
+: bb(other.bb), aabb(other.aabb), VAO(other.VAO), verticesCount(other.verticesCount)
+{}
+
 void BaseMesh::updateAABB(scmath::Mat4 const& modelMatrix) 
 {
     scmath::Vec3 min = scmath::Vec3::Max();

@@ -6,10 +6,15 @@ namespace sc
 {
 TextureMesh::TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr texturePtr)
 : BaseMesh(vertices.size())
-, _texturePtr(texturePtr)
+, texturePtr(texturePtr)
 {
     initialize(vertices);
 }
+
+TextureMesh::TextureMesh(TextureMesh const& other)
+: BaseMesh(other)
+, texturePtr(other.texturePtr)
+{}
 
 void TextureMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {   
@@ -21,8 +26,8 @@ void TextureMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights
     }
 
     shader->bind();
-    if (_texturePtr)
-        _texturePtr->bind();
+    if (texturePtr)
+        texturePtr->bind();
 
     shader->uploadUniformMat4("u_ViewProjection", camCtrl.getViewProj());
     shader->uploadUniformMat4("u_Model", modelMatrix);
@@ -83,6 +88,10 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
 {
     initialize(vertices);
 }
+
+ColorMesh::ColorMesh(ColorMesh const& other)
+: BaseMesh(other)
+{}
 
 void ColorMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {
@@ -152,15 +161,21 @@ void ColorMesh::initialize(std::vector<ColorVertex> const& vertices)
 
 CubemapMesh::CubemapMesh(std::vector<CubemapVertex> const& vertices, TexturePtr texturePtr) 
 : BaseMesh(vertices.size())
-, _texturePtr(texturePtr)
+, texturePtr(texturePtr)
 {
     initialize(vertices);
 }
+
+CubemapMesh::CubemapMesh(CubemapMesh const& other)
+: BaseMesh(other)
+, texturePtr(other.texturePtr)
+{}
+
 void CubemapMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& , scmath::Mat4 const& modelMatrix) 
 {
     shader->bind();
-    if (_texturePtr)
-        _texturePtr->bind();
+    if (texturePtr)
+        texturePtr->bind();
 
     shader->uploadUniformMat4("u_ViewProjection", camCtrl.getViewProj());
     shader->uploadUniformMat4("u_Model", modelMatrix);

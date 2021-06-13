@@ -17,13 +17,14 @@ class TextureMesh : public BaseMesh
 {
 public:
     TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr texturePtr);
+    TextureMesh(TextureMesh const& other);
     virtual ~TextureMesh() = default;
 
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& diffuse, scmath::Mat4 const& modelMatrix) override;
 
-private:
-    TexturePtr _texturePtr;
+    TexturePtr texturePtr;
 
+private:
     void initialize(std::vector<TextureVertex> const& vertices);
 };
 
@@ -39,6 +40,7 @@ class ColorMesh : public BaseMesh
 {
 public:
     ColorMesh(std::vector<ColorVertex> const& vertices);
+    ColorMesh(ColorMesh const& other);
     virtual ~ColorMesh() = default;
 
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& diffuse, scmath::Mat4 const& modelMatrix) override;
@@ -57,12 +59,14 @@ class CubemapMesh : public BaseMesh
 {
 public:
     CubemapMesh(std::vector<CubemapVertex> const& vertices, TexturePtr texturePtr);
+    CubemapMesh(CubemapMesh const& other);
     virtual ~CubemapMesh() = default;
 
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& , scmath::Mat4 const& modelMatrix) override;
 
+    TexturePtr texturePtr;
+
 private:
-    TexturePtr _texturePtr;
     void initialize(std::vector<CubemapVertex> const& vertices);
 };
 } // namespace sc
