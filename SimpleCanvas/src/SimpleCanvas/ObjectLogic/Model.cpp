@@ -3,12 +3,16 @@
 namespace sc
 {
 Model::Model(std::vector<BaseMeshPtr> const& meshes)
-: _meshes(meshes)
+: meshes(meshes)
+{}
+
+Model::Model(Model const& other)
+: meshes(getCopiedMeshes(other.getMeshes()))
 {}
 
 void Model::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix) const
 {
-    for (BaseMeshPtr const& mesh : _meshes)
+    for (BaseMeshPtr const& mesh : meshes)
     {
         mesh->draw(shader, camCtrl, lights, modelMatrix);
     }
@@ -18,7 +22,7 @@ AABB Model::getModelAABB() const
 {
     scmath::Vec3 min = scmath::Vec3::Max();
     scmath::Vec3 max = scmath::Vec3::Min();
-    for (auto const& mesh : _meshes)
+    for (auto const& mesh : meshes)
     {
         for (auto const& corner : mesh->getAABB().bb.get8Corners())
         {
@@ -35,34 +39,53 @@ AABB Model::getModelAABB() const
     return result;
 }
 
+std::vector<BaseMeshPtr> Model::getMeshes() const
+{
+    return meshes;
+}
+
+std::vector<BaseMeshPtr> Model::getCopiedMeshes(std::vector<BaseMeshPtr> const& meshes) const
+{
+    std::vector<BaseMeshPtr> result;
+    result.reserve(meshes.size());
+
+    for (auto const& meshToCopy : meshes)
+    {
+        result.push_back(meshToCopy->clone());
+    }
+
+    return result;
+}
+
 void ModelsContainer::addModel(std::string const& modelName, ModelPtr const& model) 
 {
-    if (_models.find(modelName) != _models.end())
+    if (models.find(modelName) != models.end())
     {
         LOG_WARNING("%s() %s model already exist! Skipping...", __FUNCTION__, modelName.c_str());
         return;
     }
-    _models.emplace(modelName, model);
+    models.emplace(modelName, model);
 }
 
 void ModelsContainer::addModelFromFile(std::string const& modelName, std::string const& objFilePath) 
 {
-    if (_models.find(modelName) != _models.end())
+    if (models.find(modelName) != models.end())
     {
         LOG_WARNING("%s() %s model already exist! Skipping...", __FUNCTION__, modelName.c_str());
         return;
     }
-    _models.emplace(modelName, sc::ObjLoader::loadObjFromFile(objFilePath));
+    models.emplace(modelName, sc::ObjLoader::loadObjFromFile(objFilePath));
 }
 
 ModelPtr ModelsContainer::getModel(std::string const& modelName) const
 {
-    if (_models.find(modelName) == _models.end())
+    if (models.find(modelName) == models.end())
     {
         LOG_ERROR("%s() %s model does not exist! Skipping...", __FUNCTION__, modelName.c_str());
         return nullptr;
     }
 
-    return _models.at(modelName);
+    // the NEW instance(deep copy) of Model will be created from the existing one
+    return std::make_shared<Model>(*(models.at(modelName)));
 }
 } // namespace sc

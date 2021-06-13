@@ -19,6 +19,7 @@ public:
     TextureMesh(std::vector<TextureVertex> const& vertices, TexturePtr texturePtr);
     TextureMesh(TextureMesh const& other);
     virtual ~TextureMesh() = default;
+    virtual BaseMeshPtr clone() const override;
 
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& diffuse, scmath::Mat4 const& modelMatrix) override;
 
@@ -42,6 +43,7 @@ public:
     ColorMesh(std::vector<ColorVertex> const& vertices);
     ColorMesh(ColorMesh const& other);
     virtual ~ColorMesh() = default;
+    virtual BaseMeshPtr clone() const override;
 
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& diffuse, scmath::Mat4 const& modelMatrix) override;
 
@@ -61,6 +63,7 @@ public:
     CubemapMesh(std::vector<CubemapVertex> const& vertices, TexturePtr texturePtr);
     CubemapMesh(CubemapMesh const& other);
     virtual ~CubemapMesh() = default;
+    virtual BaseMeshPtr clone() const override;
 
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& , scmath::Mat4 const& modelMatrix) override;
 

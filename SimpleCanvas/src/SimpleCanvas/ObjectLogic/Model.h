@@ -19,15 +19,18 @@ class Model
 public:
     Model() = default;
     Model(std::vector<BaseMeshPtr> const& meshes);
+    Model(Model const& other);
     ~Model() = default;
 
     void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix) const;
     AABB getModelAABB() const;
+    std::vector<BaseMeshPtr> getMeshes() const;
 
 private:
-    std::vector<BaseMeshPtr> const _meshes;
+    std::vector<BaseMeshPtr> const meshes;
+    
+    std::vector<BaseMeshPtr> getCopiedMeshes(std::vector<BaseMeshPtr> const& meshes) const;
 };
-
 class ModelsContainer
 {
 public:
@@ -38,6 +41,6 @@ public:
     ModelPtr getModel(std::string const& modelName) const;
 
 private:
-    std::unordered_map<std::string, ModelPtr> _models;
+    std::unordered_map<std::string, ModelPtr> models;
 };
 } // namespace sc

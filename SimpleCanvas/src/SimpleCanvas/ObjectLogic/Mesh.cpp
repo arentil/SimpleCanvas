@@ -16,6 +16,11 @@ TextureMesh::TextureMesh(TextureMesh const& other)
 , texturePtr(other.texturePtr)
 {}
 
+BaseMeshPtr TextureMesh::clone() const 
+{
+    return std::make_shared<TextureMesh>(*this);
+}
+
 void TextureMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {   
     updateAABB(modelMatrix);
@@ -92,6 +97,11 @@ ColorMesh::ColorMesh(std::vector<ColorVertex> const& vertices)
 ColorMesh::ColorMesh(ColorMesh const& other)
 : BaseMesh(other)
 {}
+
+BaseMeshPtr ColorMesh::clone() const 
+{
+    return std::make_shared<ColorMesh>(*this);
+}
 
 void ColorMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {
@@ -170,6 +180,11 @@ CubemapMesh::CubemapMesh(CubemapMesh const& other)
 : BaseMesh(other)
 , texturePtr(other.texturePtr)
 {}
+
+BaseMeshPtr CubemapMesh::clone() const 
+{
+    return std::make_shared<CubemapMesh>(*this);
+}
 
 void CubemapMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& , scmath::Mat4 const& modelMatrix) 
 {
