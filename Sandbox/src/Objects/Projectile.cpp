@@ -4,7 +4,6 @@ Projectile::Projectile(sc::AssetsContainer const& assets)
 : sc::SCObject("Projectile", assets.Shaders.getShader("Texture"))
 {
     _model = assets.Models.getModel("RedSphere");
-    LOG_ERROR("pointer: %p", &(*(_model.get())));
     Rigidbody.emplace();
     Transform.Scale = Transform.Scale * scale;
 }
@@ -12,10 +11,12 @@ Projectile::Projectile(sc::AssetsContainer const& assets)
 void Projectile::onUpdate() 
 {
     Transform.Translation += Transform.Front() * speed;
+
+    if (Transform.Translation.distance(scmath::Vec3::Zero()) > 50.0f)
+        IsDead = true;
 }
 
 void Projectile::onCollision(SCObject *object) 
 {
-    //LOG_WARNING("Projectile collision with %s", object->Name.c_str());
-    //IsDead = true;
+    IsDead = true;
 }

@@ -90,13 +90,13 @@ void SCObject::draw(CameraController const& camCtrl, Lights const& lights, scmat
 
 void SCObject::destroy() 
 {
-    onDestroy();
-
     if (hasChild())
         ((SCObject*)childNode)->destroy();
 
     if (hasParent() && !isLastChild())
         ((SCObject*)nextNode)->destroy();
+
+    onDestroy();
 }
 
 SCObject* SCObject::getParent()
@@ -187,9 +187,7 @@ void SCObject::onDestroy()
 {
     if (IsDead)
     {
-        LOG_ERROR("Destroying");
         detach();
-        LOG_ERROR("Detached!");
         delete this;
     }
 }

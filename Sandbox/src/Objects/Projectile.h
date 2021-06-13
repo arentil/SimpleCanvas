@@ -10,6 +10,6 @@ public:
     virtual void onUpdate() override;
     virtual void onCollision(SCObject *object) override;
 
-    float speed = 0.01f;
+    float speed = 0.2f;
     float scale = 0.1f;
 };
