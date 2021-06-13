@@ -11,7 +11,7 @@ Player::Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl
     if (!Rigidbody.has_value())
         Rigidbody.emplace();
     Rigidbody->setColliderMinMax(min, max);
-    Rigidbody->Collider.initDebugShader();
+    Rigidbody->collider.initDebugShader();
     Rigidbody->IsKinematic = true;
 
     Transform.Translation = initialPosition;

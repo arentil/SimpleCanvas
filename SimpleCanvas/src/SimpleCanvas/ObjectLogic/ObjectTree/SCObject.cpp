@@ -175,7 +175,7 @@ void SCObject::onDraw(CameraController const& camCtrl, Lights const& lights, scm
     //this is just for debug and will draw AABB collider
     if (Rigidbody.has_value())
     {
-        auto &aabb = Rigidbody->Collider;
+        auto &aabb = Rigidbody->collider;
         aabb.initDebugShader();
         aabb.draw(camCtrl, scmath::Mat4::identity());
     }

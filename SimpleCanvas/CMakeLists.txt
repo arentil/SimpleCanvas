@@ -70,6 +70,11 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCNode.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCObject.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/ObjectTree/SCObject.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/SphereCollider.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/SphereCollider.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/AABBCollider.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/AABBCollider.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Collider.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Rigidbody.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Rigidbody.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/TransformComponent.h

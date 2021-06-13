@@ -12,7 +12,8 @@ class Rigidbody
 {
 public:
     Rigidbody() = default;
-    Rigidbody(scmath::Vec3 const& min, scmath::Vec3 const& max);
+    Rigidbody(scmath::Vec3 const& min, scmath::Vec3 const& max);    // for aabb collider
+    //Rigidbody(scmath::Vec3 const& center, float radius);            // for sphere collider
 
     void physic(scmath::Vec3 & objectPosition, float deltaTime);
     bool isCollision(Rigidbody const& other) const;
@@ -26,6 +27,6 @@ public:
     scmath::Vec3 Acceleration = {0.0f, 0.0f, 0.0f};
     bool IsGrounded = false;
     
-    AABB Collider;
+    AABB collider;
 };
 } // namespace sc

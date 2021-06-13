@@ -3,7 +3,7 @@
 namespace sc
 {
 Rigidbody::Rigidbody(scmath::Vec3 const& aabbMin, scmath::Vec3 const& aabbMax)
-: Collider(aabbMin, aabbMax)
+: collider(aabbMin, aabbMax)
 {}
 
 void Rigidbody::physic(scmath::Vec3 & objectPosition, float deltaTime)
@@ -23,12 +23,12 @@ void Rigidbody::physic(scmath::Vec3 & objectPosition, float deltaTime)
 
 bool Rigidbody::isCollision(Rigidbody const& other) const
 {
-    return Collider.isCollision(other.Collider);
+    return collider.isCollision(other.collider);
 }
 
 void Rigidbody::setColliderMinMax(scmath::Vec3 const& min, scmath::Vec3 const& max)
 {
-    Collider.bb.setMinMax(min, max);
+    collider.bb.setMinMax(min, max);
 }
 
 void Rigidbody::addForce(scmath::Vec3 const& force) 
