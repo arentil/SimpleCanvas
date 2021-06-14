@@ -18,12 +18,15 @@ public:
 
     void prepare(float deltaTime);
     void physic();
+    void collisionsCheck();
     void update();
     void lateUpdate();
     void draw(sc::CameraController const& camCtrl, sc::Lights const& lights);
     void destroyCheck();
 
 private:
-    std::shared_ptr<sc::SCObject> rootObject;
+    std::shared_ptr<sc::SCObject> terrain;
     std::shared_ptr<Skybox> skybox;
+
+    void createTargets(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets);
 };

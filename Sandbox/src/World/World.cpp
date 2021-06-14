@@ -54,6 +54,11 @@ void World::physic()
     _currentScene->physic();
 }
 
+void World::collisionsCheck() 
+{
+    _currentScene->collisionsCheck();
+}
+
 void World::update()
 {
     _currentScene->update();
@@ -98,7 +103,7 @@ sc::ModelPtr World::createCubeModel() const
 
 void World::loadWorld() 
 {
-    _assets.Models.addModelFromFile("Teapot", "assets/models/teapot/teapot.obj");
+    LOG_INFO("Loading assets...")
     _assets.Models.addModelFromFile("AK-47", "assets/models/AK-47/AK-47.obj");
     _assets.Models.addModel("Cube", createCubeModel());
     _assets.Models.addModelFromFile("RedSphere", "assets/models/RedSphere/untitled.obj");
@@ -120,4 +125,5 @@ void World::loadWorld()
         "assets/textures/skybox/back.jpg"
     };
     _assets.Textures.addCubemapFromFile("Skybox", cubemapFacesFiles);
+    LOG_GREEN("Assets loaded!")
 }

@@ -10,6 +10,7 @@ void TexturesContainer::addTexture(std::string const& textureName, TexturePtr co
         return;
     }
     _textures.emplace(textureName, texture);
+    LOG_INFO("Texture %s loaded!", textureName.c_str());
 }
 
 void TexturesContainer::addTexture2dFromFile(std::string const& textureName, std::string const& textureFilePath) 
@@ -20,6 +21,7 @@ void TexturesContainer::addTexture2dFromFile(std::string const& textureName, std
         return;
     }
     _textures.emplace(textureName, Texture2d::create(textureFilePath));
+    LOG_INFO("Texture %s loaded!", textureName.c_str());
 }
 
 void TexturesContainer::addCubemapFromFile(std::string const& textureName, std::vector<std::string> const& cubemapFacesFilePaths) 
@@ -30,6 +32,7 @@ void TexturesContainer::addCubemapFromFile(std::string const& textureName, std::
         return;
     }
     _textures.emplace(textureName, Cubemap::create(cubemapFacesFilePaths));
+    LOG_INFO("Cubemap %s loaded!", textureName.c_str());
 }
 
 TexturePtr TexturesContainer::getTexture(std::string const& textureName) const

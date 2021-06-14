@@ -21,6 +21,7 @@ public:
     // can not be overriden
     void prepare(float deltaT);
     void physic();
+    void collisionsCheck();
     void update();
     void lateUpdate();
     void draw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix);
@@ -38,9 +39,10 @@ public:
     scmath::Mat4 getGlobalTransform();
 
     float deltaTime = 0.0f;
-    std::string Name;
+    std::string Name = "Default";
     TransformComponent Transform;
     std::optional<Rigidbody> Rigidbody;
+    bool hasItCheckedChildren = false;
 
 protected:
     virtual void onPrepare() {} //----------------------------------------------------------------------------------// define object preparation

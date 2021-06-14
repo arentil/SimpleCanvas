@@ -134,6 +134,7 @@ void ShadersContainer::addShader(std::string const& shaderName, ShaderPtr const&
     }
 
     _shaders.emplace(shaderName, shader);
+    LOG_INFO("Shader %s loaded!", shaderName.c_str());
 }
 
 void ShadersContainer::addShaderFromFile(std::string const& shaderName, std::string const& vertexShaderFilePath, std::string const& fragmentShaderFilePath)
@@ -146,6 +147,7 @@ void ShadersContainer::addShaderFromFile(std::string const& shaderName, std::str
         return;
     }
     _shaders.emplace(shaderName, std::make_unique<Shader>(vertexSource, fragmentSource));
+    LOG_INFO("Shader %s loaded!", shaderName.c_str());
 }
 
 ShaderPtr ShadersContainer::getShader(std::string const& shaderName) const

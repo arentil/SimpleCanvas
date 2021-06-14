@@ -19,6 +19,7 @@ public:
 	void LogInfo(const char * format, ...);
 	void LogWarning(const char * format, ...);
 	void LogError(const char * format, ...);
+	void LogGreen(const char * format, ...);
 
 private:
 	Logger();
@@ -30,9 +31,11 @@ private:
 	#define LOG_INFO(format, ...) sc::Logger::instance().LogInfo(format, ##__VA_ARGS__);
 	#define LOG_WARNING(format,  ...) sc::Logger::instance().LogWarning(format, ##__VA_ARGS__);
 	#define LOG_ERROR(format, ...) sc::Logger::instance().LogError(format, ##__VA_ARGS__);
+	#define LOG_GREEN(format, ...) sc::Logger::instance().LogGreen(format, ##__VA_ARGS__);
 #else
 	#define LOG_INFO(format, ...)
 	#define LOG_WARNING(format,  ...)
 	#define LOG_ERROR(format, ...)
+	#define LOG_GREEN(format, ...)
 #endif
 } // namespace sc

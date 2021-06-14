@@ -9,6 +9,7 @@ namespace sc {
 namespace {
 enum class CONSOLE_TEXT_COLOR : int
 {
+	COLOR_GREEN = 10,
 	COLOR_ERROR = 12,
 	COLOR_WARNING = 14,
 	COLOR_INFO = 15
@@ -54,6 +55,7 @@ void formatColorConsole(CONSOLE_TEXT_COLOR color)
 			printf("\033[1;31m");
 			break;
 		case CONSOLE_TEXT_COLOR::COLOR_INFO:
+			printf("\033[1;37m");
 		default:
 			break;
 	}
@@ -65,11 +67,12 @@ void formatColorConsole(CONSOLE_TEXT_COLOR color)
 	#define FORMAT_CONSOLE_BEGIN(color) SetConsoleTextAttribute(winCmdHandler, (int)color); \
 		printf("[ %s ] ", getCurrentTime().c_str());
 
-	#define FORMAT_CONSOLE_END printf("\n");
+	#define FORMAT_CONSOLE_END printf("\n"); SetConsoleTextAttribute(winCmdHandler, 15);
 #else
 	#define FORMAT_CONSOLE_BEGIN(color)					\
 		printf("[ %s ] ", getCurrentTime().c_str());	\
 		formatColorConsole(color);
+		formatColorConsole(15);
 
 	#define FORMAT_CONSOLE_END printf("\n");
 #endif
@@ -110,6 +113,13 @@ void Logger::LogWarning(const char* format, ...)
 void Logger::LogError(const char* format, ...)
 {
 	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_ERROR);
+	PRINT_ARGS
+	FORMAT_CONSOLE_END
+}
+
+void Logger::LogGreen(const char * format, ...) 
+{
+	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_GREEN);
 	PRINT_ARGS
 	FORMAT_CONSOLE_END
 }

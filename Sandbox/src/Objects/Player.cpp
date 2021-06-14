@@ -21,6 +21,7 @@ void Player::onCollision(SCObject *collisionObject)
 {
     if (collisionObject->Name != "Terrain")
         return;
+
     Rigidbody->IsGrounded = true;
     // set negative velocity.y so that player can stay on terrain
     Rigidbody->Velocity.y = -(Rigidbody->Velocity.y) * terrainBounceModifier;
@@ -39,7 +40,7 @@ void Player::onUpdate()
         gun->shoot();
     }
 
-    if (Transform.Translation.y < -50.0f)
+    if (Transform.Translation.y < -2.0f)
     {
         Rigidbody->Acceleration = scmath::Vec3::Zero();
         Rigidbody->Velocity = scmath::Vec3::Zero();

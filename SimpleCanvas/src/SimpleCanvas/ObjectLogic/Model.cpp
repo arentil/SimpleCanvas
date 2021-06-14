@@ -65,6 +65,7 @@ void ModelsContainer::addModel(std::string const& modelName, ModelPtr const& mod
         return;
     }
     models.emplace(modelName, model);
+    LOG_INFO("Model %s loaded!", modelName.c_str());
 }
 
 void ModelsContainer::addModelFromFile(std::string const& modelName, std::string const& objFilePath) 
@@ -75,6 +76,7 @@ void ModelsContainer::addModelFromFile(std::string const& modelName, std::string
         return;
     }
     models.emplace(modelName, sc::ObjLoader::loadObjFromFile(objFilePath));
+    LOG_INFO("Model %s loaded!", modelName.c_str());
 }
 
 ModelPtr ModelsContainer::getModel(std::string const& modelName) const

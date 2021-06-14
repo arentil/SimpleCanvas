@@ -32,7 +32,7 @@ void Window::init(WindowProperties const& properties)
 	glfwData.width = properties.width;
 	glfwData.height = properties.height;
 
-	LOG_INFO("Generating OpenGl window!");
+	LOG_INFO("Generating OpenGl window...");
 
 	if (!GLFW_INITIALIZED)
 	{

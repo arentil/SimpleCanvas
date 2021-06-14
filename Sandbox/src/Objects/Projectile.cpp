@@ -18,5 +18,7 @@ void Projectile::onUpdate()
 
 void Projectile::onCollision(SCObject *object) 
 {
+    if (object->Name.find("Target") != std::string::npos)
+        object->destroy();
     destroy();
 }

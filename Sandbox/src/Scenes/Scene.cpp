@@ -10,10 +10,7 @@
 Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl) 
 {
     skybox = std::make_shared<Skybox>(assets, camCtrl);
-    rootObject = std::make_shared<Terrain>(assets);
-
-    // terrain (root)
-    auto terrain = rootObject;
+    terrain = std::make_shared<Terrain>(assets);
     
     // player
     Player *player = new Player(assets, camCtrl);
@@ -23,38 +20,62 @@ Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl)
     // gun
     player->attach(new Gun(assets));
 
-    // target
-    terrain->attach(new Target(assets));
+    // generate targets and set their parents to terrain
+    createTargets(terrain, assets);
 }
 
 void Scene::prepare(float deltaTime) 
 {
-    rootObject->prepare(deltaTime);
+    terrain->prepare(deltaTime);
 }
 
 void Scene::physic() 
 {
-    rootObject->physic();
+    terrain->physic();
+}
+
+void Scene::collisionsCheck() 
+{
+    terrain->collisionsCheck();
 }
 
 void Scene::update()
 {
     skybox->update();
-    rootObject->update();
+    terrain->update();
 }
 
 void Scene::lateUpdate() 
 {
-    rootObject->lateUpdate();
+    terrain->lateUpdate();
 }
 
 void Scene::draw(sc::CameraController const& camCtrl, sc::Lights const& lights) 
 {
     skybox->draw(camCtrl, sc::Lights{}, scmath::Mat4::identity());
-    rootObject->draw(camCtrl, lights, scmath::Mat4::identity());
+    terrain->draw(camCtrl, lights, scmath::Mat4::identity());
 }
 
 void Scene::destroyCheck() 
 {
-    rootObject->destroyCheck();
+    terrain->destroyCheck();
+}
+
+void Scene::createTargets(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets) 
+{
+    int numberOfTargets = 100;
+    float distBetweenTargets = 3.0f;
+
+    scmath::Vec3 basePos(-20.0f, 5.0f, -20.0f);
+    int targetsSqrt = std::sqrt(numberOfTargets);
+
+    for (int i = 0; i < targetsSqrt; i++)
+    {
+        for (int j = 0; j < targetsSqrt; j++)
+        {
+            auto newTarget = new Target(assets);
+            newTarget->Transform.Translation = basePos + scmath::Vec3(distBetweenTargets * i, distBetweenTargets * j, 0.0f);
+            object->attach(newTarget);
+        }
+    }
 }

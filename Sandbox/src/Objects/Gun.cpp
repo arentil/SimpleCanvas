@@ -15,7 +15,7 @@ Gun::Gun(sc::AssetsContainer const& assets)
     Transform.Scale = scmath::Vec3(scale, scale, scale);
 }
 
-void Gun::onPrepare() 
+void Gun::onPrepare()
 {
     if (createProjectile)
     {

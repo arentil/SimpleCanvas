@@ -31,14 +31,14 @@ public:
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		sc::RenderCommand::clear();
 
-		camCtrl.update(deltaTime);
-
 		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);
 		float specularStrength = 0.5f;
 		sc::Lights lights{0.3f, diffusePos, specularStrength};
 
 		world->prepare(deltaTime);
+		camCtrl.update(deltaTime);
 		world->physic();
+		world->collisionsCheck();
 		world->update();
 		world->lateUpdate();
 		world->draw(camCtrl, lights);
