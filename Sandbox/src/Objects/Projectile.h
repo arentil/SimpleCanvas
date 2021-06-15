@@ -10,6 +10,6 @@ public:
     virtual void onUpdate() override;
     virtual void onCollision(sc::SCObject *object, sc::CollisionDir direction) override;
 
-    float speed = 10.0f;
+    float speed = 40.0f;
     float scale = 0.05f;
 };

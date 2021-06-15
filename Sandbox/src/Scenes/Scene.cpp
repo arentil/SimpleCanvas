@@ -6,6 +6,7 @@
 #include <Objects/Player.h>
 #include <Objects/Terrain.h>
 #include <Objects/Target.h>
+#include <Objects/Crosshair.h>
 
 Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl) 
 {
@@ -20,15 +21,11 @@ Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl)
     // gun
     player->attach(new Gun(assets));
 
+    // crossfire
+    player->attach(new Crosshair(assets));
+
     // generate targets and set their parents to terrain
-    //createTargets(terrain, assets);
-
-    // generate center target
-
-    auto target = new Target(assets);
-    terrain->attach(target);
-    target->Transform.Translation.y -= 4.0f;
-
+    createTargets(terrain, assets);
 }
 
 void Scene::prepare(float deltaTime) 

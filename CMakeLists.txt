@@ -32,6 +32,8 @@ set(SOURCE_FILES
   ${SOURCE_DIR}/Objects/Terrain.h
   ${SOURCE_DIR}/Objects/Target.cpp
   ${SOURCE_DIR}/Objects/Target.h
+  ${SOURCE_DIR}/Objects/Crosshair.cpp
+  ${SOURCE_DIR}/Objects/Crosshair.h
   ${SOURCE_DIR}/Sandbox.cpp
   ${SOURCE_DIR}/Scenes/Scene.cpp
   ${SOURCE_DIR}/Scenes/Scene.h
