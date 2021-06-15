@@ -29,9 +29,9 @@ You may also need to install following packages in order to compile
 * libxi-dev
 * libgl1-mesa-dev
 
-```
-  $ sudo apt-get install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev -y
-```
+
+  $ ```sudo apt-get install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev -y```
+
 
 Init and update submodules. [GLFW](https://www.glfw.org/) and [googletest](https://github.com/google/googletest)s will be downloaded.
 Then run cmake and build with make:
