@@ -19,8 +19,10 @@ TODO
 ### Building SimpleCanvas from Scratch
 
 Before build, make sure that you have installed latest graphic card drivers that supports OpenGL 4.5 or later.
-Building SimpleCanvas in virtualized systems like Linux on VirtualBox or WSL(2) may not work since they not support such OpenGL versions.
 
+If you are using laptop with a dual grahic cards(e.g Intel and Nvidia), you can use this [INSTRUCTION](https://www.linuxbabe.com/desktop-linux/switch-intel-nvidia-graphics-card-ubuntu) to check how to use Nvidia.
+
+Building SimpleCanvas in virtualized systems like Linux on VirtualBox or WSL(2) may not work since they not support such OpenGL versions.
 
 #### Linux
 
