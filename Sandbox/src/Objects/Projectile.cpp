@@ -16,9 +16,32 @@ void Projectile::onUpdate()
         destroy();
 }
 
-void Projectile::onCollision(SCObject *object) 
+void Projectile::onCollision(sc::SCObject *object, sc::CollisionDir direction) 
 {
-    if (object->Name.find("Target") != std::string::npos)
-        object->destroy();
+    // if (object->Name.find("Target") != std::string::npos)
+    //     object->destroy();
+    std::string str = "";
+    switch (direction)
+    {
+        case sc::CollisionDir::FRONT:
+            str = "FRONT";
+            break;
+        case sc::CollisionDir::BACK:
+            str = "BACK";
+            break;
+        case sc::CollisionDir::TOP:
+            str = "TOP";
+            break;
+        case sc::CollisionDir::BOTTOM:
+            str = "BOTTOM";
+            break;
+        case sc::CollisionDir::LEFT:
+            str = "LEFT";
+            break;
+        case sc::CollisionDir::RIGHT:
+            str = "RIGHT";
+            break;
+    }
+    LOG_ERROR("Projectile collision with %s on %s", object->Name.c_str(), str.c_str());;
     destroy();
 }

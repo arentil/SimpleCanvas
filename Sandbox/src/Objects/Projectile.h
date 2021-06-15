@@ -8,7 +8,7 @@ public:
     Projectile(sc::AssetsContainer const& assets);
 
     virtual void onUpdate() override;
-    virtual void onCollision(SCObject *object) override;
+    virtual void onCollision(sc::SCObject *object, sc::CollisionDir direction) override;
 
     float speed = 40.0f;
     float scale = 0.05f;

@@ -22,6 +22,13 @@ Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl)
 
     // generate targets and set their parents to terrain
     createTargets(terrain, assets);
+
+    // generate center target
+
+    auto target = new Target(assets);
+    terrain->attach(target);
+    target->Transform.Translation.y -= 3.0f;
+
 }
 
 void Scene::prepare(float deltaTime) 

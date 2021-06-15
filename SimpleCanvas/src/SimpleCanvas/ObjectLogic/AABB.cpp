@@ -93,11 +93,60 @@ void AABB::draw(CameraController const& camCtrl, scmath::Mat4 const& modelMatrix
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL ); // for normal draw
 }
 
-bool AABB::isCollision(AABB const& other) const
+std::pair<bool, CollisionDir> AABB::getCollision(AABB const& other) const
 {
-    return (bb.min.x <= other.bb.max.x && bb.max.x >= other.bb.min.x) &&
-           (bb.min.y <= other.bb.max.y && bb.max.y >= other.bb.min.y) &&
-           (bb.min.z <= other.bb.max.z && bb.max.z >= other.bb.min.z);
+    if ((bb.min.x <= other.bb.max.x && bb.max.x >= other.bb.min.x) &&
+        (bb.min.y <= other.bb.max.y && bb.max.y >= other.bb.min.y) &&
+        (bb.min.z <= other.bb.max.z && bb.max.z >= other.bb.min.z))
+        return std::make_pair(true, getDirection(other));
+
+    return std::make_pair(false, CollisionDir::NONE);
+}
+
+CollisionDir AABB::getDirection(AABB const& other) const
+{
+    scmath::Vec3 thisCenter = scmath::Vec3::lerp(bb.min, bb.max, 0.5f);
+    scmath::Vec3 otherCenter = scmath::Vec3::lerp(other.bb.min, other.bb.max, 0.5f);
+    float xDiff = thisCenter.x - otherCenter.x;
+    float yDiff = thisCenter.y - otherCenter.y;
+    float zDiff = thisCenter.z - otherCenter.z;
+    float xDiffAbs = std::abs(xDiff);
+    float yDiffAbs = std::abs(yDiff);
+    float zDiffAbs = std::abs(zDiff);
+
+    float max = xDiffAbs;
+    CollisionDir direction = xDiff > 0.0f ? CollisionDir::RIGHT : CollisionDir::LEFT;
+    if (yDiffAbs > max)
+    {
+        max = yDiffAbs;
+        direction = yDiff > 0.0f ? CollisionDir::TOP : CollisionDir::BOTTOM;
+    }
+    if (zDiffAbs > max)
+    {
+        direction = zDiff > 0.0f ? CollisionDir::FRONT : CollisionDir::BACK;
+    }
+
+    return direction;
+}
+
+CollisionDir AABB::getOppositeDirection(CollisionDir direction)
+{
+    switch (direction)
+    {
+        case CollisionDir::FRONT:
+            return CollisionDir::BACK;
+        case CollisionDir::BACK:
+            return CollisionDir::FRONT;
+        case CollisionDir::RIGHT:
+            return CollisionDir::LEFT;
+        case CollisionDir::LEFT:
+            return CollisionDir::RIGHT;
+        case CollisionDir::TOP:
+            return CollisionDir::BOTTOM;
+        case CollisionDir::BOTTOM:
+            return CollisionDir::TOP;
+    }
+    return CollisionDir::NONE;
 }
 
 scmath::Vec3 AABB::getVertexP(scmath::Vec3 const& normal) const

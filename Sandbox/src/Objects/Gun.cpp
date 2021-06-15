@@ -45,14 +45,14 @@ void Gun::onUpdate()
     if (timeSinceLastShoot < (timeBetweenShots / 2.0f))
     {
         
-        Transform.Translation.z += 0.09f;
+        Transform.Translation.z += 0.02f;
         timesToReturn++;
     }
     else
     {
         if (timesToReturn != 0)
         {
-            Transform.Translation.z -= 0.09f;
+            Transform.Translation.z -= 0.02f;
             timesToReturn--;
         }
     }

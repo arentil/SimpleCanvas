@@ -8,6 +8,17 @@
 
 namespace sc
 {
+enum class CollisionDir
+{
+    NONE,
+    FRONT,
+    BACK,
+    RIGHT,
+    LEFT,
+    TOP,
+    BOTTOM
+};
+
 class CameraController;
 
 class AABB
@@ -17,7 +28,9 @@ public:
     AABB(scmath::Vec3 const& min, scmath::Vec3 const& max);
     virtual ~AABB() = default;
 
-    bool isCollision(AABB const& other) const;
+    std::pair<bool, CollisionDir> getCollision(AABB const& other) const;
+    CollisionDir getDirection(AABB const& other) const;
+    static CollisionDir getOppositeDirection(CollisionDir direction);
 
     // for test/debug purpose only!
     void initDebugShader();

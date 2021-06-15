@@ -17,9 +17,9 @@ Player::Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl
     Transform.Translation = initialPosition;
 }
 
-void Player::onCollision(SCObject *collisionObject) 
+void Player::onCollision(sc::SCObject *collisionObject, sc::CollisionDir direction) 
 {
-    if (collisionObject->Name != "Terrain")
+    if (collisionObject->Name != "Terrain" && direction != sc::CollisionDir::TOP)
         return;
 
     Rigidbody->IsGrounded = true;

@@ -48,7 +48,7 @@ protected:
     virtual void onPrepare() {} //----------------------------------------------------------------------------------// define object preparation
     virtual void onPhysic(); //-------------------------------------------------------------------------------------// define your own physics
     virtual void updateCollider(); //-------------------------------------------------------------------------------// define your own collider
-    virtual void onCollision(SCObject *object) {} //----------------------------------------------------------------// check if collision occured
+    virtual void onCollision(SCObject *object, CollisionDir direction) {} //----------------------------------------------------------------// check if collision occured
     virtual void onUpdate() {} //-----------------------------------------------------------------------------------// script everything you want
     virtual void onLateUpdate() {} //-------------------------------------------------------------------------------// update camera position
     virtual void onDraw(CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix); //-// define own draw function

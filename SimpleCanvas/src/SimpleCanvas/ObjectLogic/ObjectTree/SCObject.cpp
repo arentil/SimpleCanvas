@@ -94,11 +94,13 @@ void SCObject::checkCollision(SCObject *object)
     if (object != (SCObject*)this &&
         Rigidbody.has_value() &&
         object->Rigidbody.has_value() &&
-        !(hasItCheckedChildren) &&
-        Rigidbody->isCollision(object->Rigidbody.value()))
+        !(hasItCheckedChildren))
     {
-        onCollision(object);
-        object->onCollision(this);
+        if (auto const& [result, direction] = Rigidbody->getCollision(object->Rigidbody.value()); result == true)
+        {
+            onCollision(object, AABB::getOppositeDirection(direction));
+            object->onCollision(this, direction);
+        }
     }
 
     if (hasChild())
