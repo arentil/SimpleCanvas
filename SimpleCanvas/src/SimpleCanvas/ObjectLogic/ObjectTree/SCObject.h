@@ -4,7 +4,7 @@
 #include "Camera/CameraController.h"
 #include "ObjectLogic/Model.h"
 #include "ObjectLogic/TransformComponent.h"
-#include "ObjectLogic/Rigidbody.h"
+#include "ObjectLogic/RigidbodyComponent.h"
 
 namespace sc
 {
@@ -41,7 +41,7 @@ public:
     float deltaTime = 0.0f;
     std::string Name = "Default";
     TransformComponent Transform;
-    std::optional<Rigidbody> Rigidbody;
+    std::optional<RigidbodyComponent> Rigidbody;
     bool hasItCheckedChildren = false;
 
 protected:

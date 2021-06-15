@@ -8,15 +8,14 @@ namespace sc
 {
 constexpr float G = 9.81; // m/s^2
 
-class Rigidbody
+class RigidbodyComponent
 {
 public:
-    Rigidbody() = default;
-    Rigidbody(scmath::Vec3 const& min, scmath::Vec3 const& max);    // for aabb collider
-    //Rigidbody(scmath::Vec3 const& center, float radius);            // for sphere collider
+    RigidbodyComponent() = default;
+    RigidbodyComponent(scmath::Vec3 const& min, scmath::Vec3 const& max);    // for aabb collider
 
     void physic(scmath::Vec3 & objectPosition, float deltaTime);
-    bool isCollision(Rigidbody const& other) const;
+    bool isCollision(RigidbodyComponent const& other) const;
     void setColliderMinMax(scmath::Vec3 const& min, scmath::Vec3 const& max);
     void addForce(scmath::Vec3 const& force);
 
