@@ -42,6 +42,6 @@ void Projectile::onCollision(sc::SCObject *object, sc::CollisionDir direction)
             str = "RIGHT";
             break;
     }
-    LOG_ERROR("Projectile collision with %s on %s", object->Name.c_str(), str.c_str());;
+    LOG_ERROR("Projectile collision with %s on %s", object->Name.c_str(), str.c_str());
     destroy();
 }

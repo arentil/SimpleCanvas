@@ -21,13 +21,13 @@ Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl)
     player->attach(new Gun(assets));
 
     // generate targets and set their parents to terrain
-    createTargets(terrain, assets);
+    //createTargets(terrain, assets);
 
     // generate center target
 
     auto target = new Target(assets);
     terrain->attach(target);
-    target->Transform.Translation.y -= 3.0f;
+    target->Transform.Translation.y -= 4.0f;
 
 }
 

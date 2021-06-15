@@ -105,28 +105,29 @@ std::pair<bool, CollisionDir> AABB::getCollision(AABB const& other) const
 
 CollisionDir AABB::getDirection(AABB const& other) const
 {
-    scmath::Vec3 thisCenter = scmath::Vec3::lerp(bb.min, bb.max, 0.5f);
-    scmath::Vec3 otherCenter = scmath::Vec3::lerp(other.bb.min, other.bb.max, 0.5f);
-    float xDiff = thisCenter.x - otherCenter.x;
-    float yDiff = thisCenter.y - otherCenter.y;
-    float zDiff = thisCenter.z - otherCenter.z;
-    float xDiffAbs = std::abs(xDiff);
-    float yDiffAbs = std::abs(yDiff);
-    float zDiffAbs = std::abs(zDiff);
+    // scmath::Vec3 thisCenter = scmath::Vec3::lerp(bb.min, bb.max, 0.5f);
+    // scmath::Vec3 otherCenter = scmath::Vec3::lerp(other.bb.min, other.bb.max, 0.5f);
+    // float xDiff = thisCenter.x - otherCenter.x;
+    // float yDiff = thisCenter.y - otherCenter.y;
+    // float zDiff = thisCenter.z - otherCenter.z;
+    // float xDiffAbs = std::abs(xDiff);
+    // float yDiffAbs = std::abs(yDiff);
+    // float zDiffAbs = std::abs(zDiff);
 
-    float max = xDiffAbs;
-    CollisionDir direction = xDiff > 0.0f ? CollisionDir::RIGHT : CollisionDir::LEFT;
-    if (yDiffAbs > max)
-    {
-        max = yDiffAbs;
-        direction = yDiff > 0.0f ? CollisionDir::TOP : CollisionDir::BOTTOM;
-    }
-    if (zDiffAbs > max)
-    {
-        direction = zDiff > 0.0f ? CollisionDir::FRONT : CollisionDir::BACK;
-    }
+    // float max = xDiffAbs;
+    // CollisionDir direction = xDiff > 0.0f ? CollisionDir::RIGHT : CollisionDir::LEFT;
+    // if (yDiffAbs > max)
+    // {
+    //     max = yDiffAbs;
+    //     direction = yDiff > 0.0f ? CollisionDir::TOP : CollisionDir::BOTTOM;
+    // }
+    // if (zDiffAbs > max)
+    // {
+    //     direction = zDiff > 0.0f ? CollisionDir::FRONT : CollisionDir::BACK;
+    // }
 
-    return direction;
+    // return direction;
+    return CollisionDir::NONE;
 }
 
 CollisionDir AABB::getOppositeDirection(CollisionDir direction)
