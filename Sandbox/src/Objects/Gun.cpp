@@ -34,7 +34,8 @@ void Gun::onPrepare()
         auto transform = player->Transform.GetTransform() * tempGunTransform.GetTransform();
 
         projectile->Transform.Translation = transform * projectile->Transform.Translation;
-        projectile->Transform.Rotation = player->Transform.Rotation;
+        scmath::Vec3 rotationAdjust(0.003f, 0.01f, 0.0f);
+        projectile->Transform.Rotation = player->Transform.Rotation + rotationAdjust;
     }
 }
 

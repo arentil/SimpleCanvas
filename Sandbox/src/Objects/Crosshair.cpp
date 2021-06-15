@@ -40,7 +40,7 @@ Crosshair::Crosshair(sc::AssetsContainer const& assets)
     glBindVertexArray(0);
 }
 
-void Crosshair::onDraw(sc::CameraController const& camCtrl, sc::Lights const& lights, scmath::Mat4 const& modelMatrix) 
+void Crosshair::onDraw(sc::CameraController const& camCtrl, sc::Lights const& , scmath::Mat4 const& modelMatrix) 
 {
     _shader->bind();
     _shader->uploadUniformMat4("u_ViewProjection", camCtrl.getViewProj());

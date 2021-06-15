@@ -1,7 +1,6 @@
 #include "Scene.h"
 
 #include <Objects/Skybox.h>
-#include <Objects/Triangle.h>
 #include <Objects/Gun.h>
 #include <Objects/Player.h>
 #include <Objects/Terrain.h>
