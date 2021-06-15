@@ -47,9 +47,9 @@ You can also specify the build type:
 
 ```
   $ cmake -DCMAKE_BUILD_TYPE=Debug ..
-
+```
   or
-
+```
   $ cmake -DCMAKE_BUILD_TYPE=Release ..
 ```
 
