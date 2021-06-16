@@ -13,6 +13,6 @@ Target::Target(sc::AssetsContainer const& assets)
 
 void Target::onCollision(SCObject *object, sc::CollisionDir direction) 
 {
-    if (object->Name.find("Projectile") != std::string::npos)
-        destroy();
+    // if (object->Name.find("Projectile") != std::string::npos)
+    //     destroy();
 }

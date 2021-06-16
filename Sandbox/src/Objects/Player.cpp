@@ -19,7 +19,7 @@ Player::Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl
 
 void Player::onCollision(sc::SCObject *collisionObject, sc::CollisionDir direction) 
 {
-    if (collisionObject->Name != "Terrain" && direction != sc::CollisionDir::TOP)
+    if (collisionObject->Name != "Terrain" && collisionObject->Name.find("Target") == std::string::npos)
         return;
 
     Rigidbody->IsGrounded = true;

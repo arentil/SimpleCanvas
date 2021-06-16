@@ -23,6 +23,19 @@ Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl)
     // crossfire
     player->attach(new Crosshair(assets));
 
+    // test target
+    auto target = new Target(assets);
+    terrain->attach(target);
+    target->Transform.Translation.y -= 6.0f;
+
+    auto target2 = new Target(assets);
+    terrain->attach(target2);
+    target2->Transform.Translation.y -= 6.0f;
+    
+    target2->Transform.Translation.x -= 3.0f;
+    target2->Transform.Scale = scmath::Vec3(1.0f, 1.0f, 4.0f);
+
+
     // generate targets and set their parents to terrain
     createTargets(terrain, assets);
 }
