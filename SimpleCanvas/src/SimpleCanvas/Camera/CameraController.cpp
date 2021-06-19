@@ -9,6 +9,10 @@ CameraController::CameraController(CameraSettings const& settings)
 : camera(settings, yaw, pitch)
 {
     Renderer::setCursorMode(CursorMode::CURSOR_DISABLED);
+    dispatcher.subscribe(this, &CameraController::onMouseMoved);
+    dispatcher.subscribe(this, &CameraController::onMouseScrolled);
+    dispatcher.subscribe(this, &CameraController::onMouseButtonPressed);
+    dispatcher.subscribe(this, &CameraController::onWindowResize);
 }
 
 void CameraController::attachObject(SCObject *obj) 
@@ -80,11 +84,6 @@ bool CameraController::isAABBvisible(AABB const& aabb) const
 
 void CameraController::onEvent(Event &event) 
 {
-    EventDispatcher dispatcher;
-    dispatcher.subscribe(this, &CameraController::onMouseMoved);
-    dispatcher.subscribe(this, &CameraController::onMouseScrolled);
-    dispatcher.subscribe(this, &CameraController::onMouseButtonPressed);
-    dispatcher.subscribe(this, &CameraController::onWindowResize);
 	dispatcher.dispatch(event);
 }
 

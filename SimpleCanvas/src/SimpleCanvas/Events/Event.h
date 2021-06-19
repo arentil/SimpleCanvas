@@ -128,8 +128,6 @@ public:
 
 		for (auto &callback : callbacks[event.type()])
 			callback->call(event);
-
-		callbacks.erase(event.type());	// pointers to FunctionHandler objects will be self deleted
 	}
 
 private:

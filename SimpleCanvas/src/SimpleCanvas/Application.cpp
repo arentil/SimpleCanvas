@@ -13,6 +13,8 @@ Application::Application()
 	_isRunning = true;
 	window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 	Renderer::init();
+	dispatcher.subscribe(this, &Application::onWindowClose);
+	dispatcher.subscribe(this, &Application::onWindowResize);
 }
 
 Application::~Application()
@@ -41,12 +43,7 @@ void Application::run()
 
 void Application::onEvent(Event &event)
 {
-	EventDispatcher dispatcher;
-	dispatcher.subscribe(this, &Application::onWindowClose);
-	dispatcher.subscribe(this, &Application::onWindowResize);
-
 	_currentCanvas->onEvent(event);
-
 	dispatcher.dispatch(event);
 }
 

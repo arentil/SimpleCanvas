@@ -21,6 +21,7 @@ public:
 	void initCanvas(Canvas *canvas);
 
 private:
+	EventDispatcher dispatcher;
 	WindowPtr window;
 	bool _isRunning = false;
 	bool _windowMinimized = false;

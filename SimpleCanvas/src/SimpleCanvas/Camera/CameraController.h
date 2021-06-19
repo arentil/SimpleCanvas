@@ -39,6 +39,7 @@ public:
     float shiftMultiplier = 2.0f;
     float jumpForceMultiplier = 7.0f;
 
+    EventDispatcher dispatcher;
     CursorMode cursorMode;
     FPSCamera camera;
     // object that the camera is attached to
