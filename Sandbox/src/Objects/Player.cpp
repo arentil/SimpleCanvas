@@ -19,9 +19,6 @@ Player::Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl
 
 void Player::onCollision(sc::SCObject *collisionObject, sc::CollisionSide side) 
 {
-    if (collisionObject->Name != "Terrain" && collisionObject->Name.find("Target") == std::string::npos)
-        return;
-
     if (side == sc::CollisionSide::DOWN)
     {
         Rigidbody->IsGrounded = true;
@@ -34,6 +31,9 @@ void Player::onCollision(sc::SCObject *collisionObject, sc::CollisionSide side)
         Transform.Translation.x = cam.lastPosition.x;
     else if (side == sc::CollisionSide::FRONT || side == sc::CollisionSide::BACK)
         Transform.Translation.z = cam.lastPosition.z;
+    else if (side == sc::CollisionSide::UP)
+        Rigidbody->addForce(scmath::Vec3::Down() * 5.0f);
+
 }
 
 void Player::updateCollider() 

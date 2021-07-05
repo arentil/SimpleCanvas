@@ -20,6 +20,6 @@ private:
     scmath::Vec3 min;
     scmath::Vec3 max;
 
-    scmath::Vec3 const initialPosition = scmath::Vec3(0.0f, 3.0f, 3.0f);
+    scmath::Vec3 const initialPosition = scmath::Vec3(0.0f, 3.0f, 0.0f);
     float terrainBounceModifier = 0.1f;
 };

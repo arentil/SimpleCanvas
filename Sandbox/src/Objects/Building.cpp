@@ -1,6 +1,6 @@
-#include "Terrain.h"
+#include "Building.h"
 
-#include <vector>
+int Building::count = 0;
 
 namespace
 {
@@ -14,8 +14,8 @@ void applyMatrixAndAppend(std::vector<sc::TextureVertex> &vertices, scmath::Mat4
 }
 }
 
-Terrain::Terrain(sc::AssetsContainer const& assets)
-: sc::SCObject("Terrain", assets.Shaders.getShader("Texture"))
+Building::Building(sc::AssetsContainer const& assets) 
+: sc::SCObject("Building" + std::to_string(count++), assets.Shaders.getShader("Texture"))
 {
     std::vector<sc::TextureVertex> vertices{
         {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
@@ -31,16 +31,6 @@ Terrain::Terrain(sc::AssetsContainer const& assets)
     applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.5f, 0.0f, -0.5f) * scmath::Mat4::rotateY(scmath::degToRad(-90)), scmath::Mat4::rotateY(scmath::degToRad(-90))); //right
     applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, 0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(90)), scmath::Mat4::rotateX(scmath::degToRad(90))); //top
     applyMatrixAndAppend(vertices, scmath::Mat4::translate(0.0f, -0.5f, -0.5f) * scmath::Mat4::rotateX(scmath::degToRad(-90)), scmath::Mat4::rotateX(scmath::degToRad(-90))); //bottom
-
-    for (auto &vertex : vertices)
-    {
-        vertex.position = scmath::Mat4::translate(0.0f, -2.0f, 6.0f) *
-            scmath::Mat4::scale(12.0f, 1.0f, 12.0f) * vertex.position;
-
-        // multiplying tex coords will force to repeat texture over the surface
-        vertex.texCoord.x *= 6.0f;
-        vertex.texCoord.y *= 6.0f;
-    }
 
     auto mesh = std::make_shared<sc::TextureMesh>(vertices, assets.Textures.getTexture("Cobblestone"));
     std::vector<sc::BaseMeshPtr> const meshes{ mesh };

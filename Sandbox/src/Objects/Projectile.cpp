@@ -18,9 +18,11 @@ void Projectile::onUpdate()
 
 void Projectile::onCollision(sc::SCObject *object, sc::CollisionSide side) 
 {
-    if (object->Name.find("Player") != std::string::npos)
+    if ((object->Name.find("Player") != std::string::npos))
         return;
+    
+    if ((object->Name.find("Target") != std::string::npos))
+        object->destroy();
 
-    LOG_ERROR("Projectile hit %s", object->Name.c_str());
     destroy();
 }
