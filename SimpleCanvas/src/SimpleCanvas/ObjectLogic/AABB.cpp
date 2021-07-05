@@ -93,61 +93,40 @@ void AABB::draw(CameraController const& camCtrl, scmath::Mat4 const& modelMatrix
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL ); // for normal draw
 }
 
-std::pair<bool, CollisionDir> AABB::getCollision(AABB const& other) const
+std::pair<bool, CollisionSide> AABB::getCollision(AABB const& other) const
 {
     if ((bb.min.x <= other.bb.max.x && bb.max.x >= other.bb.min.x) &&
         (bb.min.y <= other.bb.max.y && bb.max.y >= other.bb.min.y) &&
         (bb.min.z <= other.bb.max.z && bb.max.z >= other.bb.min.z))
-        return std::make_pair(true, getDirection(other));
+        return std::make_pair(true, getCollisionSide(other));
 
-    return std::make_pair(false, CollisionDir::NONE);
+    return std::make_pair(false, CollisionSide::UNDEFINED);
 }
 
-CollisionDir AABB::getDirection(AABB const& other) const
+CollisionSide AABB::getCollisionSide(AABB const& other) const
 {
-    // scmath::Vec3 thisCenter = scmath::Vec3::lerp(bb.min, bb.max, 0.5f);
-    // scmath::Vec3 otherCenter = scmath::Vec3::lerp(other.bb.min, other.bb.max, 0.5f);
-    // float xDiff = thisCenter.x - otherCenter.x;
-    // float yDiff = thisCenter.y - otherCenter.y;
-    // float zDiff = thisCenter.z - otherCenter.z;
-    // float xDiffAbs = std::abs(xDiff);
-    // float yDiffAbs = std::abs(yDiff);
-    // float zDiffAbs = std::abs(zDiff);
+    float precision = 0.15f;
 
-    // float max = xDiffAbs;
-    // CollisionDir direction = xDiff > 0.0f ? CollisionDir::RIGHT : CollisionDir::LEFT;
-    // if (yDiffAbs > max)
-    // {
-    //     max = yDiffAbs;
-    //     direction = yDiff > 0.0f ? CollisionDir::TOP : CollisionDir::BOTTOM;
-    // }
-    // if (zDiffAbs > max)
-    // {
-    //     direction = zDiff > 0.0f ? CollisionDir::FRONT : CollisionDir::BACK;
-    // }
+    if (bb.max.y <= other.bb.min.y + precision)
+        return CollisionSide::DOWN;
+    if (bb.min.y >= other.bb.max.y - precision)
+        return CollisionSide::UP;
+    if (bb.max.x <= other.bb.min.x + precision)
+        return CollisionSide::LEFT;
+    if (bb.min.x >= other.bb.max.x - precision)
+        return CollisionSide::RIGHT;
+    if (bb.max.z <= other.bb.min.z + precision)
+        return CollisionSide::FRONT;
+    if (bb.min.z >= other.bb.max.z - precision)
+        return CollisionSide::BACK;
 
-    // return direction;
-    return CollisionDir::NONE;
+    // undefined direction
+    return CollisionSide::UNDEFINED;
 }
 
-CollisionDir AABB::getOppositeDirection(CollisionDir direction)
+CollisionSide AABB::getOpposideSide(CollisionSide side)
 {
-    switch (direction)
-    {
-        case CollisionDir::FRONT:
-            return CollisionDir::BACK;
-        case CollisionDir::BACK:
-            return CollisionDir::FRONT;
-        case CollisionDir::RIGHT:
-            return CollisionDir::LEFT;
-        case CollisionDir::LEFT:
-            return CollisionDir::RIGHT;
-        case CollisionDir::TOP:
-            return CollisionDir::BOTTOM;
-        case CollisionDir::BOTTOM:
-            return CollisionDir::TOP;
-    }
-    return CollisionDir::NONE;
+    return opposideDirectionMap.at(side);
 }
 
 scmath::Vec3 AABB::getVertexP(scmath::Vec3 const& normal) const

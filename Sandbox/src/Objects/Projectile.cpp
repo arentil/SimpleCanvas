@@ -16,7 +16,7 @@ void Projectile::onUpdate()
         destroy();
 }
 
-void Projectile::onCollision(sc::SCObject *object, sc::CollisionDir direction) 
+void Projectile::onCollision(sc::SCObject *object, sc::CollisionSide side) 
 {
     if (object->Name.find("Player") != std::string::npos)
         return;

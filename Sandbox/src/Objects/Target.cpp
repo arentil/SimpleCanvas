@@ -10,9 +10,3 @@ Target::Target(sc::AssetsContainer const& assets)
     Transform.Scale = Transform.Scale * scale;
     Transform.Translation.y = 5.0f;
 }
-
-void Target::onCollision(SCObject *object, sc::CollisionDir direction) 
-{
-    // if (object->Name.find("Projectile") != std::string::npos)
-    //     destroy();
-}

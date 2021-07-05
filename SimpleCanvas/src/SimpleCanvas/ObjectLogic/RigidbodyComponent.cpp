@@ -21,7 +21,7 @@ void RigidbodyComponent::physic(scmath::Vec3 & objectPosition, float deltaTime)
     Acceleration = scmath::Vec3(0.0f, 0.0f, 0.0f);
 }
 
-std::pair<bool, CollisionDir> RigidbodyComponent::getCollision(RigidbodyComponent const& other) const
+std::pair<bool, CollisionSide> RigidbodyComponent::getCollision(RigidbodyComponent const& other) const
 {
     return collider.getCollision(other.collider);
 }

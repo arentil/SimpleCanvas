@@ -42,6 +42,7 @@
 #include "SimpleCanvas/ObjectLogic/Model.h"
 #include "SimpleCanvas/ObjectLogic/BoundingBox.h"
 #include "SimpleCanvas/ObjectLogic/AABB.h"
+#include "SimpleCanvas/ObjectLogic/Sphere.h"
 #include "SimpleCanvas/ObjectLogic/ObjLoader.h"
 #include "SimpleCanvas/ObjectLogic/TransformComponent.h"
 #include "SimpleCanvas/ObjectLogic/RigidbodyComponent.h"

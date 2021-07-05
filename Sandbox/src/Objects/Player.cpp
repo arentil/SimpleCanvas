@@ -17,14 +17,23 @@ Player::Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl
     Transform.Translation = initialPosition;
 }
 
-void Player::onCollision(sc::SCObject *collisionObject, sc::CollisionDir direction) 
+void Player::onCollision(sc::SCObject *collisionObject, sc::CollisionSide side) 
 {
     if (collisionObject->Name != "Terrain" && collisionObject->Name.find("Target") == std::string::npos)
         return;
 
-    Rigidbody->IsGrounded = true;
-    // set negative velocity.y so that player can stay on terrain
-    Rigidbody->Velocity.y = -(Rigidbody->Velocity.y) * terrainBounceModifier;
+    if (side == sc::CollisionSide::DOWN)
+    {
+        Rigidbody->IsGrounded = true;
+        // set negative velocity.y so that player can stay on terrai
+        Rigidbody->Velocity.y = -(Rigidbody->Velocity.y) * terrainBounceModifier;
+        return;
+    }
+
+    if  (side == sc::CollisionSide::LEFT || side == sc::CollisionSide::RIGHT)
+        Transform.Translation.x = cam.lastPosition.x;
+    else if (side == sc::CollisionSide::FRONT || side == sc::CollisionSide::BACK)
+        Transform.Translation.z = cam.lastPosition.z;
 }
 
 void Player::updateCollider() 

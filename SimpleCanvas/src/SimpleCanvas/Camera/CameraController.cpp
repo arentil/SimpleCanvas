@@ -29,6 +29,7 @@ void CameraController::update(float deltaTime)
     scmath::Vec3 const right = camera.right;
     scmath::Vec3 const front = right.cross(scmath::Vec3::Up() * -1);
 
+    lastPosition = object->Transform.Translation;
     scmath::Vec3 &objectPos = object->Transform.Translation;
     if (Input::isKeyPressed(KEY_W))
     {

@@ -19,6 +19,6 @@ public:
 
 private:
     std::string const _filePath;
-    uint32_t _width, _height;
+    int _width, _height;
 };
 }

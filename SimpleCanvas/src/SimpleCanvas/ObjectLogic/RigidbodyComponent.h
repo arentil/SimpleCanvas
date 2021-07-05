@@ -15,7 +15,7 @@ public:
     RigidbodyComponent(scmath::Vec3 const& min, scmath::Vec3 const& max);    // for aabb collider
 
     void physic(scmath::Vec3 & objectPosition, float deltaTime);
-    std::pair<bool, CollisionDir> getCollision(RigidbodyComponent const& other) const;
+    std::pair<bool, CollisionSide> getCollision(RigidbodyComponent const& other) const;
     void setColliderMinMax(scmath::Vec3 const& min, scmath::Vec3 const& max);
     void addForce(scmath::Vec3 const& force);
 

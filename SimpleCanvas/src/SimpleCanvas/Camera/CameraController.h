@@ -44,5 +44,7 @@ public:
     FPSCamera camera;
     // object that the camera is attached to
     SCObject *object;
+
+    scmath::Vec3 lastPosition;
 };
 } // namespace sc

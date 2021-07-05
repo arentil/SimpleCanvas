@@ -8,15 +8,26 @@
 
 namespace sc
 {
-enum class CollisionDir
+enum class CollisionSide
 {
-    NONE,
+    UNDEFINED,
     FRONT,
     BACK,
-    RIGHT,
     LEFT,
-    TOP,
-    BOTTOM
+    RIGHT,
+    UP,
+    DOWN
+};
+
+std::map<CollisionSide, CollisionSide> const opposideDirectionMap
+{
+    {CollisionSide::UNDEFINED, CollisionSide::UNDEFINED},
+    {CollisionSide::FRONT, CollisionSide::BACK},
+    {CollisionSide::BACK, CollisionSide::FRONT},
+    {CollisionSide::LEFT, CollisionSide::RIGHT},
+    {CollisionSide::RIGHT, CollisionSide::LEFT},
+    {CollisionSide::UP, CollisionSide::DOWN},
+    {CollisionSide::DOWN, CollisionSide::UP}
 };
 
 class CameraController;
@@ -28,9 +39,9 @@ public:
     AABB(scmath::Vec3 const& min, scmath::Vec3 const& max);
     virtual ~AABB() = default;
 
-    std::pair<bool, CollisionDir> getCollision(AABB const& other) const;
-    CollisionDir getDirection(AABB const& other) const;
-    static CollisionDir getOppositeDirection(CollisionDir direction);
+    std::pair<bool, CollisionSide> getCollision(AABB const& other) const;
+    CollisionSide getCollisionSide(AABB const& other) const;
+    static CollisionSide getOpposideSide(CollisionSide side);
 
     // for test/debug purpose only!
     void initDebugShader();

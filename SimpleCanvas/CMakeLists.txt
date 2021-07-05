@@ -55,6 +55,8 @@ set(SOURCE_FILES
 	${SOURCE_DIR}/SimpleCanvas/Logger.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/AABB.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/AABB.h
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Sphere.cpp
+	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/Sphere.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/BaseMesh.cpp
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/BaseMesh.h
 	${SOURCE_DIR}/SimpleCanvas/ObjectLogic/BoundingBox.cpp

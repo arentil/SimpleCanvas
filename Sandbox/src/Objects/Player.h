@@ -10,7 +10,7 @@ class Player : public sc::SCObject
 public:
     Player(sc::AssetsContainer const& assets, sc::CameraController & camCtrl);
 
-    virtual void onCollision(sc::SCObject *collisionObject, sc::CollisionDir direction) override;
+    virtual void onCollision(sc::SCObject *collisionObject, sc::CollisionSide side) override;
     virtual void updateCollider() override;
     virtual void onUpdate() override;
     virtual void onLateUpdate() override;
