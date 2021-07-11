@@ -28,6 +28,6 @@ private:
     std::shared_ptr<sc::SCObject> grassTerrain;
     std::shared_ptr<Skybox> skybox;
 
-    void createBuildings(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets);
+    void createWalls(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets);
     void createTargets(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets);
 };

@@ -32,6 +32,12 @@ set(SOURCE_FILES
   ${SOURCE_DIR}/Objects/Terrain.h
   ${SOURCE_DIR}/Objects/Target.cpp
   ${SOURCE_DIR}/Objects/Target.h
+  ${SOURCE_DIR}/Targets/VerticalMovingTarget.cpp
+  ${SOURCE_DIR}/Targets/VerticalMovingTarget.h
+  ${SOURCE_DIR}/Targets/HorizontalMovingTarget.cpp
+  ${SOURCE_DIR}/Targets/HorizontalMovingTarget.h
+  ${SOURCE_DIR}/Targets/RotatingTarget.cpp
+  ${SOURCE_DIR}/Targets/RotatingTarget.h
   ${SOURCE_DIR}/Objects/Building.cpp
   ${SOURCE_DIR}/Objects/Building.h
   ${SOURCE_DIR}/Objects/Crosshair.cpp

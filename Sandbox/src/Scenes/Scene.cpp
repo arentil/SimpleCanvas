@@ -8,12 +8,16 @@
 #include <Objects/Target.h>
 #include <Objects/Crosshair.h>
 
+#include <Targets/HorizontalMovingTarget.h>
+#include <Targets/VerticalMovingTarget.h>
+#include <Targets/RotatingTarget.h>
+
 Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl) 
 {
     skybox = std::make_shared<Skybox>(assets, camCtrl);
 
     grassTerrain = std::make_shared<Terrain>(assets);
-    createBuildings(grassTerrain, assets);
+    createWalls(grassTerrain, assets);
     
     // player
     Player *player = new Player(assets, camCtrl);
@@ -69,10 +73,25 @@ void Scene::destroyCheck()
 
 void Scene::createTargets(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets) 
 {
+    object->attach(new VerticalMovingTarget(assets));
+    object->attach(new HorizontalMovingTarget(assets));
+
+    auto vert1 = new VerticalMovingTarget(assets);
+    vert1->Transform.Translation.x += 20.0f;
+    object->attach(vert1);
+    auto horiz1 = new HorizontalMovingTarget(assets);
+    horiz1->Transform.Translation.x += 20.0f;
+    object->attach(horiz1);
+
+    object->attach(new RotatingTarget(assets));
+    auto rot1 = new RotatingTarget(assets);
+    rot1->Transform.Translation.x += 20.0f;
+    object->attach(rot1);
+
     int numberOfTargets = 20;
     float distBetweenTargets = 3.0f;
 
-    scmath::Vec3 basePos(-5.0f, 5.0f, -20.0f);
+    scmath::Vec3 basePos(30.0f, 15.0f, -40.0f);
     int targetsSqrt = std::sqrt(numberOfTargets);
 
     for (int i = 0; i < targetsSqrt; i++)
@@ -80,18 +99,18 @@ void Scene::createTargets(std::shared_ptr<sc::SCObject> object, sc::AssetsContai
         for (int j = 0; j < targetsSqrt; j++)
         {
             auto newTarget = new Target(assets);
-            newTarget->Transform.Translation = basePos + scmath::Vec3(distBetweenTargets * i, distBetweenTargets * j, 0.0f);
+            newTarget->Transform.Translation = basePos + scmath::Vec3(0.0f, distBetweenTargets * j, distBetweenTargets * i);
             object->attach(newTarget);
         }
     }
 }
 
-void Scene::createBuildings(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets) 
+void Scene::createWalls(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets) 
 {
     // way
     auto way = new Building(assets);
     way->Transform.Scale.x = 5.0f;
-    way->Transform.Scale.z = 50.0f;
+    way->Transform.Scale.z = 25.0f;
     way->Transform.Translation.z -= 6.0f;
     way->Transform.Translation.y = -2.0f;
     object->attach(way);
@@ -146,7 +165,7 @@ void Scene::createBuildings(std::shared_ptr<sc::SCObject> object, sc::AssetsCont
     wall5->Transform.Translation.y = -1.0f;
     object->attach(wall5);
 
-        // walls around terrain
+    // walls around terrain
     auto wall6 = new Building(assets);
     wall6->Transform.Scale.z = 1.0f;
     wall6->Transform.Scale.x = 12.0f;
@@ -155,4 +174,54 @@ void Scene::createBuildings(std::shared_ptr<sc::SCObject> object, sc::AssetsCont
     wall6->Transform.Translation.z -= 6.0f;
     wall6->Transform.Translation.y = 1.5f;
     object->attach(wall6);
+
+    // stair1
+    auto stair1 = new Building(assets);
+    stair1->Transform.Scale.x = 3.0f;
+    stair1->Transform.Translation.x = 0.0f;
+    stair1->Transform.Translation.z -= 30.0f;
+    stair1->Transform.Translation.y = -1.0f;
+    object->attach(stair1);
+
+    // stair2
+    auto stair2 = new Building(assets);
+    stair2->Transform.Scale.x = 3.0f;
+    stair2->Transform.Translation.x = 0.0f;
+    stair2->Transform.Translation.z -= 31.0f;
+    stair2->Transform.Translation.y = 0.0f;
+    object->attach(stair2);
+
+    // stair3
+    auto stair3 = new Building(assets);
+    stair3->Transform.Scale.x = 3.0f;
+    stair3->Transform.Translation.x = 0.0f;
+    stair3->Transform.Translation.z -= 32.0f;
+    stair3->Transform.Translation.y = 1.0f;
+    object->attach(stair3);
+
+    // stair4
+    auto stair4 = new Building(assets);
+    stair4->Transform.Scale.x = 3.0f;
+    stair4->Transform.Translation.x = 0.0f;
+    stair4->Transform.Translation.z -= 33.0f;
+    stair4->Transform.Translation.y = 2.0f;
+    object->attach(stair4);
+
+    // wayPart1
+    auto wayPart1 = new Building(assets);
+    wayPart1->Transform.Scale.x = 5.0f;
+    wayPart1->Transform.Scale.z = 5.0f;
+    wayPart1->Transform.Translation.x = 1.0f;
+    wayPart1->Transform.Translation.y = 3.0f;
+    wayPart1->Transform.Translation.z = -34.0f;
+    object->attach(wayPart1);
+
+    // wayPart2
+    auto wayPart2 = new Building(assets);
+    wayPart2->Transform.Scale.x = 5.0f;
+    wayPart2->Transform.Scale.z = 5.0f;
+    wayPart2->Transform.Translation.x = 13.0f;
+    wayPart2->Transform.Translation.y = 3.0f;
+    wayPart2->Transform.Translation.z = -34.0f;
+    object->attach(wayPart2);
 }

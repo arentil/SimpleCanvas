@@ -12,7 +12,7 @@ void Projectile::onUpdate()
 {
     Transform.Translation += Transform.Front() * speed * deltaTime;
 
-    if (Transform.Translation.distance(scmath::Vec3::Zero()) > 50.0f)
+    if (Transform.Translation.distance(scmath::Vec3::Zero()) > maxDist)
         destroy();
 }
 

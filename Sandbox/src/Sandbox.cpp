@@ -31,9 +31,9 @@ public:
 		sc::RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1});
 		sc::RenderCommand::clear();
 
-		scmath::Vec3 diffusePos(0.0f, 4.0f, 0.0f);
-		float specularStrength = 0.5f;
-		sc::Lights lights{0.3f, diffusePos, specularStrength};
+		scmath::Vec3 diffusePos(0.0f, 10.0f, -20.0f);
+		float specularStrength = 1.0f;
+		sc::Lights lights{0.2f, diffusePos, specularStrength};
 
 		world->prepare(deltaTime);
 		camCtrl.update(deltaTime);

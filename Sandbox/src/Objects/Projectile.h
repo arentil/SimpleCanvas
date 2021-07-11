@@ -11,5 +11,6 @@ public:
     virtual void onCollision(sc::SCObject *object, sc::CollisionSide side) override;
 
     float speed = 40.0f;
+    float maxDist = 70.0f;
     float scale = 0.05f;
 };
