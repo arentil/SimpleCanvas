@@ -2,7 +2,7 @@
 .vs
 x64
 SimpleCanvas/x64
-Sandbox/x64
+SimpleGame/x64
 ipch
 build
 # ------ FILES -------

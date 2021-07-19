@@ -56,18 +56,18 @@ private:
 	std::unique_ptr<World> world;
 };
 
-class Sandbox : public sc::Application
+class SimpleGame : public sc::Application
 {
 public:
-	Sandbox()
+	SimpleGame()
 	{
 		initCanvas(new ExampleCanvas());
 	}
 
-	~Sandbox() {}
+	~SimpleGame() {}
 };
 
 sc::Application* sc::CreateApplication()
 {
-	return new Sandbox();
+	return new SimpleGame();
 }

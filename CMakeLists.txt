@@ -18,7 +18,7 @@ else()
   set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 endif ()
 
-set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/Sandbox/src)
+set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/SimpleGame/src)
 set(SOURCE_FILES
   ${SOURCE_DIR}/Objects/Gun.cpp
   ${SOURCE_DIR}/Objects/Gun.h
@@ -42,18 +42,18 @@ set(SOURCE_FILES
   ${SOURCE_DIR}/Objects/Building.h
   ${SOURCE_DIR}/Objects/Crosshair.cpp
   ${SOURCE_DIR}/Objects/Crosshair.h
-  ${SOURCE_DIR}/Sandbox.cpp
+  ${SOURCE_DIR}/SimpleGame.cpp
   ${SOURCE_DIR}/Scenes/Scene.cpp
   ${SOURCE_DIR}/Scenes/Scene.h
   ${SOURCE_DIR}/World/World.cpp
   ${SOURCE_DIR}/World/World.h
 )
 
-include_directories(${CMAKE_SOURCE_DIR}/Sandbox/src)
-add_executable(Sandbox  ${SOURCE_FILES})
-target_link_libraries(Sandbox PUBLIC SimpleCanvas)
+include_directories(${CMAKE_SOURCE_DIR}/SimpleGame/src)
+add_executable(SimpleGame  ${SOURCE_FILES})
+target_link_libraries(SimpleGame PUBLIC SimpleCanvas)
 
 # move assets folder into binary folder
-add_custom_command(TARGET Sandbox PRE_BUILD
+add_custom_command(TARGET SimpleGame PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
-                   ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:Sandbox>/assets)
+                   ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:SimpleGame>/assets)
