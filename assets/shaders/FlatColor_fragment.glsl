@@ -1,4 +1,4 @@
-#version 330 core
+#version 450 core
 
 in vec3 v_Color;
 in vec3 v_Normal;
@@ -24,13 +24,13 @@ void main()
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * lightColor;
 
-
     // specular
     vec3 viewDir = normalize(u_ViewPos - v_FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
-    int shiness = 256;
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shiness);
-    vec3 specular = u_Specular * spec * lightColor;
+    float theta = max(dot(viewDir, reflectDir), 0.0);
+    int shiness = 32;
+    float shine = pow(theta, shiness);
+    vec3 specular = u_Specular * shine * lightColor;
 
     vec3 result = (ambient + diffuse + specular) * v_Color;
     fragColor = vec4(result, 1.0);

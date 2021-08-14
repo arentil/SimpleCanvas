@@ -50,13 +50,13 @@ Texture2d::Texture2d(std::string const& filePath)
 
     SC_ASSERT(internalFormat & dataFormat);
 
-    glCreateTextures(GL_TEXTURE_2D, 1, &_rendererId);
-    glTextureStorage2D(_rendererId, 1, internalFormat, _width, _height);
-    glTextureParameteri(_rendererId, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTextureParameteri(_rendererId, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTextureParameteri(_rendererId, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTextureParameteri(_rendererId, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTextureSubImage2D(_rendererId, 0, 0, 0, _width, _height, dataFormat, GL_UNSIGNED_BYTE, data);
+    glCreateTextures(GL_TEXTURE_2D, 1, &textureId);
+    glTextureStorage2D(textureId, 1, internalFormat, _width, _height);    // generate texture
+    glTextureParameteri(textureId, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTextureParameteri(textureId, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTextureParameteri(textureId, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTextureParameteri(textureId, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTextureSubImage2D(textureId, 0, 0, 0, _width, _height, dataFormat, GL_UNSIGNED_BYTE, data); // fill texture with data
 
     stbi_image_free(data);
 }
@@ -73,6 +73,6 @@ std::string Texture2d::getFilePath() const
 
 void Texture2d::bind() const
 {
-    glBindTexture(GL_TEXTURE_2D, _rendererId);
+    glBindTexture(GL_TEXTURE_2D, textureId);
 }
 } // namespace sc

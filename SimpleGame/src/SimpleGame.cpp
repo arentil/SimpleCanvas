@@ -33,7 +33,7 @@ public:
 
 		scmath::Vec3 diffusePos(0.0f, 10.0f, -20.0f);
 		float specularStrength = 1.0f;
-		sc::Lights lights{0.2f, diffusePos, specularStrength};
+		sc::Lights lights{0.3f, diffusePos, specularStrength};
 
 		world->prepare(deltaTime);
 		camCtrl.update(deltaTime);
@@ -62,6 +62,10 @@ public:
 	SimpleGame()
 	{
 		initCanvas(new ExampleCanvas());
+		LOG_INFO("LOG_INFO - normal!")
+		LOG_GREEN("LOG_GREEN - green!")
+		LOG_WARNING("LOG_WARNING - yellow!")
+		LOG_ERROR("LOG_ERROR - red!")
 	}
 
 	~SimpleGame() {}

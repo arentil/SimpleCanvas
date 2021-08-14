@@ -6,7 +6,7 @@
 
 namespace sc
 {
-constexpr float G = 9.81; // m/s^2
+constexpr float GRAVITY = 9.81; // m/s^2
 
 class RigidbodyComponent
 {
@@ -22,9 +22,11 @@ public:
     bool IsKinematic = false;
 
     float Mass = 1.0f;
+    scmath::Vec3 Forces = {0.0f, 0.0f, 0.0f};
     scmath::Vec3 Velocity = {0.0f, 0.0f, 0.0f};
-    scmath::Vec3 Acceleration = {0.0f, 0.0f, 0.0f};
+    // scmath::Vec3 Acceleration = {0.0f, 0.0f, 0.0f};
     bool IsGrounded = false;
+
     
     AABB collider;
 };

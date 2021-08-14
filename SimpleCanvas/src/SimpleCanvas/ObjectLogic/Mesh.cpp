@@ -23,8 +23,8 @@ BaseMeshPtr TextureMesh::clone() const
 
 void TextureMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {   
-    updateAABB(modelMatrix);
-    // aabb.draw(camera, scmath::Mat4::identity());
+    updateAABBForViewFrustum(modelMatrix);
+    // aabb.draw(camCtrl, scmath::Mat4::identity());
     if (!camCtrl.isAABBvisible(aabb))
     {
         return;
@@ -105,7 +105,7 @@ BaseMeshPtr ColorMesh::clone() const
 
 void ColorMesh::draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix)
 {
-    updateAABB(modelMatrix);
+    updateAABBForViewFrustum(modelMatrix);
     // aabb.draw(camera, scmath::Mat4::identity());
     if (!camCtrl.isAABBvisible(aabb))
     {
@@ -140,7 +140,7 @@ void ColorMesh::initialize(std::vector<ColorVertex> const& vertices)
 
     // vertex position
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0 , 3, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ColorVertex), nullptr);
 
     // vertex normals
     glEnableVertexAttribArray(1);

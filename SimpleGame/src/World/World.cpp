@@ -104,6 +104,7 @@ sc::ModelPtr World::createCubeModel() const
 void World::loadWorld() 
 {
     LOG_INFO("Loading assets...")
+
     _assets.Models.addModelFromFile("AK-47", "assets/models/AK-47/AK-47.obj");
     _assets.Models.addModel("Cube", createCubeModel());
     _assets.Models.addModelFromFile("RedSphere", "assets/models/RedSphere/untitled.obj");

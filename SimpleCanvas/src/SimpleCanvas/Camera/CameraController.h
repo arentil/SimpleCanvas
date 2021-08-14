@@ -37,7 +37,7 @@ public:
 
     float movementSpeed = 2.5f;
     float shiftMultiplier = 2.0f;
-    float jumpForceMultiplier = 7.0f;
+    float jumpForceMultiplier = 400.0f;
 
     EventDispatcher dispatcher;
     CursorMode cursorMode;

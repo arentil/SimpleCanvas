@@ -7,8 +7,8 @@ namespace sc
 {
 Cubemap::Cubemap(std::vector<std::string> const& facesFilePaths)
 {
-    glGenTextures(1, &_rendererId);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _rendererId);
+    glGenTextures(1, &textureId);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
 
     int width, height, nrChannels;
     for (unsigned int i = 0; i < facesFilePaths.size(); i++)
@@ -37,7 +37,7 @@ Cubemap::Cubemap(std::vector<std::string> const& facesFilePaths)
 
 void Cubemap::bind() const
 {
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _rendererId);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
 }
 
 TexturePtr Cubemap::create(std::vector<std::string> const& facesFilePaths)

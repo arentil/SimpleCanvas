@@ -15,9 +15,9 @@ public:
 	void setCamDef(scmath::Vec3 const& eye, scmath::Vec3 const& target, scmath::Vec3 const& up);
 	bool pointInFrustum(scmath::Vec3 const& point) const;
 	bool sphereInFrustum(scmath::Vec3 const& point, float radius) const;
-	bool isAABBvisible(AABB const& b) const;
+	bool isAABBvisible(AABB const& aabb) const;
 
-    Plane pl[6];
+    Plane planes[6];
     scmath::Vec3 ntl,ntr,nbl,nbr,ftl,ftr,fbl,fbr;
     float nearD, farD, ratio, angle,tang;
 	float nw,nh,fw,fh;

@@ -22,7 +22,7 @@ void Player::onCollision(sc::SCObject *collisionObject, sc::CollisionSide side)
     if (side == sc::CollisionSide::DOWN)
     {
         Rigidbody->IsGrounded = true;
-        // set negative velocity.y so that player can stay on terrai
+        // set negative velocity.y so that player can stay on terrain
         Rigidbody->Velocity.y = -(Rigidbody->Velocity.y) * terrainBounceModifier;
         return;
     }
@@ -32,7 +32,7 @@ void Player::onCollision(sc::SCObject *collisionObject, sc::CollisionSide side)
     else if (side == sc::CollisionSide::FRONT || side == sc::CollisionSide::BACK)
         Transform.Translation.z = cam.lastPosition.z;
     else if (side == sc::CollisionSide::UP)
-        Rigidbody->addForce(scmath::Vec3::Down() * 5.0f);
+        Rigidbody->addForce(scmath::Vec3::Down() * 150.0f);
 
 }
 
@@ -51,7 +51,7 @@ void Player::onUpdate()
 
     if (Transform.Translation.y < -2.0f)
     {
-        Rigidbody->Acceleration = scmath::Vec3::Zero();
+        Rigidbody->Forces = scmath::Vec3::Zero();
         Rigidbody->Velocity = scmath::Vec3::Zero();
         Transform.Translation = initialPosition;
     }

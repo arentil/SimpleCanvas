@@ -54,19 +54,19 @@ void Frustum::setCamDef(scmath::Vec3 const& eye, scmath::Vec3 const& target, scm
 	// compute the six planes
 	// the function set3Points assumes that the points
 	// are given in counter clockwise order
-	pl[TOP].setPoints(ntr,ntl,ftl);
-	pl[BOTTOM].setPoints(nbl,nbr,fbr);
-	pl[LEFT].setPoints(ntl,nbl,fbl);
-	pl[RIGHT].setPoints(nbr,ntr,fbr);
-	pl[NEAR].setPoints(ntl,ntr,nbr);
-	pl[FAR].setPoints(ftr,ftl,fbl);
+	planes[TOP].setPoints(ntr,ntl,ftl);
+	planes[BOTTOM].setPoints(nbl,nbr,fbr);
+	planes[LEFT].setPoints(ntl,nbl,fbl);
+	planes[RIGHT].setPoints(nbr,ntr,fbr);
+	planes[NEAR].setPoints(ntl,ntr,nbr);
+	planes[FAR].setPoints(ftr,ftl,fbl);
 }
 
 bool Frustum::pointInFrustum(scmath::Vec3 const& point) const
 {
     for(int i=0; i < 6; i++) 
     {
-		if (pl[i].distance(point) < 0.0f)
+		if (planes[i].distance(point) < 0.0f)
 			return false;
 	}
 	return true;
@@ -76,17 +76,19 @@ bool Frustum::sphereInFrustum(scmath::Vec3 const& point, float radius) const
 {
 	for(int i=0; i < 6; i++) 
     {
-		if (pl[i].distance(point) < -radius)
+		if (planes[i].distance(point) < -radius)
 			return false;
 	}
 	return true;
 }
 
-bool Frustum::isAABBvisible(AABB const& b) const
+bool Frustum::isAABBvisible(AABB const& aabb) const
 {
 	for(int i=0; i < 6; i++)
     {
-		if (pl[i].distance(b.getVertexP(pl[i].normal)) < 0.0f)
+		scmath::Vec3 pVertex = aabb.getVertexP(planes[i].normal);
+		
+		if (planes[i].distance(pVertex) < 0.0f)
 			return false;
 	}
 	return true;

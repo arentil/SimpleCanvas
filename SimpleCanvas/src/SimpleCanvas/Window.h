@@ -49,12 +49,12 @@ private:
 	GLFWwindow *glfwWindow;
 	GLContext *glContext;
 
+	using EventCallbackFn = std::function<void(Event&)>;
 	struct GLFWWindowData
 	{
 		std::string title;
 		uint32_t width, height;
 		bool VSync;
-
 		EventCallbackFn eventCallback;
 	};
 

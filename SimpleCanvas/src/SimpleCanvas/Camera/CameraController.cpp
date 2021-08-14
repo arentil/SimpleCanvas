@@ -52,6 +52,18 @@ void CameraController::update(float deltaTime)
         object->Rigidbody->addForce(scmath::Vec3::Up() * jumpForceMultiplier);
     }
 
+    if (!(object->Rigidbody->IsKinematic))
+    {
+        if (Input::isKeyPressed(KEY_E))
+        {
+            objectPos += scmath::Vec3::Up() * speed;
+        }
+        if (Input::isKeyPressed(KEY_Q))
+        {
+            objectPos += scmath::Vec3::Down() * speed;
+        }
+    }
+
     if (Input::isKeyPressed(KEY_ESC))
     {
         Renderer::setCursorMode(CursorMode::CURSOR_NORMAL);

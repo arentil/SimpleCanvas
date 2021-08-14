@@ -16,12 +16,12 @@ Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl)
 {
     skybox = std::make_shared<Skybox>(assets, camCtrl);
 
-    grassTerrain = std::make_shared<Terrain>(assets);
-    createWalls(grassTerrain, assets);
+    terrain = std::make_shared<Terrain>(assets);
+    createObstacles(terrain, assets);
     
     // player
     Player *player = new Player(assets, camCtrl);
-    grassTerrain->attach(player);
+    terrain->attach(player);
     camCtrl.attachObject(player);
 
     // gun
@@ -31,44 +31,44 @@ Scene::Scene(sc::AssetsContainer &assets, sc::CameraController & camCtrl)
     player->attach(new Crosshair(assets));
 
     // generate targets and set their parents to terrain
-    createTargets(grassTerrain, assets);
+    createTargets(terrain, assets);
 }
 
 void Scene::prepare(float deltaTime) 
 {
-    grassTerrain->prepare(deltaTime);
+    terrain->prepare(deltaTime);
 }
 
 void Scene::physic() 
 {
-    grassTerrain->physic();
+    terrain->physic();
 }
 
 void Scene::collisionsCheck() 
 {
-    grassTerrain->collisionsCheck();
+    terrain->collisionsCheck();
 }
 
 void Scene::update()
 {
     skybox->update();
-    grassTerrain->update();
+    terrain->update();
 }
 
 void Scene::lateUpdate() 
 {
-    grassTerrain->lateUpdate();
+    terrain->lateUpdate();
 }
 
 void Scene::draw(sc::CameraController const& camCtrl, sc::Lights const& lights) 
 {
     skybox->draw(camCtrl, sc::Lights{}, scmath::Mat4::identity());
-    grassTerrain->draw(camCtrl, lights, scmath::Mat4::identity());
+    terrain->draw(camCtrl, lights, scmath::Mat4::identity());
 }
 
 void Scene::destroyCheck() 
 {
-    grassTerrain->destroyCheck();
+    terrain->destroyCheck();
 }
 
 void Scene::createTargets(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets) 
@@ -105,7 +105,7 @@ void Scene::createTargets(std::shared_ptr<sc::SCObject> object, sc::AssetsContai
     }
 }
 
-void Scene::createWalls(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets) 
+void Scene::createObstacles(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets) 
 {
     // way
     auto way = new Building(assets);

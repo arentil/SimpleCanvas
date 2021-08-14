@@ -12,13 +12,14 @@ void RigidbodyComponent::physic(scmath::Vec3 & objectPosition, float deltaTime)
         return;
 
     if (!IsGrounded)
-        Acceleration += scmath::Vec3::Down() * G * Mass * deltaTime;
+        addForce(scmath::Vec3::Down() * GRAVITY);
 
-    Velocity += Acceleration;
+    scmath::Vec3 acceleration = Forces / Mass;
+    Velocity += acceleration * deltaTime;
     objectPosition += Velocity * deltaTime;
 
     IsGrounded = false;
-    Acceleration = scmath::Vec3(0.0f, 0.0f, 0.0f);
+    Forces = scmath::Vec3::Zero();
 }
 
 std::pair<bool, CollisionSide> RigidbodyComponent::getCollision(RigidbodyComponent const& other) const
@@ -33,6 +34,6 @@ void RigidbodyComponent::setColliderMinMax(scmath::Vec3 const& min, scmath::Vec3
 
 void RigidbodyComponent::addForce(scmath::Vec3 const& force) 
 {
-    Acceleration += force / Mass;
+    Forces += force;
 }
 } // namespace sc

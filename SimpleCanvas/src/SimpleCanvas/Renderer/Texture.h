@@ -12,12 +12,12 @@ class Texture
 public:
     virtual ~Texture()
     {
-        glDeleteTextures(1, &_rendererId);
+        glDeleteTextures(1, &textureId);
     }
 
     virtual void bind() const = 0;
 
 protected:
-    uint32_t _rendererId;
+    uint32_t textureId;
 };
 }

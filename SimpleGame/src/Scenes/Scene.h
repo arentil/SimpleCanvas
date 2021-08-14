@@ -25,9 +25,9 @@ public:
     void destroyCheck();
 
 private:
-    std::shared_ptr<sc::SCObject> grassTerrain;
+    std::shared_ptr<sc::SCObject> terrain;
     std::shared_ptr<Skybox> skybox;
 
-    void createWalls(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets);
+    void createObstacles(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets);
     void createTargets(std::shared_ptr<sc::SCObject> object, sc::AssetsContainer &assets);
 };

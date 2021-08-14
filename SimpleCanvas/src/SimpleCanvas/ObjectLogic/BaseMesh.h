@@ -20,7 +20,7 @@ public:
     
     virtual void draw(ShaderPtr shader, CameraController const& camCtrl, Lights const& lights, scmath::Mat4 const& modelMatrix) = 0;
     virtual AABB getAABB() const { return aabb; }
-    virtual void updateAABB(scmath::Mat4 const& modelMatrix);
+    virtual void updateAABBForViewFrustum(scmath::Mat4 const& modelMatrix);
     virtual BaseMeshPtr clone() const = 0;
 
     BoundingBox bb; // original 8 vertices, do not use!
