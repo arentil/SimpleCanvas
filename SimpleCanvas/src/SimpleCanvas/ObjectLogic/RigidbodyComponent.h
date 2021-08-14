@@ -24,9 +24,7 @@ public:
     float Mass = 1.0f;
     scmath::Vec3 Forces = {0.0f, 0.0f, 0.0f};
     scmath::Vec3 Velocity = {0.0f, 0.0f, 0.0f};
-    // scmath::Vec3 Acceleration = {0.0f, 0.0f, 0.0f};
     bool IsGrounded = false;
-
     
     AABB collider;
 };
