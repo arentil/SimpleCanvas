@@ -9,7 +9,7 @@ namespace sc {
 namespace {
 enum class CONSOLE_TEXT_COLOR : int
 {
-	COLOR_GREEN = 10,
+	COLOR_OK = 10,
 	COLOR_ERROR = 12,
 	COLOR_WARNING = 14,
 	COLOR_INFO = 15
@@ -57,7 +57,7 @@ void formatColorConsole(CONSOLE_TEXT_COLOR color)
 		case CONSOLE_TEXT_COLOR::COLOR_INFO:
 			printf("\033[1;37m");
 			break;
-		case CONSOLE_TEXT_COLOR::COLOR_GREEN:
+		case CONSOLE_TEXT_COLOR::COLOR_OK:
 			printf("\033[1;32m");
 		default:
 			break;
@@ -119,9 +119,9 @@ void Logger::LogError(const char* format, ...)
 	FORMAT_CONSOLE_END
 }
 
-void Logger::LogGreen(const char * format, ...) 
+void Logger::LogOk(const char * format, ...) 
 {
-	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_GREEN);
+	FORMAT_CONSOLE_BEGIN(CONSOLE_TEXT_COLOR::COLOR_OK);
 	PRINT_ARGS
 	FORMAT_CONSOLE_END
 }

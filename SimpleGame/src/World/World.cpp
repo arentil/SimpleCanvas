@@ -128,5 +128,5 @@ void World::loadWorld()
         "assets/textures/skybox/back.jpg"
     };
     _assets.Textures.addCubemapFromFile("Skybox", cubemapFacesFiles);
-    LOG_GREEN("Assets loaded!")
+    LOG_OK("Assets loaded!")
 }

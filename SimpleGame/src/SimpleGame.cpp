@@ -62,8 +62,8 @@ public:
 	SimpleGame()
 	{
 		initCanvas(new ExampleCanvas());
-		LOG_INFO("LOG_INFO - normal!")
-		LOG_GREEN("LOG_GREEN - green!")
+		LOG_INFO("LOG_INFO - white!")
+		LOG_OK("LOG_OK - green!")
 		LOG_WARNING("LOG_WARNING - yellow!")
 		LOG_ERROR("LOG_ERROR - red!")
 	}

@@ -48,6 +48,7 @@ void Window::init(WindowProperties const& properties)
 	glfwWindow = glfwCreateWindow(glfwData.width, glfwData.height, glfwData.title.c_str(), nullptr /*glfwGetPrimaryMonitor() - for full screen */, nullptr);
 
 	glContext = new GLContext(glfwWindow);
+	// initialize window with opengl
 	glContext->init();
 
 	glfwSetWindowUserPointer(glfwWindow, &glfwData);	// assosiate wrapper pointer to the window

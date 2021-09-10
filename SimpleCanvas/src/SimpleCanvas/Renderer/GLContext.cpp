@@ -29,7 +29,7 @@ void GLContext::init()
 	glfwMakeContextCurrent(window);
 	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);	// exactly like in the glfw context guide
 	SC_ASSERT(status, "Assertion failed! Failed to initialize glad!");
-	LOG_GREEN("%s, %s, %s", glGetString(GL_VENDOR) ,glGetString(GL_RENDERER), glGetString(GL_VERSION));
+	LOG_OK("%s, %s, %s", glGetString(GL_VENDOR) ,glGetString(GL_RENDERER), glGetString(GL_VERSION));
 
 	if 	(auto [versionMajor, versionMinor] = getGlVersion(); versionMajor < 4 || versionMinor < 5)	// check if installed OpenGL version >4.5
 	{
