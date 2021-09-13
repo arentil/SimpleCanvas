@@ -18,7 +18,6 @@ class Window
 {
 public:
 	using EventCallbackFn = std::function<void(Event&)>;
-
 	struct WindowProperties
 	{
 		std::string title;
@@ -48,8 +47,6 @@ private:
 
 	GLFWwindow *glfwWindow;
 	GLContext *glContext;
-
-	using EventCallbackFn = std::function<void(Event&)>;
 	struct GLFWWindowData
 	{
 		std::string title;
