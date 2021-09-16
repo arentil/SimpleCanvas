@@ -25,7 +25,6 @@ Application::~Application()
 void Application::run()
 {
 	float lastFrameDeltaTime = (float)glfwGetTime();
-
 	while (_isRunning)
 	{
 		float currentTime = (float)glfwGetTime();

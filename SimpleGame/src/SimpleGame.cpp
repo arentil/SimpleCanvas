@@ -9,10 +9,10 @@
 #include <filesystem>
 #include <vector>
 
-class ExampleCanvas : public sc::Canvas
+class SimpleGameCanvas : public sc::Canvas
 {
 public:
-	ExampleCanvas()
+	SimpleGameCanvas()
 	: cameraSettings
 		{ 
 			70,			// fov
@@ -61,7 +61,7 @@ class SimpleGame : public sc::Application
 public:
 	SimpleGame()
 	{
-		initCanvas(new ExampleCanvas());
+		initCanvas(new SimpleGameCanvas());
 		LOG_INFO("LOG_INFO - white!")
 		LOG_OK("LOG_OK - green!")
 		LOG_WARNING("LOG_WARNING - yellow!")
